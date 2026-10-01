@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azure Pricing Estimate - {{WORKLOAD}} - {{REGION_NAME}}</title>
+<style>
+  :root{--ms-blue:#0078D4;--ms-blue-dark:#106EBE;--ms-blue-darker:#005A9E;--ink:#201F1E;--ink-soft:#323130;--gray:#605E5C;--hairline:#E1DFDD;--panel:#F3F2F1;--panel-alt:#FAF9F8;--green:#107C10;--green-bg:#DFF6DD;--amber:#8A6D00;--amber-bg:#FFF8E1;}
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI','Segoe UI Web',Arial,sans-serif;font-size:14px;line-height:1.5;color:var(--ink-soft);background:#fff;margin:0;}
+  main{max-width:920px;margin:0 auto;padding:32px 44px 70px;}
+  header.doc-header{border-bottom:3px solid var(--ms-blue);padding-bottom:13px;margin-bottom:6px;}
+  header.doc-header h1{margin:0 0 5px;font-size:20px;font-weight:600;color:var(--ms-blue);}
+  .meta{display:flex;gap:28px;flex-wrap:wrap;font-size:12px;color:var(--gray);margin-top:7px;}
+  .meta div span{color:var(--ink);font-weight:600;}
+  .note{font-size:11.5px;color:var(--gray);border:1px solid var(--hairline);background:var(--panel-alt);border-radius:4px;padding:8px 13px;margin:14px 0 20px;}
+  .rec{border:2px solid var(--green);border-radius:9px;background:var(--green-bg);padding:17px 21px;margin:0 0 18px;}
+  .rec .lbl{font-size:10.5px;font-weight:700;letter-spacing:.7px;color:var(--green);text-transform:uppercase;}
+  .rec .hero{display:flex;align-items:baseline;gap:16px;margin-top:6px;flex-wrap:wrap;}
+  .rec .num{font-size:38px;font-weight:700;color:var(--green);line-height:1;}
+  .rec .num small{font-size:13px;font-weight:600;color:var(--ink-soft);margin-left:6px;}
+  .rec .sku{font-family:Consolas,monospace;font-size:15px;font-weight:700;color:var(--ink);}
+  .rec p{margin:10px 0 0;font-size:13.5px;color:var(--ink-soft);}
+  .rec .listp{font-size:12.5px;color:var(--gray);margin-top:3px;}
+  .cards{display:flex;gap:16px;margin:20px 0 10px;align-items:stretch;}
+  .card{flex:1;border:2px solid var(--hairline);border-radius:10px;padding:0 0 16px;position:relative;background:#fff;overflow:hidden;display:flex;flex-direction:column;}
+  .card.win{border-color:var(--green);box-shadow:0 2px 10px rgba(16,124,16,.13);}
+  .card.muted{border-style:dashed;background:#fcfcfb;}
+  .badge{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px;padding:4px 11px;border-radius:0 8px 0 10px;}
+  .badge.gray{background:var(--gray);}
+  .card .cap{background:var(--panel);padding:13px 17px 11px;border-bottom:1px solid var(--hairline);}
+  .card.win .cap{background:var(--green-bg);}
+  .card .opt{font-size:10.5px;font-weight:700;color:var(--gray);letter-spacing:.6px;text-transform:uppercase;}
+  .card .sku{font-family:Consolas,monospace;font-size:14px;font-weight:700;color:var(--ink);margin-top:3px;}
+  .card .proc{font-size:11.5px;color:var(--gray);margin-top:2px;}
+  .card .body{padding:14px 17px 0;flex:1;}
+  .price{font-size:29px;font-weight:700;color:var(--ms-blue-darker);line-height:1.05;}
+  .card.win .price{color:var(--green);}
+  .card.muted .price{color:var(--gray);}
+  .price small{font-size:11.5px;font-weight:600;color:var(--gray);display:block;margin-top:3px;}
+  .strike{font-size:12px;color:var(--gray);margin-top:5px;}
+  .alt{font-size:12px;color:var(--ink-soft);margin-top:10px;padding-top:9px;border-top:1px dashed var(--hairline);}
+  .alt b{color:var(--ink);}
+  ul.spec{list-style:none;margin:12px 0 0;padding:0;font-size:12.5px;}
+  ul.spec li{padding:4px 0 4px 20px;position:relative;border-bottom:1px solid #f0efee;}
+  ul.spec li:last-child{border-bottom:none;}
+  ul.spec li:before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:700;}
+  ul.spec li.no:before{content:"\2013";color:var(--gray);}  .grid{display:flex;gap:14px;margin:0 0 20px;}
+  .kpi{flex:1;border:1px solid var(--hairline);border-radius:7px;padding:11px 14px;background:var(--panel-alt);}
+  .kpi .k{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--gray);text-transform:uppercase;}
+  .kpi .v{font-size:19px;font-weight:700;color:var(--ms-blue-darker);margin-top:3px;}
+  .kpi .d{font-size:11px;color:var(--gray);margin-top:2px;}
+  h2{font-size:15px;color:var(--ink);font-weight:600;margin:28px 0 5px;padding-bottom:6px;border-bottom:2px solid var(--hairline);}
+  code{font-family:Consolas,'Courier New',monospace;background:#f4f4f4;color:#a31515;padding:1px 5px;border-radius:3px;font-size:0.87em;}
+  table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:13px;}
+  th{background:var(--ms-blue);color:#fff;text-align:left;padding:6px 10px;border:1px solid var(--ms-blue-dark);font-weight:600;}
+  td{padding:6px 10px;border:1px solid var(--hairline);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--panel-alt);}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+  td.c,th.c{text-align:center;}
+  tr.win td{background:var(--green-bg)!important;font-weight:600;}
+  tr.muted td{color:var(--gray);}
+  .box{border-left:4px solid var(--ms-blue);background:#F5FAFE;padding:10px 15px;margin:12px 0;border-radius:0 5px 5px 0;font-size:13px;}
+  .box.warn{border-left-color:var(--amber);background:var(--amber-bg);}
+  .box b{color:var(--ink);display:block;margin-bottom:4px;}
+  ul.tight{margin:6px 0 0;padding-left:20px;font-size:13px;}
+  ul.tight li{margin-bottom:4px;}
+  ol.next{margin:8px 0 0;padding-left:22px;font-size:13.5px;}
+  ol.next li{margin-bottom:6px;}
+  tr.grp td{background:var(--panel)!important;font-weight:600;color:var(--ink);font-size:12px;letter-spacing:.3px;}
+  tr.sub td{background:#eef6fc!important;font-weight:600;}
+  tr.tot td{background:var(--green-bg)!important;font-weight:700;color:var(--ink);border-top:2px solid var(--green);font-size:13.5px;}
+  h2 .tag{float:right;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;background:var(--green-bg);color:var(--green);}
+  h2 .tag.gray{background:var(--panel);color:var(--gray);}
+  .pagebreak{margin-top:34px;padding-top:4px;border-top:3px double var(--hairline);}
+  .foot{margin-top:30px;padding-top:11px;border-top:1px solid var(--hairline);font-size:11.5px;color:var(--gray);}
+</style>
+</head>
+<body>
+<main>
+
+<header class="doc-header">
+  <h1>Pricing Estimate - {{WORKLOAD}}</h1>
+  <div class="meta">
+    <div>Region <span>{{REGION_NAME}}</span></div>
+    <div>Currency <span>USD</span></div>
+    <div>Billing <span>Pay-as-you-go</span></div>
+    <div>Period <span>Monthly, 730 hours</span></div>
+    <div>Prepared <span>{{DATE}}</span></div>
+  </div>
+</header>
+
+<p class="note"><strong>This document is a pricing estimate.</strong> Figures use published Azure rates at the date above and the assumptions listed below. Prices shown are <strong>your price</strong>, which includes the {{DISCOUNT_PCT}} percent pay-as-you-go discount. Actual billing varies with usage, region availability and rate changes.</p>
+
+<div class="cards">
+
+  <div class="card">
+    <div class="cap">
+      <div class="opt">Option 1</div>
+      <div class="sku">Standard_E8s_v6</div>
+      <div class="proc">Intel &middot; 8 vCPU</div>
+    </div>
+    <div class="body">
+      <div class="price">$600.66<small>per month with Premium SSD</small></div>
+      <div class="strike">List $715.07</div>
+      <div class="alt"><b>$528.07</b> with Standard SSD<br><span style="color:#605E5C">List $628.67</span></div>
+      <ul class="spec">
+        <li>64 GB memory</li>
+        <li>8 usable vCPU</li>
+        <li>Intel processor</li>
+        <li class="no">$31.88 more each month than Option 2</li>
+        <li class="no">No local temp disk</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card win">
+    <div class="badge">LOWEST COST</div>
+    <div class="cap">
+      <div class="opt">Option 2</div>
+      <div class="sku">Standard_E8as_v6</div>
+      <div class="proc">AMD &middot; 8 vCPU</div>
+    </div>
+    <div class="body">
+      <div class="price">$568.78<small>per month with Premium SSD</small></div>
+      <div class="strike">List $677.11</div>
+      <div class="alt"><b>$496.19</b> with Standard SSD<br><span style="color:#605E5C">List $590.71</span></div>
+      <ul class="spec">
+        <li>64 GB memory</li>
+        <li>8 usable vCPU</li>
+        <li>Lower compute rate</li>
+        <li>Saves $382.56 each year</li>
+        <li class="no">No local temp disk</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card muted">
+    <div class="badge gray">SPECIAL CASE</div>
+    <div class="cap">
+      <div class="opt">Option 3</div>
+      <div class="sku">Standard_E8-4s_v6</div>
+      <div class="proc">Intel &middot; 4 usable vCPU</div>
+    </div>
+    <div class="body">
+      <div class="price">$600.66<small>per month with Premium SSD</small></div>
+      <div class="strike">List $715.07</div>
+      <div class="alt"><b>$528.07</b> with Standard SSD<br><span style="color:#605E5C">List $628.67</span></div>
+      <ul class="spec">
+        <li>64 GB memory</li>
+        <li class="no">4 usable vCPU, 8 physical</li>
+        <li class="no">Same price as Option 1</li>
+        <li>Reduces per-core application licenses</li>
+        <li class="no">No local temp disk</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<h2>How to choose</h2>
+
+<table>
+  <thead><tr><th style="width:24%">Option</th><th class="c" style="width:12%">Usable vCPU</th><th class="n" style="width:16%">Your price</th><th>When to choose it</th></tr></thead>
+  <tbody>
+    <tr class="win"><td><strong>Option 2</strong> &middot; AMD<br><code>E8as_v6</code></td><td class="c">8</td><td class="n">$496.19</td><td><strong>Default choice.</strong> Lowest cost. Saves $382.56 each year against Option 1.</td></tr>
+    <tr><td><strong>Option 1</strong> &middot; Intel<br><code>E8s_v6</code></td><td class="c">8</td><td class="n">$528.07</td><td>Choose if an application or license requires an Intel processor.</td></tr>
+    <tr class="muted"><td><strong>Option 3</strong> &middot; Intel constrained<br><code>E8-4s_v6</code></td><td class="c">4</td><td class="n">$528.07</td><td>Choose only if software licensed per core runs on the VM. Same price as Option 1.</td></tr>
+  </tbody>
+</table>
+<p style="font-size:12px;color:#605E5C;margin-top:4px">Prices shown with Standard SSD. Add $72.59 for Premium SSD.</p>
+
+<div class="box warn">
+  <b>The constrained size does not save Azure cost</b>
+  Option 3 reduces usable cores from 8 to 4. It does not reduce the price. Azure charges compute at the full parent size rate, and the Red Hat license is charged at the 8 vCPU tier in all three options. <strong>Option 3 costs exactly the same as Option 1 and gives half the usable cores.</strong> It is worth choosing only when a per-core application license saves more than the cores are worth.
+</div>
+
+<h2>What drives the cost</h2>
+
+<table>
+  <thead><tr><th style="width:26%">Component</th><th class="n" style="width:16%">Your price</th><th class="c" style="width:12%">Share</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Compute</td><td class="n">$292.50</td><td class="c">59%</td><td>8 vCPU, 64 GB, 730 hours.</td></tr>
+    <tr><td>Data disk, 2 TB</td><td class="n">$129.02</td><td class="c">26%</td><td>Standard SSD. Premium adds $68.82.</td></tr>
+    <tr><td>RHEL license</td><td class="n">$70.64</td><td class="c">14%</td><td>Charged on the 8 vCPU tier.</td></tr>
+    <tr><td>OS disk, 64 GiB</td><td class="n">$4.03</td><td class="c">1%</td><td>Standard SSD.</td></tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <b>The disk choice matters more than the processor choice</b>
+  Premium SSD costs <strong>$72.59 more each month</strong> than Standard SSD, or $871.08 each year. For that, Premium delivers <strong>fifteen times the IOPS</strong> (7,500 against 500) and four times the throughput, and it carries no transaction charges. The Standard SSD figure is a floor, because transactions bill separately. If the workload is I/O sensitive, choose Premium and treat the difference as immaterial.
+</div>
+
+<h2>Assumptions</h2>
+
+<ul class="tight">
+  <li>730 hours per month, running continuously.</li>
+  <li>Pay-as-you-go rates. No reserved instances, savings plans or Azure Hybrid Benefit applied. A one-year reservation would reduce the compute line further.</li>
+  <li>Your price applies {{DISCOUNT_PCT}} percent to every Azure consumption meter.</li>
+  <li>The Red Hat license is charged at the 8 vCPU tier in all three options.</li>
+  <li>Locally redundant disks. Zone-redundant costs approximately 50 percent more.</li>
+  <li>No size includes a local temp disk. Add $63.77 per month for AMD <code>E8ads_v6</code> if local scratch space is required.</li>
+  <li><strong>Excluded:</strong> outbound data transfer, backup, snapshots, support plans, Standard SSD transaction charges, monitoring and log ingestion, public IP addresses and load balancers.</li>
+</ul>
+
+<h2>Next steps</h2>
+
+<ol class="next">
+  <li>Confirm whether the workload is I/O sensitive. This decides Premium or Standard SSD and is worth $871 per year.</li>
+  <li>Confirm no application or license constraint requires an Intel processor.</li>
+  <li>Confirm whether any software on the VM is licensed per core. If so, Option 3 may be worth the reduced core count.</li>
+  <li>Confirm whether local scratch space is needed on the VM.</li>
+  <li>Tell us if the VM will run continuously. If so, a reservation reduces the compute cost further and we can re-price.</li>
+</ol>
+
+<div class="pagebreak"></div>
+
+<h2 style="margin-top:14px">Full itemization</h2>
+<p style="font-size:13px;margin:6px 0 4px">Every line below is a separate Azure meter. <strong>List</strong> is the published rate. <strong>Your price</strong> applies the {{DISCOUNT_PCT}} percent pay-as-you-go discount.</p>
+<!-- ================= OPTION 2 ================= -->
+<h2>Option 2 - AMD <code>Standard_E8as_v6</code>, 8 vCPU<span class="tag">LOWEST COST</span></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:15%">Service</th><th style="width:29%">Description</th><th class="c" style="width:7%">Qty</th>
+      <th style="width:11%">Unit</th><th class="n" style="width:12%">Unit price</th><th class="n" style="width:12%">List</th><th class="n">Your price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="grp"><td colspan="7">Virtual machine</td></tr>
+    <tr><td>Virtual Machines</td><td>E8as v6, Linux, 8 vCPU, 64 GB</td><td class="c">730</td><td>hours</td><td class="n">$0.477000</td><td class="n">$348.21</td><td class="n">$292.50</td></tr>
+    <tr><td>VM Licenses</td><td>Red Hat Enterprise Linux, 8 vCPU tier</td><td class="c">730</td><td>hours</td><td class="n">$0.115200</td><td class="n">$84.10</td><td class="n">$70.64</td></tr>
+    <tr class="sub"><td colspan="5">Virtual machine subtotal</td><td class="n">$432.31</td><td class="n">$363.14</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Premium SSD</td></tr>
+    <tr><td>Storage</td><td>P40 Premium SSD LRS, 2,048 GiB, 7,500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$235.52</td><td class="n">$235.52</td><td class="n">$197.84</td></tr>
+    <tr><td>Storage</td><td>P6 Premium SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$9.2801</td><td class="n">$9.28</td><td class="n">$7.80</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$244.80</td><td class="n">$205.64</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Premium SSD</td><td class="n">$677.11</td><td class="n">$568.78</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Standard SSD</td></tr>
+    <tr><td>Storage</td><td>E40 Standard SSD LRS, 2,048 GiB, 500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$153.60</td><td class="n">$153.60</td><td class="n">$129.02</td></tr>
+    <tr><td>Storage</td><td>E6 Standard SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$4.80</td><td class="n">$4.80</td><td class="n">$4.03</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$158.40</td><td class="n">$133.05</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Standard SSD</td><td class="n">$590.71</td><td class="n">$496.19</td></tr>
+  </tbody>
+</table>
+
+<!-- ================= OPTION 1 ================= -->
+<h2>Option 1 - Intel <code>Standard_E8s_v6</code>, 8 vCPU</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:15%">Service</th><th style="width:29%">Description</th><th class="c" style="width:7%">Qty</th>
+      <th style="width:11%">Unit</th><th class="n" style="width:12%">Unit price</th><th class="n" style="width:12%">List</th><th class="n">Your price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="grp"><td colspan="7">Virtual machine</td></tr>
+    <tr><td>Virtual Machines</td><td>E8s v6, Linux, 8 vCPU, 64 GB</td><td class="c">730</td><td>hours</td><td class="n">$0.529000</td><td class="n">$386.17</td><td class="n">$324.38</td></tr>
+    <tr><td>VM Licenses</td><td>Red Hat Enterprise Linux, 8 vCPU tier</td><td class="c">730</td><td>hours</td><td class="n">$0.115200</td><td class="n">$84.10</td><td class="n">$70.64</td></tr>
+    <tr class="sub"><td colspan="5">Virtual machine subtotal</td><td class="n">$470.27</td><td class="n">$395.02</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Premium SSD</td></tr>
+    <tr><td>Storage</td><td>P40 Premium SSD LRS, 2,048 GiB, 7,500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$235.52</td><td class="n">$235.52</td><td class="n">$197.84</td></tr>
+    <tr><td>Storage</td><td>P6 Premium SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$9.2801</td><td class="n">$9.28</td><td class="n">$7.80</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$244.80</td><td class="n">$205.64</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Premium SSD</td><td class="n">$715.07</td><td class="n">$600.66</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Standard SSD</td></tr>
+    <tr><td>Storage</td><td>E40 Standard SSD LRS, 2,048 GiB, 500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$153.60</td><td class="n">$153.60</td><td class="n">$129.02</td></tr>
+    <tr><td>Storage</td><td>E6 Standard SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$4.80</td><td class="n">$4.80</td><td class="n">$4.03</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$158.40</td><td class="n">$133.05</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Standard SSD</td><td class="n">$628.67</td><td class="n">$528.07</td></tr>
+  </tbody>
+</table>
+
+<!-- ================= OPTION 3 ================= -->
+<h2>Option 3 - Intel <code>Standard_E8-4s_v6</code>, 4 usable vCPU<span class="tag gray">SPECIAL CASE</span></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:15%">Service</th><th style="width:29%">Description</th><th class="c" style="width:7%">Qty</th>
+      <th style="width:11%">Unit</th><th class="n" style="width:12%">Unit price</th><th class="n" style="width:12%">List</th><th class="n">Your price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="grp"><td colspan="7">Virtual machine</td></tr>
+    <tr><td>Virtual Machines</td><td>E8-4s v6, Linux, 4 usable vCPU of 8, 64 GB</td><td class="c">730</td><td>hours</td><td class="n">$0.529000</td><td class="n">$386.17</td><td class="n">$324.38</td></tr>
+    <tr><td>VM Licenses</td><td>Red Hat Enterprise Linux, 8 vCPU tier</td><td class="c">730</td><td>hours</td><td class="n">$0.115200</td><td class="n">$84.10</td><td class="n">$70.64</td></tr>
+    <tr class="sub"><td colspan="5">Virtual machine subtotal</td><td class="n">$470.27</td><td class="n">$395.02</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Premium SSD</td></tr>
+    <tr><td>Storage</td><td>P40 Premium SSD LRS, 2,048 GiB, 7,500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$235.52</td><td class="n">$235.52</td><td class="n">$197.84</td></tr>
+    <tr><td>Storage</td><td>P6 Premium SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$9.2801</td><td class="n">$9.28</td><td class="n">$7.80</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$244.80</td><td class="n">$205.64</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Premium SSD</td><td class="n">$715.07</td><td class="n">$600.66</td></tr>
+    <tr class="grp"><td colspan="7">Storage - with Standard SSD</td></tr>
+    <tr><td>Storage</td><td>E40 Standard SSD LRS, 2,048 GiB, 500 IOPS</td><td class="c">1</td><td>disk / month</td><td class="n">$153.60</td><td class="n">$153.60</td><td class="n">$129.02</td></tr>
+    <tr><td>Storage</td><td>E6 Standard SSD LRS, 64 GiB, OS disk</td><td class="c">1</td><td>disk / month</td><td class="n">$4.80</td><td class="n">$4.80</td><td class="n">$4.03</td></tr>
+    <tr class="sub"><td colspan="5">Storage subtotal</td><td class="n">$158.40</td><td class="n">$133.05</td></tr>
+    <tr class="tot"><td colspan="5">Monthly total with Standard SSD</td><td class="n">$628.67</td><td class="n">$528.07</td></tr>
+  </tbody>
+</table>
+
+<div class="foot">
+  <p>Unit prices retrieved from the Azure Retail Prices API on {{DATE}}. Region <code>{{REGION_CODE}}</code>, currency USD, consumption pricing. VM size availability and vCPU capabilities verified against the {{REGION_NAME}} SKU catalog.</p>
+</div>
+
+</main>
+</body>
+</html>

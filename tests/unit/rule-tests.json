@@ -1,0 +1,4022 @@
+{
+  "rules": {
+    "vm-spot-interruptible": {
+      "level": "info",
+      "title": "Compare Spot VMs for interruptible compute",
+      "body": "The customer said this VM workload can be interrupted and restarted. Microsoft says Azure Spot Virtual Machines are a fit for workloads that can handle interruptions, so add a Spot VM or Spot scale set option before choosing the pay-as-you-go VM price.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Spot Virtual Machines",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/spot-vms",
+        "quote": "Azure Spot Virtual Machines are great for workloads that can handle interruptions like batch processing jobs, dev/test environments, large compute workloads, and more."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "interruptible": true
+        },
+        "all": [
+          {
+            "type": "vm"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "interruptible": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "interruptible": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        344,
+        47
+      ]
+    },
+    "vm-avoid-commitment-unsteady": {
+      "level": "warn",
+      "title": "Do not use a VM commitment for unsteady usage",
+      "body": "The customer said this VM usage is not steady, but this option uses a reservation or savings plan. Microsoft says unused commitment for an hour expires and does not roll over, so price pay-as-you-go before buying a commitment.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What are Azure savings plans for compute?",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-overview",
+        "quote": "Unused commitment for an hour expires and does not roll over."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": false
+        },
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "spec.commitment": {
+                "!=": "payg",
+                "default": "payg"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "sp1y"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        43
+      ]
+    },
+    "private-only-public-ip": {
+      "level": "warn",
+      "title": "Private-only workload includes a public IP",
+      "body": "The customer said this workload should be private-only, but this option includes a public IP. Microsoft security guidance says to deploy private endpoints for resources that support Private Link, so remove the public IP or price a private front end or private endpoint pattern instead.",
+      "citation": {
+        "framework": "MCSB",
+        "code": "NS-2",
+        "source": "Microsoft cloud security benchmark: Network security",
+        "url": "https://learn.microsoft.com/security/benchmark/azure/mcsb-network-security",
+        "quote": "Deploy private endpoints for all Azure resources that support the Private Link feature to establish a private access point for the resources."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "public-ip"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        328,
+        99
+      ]
+    },
+    "app-gateway-v2-autoscale": {
+      "level": "info",
+      "title": "Application Gateway v2 includes autoscaling and performance benefits",
+      "body": "This estimate prices Application Gateway v2. Microsoft guidance says the v2 SKU offers autoscaling and performance benefits compared with v1, so keep v2 for new deployments and use the v2 capacity settings instead of pricing a v1 gateway.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Performance Efficiency checklist 43",
+        "source": "Architecture best practices for Azure Application Gateway v2",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-application-gateway",
+        "quote": "The v2 SKU offers autoscaling, which scales up Application Gateway as traffic increases."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-gateway"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-gateway",
+                  "waf": true,
+                  "capacityUnits": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        168,
+        126
+      ]
+    },
+    "vm-availability-zones-min-instances": {
+      "level": "warn",
+      "title": "Use at least two VM instances across availability zones",
+      "body": "The customer said this production VM workload must keep running through a zone failure, but this option has fewer than two VM instances. Microsoft guidance says to deploy scale sets across availability zones and set up at least two instances in each zone; price at least two instances across zones before sharing this design.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability configuration 18",
+        "source": "Architecture best practices for Azure Virtual Machines and Scale Sets",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/virtual-machines",
+        "quote": "Deploy across availability zones on scale sets. Set up at least two instances in each zone."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "spec.count": {
+                "<": 2,
+                "default": 1
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4as_v5",
+                  "os": "linux",
+                  "count": 2,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        17,
+        236
+      ]
+    },
+    "front-door-global-app-gateway": {
+      "level": "info",
+      "title": "Consider Azure Front Door for global internet users",
+      "body": "The customer said users are spread across regions and the workload is internet-facing. Microsoft describes Azure Front Door as a global load balancer and CDN that routes HTTP and HTTPS traffic, so consider adding Azure Front Door in front of Application Gateway for global routing.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability",
+        "source": "Architecture best practices for Azure Front Door",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-front-door",
+        "quote": "Azure Front Door is a global load balancer and content delivery network (CDN) that routes HTTP and HTTPS traffic."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "multiRegionUsers": true,
+          "internetFacing": true,
+          "frontDoor": {
+            "!=": true
+          }
+        },
+        "all": [
+          {
+            "type": "app-gateway"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-gateway",
+                  "waf": true,
+                  "capacityUnits": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": false,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-gateway",
+                  "waf": true,
+                  "capacityUnits": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        127
+      ]
+    },
+    "front-door-global-load-balancer": {
+      "level": "info",
+      "title": "Consider Azure Front Door for global internet users",
+      "body": "The customer said users are spread across regions and the workload is internet-facing. Microsoft describes Azure Front Door as a global load balancer and CDN that routes HTTP and HTTPS traffic, so consider adding Azure Front Door for global routing.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability",
+        "source": "Architecture best practices for Azure Front Door",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-front-door",
+        "quote": "Azure Front Door is a global load balancer and content delivery network (CDN) that routes HTTP and HTTPS traffic."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "multiRegionUsers": true,
+          "internetFacing": true,
+          "frontDoor": {
+            "!=": true
+          }
+        },
+        "all": [
+          {
+            "type": "load-balancer"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 5,
+                  "processedGB": 0,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true,
+            "internetFacing": true,
+            "frontDoor": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 5,
+                  "processedGB": 0,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        120,
+        86
+      ]
+    },
+    "front-door-global-public-ip": {
+      "level": "info",
+      "title": "Consider Azure Front Door for global internet users",
+      "body": "The customer said users are spread across regions and the workload is internet-facing. Microsoft describes Azure Front Door as a global load balancer and CDN that routes HTTP and HTTPS traffic, so consider adding Azure Front Door instead of exposing a standalone public IP as the global entry point.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability",
+        "source": "Architecture best practices for Azure Front Door",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-front-door",
+        "quote": "Azure Front Door is a global load balancer and content delivery network (CDN) that routes HTTP and HTTPS traffic."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "multiRegionUsers": true,
+          "internetFacing": true,
+          "frontDoor": {
+            "!=": true
+          }
+        },
+        "all": [
+          {
+            "type": "public-ip"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": false,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        127,
+        120
+      ]
+    },
+    "ddos-protection-public-ip": {
+      "level": "info",
+      "title": "Add DDoS Protection for this public endpoint",
+      "body": "This production internet-facing option includes a public endpoint, but Azure DDoS Protection is not included in this estimate. Microsoft security guidance says to enable the DDoS standard protection plan for resources exposed to public networks, so add DDoS Protection if this endpoint needs advanced DDoS protection.",
+      "citation": {
+        "framework": "MCSB",
+        "code": "NS-5",
+        "source": "Microsoft cloud security benchmark: Network Security",
+        "url": "https://learn.microsoft.com/security/benchmark/azure/mcsb-network-security",
+        "quote": "For higher levels of protection of your application layer (Layer 7) attacks such as HTTP floods and DNS floods, enable the DDoS standard protection plan on your VNet to protect resources that are exposed to the public networks."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "internetFacing": true
+        },
+        "all": [
+          {
+            "type": "public-ip"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "internetFacing": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        330
+      ]
+    },
+    "ddos-protection-app-gateway": {
+      "level": "info",
+      "title": "Add DDoS Protection for this public endpoint",
+      "body": "This production internet-facing option includes Application Gateway, but Azure DDoS Protection is not included in this estimate. Microsoft security guidance says to enable the DDoS standard protection plan for resources exposed to public networks, so add DDoS Protection if this endpoint needs advanced DDoS protection.",
+      "citation": {
+        "framework": "MCSB",
+        "code": "NS-5",
+        "source": "Microsoft cloud security benchmark: Network Security",
+        "url": "https://learn.microsoft.com/security/benchmark/azure/mcsb-network-security",
+        "quote": "For higher levels of protection of your application layer (Layer 7) attacks such as HTTP floods and DNS floods, enable the DDoS standard protection plan on your VNet to protect resources that are exposed to the public networks."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "internetFacing": true
+        },
+        "all": [
+          {
+            "type": "app-gateway"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-gateway",
+                  "waf": true,
+                  "capacityUnits": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-gateway",
+                  "waf": true,
+                  "capacityUnits": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        174
+      ]
+    },
+    "ddos-protection-load-balancer": {
+      "level": "info",
+      "title": "Add DDoS Protection for this public endpoint",
+      "body": "This production internet-facing option includes Load Balancer, but Azure DDoS Protection is not included in this estimate. Microsoft security guidance says to enable the DDoS standard protection plan for resources exposed to public networks, so add DDoS Protection if this endpoint needs advanced DDoS protection.",
+      "citation": {
+        "framework": "MCSB",
+        "code": "NS-5",
+        "source": "Microsoft cloud security benchmark: Network Security",
+        "url": "https://learn.microsoft.com/security/benchmark/azure/mcsb-network-security",
+        "quote": "For higher levels of protection of your application layer (Layer 7) attacks such as HTTP floods and DNS floods, enable the DDoS standard protection plan on your VNet to protect resources that are exposed to the public networks."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "internetFacing": true
+        },
+        "all": [
+          {
+            "type": "load-balancer"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "internetFacing": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 5,
+                  "processedGB": 0,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "internetFacing": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 5,
+                  "processedGB": 0,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        100
+      ]
+    },
+    "premium-v2-data-disk": {
+      "level": "info",
+      "title": "Compare Premium SSD v2 for Premium SSD data disks",
+      "body": "This option uses a Premium SSD data disk. Microsoft states that Premium SSD v2 offers higher performance than Premium SSD while generally being less costly, so compare Premium SSD v2 for data disks where the region and VM support it.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Select a disk type for Azure IaaS VMs - managed disks",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/disks-types",
+        "quote": "Premium SSD v2 offers higher performance than Premium SSDs while also generally being less costly."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "disk",
+            "where": {
+              "facts.type": "premium-ssd",
+              "facts.role": {
+                "match": "data"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "disk",
+                  "diskType": "premium-ssd",
+                  "sizeGiB": 128,
+                  "redundancy": "LRS",
+                  "role": "data"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "disk",
+                  "diskType": "premium-ssd",
+                  "sizeGiB": 128,
+                  "redundancy": "LRS",
+                  "role": "OS"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        297,
+        342
+      ]
+    },
+    "aks-zones-for-resilience": {
+      "level": "info",
+      "title": "Deploy AKS node pools across availability zones",
+      "body": "This production AKS estimate asks for zone resilience and includes node VMs. Deploy AKS node pools across availability zones for the zonal design.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-aks-reliability-4",
+        "source": "Architecture best practices for Azure Kubernetes Service (AKS)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-kubernetes-service",
+        "quote": "Use availability zones for your AKS clusters as part of your resiliency strategy to increase availability when you deploy to a single region."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "aks"
+          },
+          {
+            "type": "vm"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        3
+      ]
+    },
+    "aks-spot-node-pools-interruptible": {
+      "level": "info",
+      "title": "Compare AKS Spot node pools for interruptible work",
+      "body": "This AKS estimate is for interruptible work and includes node VMs. Compare Spot node pools for the interruptible node pool portion.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-aks-cost-spot",
+        "source": "Architecture best practices for Azure Kubernetes Service (AKS)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-kubernetes-service",
+        "quote": "Choose Azure Spot Virtual Machines to use unutilized Azure capacity with significant discounts."
+      },
+      "when": {
+        "context": {
+          "interruptible": true
+        },
+        "all": [
+          {
+            "type": "aks"
+          },
+          {
+            "type": "vm"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "interruptible": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "interruptible": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        144
+      ]
+    },
+    "aks-node-commitment-steady-usage": {
+      "level": "info",
+      "title": "Compare reservations or savings plans for steady AKS node VMs",
+      "body": "This AKS estimate has steady usage and pay-as-you-go node VMs. Compare Azure Reservations or a savings plan for the node VM portion.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-aks-cost-commitment",
+        "source": "Architecture best practices for Azure Kubernetes Service (AKS)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-kubernetes-service",
+        "quote": "If you properly plan for capacity and your workload is predictable and will exist for an extended period of time, sign up for Azure Reservations or a savings plan to reduce your resource costs."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "aks"
+          },
+          {
+            "type": "vm",
+            "where": {
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks",
+                  "tier": "standard",
+                  "hours": 730
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "count": 3,
+                  "hours": 730,
+                  "commitment": "ri1y"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        24
+      ]
+    },
+    "app-service-premium-production": {
+      "level": "warn",
+      "title": "Use Premium v3 or Premium v4 for production App Service workloads",
+      "body": "This production App Service option is not on a Premium v3 or Premium v4 plan. Price a Premium plan for the production estimate.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-app-service-reliability-1",
+        "source": "Architecture best practices for Azure App Service (Web Apps)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/app-service-web-apps",
+        "quote": "(App Service) Choose the Premium v3 tier of an App Service plan for production workloads."
+      },
+      "when": {
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "app-service",
+            "where": {
+              "spec.plan": {
+                "notIn": [
+                  "P0v3",
+                  "P1v3",
+                  "P2v3",
+                  "P3v3",
+                  "P1mv3",
+                  "P2mv3",
+                  "P3mv3",
+                  "P4mv3",
+                  "P5mv3",
+                  "P0v4",
+                  "P1v4",
+                  "P2v4",
+                  "P3v4",
+                  "P1mv4",
+                  "P2mv4",
+                  "P3mv4",
+                  "P4mv4",
+                  "P5mv4"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "B1",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        49
+      ]
+    },
+    "app-service-basic-lower-environment": {
+      "level": "info",
+      "title": "Compare Free or Basic App Service for lower environments",
+      "body": "This nonproduction App Service option uses a higher tier. Compare a Free or Basic tier if this estimate is for a lower environment.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-app-service-cost-optimization-1",
+        "source": "Architecture best practices for Azure App Service (Web Apps)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/app-service-web-apps",
+        "quote": "(App Service) Choose free tiers or basic tiers for lower environments."
+      },
+      "when": {
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "app-service",
+            "where": {
+              "spec.plan": {
+                "notIn": [
+                  "F1",
+                  "D1",
+                  "B1",
+                  "B2",
+                  "B3"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "B1",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        64,
+        65
+      ]
+    },
+    "app-service-private-networking": {
+      "level": "info",
+      "title": "Configure App Service private networking",
+      "body": "This App Service estimate is private-only and uses a Basic or higher plan. Configure virtual network integration and private endpoints for the app.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-app-service-security-4",
+        "source": "Architecture best practices for Azure App Service (Web Apps)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/app-service-web-apps",
+        "quote": "Use private endpoints to control inbound traffic, limit access to your App Service instance from within your virtual network, and disable public internet access."
+      },
+      "when": {
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "app-service",
+            "where": {
+              "spec.plan": {
+                "notIn": [
+                  "F1",
+                  "D1"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "B1",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "B1",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        59,
+        70
+      ]
+    },
+    "app-service-zone-minimum-instances": {
+      "level": "warn",
+      "title": "Zone-redundant App Service needs at least two instances",
+      "body": "This option asks for zone resilience but prices fewer than two App Service instances. Increase the instance count to at least two for this estimate.",
+      "citation": {
+        "framework": "Pricing",
+        "code": "Pricing-AppService-zone-recommend-three",
+        "source": "Configure App Service plans for zone redundancy",
+        "url": "https://learn.microsoft.com/azure/app-service/configure-zone-redundancy",
+        "quote": "If Instance count is less than 2 , increase it to 2 ; preserve a higher value."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "app-service",
+            "where": {
+              "spec.count": {
+                "<": 2,
+                "default": 1
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "os": "linux",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "os": "linux",
+                  "count": 2,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        50,
+        242,
+        243
+      ]
+    },
+    "functions-flex-zone-resilience": {
+      "level": "warn",
+      "title": "Use Flex Consumption for zone-redundant Functions",
+      "body": "This Functions option asks for zone resilience while using the Consumption plan. Price Flex Consumption for zone-redundant resilience.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-functions-reliability-5",
+        "source": "Architecture best practices for Azure Functions",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-functions",
+        "quote": "The Flex Consumption plan supports deployment across Availability Zones for zone-redundant resilience."
+      },
+      "when": {
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "functions",
+            "where": {
+              "spec.plan": "consumption"
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "consumption",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "flex",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        78
+      ]
+    },
+    "functions-flex-private-networking": {
+      "level": "warn",
+      "title": "Use Flex Consumption for private-only Functions",
+      "body": "This private-only Functions estimate uses the Consumption plan. Price Flex Consumption because the Consumption plan does not support private endpoints.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Functions networking options",
+        "url": "https://learn.microsoft.com/azure/azure-functions/functions-networking-options",
+        "quote": "Private endpoints aren't supported on the Consumption plan or for the function app in the legacy Container Apps integration."
+      },
+      "when": {
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "functions",
+            "where": {
+              "spec.plan": "consumption"
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "consumption",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "flex",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        81,
+        94
+      ]
+    },
+    "functions-consumption-unpredictable": {
+      "level": "info",
+      "title": "Compare Consumption for intermittent Functions traffic",
+      "body": "This Functions option uses Flex Consumption for an intermittent workload without a private-only requirement. Compare the Consumption plan for unpredictable traffic.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-functions-cost-optimization-1",
+        "source": "Architecture best practices for Azure Functions",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-functions",
+        "quote": "Use the Consumption plan for workloads with unpredictable traffic."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true,
+          "privateOnly": {
+            "!=": true
+          }
+        },
+        "all": [
+          {
+            "type": "functions",
+            "where": {
+              "spec.plan": "flex"
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true,
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "flex",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true,
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "consumption",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        83
+      ]
+    },
+    "functions-flex-new-serverless": {
+      "level": "info",
+      "title": "Compare Flex Consumption for new serverless Functions apps",
+      "body": "This Functions option uses the Consumption plan. For a new serverless function app, compare the Flex Consumption plan.",
+      "citation": {
+        "framework": "Pricing",
+        "code": "Pricing-Functions-consumption",
+        "source": "Azure Functions hosting options",
+        "url": "https://learn.microsoft.com/azure/azure-functions/functions-scale",
+        "quote": "For new serverless function apps, use the Flex Consumption plan instead."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "functions",
+            "where": {
+              "spec.plan": "consumption"
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "consumption",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "flex",
+                  "executions": 1000000,
+                  "gbSeconds": 400000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        84,
+        245,
+        247
+      ]
+    },
+    "container-apps-zone-minimum-replicas": {
+      "level": "warn",
+      "title": "Price more than one Container Apps replica for zone resilience",
+      "body": "This Container Apps option asks for zone resilience but prices fewer than two replicas. Increase minimum replicas so replicas can be distributed across zones.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-container-apps-reliability-1",
+        "source": "Architecture best practices for Azure Container Apps",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-container-apps",
+        "quote": "Enable Container Apps availability zone support to automatically distribute replicas across multiple zones in a region."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "container-apps",
+            "where": {
+              "spec.replicas": {
+                "<": 2,
+                "default": 1
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-apps",
+                  "apps": 1,
+                  "vcpu": 0.5,
+                  "memGiB": 1,
+                  "replicas": 1,
+                  "hours": 730,
+                  "activeFraction": 1,
+                  "requests": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-apps",
+                  "apps": 1,
+                  "vcpu": 0.5,
+                  "memGiB": 1,
+                  "replicas": 2,
+                  "hours": 730,
+                  "activeFraction": 1,
+                  "requests": 1000000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        97
+      ]
+    },
+    "container-apps-private-workload-profile": {
+      "level": "info",
+      "title": "Plan workload profile environment for private Container Apps",
+      "body": "This Container Apps estimate is private-only. Private endpoints require a workload profile environment, so include that architecture choice in the estimate discussion.",
+      "citation": {
+        "framework": "WAF",
+        "code": "WAF-container-apps-security-3",
+        "source": "Architecture best practices for Azure Container Apps",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-container-apps",
+        "quote": "Use private endpoints in workload profile environments to restrict inbound access to a private IP address within your virtual network."
+      },
+      "when": {
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "container-apps"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-apps",
+                  "apps": 1,
+                  "vcpu": 0.5,
+                  "memGiB": 1,
+                  "replicas": 1,
+                  "hours": 730,
+                  "activeFraction": 1,
+                  "requests": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-apps",
+                  "apps": 1,
+                  "vcpu": 0.5,
+                  "memGiB": 1,
+                  "replicas": 1,
+                  "hours": 730,
+                  "activeFraction": 1,
+                  "requests": 1000000
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        107,
+        119
+      ]
+    },
+    "sqldb-serverless-idle": {
+      "level": "info",
+      "title": "Consider SQL Database serverless for idle periods",
+      "body": "This SQL Database estimate uses provisioned compute while the workload has idle periods. Compare a serverless single database if intermittent use and compute warm-up delay are acceptable.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Cost Optimization.configuration.04",
+        "source": "Architecture best practices for Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-sql-database",
+        "quote": "Consider using the Serverless tier for single databases that have intermittent, unpredictable usage patterns and can afford a delay in compute warm-up after idle usage periods."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "sql-database"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        31,
+        38,
+        438,
+        439
+      ]
+    },
+    "sqlmi-stop-idle": {
+      "level": "info",
+      "title": "Stop General Purpose SQL Managed Instance during predictable idle periods",
+      "body": "This General Purpose managed instance has predictable idle periods. Compare a schedule with fewer running hours if the instance can be stopped before idle windows and started before use.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Cost Optimization.configuration.05",
+        "source": "Architecture best practices for Azure SQL Managed Instance",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-sql-managed-instance",
+        "quote": "Stop General Purpose instances during predictable idle periods to eliminate vCore and licensing charges."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true,
+          "zoneResilience": {
+            "!=": true
+          }
+        },
+        "all": [
+          {
+            "type": "sql-mi",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "general-purpose"
+                ],
+                "default": "general-purpose"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": false,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        116
+      ]
+    },
+    "sqldb-reserved-capacity": {
+      "level": "info",
+      "title": "Compare Azure SQL Database reserved capacity",
+      "body": "This SQL Database workload is expected to run steadily. Compare one-year or three-year Azure SQL reserved capacity against pay-as-you-go compute.",
+      "citation": {
+        "framework": "Learn",
+        "code": "sql-reserved-capacity",
+        "source": "Save on compute costs with Azure Reservations - Azure SQL Database & SQL Managed Instance",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/reserved-capacity-overview",
+        "quote": "With Azure Reservations, you commit to using Azure SQL resource for a period of one or three years to receive a significant discount on compute costs."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "sql-database"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        32,
+        40,
+        442
+      ]
+    },
+    "sqlmi-reserved-capacity": {
+      "level": "info",
+      "title": "Compare SQL Managed Instance reserved capacity",
+      "body": "This managed instance workload is expected to run steadily. Compare one-year or three-year Azure SQL reserved capacity against pay-as-you-go compute.",
+      "citation": {
+        "framework": "Learn",
+        "code": "sql-reserved-capacity",
+        "source": "Save on compute costs with Azure Reservations - Azure SQL Database & SQL Managed Instance",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/reserved-capacity-overview",
+        "quote": "With Azure Reservations, you commit to using Azure SQL resource for a period of one or three years to receive a significant discount on compute costs."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "sql-mi"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        114
+      ]
+    },
+    "postgres-reserved-capacity": {
+      "level": "info",
+      "title": "Compare PostgreSQL reserved capacity",
+      "body": "This PostgreSQL flexible server workload is expected to run steadily. Compare one-year or three-year reserved capacity for the compute resources.",
+      "citation": {
+        "framework": "Learn",
+        "code": "postgres-reserved-capacity",
+        "source": "Prepay for compute resources with reserved capacity in Azure Database for PostgreSQL flexible server",
+        "url": "https://learn.microsoft.com/azure/postgresql/flexible-server/concept-reserved-pricing",
+        "quote": "With reserved capacity, you make an upfront commitment on Azure Database for PostgreSQL for a one-year or three-year period."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "postgres"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "postgres",
+                  "tier": "general-purpose",
+                  "series": "Ddsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "postgres",
+                  "tier": "general-purpose",
+                  "series": "Ddsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        175,
+        447
+      ]
+    },
+    "mysql-reserved-capacity": {
+      "level": "info",
+      "title": "Compare MySQL reserved instances",
+      "body": "This MySQL flexible server workload is expected to run steadily. Compare one-year or three-year reserved instances for the compute resources.",
+      "citation": {
+        "framework": "Learn",
+        "code": "mysql-reserved-capacity",
+        "source": "Save on Azure Database for MySQL flexible server compute resources with reserved instances",
+        "url": "https://learn.microsoft.com/azure/mysql/flexible-server/concept-reserved-pricing",
+        "quote": "With Azure Database for MySQL Flexible Server reserved instances, you make an upfront commitment on Azure Database for MySQL Flexible Server for a one or three year period to get a significant discount on the compute costs."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "mysql"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "mysql",
+                  "tier": "general-purpose",
+                  "series": "Dadsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "mysql",
+                  "tier": "general-purpose",
+                  "series": "Dadsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        245,
+        450
+      ]
+    },
+    "cosmos-reserved-capacity": {
+      "level": "info",
+      "title": "Compare Cosmos DB reserved capacity for provisioned throughput",
+      "body": "This Cosmos DB account has steady provisioned throughput. Compare Azure Cosmos DB Reserved Capacity for discounted prices on provisioned throughput.",
+      "citation": {
+        "framework": "Learn",
+        "code": "cosmos-reserved-capacity",
+        "source": "Azure Cosmos DB pricing & discounts with Reserved Capacity",
+        "url": "https://learn.microsoft.com/azure/cosmos-db/reserved-capacity",
+        "quote": "Azure Cosmos DB Reserved Capacity allows you to benefit from discounted prices on the throughput provisioned for your Azure Cosmos DB resources."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "cosmos",
+            "where": {
+              "spec.mode": {
+                "in": [
+                  "provisioned",
+                  "autoscale"
+                ],
+                "default": "autoscale"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "serverless",
+                  "requestUnits": 1000000,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        455
+      ]
+    },
+    "cosmos-serverless-idle": {
+      "level": "info",
+      "title": "Consider Cosmos DB serverless for sporadic usage",
+      "body": "This Cosmos DB account has idle or sporadic usage but is priced with provisioned throughput. Compare serverless if paying only for consumed request units fits the workload.",
+      "citation": {
+        "framework": "Learn",
+        "code": "cosmos-serverless-billing",
+        "source": "Azure Cosmos DB serverless account type",
+        "url": "https://learn.microsoft.com/azure/cosmos-db/serverless",
+        "quote": "With the serverless option, you're charged only for the request units (RUs) that your database operations consume and for the storage that your data consumes."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "cosmos",
+            "where": {
+              "spec.mode": {
+                "in": [
+                  "provisioned",
+                  "autoscale"
+                ],
+                "default": "autoscale"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "serverless",
+                  "requestUnits": 1000000,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        311,
+        452
+      ]
+    },
+    "cosmos-multi-region-users": {
+      "level": "info",
+      "title": "Price Cosmos DB regions for geographically distributed users",
+      "body": "Users are geographically distributed, but this Cosmos DB account is priced in one region. Compare additional regions or multi-region writes as appropriate for the application.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Performance Efficiency.configuration.05",
+        "source": "Architecture best practices for Azure Cosmos DB for NoSQL",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/cosmos-db",
+        "quote": "Use multi-region writes if your clients are geographically distributed."
+      },
+      "when": {
+        "context": {
+          "multiRegionUsers": true
+        },
+        "all": [
+          {
+            "type": "cosmos",
+            "where": {
+              "facts.regions": {
+                "<": 2,
+                "default": 1
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "multiRegionUsers": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 2
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        338,
+        454
+      ]
+    },
+    "sqldb-zone-redundancy": {
+      "level": "info",
+      "title": "Include SQL Database zone redundancy for zone-resilient production",
+      "body": "This is a production SQL Database workload that must withstand a datacenter outage. Include the zone-redundant configuration in the estimate before comparing options.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability.configuration.03",
+        "source": "Architecture best practices for Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-sql-database",
+        "quote": "Zone-redundant availability ensures your compute and storage components are distributed across multiple Azure availability zones within the primary region."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "sql-database"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-database",
+                  "tier": "general-purpose",
+                  "vcores": 2,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        11,
+        400
+      ]
+    },
+    "sqlmi-zone-redundancy": {
+      "level": "info",
+      "title": "Include SQL Managed Instance zone redundancy for production",
+      "body": "This is a production managed instance workload that requires datacenter failure protection. Include zone redundancy and its separately billed add-on when comparing options.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability.configuration.01",
+        "source": "Architecture best practices for Azure SQL Managed Instance",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-sql-managed-instance",
+        "quote": "Turn on zone redundancy for production SQL Managed Instance workloads that require datacenter failure protection."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "sql-mi"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "sql-mi",
+                  "tier": "general-purpose",
+                  "vcores": 4,
+                  "storageGB": 32
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        79,
+        395,
+        401,
+        443
+      ]
+    },
+    "cosmos-zone-redundancy": {
+      "level": "info",
+      "title": "Include Cosmos DB availability zones for zone-resilient production",
+      "body": "This is a production Cosmos DB workload that requires zone resilience. Include availability-zone distribution where it is available in the selected region.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability.configuration.01",
+        "source": "Architecture best practices for Azure Cosmos DB for NoSQL",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/cosmos-db",
+        "quote": "Distribute your Azure Cosmos DB account across availability zones when available."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "cosmos"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 400,
+                  "storageGB": 10,
+                  "regions": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        289,
+        377
+      ]
+    },
+    "postgres-burstable-devtest": {
+      "level": "info",
+      "title": "Compare PostgreSQL Burstable for nonproduction",
+      "body": "This PostgreSQL flexible server is nonproduction. Compare the Burstable pricing tier with General Purpose or Memory Optimized for the development or test estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": "postgres-burstable-tier",
+        "source": "Compute options in Azure Database for PostgreSQL flexible server",
+        "url": "https://learn.microsoft.com/azure/postgresql/flexible-server/concepts-compute-storage",
+        "quote": "You can create an Azure Database for PostgreSQL flexible server in one of three pricing tiers: Burstable, General Purpose, and Memory Optimized."
+      },
+      "when": {
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "postgres",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "general-purpose",
+                  "memory-optimized"
+                ],
+                "default": "general-purpose"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "postgres",
+                  "tier": "general-purpose",
+                  "series": "Ddsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "postgres",
+                  "tier": "general-purpose",
+                  "series": "Ddsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        173,
+        445
+      ]
+    },
+    "mysql-burstable-devtest": {
+      "level": "info",
+      "title": "Compare MySQL Burstable for development and testing",
+      "body": "This MySQL flexible server is nonproduction. Compare a Burstable B-series instance for development and testing workloads with intermittent CPU demand.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Cost Optimization.configuration.05",
+        "source": "Architecture best practices for Azure Database for MySQL",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-database-for-mysql",
+        "quote": "Select Burstable B-series instances for development and testing workloads that have intermittent CPU demand."
+      },
+      "when": {
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "mysql",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "general-purpose",
+                  "memory-optimized"
+                ],
+                "default": "general-purpose"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "mysql",
+                  "tier": "general-purpose",
+                  "series": "Dadsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "mysql",
+                  "tier": "general-purpose",
+                  "series": "Dadsv5",
+                  "vcores": 2,
+                  "storageGB": 128
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        247,
+        448
+      ]
+    },
+    "blob-cool-minimum-retention": {
+      "level": "info",
+      "title": "Cool blob storage has a 30-day minimum retention period",
+      "body": "This option prices Blob Storage in the Cool tier. Microsoft states that data in the cool tier should be stored for at least 30 days; if the data may be deleted, overwritten, or moved sooner, compare Hot tier pricing instead.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Access tiers for blob data",
+        "url": "https://learn.microsoft.com/azure/storage/blobs/access-tiers-overview",
+        "quote": "Data in the cool tier should be stored for a minimum of 30 days."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "Cool"
+                ],
+                "default": "Hot"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Cool",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Hot",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        369
+      ]
+    },
+    "blob-cold-minimum-retention": {
+      "level": "info",
+      "title": "Cold blob storage has a 90-day minimum retention period",
+      "body": "This option prices Blob Storage in the Cold tier. Microsoft states that data in the cold tier should be stored for at least 90 days; if the data may be deleted, overwritten, or moved sooner, compare Cool or Hot tier pricing instead.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Access tiers for blob data",
+        "url": "https://learn.microsoft.com/azure/storage/blobs/access-tiers-overview",
+        "quote": "Data in the cold tier should be stored for a minimum of 90 days."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "Cold"
+                ],
+                "default": "Hot"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Cold",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Cool",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        370
+      ]
+    },
+    "blob-archive-minimum-retention": {
+      "level": "info",
+      "title": "Archive blob storage has a 180-day minimum retention period",
+      "body": "This option prices Blob Storage in the Archive tier. Microsoft states that data in the archive tier should be stored for at least 180 days; if the data may be deleted or moved sooner, compare an online tier instead.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Access tiers for blob data",
+        "url": "https://learn.microsoft.com/azure/storage/blobs/access-tiers-overview",
+        "quote": "Data in the archive tier should be stored for a minimum of 180 days."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "Archive"
+                ],
+                "default": "Hot"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Archive",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Cold",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        371
+      ]
+    },
+    "blob-archive-standard-rehydration": {
+      "level": "info",
+      "title": "Archive retrieval is priced; use standard-priority rehydration when it is not an emergency",
+      "body": "This option includes Archive-tier retrieval. Microsoft cost guidance says to use standard-priority rehydration for archive blobs; use high-priority rehydration only for emergency restoration.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Cost Optimization",
+        "source": "Architecture best practices for Azure Blob Storage",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-blob-storage",
+        "quote": "Use standard-priority rehydration when rehydrating blobs from archive storage."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.tier": {
+                "in": [
+                  "Archive"
+                ],
+                "default": "Hot"
+              },
+              "spec.retrievalGB": {
+                ">": 0,
+                "default": 0
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Archive",
+                  "capacityGB": 100,
+                  "retrievalGB": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Archive",
+                  "capacityGB": 100,
+                  "retrievalGB": 0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        44
+      ]
+    },
+    "blob-reserved-capacity-steady": {
+      "level": "info",
+      "title": "Compare Blob Storage reserved capacity for steady large capacity",
+      "body": "This estimate has at least 100 TiB of steady Blob Storage capacity. Microsoft states that reserved capacity can significantly reduce capacity costs for block blobs and Data Lake Storage data; compare a one-year or three-year reservation for the same region, access tier, and redundancy.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Optimize costs for Blob storage with reserved capacity",
+        "url": "https://learn.microsoft.com/azure/storage/blobs/storage-blob-reserved-capacity",
+        "quote": "Azure Storage reserved capacity can significantly reduce your capacity costs for block blobs and Azure Data Lake Storage data."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.capacityGB": {
+                ">=": 102400
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Hot",
+                  "capacityGB": 102400
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Hot",
+                  "capacityGB": 102400
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        373,
+        374
+      ]
+    },
+    "files-reserved-capacity-steady": {
+      "level": "info",
+      "title": "Compare Azure Files Reservations for steady large file shares",
+      "body": "This estimate has at least 10 TiB of steady Azure Files capacity on a reservation-eligible billing model. Microsoft states that Azure Files reservations can significantly reduce capacity costs; compare a one-year or three-year reservation for the same region, tier, and redundancy.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Reduce Costs for Azure Files with Reservations",
+        "url": "https://learn.microsoft.com/azure/storage/files/files-reserve-capacity",
+        "quote": "Azure Files reservations can significantly reduce your capacity costs for storing data in Azure file shares."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "files",
+            "where": {
+              "spec.capacityGB": {
+                ">=": 10240
+              },
+              "spec.model": {
+                "in": [
+                  "payg-hot",
+                  "payg-cool"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "payg-hot",
+                  "capacityGB": 10240
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "provisioned-v2-hdd",
+                  "capacityGB": 10240
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        100,
+        377,
+        378
+      ]
+    },
+    "files-zone-redundancy-production": {
+      "level": "warn",
+      "title": "Azure Files is locally redundant but zone resilience was requested",
+      "body": "The workload is production, zone resilience was requested, and this Azure Files option is priced as LRS. Microsoft guidance says to configure Azure Files with ZRS, GRS, or GZRS for maximum availability and durability; price ZRS if the share must survive a zone failure.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Reliability",
+        "source": "Architecture best practices for Azure Files",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-files",
+        "quote": "The ZRS and GZRS configuration options replicate across various availability zones and enable applications to continue reading data during an outage."
+      },
+      "when": {
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "files",
+            "where": {
+              "spec.redundancy": {
+                "in": [
+                  "LRS"
+                ],
+                "default": "LRS"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "payg-hot",
+                  "capacityGB": 100,
+                  "redundancy": "LRS"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "payg-hot",
+                  "capacityGB": 100,
+                  "redundancy": "ZRS"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        85,
+        376
+      ]
+    },
+    "log-analytics-nonproduction-retention": {
+      "level": "info",
+      "title": "Nonproduction Log Analytics retention is longer than 90 days",
+      "body": "This nonproduction workspace keeps logs for more than 90 days. Microsoft guidance says to treat nonproduction environments differently than production environments; if this is dev/test or sandbox data, compare shorter retention before sharing the estimate.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Cost Optimization",
+        "source": "Architecture best practices for Log Analytics",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-log-analytics",
+        "quote": "Treat nonproduction environments differently than production environments: Review your nonproduction environments to ensure that your diagnostic settings and retention policies are configured appropriately."
+      },
+      "when": {
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "log-analytics",
+            "where": {
+              "spec.retentionDays": {
+                ">": 90,
+                "default": 31
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 5,
+                  "retentionDays": 180
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 5,
+                  "retentionDays": 180
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        157
+      ]
+    },
+    "advisor-ri-vm": {
+      "level": "info",
+      "title": "Compare a VM reservation for steady pay-as-you-go compute",
+      "body": "Advisor recommends reservations based on usage over the selected term and look-back period. This estimate prices steady VM usage on pay-as-you-go terms; compare the matching reservation before relying on the run rate.",
+      "citation": {
+        "framework": "Advisor",
+        "code": null,
+        "source": "Cost recommendations",
+        "url": "https://learn.microsoft.com/azure/advisor/advisor-reference-cost-recommendations",
+        "quote": "Based on your usage over the selected term and look-back period, we recommend reservations to maximize savings."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
+          }
+        ],
+        "none": [
+          {
+            "type": "aks"
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "hours": 730,
+                  "commitment": "ri1y"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        265
+      ]
+    },
+    "advisor-ri-disk": {
+      "level": "info",
+      "title": "Compare a managed disk reservation for steady Premium SSD P30 or larger disks",
+      "body": "Advisor recommends reservations based on usage over the selected term and look-back period. This estimate has steady Premium SSD managed disks at P30 or larger; compare a matching disk reservation before relying on the run rate.",
+      "citation": {
+        "framework": "Advisor",
+        "code": null,
+        "source": "Cost recommendations",
+        "url": "https://learn.microsoft.com/azure/advisor/advisor-reference-cost-recommendations",
+        "quote": "Based on your usage over the selected term and look-back period, we recommend reservations to maximize savings."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "disk",
+            "where": {
+              "facts.type": "premium-ssd",
+              "facts.tier": {
+                "match": "^P(3[0-9]|[4-8][0-9])$"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "disk",
+                  "diskType": "premium-ssd",
+                  "sizeGiB": 1024
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "disk",
+                  "diskType": "premium-ssd",
+                  "sizeGiB": 512
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        256
+      ]
+    },
+    "advisor-ri-app-service": {
+      "level": "info",
+      "title": "Compare an App Service reservation for steady Premium v3 usage",
+      "body": "Advisor recommends reservations based on usage over the selected term and look-back period. This estimate prices steady Premium v3 App Service plan usage on pay-as-you-go terms; compare the matching reservation before relying on the run rate.",
+      "citation": {
+        "framework": "Advisor",
+        "code": null,
+        "source": "Cost recommendations",
+        "url": "https://learn.microsoft.com/azure/advisor/advisor-reference-cost-recommendations",
+        "quote": "Based on your usage over the selected term and look-back period, we recommend reservations to maximize savings."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "app-service",
+            "where": {
+              "spec.plan": {
+                "match": "^P.*v3$"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-service",
+                  "plan": "P1v3",
+                  "count": 1,
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        250
+      ]
+    },
+    "advisor-ri-redhat": {
+      "level": "info",
+      "title": "Compare a Red Hat software reservation for steady VM usage",
+      "body": "Advisor recommends reservations based on usage over the selected term and look-back period. This estimate prices steady Red Hat VM software usage on pay-as-you-go terms; compare the matching reservation before relying on the run rate.",
+      "citation": {
+        "framework": "Advisor",
+        "code": null,
+        "source": "Cost recommendations",
+        "url": "https://learn.microsoft.com/azure/advisor/advisor-reference-cost-recommendations",
+        "quote": "Based on your usage over the selected term and look-back period, we recommend reservations to maximize savings."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "spec.os": "rhel",
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "rhel",
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        263
+      ]
+    },
+    "advisor-ri-suse": {
+      "level": "info",
+      "title": "Compare a SUSE software reservation for steady VM usage",
+      "body": "Advisor recommends reservations based on usage over the selected term and look-back period. This estimate prices steady SUSE Linux VM software usage on pay-as-you-go terms; compare the matching reservation before relying on the run rate.",
+      "citation": {
+        "framework": "Advisor",
+        "code": null,
+        "source": "Cost recommendations",
+        "url": "https://learn.microsoft.com/azure/advisor/advisor-reference-cost-recommendations",
+        "quote": "Based on your usage over the selected term and look-back period, we recommend reservations to maximize savings."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "spec.os": "sles",
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "sles",
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "os": "linux",
+                  "hours": 730,
+                  "commitment": "payg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        269
+      ]
+    },
+    "nonproduction-environment-costs": {
+      "level": "info",
+      "title": "Nonproduction estimate: make intentional environment tradeoffs",
+      "body": "This estimate is marked nonproduction. Microsoft cost guidance says to align spending across preproduction, production, operations, and disaster recovery environments, and to consider availability, licensing, operating hours, operating conditions, and security for each environment.",
+      "citation": {
+        "framework": "WAF",
+        "code": "CO:08",
+        "source": "Design review checklist for Cost Optimization",
+        "url": "https://learn.microsoft.com/azure/well-architected/cost-optimization/checklist",
+        "quote": "For each environment, consider the required availability, licensing, operating hours and conditions, and security."
+      },
+      "when": {
+        "scope": "estimate",
+        "context": {
+          "production": false
+        }
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2as_v5",
+                  "hours": 730
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        208
+      ]
+    },
+    "blob-private-endpoint-private-only": {
+      "level": "info",
+      "title": "Private-only Blob Storage should include private endpoints",
+      "body": "The workload is marked private-only and includes Blob Storage. Microsoft guidance says to create private endpoints for clients that run in Azure; include the private endpoint design and any related networking costs before sharing the estimate.",
+      "citation": {
+        "framework": "WAF",
+        "code": "Security",
+        "source": "Architecture best practices for Azure Blob Storage",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-blob-storage",
+        "quote": "Create private endpoints for clients that run in Azure."
+      },
+      "when": {
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "blob",
+            "where": {
+              "spec.capacityGB": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "test": {
+        "fires": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Hot",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "centralus",
+          "discountPct": 0,
+          "context": {
+            "privateOnly": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "blob",
+                  "tier": "Hot",
+                  "capacityGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sweep_items": [
+        14,
+        23
+      ]
+    }
+  }
+}

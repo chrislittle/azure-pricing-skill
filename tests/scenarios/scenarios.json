@@ -1,0 +1,1112 @@
+{
+  "version": 1,
+  "notes": "Customer answer sheets for simulated novice customers. 'facts' is everything the customer knows; anything not listed, the customer answers 'I don't know, what do you recommend?'. 'canonical' is the configuration the oracle prices; 'accept' lists acceptable alternatives the grader may re-price. 'advisories' are the expert warnings a competent CSA would raise.",
+  "scenarios": [
+    {
+      "id": "s01-small-web-linux",
+      "title": "Small Linux web server",
+      "opening": "Hi, I need a price for a small Linux server in Azure for an internal web app. Can you help?",
+      "facts": {
+        "region": "Central US",
+        "discount": "16% off list on everything",
+        "currency": "USD",
+        "workload": "internal web app, about 50 users, Ubuntu",
+        "cpu_memory": "2 CPUs and 8 GB memory is what the old server had",
+        "disk": "128 GB is plenty, nothing special about speed",
+        "hours": "runs all the time",
+        "count": "1",
+        "commitment": "just pay as you go for now",
+        "internet": "internal only, users come in over the VPN",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "only our staff on the internal network",
+        "can_be_interrupted": "no, it should stay up during the day",
+        "long_term_use": "yes, we expect to keep it for years, but we only want pay-as-you-go pricing for now",
+        "idle_periods": "no, people use it during business days",
+        "datacenter_failure": "not required, a short outage is acceptable",
+        "private_only": "yes, internal network only",
+        "where_users_are": "one office in the US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D2as_v5",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E10 Standard SSD LRS",
+            "sizeGiB": 128,
+            "count": 1
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D2as_v5",
+          "Standard_D2s_v5",
+          "Standard_D2as_v6",
+          "Standard_D2s_v6",
+          "Standard_D2ads_v5",
+          "Standard_D2ds_v5",
+          "Standard_B2ms",
+          "Standard_D2als_v6",
+          "Standard_D2ls_v5"
+        ],
+        "disk_tiers": [
+          "E10",
+          "P10",
+          "S10"
+        ]
+      },
+      "advisories": [],
+      "must_not": [
+        "public-ip"
+      ]
+    },
+    {
+      "id": "s02-rhel-8x64",
+      "title": "RHEL 8 vCPU / 64 GB with 2 TB storage (reference quote)",
+      "opening": "We need pricing for a Red Hat server, 64 GB of RAM with 2 TB of storage.",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16% off list",
+        "currency": "USD",
+        "os": "Red Hat Enterprise Linux, we do NOT have our own Red Hat licenses, need pay-as-you-go license",
+        "cpu_memory": "8 CPUs, 64 GB",
+        "disk": "2 TB data disk, it's a database-ish app so decent performance; plus normal OS disk",
+        "hours": "24x7",
+        "count": "1",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, several years, but price pay-as-you-go",
+        "idle_periods": "no, busy most of the time",
+        "datacenter_failure": "would be nice but not required",
+        "private_only": "internal only is fine",
+        "where_users_are": "users in the US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "rhel",
+            "sku": "Standard_E8as_v6",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "rhel-license",
+            "vcpu": 8,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "P40 Premium SSD LRS",
+            "sizeGiB": 2048,
+            "count": 1
+          },
+          {
+            "service": "managed-disk",
+            "tier": "P6 Premium SSD LRS",
+            "sizeGiB": 64,
+            "count": 1
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_E8as_v6",
+          "Standard_E8s_v6",
+          "Standard_E8as_v5",
+          "Standard_E8s_v5",
+          "Standard_E8ads_v5",
+          "Standard_E8ds_v5",
+          "Standard_E8ads_v6",
+          "Standard_E8ds_v6"
+        ],
+        "disk_tiers": [
+          "P40",
+          "E40",
+          "PremiumV2",
+          "P6",
+          "E6",
+          "P10",
+          "E10",
+          "P4",
+          "E4"
+        ]
+      },
+      "advisories": [
+        "rhel-license-regionless"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s03-windows-ahb",
+      "title": "Windows Server VM with existing licenses",
+      "opening": "How much would a Windows server cost us in Azure? We already own Windows Server licenses with Software Assurance.",
+      "facts": {
+        "region": "East US 2",
+        "discount": "10% off list",
+        "currency": "USD",
+        "workload": "file and print / line of business app server",
+        "cpu_memory": "4 CPUs, 16 GB",
+        "disk": "256 GB, standard performance",
+        "hours": "24x7",
+        "count": "1",
+        "licenses": "Yes, Windows Server Datacenter with SA, want to use Hybrid Benefit",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years, but pay-as-you-go pricing for now",
+        "idle_periods": "no",
+        "datacenter_failure": "not required",
+        "private_only": "internal only",
+        "where_users_are": "one region"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "windows-ahb",
+            "sku": "Standard_D4as_v5",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E15 Standard SSD LRS",
+            "sizeGiB": 256,
+            "count": 1
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4as_v5",
+          "Standard_D4s_v5",
+          "Standard_D4as_v6",
+          "Standard_D4s_v6",
+          "Standard_D4ads_v5",
+          "Standard_D4ds_v5",
+          "Standard_B4ms"
+        ],
+        "disk_tiers": [
+          "E15",
+          "P15",
+          "S15"
+        ]
+      },
+      "advisories": [
+        "ahb-applied"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s04-web-vm-public-ip",
+      "title": "Public web server with a public IP on the VM",
+      "opening": "I need a Linux VM for a public website with a public IP address on it so customers can reach it. What would that cost?",
+      "facts": {
+        "region": "Central US",
+        "discount": "none",
+        "currency": "USD",
+        "cpu_memory": "2 CPUs 4 GB is fine",
+        "disk": "64 GB",
+        "hours": "24x7",
+        "count": "1",
+        "traffic": "about 200 GB a month out to the internet",
+        "commitment": "pay as you go",
+        "open_to_advice": "yes, I'm not an Azure expert, tell me if there's a better way",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, customers reach the website from the internet",
+        "can_be_interrupted": "no",
+        "long_term_use": "not sure yet",
+        "idle_periods": "no, it is up all the time",
+        "datacenter_failure": "not required",
+        "private_only": "no, it is a public website",
+        "where_users_are": "mostly US customers"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_B2s",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E6 Standard SSD LRS",
+            "sizeGiB": 64,
+            "count": 1
+          },
+          {
+            "service": "public-ip",
+            "type": "Standard static IPv4",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "bandwidth",
+            "egressGB": 200
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_B2s",
+          "Standard_B2als_v2",
+          "Standard_B2ls_v2",
+          "Standard_D2als_v6",
+          "Standard_D2ls_v5",
+          "Standard_D2als_v5",
+          "Standard_F2s_v2",
+          "Standard_D2as_v5",
+          "Standard_D2s_v5",
+          "Standard_B2ats_v2",
+          "Standard_B2ts_v2"
+        ],
+        "disk_tiers": [
+          "E6",
+          "P6",
+          "S6"
+        ]
+      },
+      "advisories": [
+        "public-ip-on-vm",
+        "no-discount"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s05-aks-prod",
+      "title": "Production AKS cluster",
+      "opening": "We want to run our containers on Kubernetes in Azure for production. Can you estimate a small cluster?",
+      "facts": {
+        "region": "Central US",
+        "discount": "no discount",
+        "currency": "USD",
+        "nodes": "3 worker nodes, each 4 CPUs and 16 GB",
+        "os": "Linux nodes",
+        "production": "yes, production, we need the uptime SLA",
+        "node_disk": "whatever the default is",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, it serves an internet API",
+        "can_be_interrupted": "no, production must not be interrupted",
+        "long_term_use": "yes, at least 3 years, but show pay-as-you-go",
+        "idle_periods": "no",
+        "datacenter_failure": "yes, it must survive a datacenter outage",
+        "private_only": "no, it is internet-facing",
+        "where_users_are": "US and Europe"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "aks-control-plane",
+            "tier": "Standard",
+            "hours": 730
+          },
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D4as_v5",
+            "count": 3,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "P10 Premium SSD LRS",
+            "sizeGiB": 128,
+            "count": 3
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4as_v5",
+          "Standard_D4s_v5",
+          "Standard_D4as_v6",
+          "Standard_D4s_v6",
+          "Standard_D4ds_v5",
+          "Standard_D4ads_v5"
+        ],
+        "disk_tiers": [
+          "P10",
+          "E10",
+          "Ephemeral"
+        ]
+      },
+      "advisories": [
+        "aks-tier",
+        "no-discount"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s06-appservice-sql",
+      "title": "Web app on App Service with Azure SQL Database",
+      "opening": "We're moving a .NET web application to Azure PaaS — App Service and Azure SQL. What would it cost?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "12% off list",
+        "currency": "USD",
+        "app_service": "2 instances for redundancy, each needs about 2 CPUs and 8 GB, Windows",
+        "sql": "Azure SQL Database, General Purpose, 4 vCores, 250 GB data, provisioned not serverless",
+        "sql_licenses": "no existing SQL licenses",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, customers use the web app over the internet",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, but pay-as-you-go for now",
+        "idle_periods": "no, busy during the day and evening",
+        "datacenter_failure": "yes, it should survive a datacenter outage",
+        "private_only": "no",
+        "where_users_are": "US customers"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "app-service",
+            "plan": "P1v3 Windows",
+            "count": 2,
+            "hours": 730
+          },
+          {
+            "service": "sql-database",
+            "tier": "General Purpose Gen5 provisioned",
+            "vcores": 4,
+            "storageGB": 250,
+            "hours": 730
+          }
+        ]
+      },
+      "accept": {
+        "app_plans": [
+          "P1v3",
+          "P1mv3",
+          "P0v3"
+        ],
+        "sql": "GP Gen5 4 vCore license included"
+      },
+      "advisories": [
+        "sql-per-vcore"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s07-functions",
+      "title": "Serverless Azure Functions API",
+      "opening": "How much would Azure Functions cost for a small API? I have no idea how it's billed.",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16%",
+        "currency": "USD",
+        "executions": "about 5 million calls a month",
+        "duration_memory": "each call runs about 200 ms using about 512 MB",
+        "plan": "cheapest option, cold starts are okay",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "it is called by our other systems over the internet",
+        "can_be_interrupted": "no",
+        "long_term_use": "not sure",
+        "idle_periods": "yes, quiet at night",
+        "datacenter_failure": "not required",
+        "private_only": "no",
+        "where_users_are": "US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "functions-consumption",
+            "executions": 5000000,
+            "gbSeconds": 500000
+          }
+        ]
+      },
+      "accept": {
+        "plans": [
+          "Consumption",
+          "Flex Consumption"
+        ]
+      },
+      "advisories": [
+        "free-grant"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s08-blob-archive",
+      "title": "Long-term backup archive in Blob",
+      "opening": "We need to keep 50 TB of old backups in Azure for 7 years for compliance. We almost never read them. Cheapest option?",
+      "facts": {
+        "region": "Central US",
+        "discount": "16%",
+        "currency": "USD",
+        "capacity": "50 TB now, not growing much",
+        "access": "maybe restore something once or twice a year",
+        "writes": "about 100,000 files written per month",
+        "redundancy": "one region is fine, we have another copy elsewhere",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "no, internal backups only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, we keep it for years",
+        "idle_periods": "yes, almost never touched",
+        "datacenter_failure": "no, one datacenter is fine, we have another copy elsewhere",
+        "private_only": "yes, private access only would be ideal",
+        "where_users_are": "not relevant"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "blob",
+            "tier": "Archive",
+            "redundancy": "LRS",
+            "capacityGB": 51200,
+            "writeOps": 100000
+          }
+        ]
+      },
+      "accept": {
+        "tiers": [
+          "Archive",
+          "Cold",
+          "Cool"
+        ]
+      },
+      "advisories": [
+        "archive-rehydration",
+        "unit-multiplier"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s09-openai-chatbot",
+      "title": "Internal chatbot on Azure OpenAI",
+      "opening": "We want to build an internal chatbot using GPT on Azure. How much would the AI part cost per month?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16%",
+        "currency": "USD",
+        "model": "a small, cheap current GPT model is fine",
+        "usage": "about 200 million input tokens and 40 million output tokens per month",
+        "deployment": "global is fine, no data residency requirement",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, our customers chat with it on our website",
+        "can_be_interrupted": "no",
+        "long_term_use": "not sure",
+        "idle_periods": "quieter at night",
+        "datacenter_failure": "not required",
+        "private_only": "no",
+        "where_users_are": "US and Canada"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "openai-tokens",
+            "model": "cheapest current GPT mini model, Global Standard",
+            "inputTokens": 200000000,
+            "outputTokens": 40000000
+          }
+        ]
+      },
+      "accept": {
+        "models": [
+          "gpt-4.1-mini",
+          "gpt-4o-mini",
+          "gpt-5-mini",
+          "gpt-4.1-nano",
+          "gpt-5-nano"
+        ]
+      },
+      "advisories": [
+        "token-unit"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s10-cosmos",
+      "title": "Cosmos DB for a product catalog",
+      "opening": "What would Cosmos DB cost for our product catalog app?",
+      "facts": {
+        "region": "Central US",
+        "discount": "none",
+        "currency": "USD",
+        "throughput": "autoscale up to 4000 RU/s",
+        "storage": "100 GB",
+        "regions": "single region",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "it backs a public app",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, a few years, but pay-as-you-go for now",
+        "idle_periods": "no, steady traffic",
+        "datacenter_failure": "not required, single region is what we want",
+        "private_only": "no",
+        "where_users_are": "US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "cosmos-autoscale",
+            "maxRU": 4000,
+            "hours": 730,
+            "storageGB": 100
+          }
+        ]
+      },
+      "accept": {},
+      "advisories": [
+        "cosmos-autoscale-max",
+        "no-discount"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s11-postgres-ha",
+      "title": "PostgreSQL Flexible Server with HA",
+      "opening": "Can you price a managed PostgreSQL database with high availability?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16%",
+        "currency": "USD",
+        "size": "4 vCores, 16 GB memory, general purpose",
+        "storage": "512 GB",
+        "ha": "yes, zone-redundant high availability",
+        "backup": "default 7 days",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal app servers only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years, but pay-as-you-go for now",
+        "idle_periods": "no",
+        "datacenter_failure": "yes, that is why we want zone-redundant HA",
+        "private_only": "yes, private only",
+        "where_users_are": "US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "postgres-flex",
+            "sku": "D4ds_v5 General Purpose",
+            "vcores": 4,
+            "ha": true,
+            "storageGB": 512,
+            "hours": 730
+          }
+        ]
+      },
+      "accept": {
+        "skus": [
+          "D4ds_v5",
+          "D4ads_v5",
+          "D4s_v3",
+          "D4ds_v4"
+        ]
+      },
+      "advisories": [
+        "ha-doubles-compute"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s12-three-tier",
+      "title": "Three-tier app: web VMs, load balancer, SQL Managed Instance, monitoring",
+      "opening": "We're lifting a three-tier application to Azure: two web servers, a load balancer, and a SQL Server database. Can you put an estimate together?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16% off list",
+        "currency": "USD",
+        "web": "2 Windows web servers, 4 CPUs 16 GB each, we have Windows licenses with SA",
+        "web_disk": "128 GB each, standard",
+        "lb": "standard load balancer, 5 rules, about 1 TB processed a month",
+        "database": "SQL Managed Instance, General Purpose, 8 vCores, 512 GB storage, we do NOT have SQL licenses",
+        "monitoring": "Log Analytics, about 10 GB of logs a day",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, the web tier is on the internet",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years, but pay-as-you-go for now",
+        "idle_periods": "no",
+        "datacenter_failure": "yes, it should survive a datacenter outage",
+        "private_only": "the database should be private, the web tier is public",
+        "where_users_are": "US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "windows-ahb",
+            "sku": "Standard_D4as_v5",
+            "count": 2,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E10 Standard SSD LRS",
+            "sizeGiB": 128,
+            "count": 2
+          },
+          {
+            "service": "load-balancer",
+            "sku": "Standard",
+            "rules": 5,
+            "processedGB": 1024,
+            "hours": 730
+          },
+          {
+            "service": "sql-mi",
+            "tier": "General Purpose Gen5",
+            "vcores": 8,
+            "storageGB": 512,
+            "hours": 730
+          },
+          {
+            "service": "log-analytics",
+            "ingestGBPerDay": 10
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4as_v5",
+          "Standard_D4s_v5",
+          "Standard_D4as_v6",
+          "Standard_D4s_v6",
+          "Standard_D4ads_v5",
+          "Standard_D4ds_v5"
+        ],
+        "disk_tiers": [
+          "E10",
+          "P10",
+          "S10"
+        ]
+      },
+      "advisories": [
+        "ahb-applied",
+        "sql-per-vcore",
+        "log-analytics-free-tier-or-commitment"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s13-reservations",
+      "title": "Fleet of VMs, compare PAYG vs reservations vs savings plan",
+      "opening": "We run 10 Linux application servers around the clock. What's the cheapest way to pay — pay-as-you-go, reservations, or a savings plan?",
+      "facts": {
+        "region": "Central US",
+        "discount": "16% off list, applies to reservations too",
+        "currency": "USD",
+        "cpu_memory": "each is 8 CPUs, 32 GB",
+        "count": "10",
+        "hours": "24x7, they never stop",
+        "disk": "ignore disks, just compute",
+        "commitment": "show 1 year and 3 year reservation and savings plan side by side",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal batch platform",
+        "can_be_interrupted": "no, they must keep running",
+        "long_term_use": "yes, definitely 3 years or more",
+        "idle_periods": "no, they never stop",
+        "datacenter_failure": "not required",
+        "private_only": "internal only",
+        "where_users_are": "not relevant"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D8as_v5",
+            "count": 10,
+            "hours": 730,
+            "compare": [
+              "payg",
+              "ri1y",
+              "ri3y",
+              "sp1y",
+              "sp3y"
+            ]
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D8as_v5",
+          "Standard_D8s_v5",
+          "Standard_D8as_v6",
+          "Standard_D8s_v6",
+          "Standard_D8ads_v5",
+          "Standard_D8ds_v5"
+        ]
+      },
+      "advisories": [
+        "ri-vs-sp-tradeoff"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s14-dev-business-hours",
+      "title": "Dev VMs that run business hours only — savings plan trap",
+      "opening": "Our developers need 8 Linux VMs but only during work hours. Should we buy a savings plan to save money?",
+      "facts": {
+        "region": "Central US",
+        "discount": "16%",
+        "currency": "USD",
+        "cpu_memory": "4 CPUs, 16 GB each",
+        "count": "8",
+        "hours": "about 10 hours a day, 22 working days a month, shut down otherwise (auto-shutdown)",
+        "disk": "128 GB standard SSD each",
+        "commitment": "asking whether savings plan makes sense",
+        "workload_type": "development and testing only",
+        "internet_access": "no, developers only on the VPN",
+        "can_be_interrupted": "yes, it is fine if they get stopped and restarted",
+        "long_term_use": "the team will exist for years but the machines change",
+        "idle_periods": "yes, idle at night and on weekends",
+        "datacenter_failure": "no",
+        "private_only": "yes, private only",
+        "where_users_are": "one office"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D4as_v5",
+            "count": 8,
+            "hours": 220
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E10 Standard SSD LRS",
+            "sizeGiB": 128,
+            "count": 8
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4as_v5",
+          "Standard_D4s_v5",
+          "Standard_D4as_v6",
+          "Standard_D4s_v6",
+          "Standard_B4ms",
+          "Standard_D4ads_v5",
+          "Standard_D4ds_v5"
+        ],
+        "disk_tiers": [
+          "E10"
+        ]
+      },
+      "advisories": [
+        "commitment-billed-every-hour",
+        "disks-bill-when-stopped"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s15-disk-cliff",
+      "title": "Database VM needing 1.1 TB of fast disk",
+      "opening": "I'm pricing a SQL Server VM. It needs about 1.1 TB of fast disk. What will storage cost?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16%",
+        "currency": "USD",
+        "vm": "just price the disk, the VM is already handled",
+        "capacity": "1.1 TB (about 1,126 GB)",
+        "performance": "about 5,000 IOPS and 200 MB/s",
+        "redundancy": "single zone is fine",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years",
+        "idle_periods": "no",
+        "datacenter_failure": "no, single zone is fine",
+        "private_only": "private only",
+        "where_users_are": "not relevant"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "managed-disk",
+            "tier": "Premium SSD v2 LRS",
+            "sizeGiB": 1126,
+            "iops": 5000,
+            "throughputMBps": 200
+          }
+        ]
+      },
+      "accept": {
+        "disk_tiers": [
+          "PremiumV2",
+          "P40"
+        ]
+      },
+      "advisories": [
+        "premium-tier-cliff"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s16-egress-heavy",
+      "title": "Content distribution with heavy internet egress",
+      "opening": "We distribute software downloads from Azure Blob storage. About 20 TB a month goes out to customers on the internet. What does that cost?",
+      "facts": {
+        "region": "Central US",
+        "discount": "16%",
+        "currency": "USD",
+        "storage": "2 TB of files in hot blob storage, LRS",
+        "egress": "20 TB per month to the internet",
+        "reads": "about 4 million downloads a month",
+        "cdn": "not using a CDN today, open to advice",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "yes, the public downloads files from the internet",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, a few years",
+        "idle_periods": "no, downloads all day",
+        "datacenter_failure": "not required",
+        "private_only": "no, the downloads are public",
+        "where_users_are": "customers worldwide on several continents"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "blob",
+            "tier": "Hot",
+            "redundancy": "LRS",
+            "capacityGB": 2048,
+            "readOps": 4000000
+          },
+          {
+            "service": "bandwidth",
+            "egressGB": 20480
+          }
+        ]
+      },
+      "accept": {},
+      "advisories": [
+        "tiered-egress",
+        "cdn-consider"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s17-eur-germany",
+      "title": "Two VMs in Germany, priced in euros",
+      "opening": "Wir brauchen einen Preis in Euro. We need two Linux VMs in Germany, priced in EUR please.",
+      "facts": {
+        "region": "Germany West Central",
+        "discount": "20% off list",
+        "currency": "EUR",
+        "cpu_memory": "4 CPUs 16 GB each",
+        "count": "2",
+        "disk": "256 GB standard SSD each",
+        "hours": "24x7",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years, but pay-as-you-go for now",
+        "idle_periods": "no",
+        "datacenter_failure": "not required",
+        "private_only": "private only",
+        "where_users_are": "Germany"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D4as_v5",
+            "count": 2,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E15 Standard SSD LRS",
+            "sizeGiB": 256,
+            "count": 2
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4as_v5",
+          "Standard_D4s_v5",
+          "Standard_D4as_v6",
+          "Standard_D4s_v6",
+          "Standard_D4ads_v5",
+          "Standard_D4ds_v5"
+        ],
+        "disk_tiers": [
+          "E15"
+        ]
+      },
+      "advisories": [
+        "currency-native"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s18-container-apps",
+      "title": "Container Apps, no discount",
+      "opening": "What would Azure Container Apps cost for two small microservices?",
+      "facts": {
+        "region": "Central US",
+        "discount": "we don't have any discount",
+        "currency": "USD",
+        "plan": "consumption",
+        "apps": "2 apps, each 0.5 vCPU and 1 GiB, always 1 replica running (min replicas 1), 24x7",
+        "requests": "about 3 million requests a month total",
+        "commitment": "pay as you go",
+        "workload_type": "development and testing only",
+        "internet_access": "yes, testers reach it over the internet",
+        "can_be_interrupted": "yes, restarts are fine",
+        "long_term_use": "not sure",
+        "idle_periods": "yes, quiet at night",
+        "datacenter_failure": "no",
+        "private_only": "no",
+        "where_users_are": "one country"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "container-apps-consumption",
+            "apps": 2,
+            "vcpu": 0.5,
+            "memGiB": 1,
+            "replicas": 1,
+            "hours": 730,
+            "requests": 3000000
+          }
+        ]
+      },
+      "accept": {},
+      "advisories": [
+        "free-grant",
+        "no-discount"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s19-legacy-v3",
+      "title": "Customer asks for a legacy v3 size",
+      "opening": "Please price a Standard_D4s_v3 Linux VM in Central US — that's what we use today.",
+      "facts": {
+        "region": "Central US",
+        "discount": "16%",
+        "currency": "USD",
+        "sku": "Standard_D4s_v3 because that's what we have",
+        "flexibility": "we'd move to a newer size if it's better, we just didn't know",
+        "disk": "128 GB standard SSD",
+        "hours": "24x7",
+        "count": "1",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "internal only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years, but pay-as-you-go for now",
+        "idle_periods": "no",
+        "datacenter_failure": "not required",
+        "private_only": "private only",
+        "where_users_are": "US"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "vm",
+            "os": "linux",
+            "sku": "Standard_D4s_v5",
+            "count": 1,
+            "hours": 730
+          },
+          {
+            "service": "managed-disk",
+            "tier": "E10 Standard SSD LRS",
+            "sizeGiB": 128,
+            "count": 1
+          }
+        ]
+      },
+      "accept": {
+        "vm_skus": [
+          "Standard_D4s_v3",
+          "Standard_D4s_v5",
+          "Standard_D4as_v5",
+          "Standard_D4s_v6",
+          "Standard_D4as_v6",
+          "Standard_D4ds_v5",
+          "Standard_D4ads_v5"
+        ],
+        "disk_tiers": [
+          "E10"
+        ]
+      },
+      "advisories": [
+        "v3-capacity-restricted"
+      ],
+      "must_not": []
+    },
+    {
+      "id": "s20-azure-files",
+      "title": "Azure Files for user shares",
+      "opening": "We're moving user file shares to Azure Files. About 5 TB. What would that cost per month?",
+      "facts": {
+        "region": "East US 2",
+        "discount": "16%",
+        "currency": "USD",
+        "capacity": "5 TB total",
+        "protocol": "SMB, Windows users, domain joined",
+        "performance": "normal office documents, nothing heavy",
+        "redundancy": "LRS is fine",
+        "backup": "not yet, just the storage",
+        "commitment": "pay as you go",
+        "workload_type": "production, real users depend on it",
+        "internet_access": "no, internal office users only",
+        "can_be_interrupted": "no",
+        "long_term_use": "yes, years",
+        "idle_periods": "quiet at night and weekends",
+        "datacenter_failure": "not required",
+        "private_only": "yes, private only",
+        "where_users_are": "one office"
+      },
+      "canonical": {
+        "components": [
+          {
+            "service": "azure-files",
+            "tier": "Standard (HDD) provisioned v2 or pay-as-you-go transaction optimized/hot",
+            "redundancy": "LRS",
+            "capacityGB": 5120
+          }
+        ]
+      },
+      "accept": {
+        "tiers": [
+          "Provisioned v2 HDD",
+          "Hot",
+          "Transaction optimized",
+          "Cool",
+          "Premium"
+        ]
+      },
+      "advisories": [
+        "files-billing-model"
+      ],
+      "must_not": []
+    }
+  ]
+}

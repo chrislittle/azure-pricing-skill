@@ -1,0 +1,1000 @@
+{
+  "pass": 142,
+  "fail": 0,
+  "rows": [
+    {
+      "name": "s01-small-web-linux canonical list",
+      "got": 80.56,
+      "want": 80.56,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux canonical your",
+      "got": 67.67,
+      "want": 67.67,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2as_v5",
+      "got": 70.96,
+      "want": 70.96,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2s_v5",
+      "got": 78.84,
+      "want": 78.84,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2as_v6",
+      "got": 75.19,
+      "want": 75.19,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2s_v6",
+      "got": 83.22,
+      "want": 83.22,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2ads_v5",
+      "got": 84.68,
+      "want": 84.68,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2ds_v5",
+      "got": 93.44,
+      "want": 93.44,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_B2ms",
+      "got": 72.85,
+      "want": 72.85,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2als_v6",
+      "got": 66.28,
+      "want": 66.28,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s01-small-web-linux vm Standard_D2ls_v5",
+      "got": 70.15,
+      "want": 70.15,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 canonical list",
+      "got": 677.11,
+      "want": 677.11,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 canonical your",
+      "got": 568.78,
+      "want": 568.78,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8as_v6",
+      "got": 432.31,
+      "want": 432.31,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8s_v6",
+      "got": 470.27,
+      "want": 470.27,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8as_v5",
+      "got": 414.06,
+      "want": 414.06,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8s_v5",
+      "got": 452.02,
+      "want": 452.02,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8ads_v5",
+      "got": 466.62,
+      "want": 466.62,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8ds_v5",
+      "got": 504.58,
+      "want": 504.58,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8ads_v6",
+      "got": 508.23,
+      "want": 508.23,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s02-rhel-8x64 vm Standard_E8ds_v6",
+      "got": 561.52,
+      "want": 561.52,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb canonical list",
+      "got": 144.76,
+      "want": 144.76,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb canonical your",
+      "got": 130.28,
+      "want": 130.28,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4as_v5",
+      "got": 125.56,
+      "want": 125.56,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4s_v5",
+      "got": 140.16,
+      "want": 140.16,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4as_v6",
+      "got": 132.86,
+      "want": 132.86,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4s_v6",
+      "got": 147.46,
+      "want": 147.46,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4ads_v5",
+      "got": 150.38,
+      "want": 150.38,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_D4ds_v5",
+      "got": 164.98,
+      "want": 164.98,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s03-windows-ahb vm Standard_B4ms",
+      "got": 121.18,
+      "want": 121.18,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip canonical list",
+      "got": 53.58,
+      "want": 53.58,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip canonical your",
+      "got": 53.58,
+      "want": 53.58,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_B2s",
+      "got": 36.43,
+      "want": 36.43,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_B2als_v2",
+      "got": 31.03,
+      "want": 31.03,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_B2ls_v2",
+      "got": 34.31,
+      "want": 34.31,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_D2als_v6",
+      "got": 66.28,
+      "want": 66.28,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_D2ls_v5",
+      "got": 70.15,
+      "want": 70.15,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_F2s_v2",
+      "got": 74.46,
+      "want": 74.46,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_D2as_v5",
+      "got": 70.96,
+      "want": 70.96,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_D2s_v5",
+      "got": 78.84,
+      "want": 78.84,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_B2ats_v2",
+      "got": 7.74,
+      "want": 7.74,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s04-web-vm-public-ip vm Standard_B2ts_v2",
+      "got": 8.61,
+      "want": 8.61,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod canonical list",
+      "got": 556.99,
+      "want": 556.99,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod canonical your",
+      "got": 556.99,
+      "want": 556.99,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4as_v5",
+      "got": 424.86,
+      "want": 424.86,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4s_v5",
+      "got": 475.23,
+      "want": 475.23,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4as_v6",
+      "got": 448.95,
+      "want": 448.95,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4s_v6",
+      "got": 499.32,
+      "want": 499.32,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4ds_v5",
+      "got": 558.45,
+      "want": 558.45,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s05-aks-prod vm Standard_D4ads_v5",
+      "got": 510.27,
+      "want": 510.27,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s06-appservice-sql canonical list",
+      "got": 1225.02,
+      "want": 1225.02,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s06-appservice-sql canonical your",
+      "got": 1078.01,
+      "want": 1078.01,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s07-functions canonical list",
+      "got": 2.4,
+      "want": 2.4,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s07-functions canonical your",
+      "got": 2.01,
+      "want": 2.01,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s08-blob-archive canonical list",
+      "got": 103.4,
+      "want": 103.4,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s08-blob-archive canonical your",
+      "got": 86.86,
+      "want": 86.86,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s09-openai-chatbot canonical list",
+      "got": 26,
+      "want": 26,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s09-openai-chatbot canonical your",
+      "got": 21.84,
+      "want": 21.84,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s10-cosmos canonical list",
+      "got": 375.4,
+      "want": 375.4,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s10-cosmos canonical your",
+      "got": 375.4,
+      "want": 375.4,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s11-postgres-ha canonical list",
+      "got": 637.52,
+      "want": 637.52,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s11-postgres-ha canonical your",
+      "got": 535.52,
+      "want": 535.52,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier canonical list",
+      "got": 2647.34,
+      "want": 2647.34,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier canonical your",
+      "got": 2223.77,
+      "want": 2223.77,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4as_v5",
+      "got": 251.12,
+      "want": 251.12,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4s_v5",
+      "got": 280.32,
+      "want": 280.32,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4as_v6",
+      "got": 265.72,
+      "want": 265.72,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4s_v6",
+      "got": 294.92,
+      "want": 294.92,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4ads_v5",
+      "got": 300.76,
+      "want": 300.76,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s12-three-tier vm Standard_D4ds_v5",
+      "got": 329.96,
+      "want": 329.96,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations canonical list",
+      "got": 2839.7,
+      "want": 2839.7,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations canonical your",
+      "got": 2385.35,
+      "want": 2385.35,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8as_v5",
+      "got": 2839.7,
+      "want": 2839.7,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8s_v5",
+      "got": 3168.2,
+      "want": 3168.2,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8as_v6",
+      "got": 2993,
+      "want": 2993,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8s_v6",
+      "got": 3328.8,
+      "want": 3328.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8ads_v5",
+      "got": 3401.8,
+      "want": 3401.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations vm Standard_D8ds_v5",
+      "got": 3730.3,
+      "want": 3730.3,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v5 payg",
+      "got": 2839.7,
+      "want": 2839.7,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v5 ri1y",
+      "got": 1481.67,
+      "want": 1481.67,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v5 ri3y",
+      "got": 954.17,
+      "want": 954.17,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v5 sp1y",
+      "got": 1715.18,
+      "want": 1715.18,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v5 sp3y",
+      "got": 1150.08,
+      "want": 1150.08,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v5 payg",
+      "got": 3168.2,
+      "want": 3168.2,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v5 ri1y",
+      "got": 1654.17,
+      "want": 1654.17,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v5 ri3y",
+      "got": 1037.22,
+      "want": 1037.22,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v5 sp1y",
+      "got": 1919.93,
+      "want": 1919.93,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v5 sp3y",
+      "got": 1289.46,
+      "want": 1289.46,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v6 payg",
+      "got": 2993,
+      "want": 2993,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v6 ri1y",
+      "got": 1564.17,
+      "want": 1564.17,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v6 ri3y",
+      "got": 1007.5,
+      "want": 1007.5,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v6 sp1y",
+      "got": 1819.74,
+      "want": 1819.74,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8as_v6 sp3y",
+      "got": 1212.17,
+      "want": 1212.17,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v6 payg",
+      "got": 3328.8,
+      "want": 3328.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v6 ri1y",
+      "got": 1825,
+      "want": 1825,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v6 ri3y",
+      "got": 1147.78,
+      "want": 1147.78,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v6 sp1y",
+      "got": 2027.24,
+      "want": 2027.24,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8s_v6 sp3y",
+      "got": 1351.49,
+      "want": 1351.49,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ads_v5 payg",
+      "got": 3401.8,
+      "want": 3401.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ads_v5 ri1y",
+      "got": 1774.17,
+      "want": 1774.17,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ads_v5 ri3y",
+      "got": 1142.78,
+      "want": 1142.78,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ads_v5 sp1y",
+      "got": 2064.89,
+      "want": 2064.89,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ads_v5 sp3y",
+      "got": 1377.73,
+      "want": 1377.73,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ds_v5 payg",
+      "got": 3730.3,
+      "want": 3730.3,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ds_v5 ri1y",
+      "got": 1946.67,
+      "want": 1946.67,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ds_v5 ri3y",
+      "got": 1253.89,
+      "want": 1253.89,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ds_v5 sp1y",
+      "got": 2249.37,
+      "want": 2249.37,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s13-reservations Standard_D8ds_v5 sp3y",
+      "got": 1503.31,
+      "want": 1503.31,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours canonical list",
+      "got": 418.24,
+      "want": 418.24,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours canonical your",
+      "got": 351.32,
+      "want": 351.32,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4as_v5",
+      "got": 341.44,
+      "want": 341.44,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4s_v5",
+      "got": 381.92,
+      "want": 381.92,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4as_v6",
+      "got": 360.8,
+      "want": 360.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4s_v6",
+      "got": 401.28,
+      "want": 401.28,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_B4ms",
+      "got": 352,
+      "want": 352,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4ads_v5",
+      "got": 410.08,
+      "want": 410.08,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s14-dev-business-hours vm Standard_D4ds_v5",
+      "got": 448.8,
+      "want": 448.8,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s15-disk-cliff canonical list",
+      "got": 103.65,
+      "want": 103.65,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s15-disk-cliff canonical your",
+      "got": 87.06,
+      "want": 87.06,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s16-egress-heavy canonical list",
+      "got": 1771.76,
+      "want": 1771.76,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s16-egress-heavy canonical your",
+      "got": 1488.27,
+      "want": 1488.27,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany canonical list",
+      "got": 301.02,
+      "want": 301.02,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany canonical your",
+      "got": 240.81,
+      "want": 240.81,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4as_v5",
+      "got": 267.23,
+      "want": 267.23,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4s_v5",
+      "got": 295.5,
+      "want": 295.5,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4as_v6",
+      "got": 282.65,
+      "want": 282.65,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4s_v6",
+      "got": 310.91,
+      "want": 310.91,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4ads_v5",
+      "got": 321.19,
+      "want": 321.19,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s17-eur-germany vm Standard_D4ds_v5",
+      "got": 349.45,
+      "want": 349.45,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s18-container-apps canonical list",
+      "got": 73.84,
+      "want": 73.84,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s18-container-apps canonical your",
+      "got": 73.84,
+      "want": 73.84,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 canonical list",
+      "got": 168.01,
+      "want": 168.01,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 canonical your",
+      "got": 141.12,
+      "want": 141.12,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4s_v3",
+      "got": 160.6,
+      "want": 160.6,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4s_v5",
+      "got": 158.41,
+      "want": 158.41,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4as_v5",
+      "got": 141.62,
+      "want": 141.62,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4s_v6",
+      "got": 166.44,
+      "want": 166.44,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4as_v6",
+      "got": 149.65,
+      "want": 149.65,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4ds_v5",
+      "got": 186.15,
+      "want": 186.15,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s19-legacy-v3 vm Standard_D4ads_v5",
+      "got": 170.09,
+      "want": 170.09,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s20-azure-files canonical list",
+      "got": 128.4,
+      "want": 128.4,
+      "diff": 0,
+      "ok": true
+    },
+    {
+      "name": "s20-azure-files canonical your",
+      "got": 107.86,
+      "want": 107.86,
+      "diff": 0,
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "_source": "Clean-room tests, 1 October 2026: 160 multi-turn conversations per batch (8 models x 20 scenarios) with a simulated customer, plus repeated adversarial re-tests. Re-test before changing this list.",
+  "tested": "2026-10-01",
+  "recommended": {
+    "gpt-5.5": "20 of 20 trustworthy, 20 of 20 perfect",
+    "claude-sonnet-5": "20 of 20 trustworthy, 20 of 20 perfect",
+    "grok-4.5": "20 of 20 trustworthy, 19 of 20 perfect",
+    "gpt-5.4-mini": "20 of 20 trustworthy, 19 of 20 perfect"
+  },
+  "acceptable": {
+    "gpt-5-mini": "19 of 20 trustworthy; occasionally misreads a quantity",
+    "claude-haiku-4.5": "20 of 20 trustworthy; often asks too many questions at once and misreads quantities more often"
+  },
+  "notRecommended": {
+    "gemini-3.5-flash": "In testing it repeatedly worked around the skill's safeguards, including forging the conversation record, so its estimates cannot be relied on."
+  }
+}

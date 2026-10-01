@@ -1,0 +1,571 @@
+{
+  "_source": "Microsoft Learn + Azure Retail Prices API, verified 2026-09-30. Re-verify links with `node azp.js check-links`.",
+  "diskTiers": {
+    "premium-ssd": {
+      "product": "Premium SSD Managed Disks",
+      "prefix": "P",
+      "redundancy": [
+        "LRS",
+        "ZRS"
+      ],
+      "tiers": [
+        [
+          "P1",
+          4
+        ],
+        [
+          "P2",
+          8
+        ],
+        [
+          "P3",
+          16
+        ],
+        [
+          "P4",
+          32
+        ],
+        [
+          "P6",
+          64
+        ],
+        [
+          "P10",
+          128
+        ],
+        [
+          "P15",
+          256
+        ],
+        [
+          "P20",
+          512
+        ],
+        [
+          "P30",
+          1024
+        ],
+        [
+          "P40",
+          2048
+        ],
+        [
+          "P50",
+          4096
+        ],
+        [
+          "P60",
+          8192
+        ],
+        [
+          "P70",
+          16384
+        ],
+        [
+          "P80",
+          32767
+        ]
+      ],
+      "perf": {
+        "P1": [
+          120,
+          25
+        ],
+        "P2": [
+          120,
+          25
+        ],
+        "P3": [
+          120,
+          25
+        ],
+        "P4": [
+          120,
+          25
+        ],
+        "P6": [
+          240,
+          50
+        ],
+        "P10": [
+          500,
+          100
+        ],
+        "P15": [
+          1100,
+          125
+        ],
+        "P20": [
+          2300,
+          150
+        ],
+        "P30": [
+          5000,
+          200
+        ],
+        "P40": [
+          7500,
+          250
+        ],
+        "P50": [
+          7500,
+          250
+        ],
+        "P60": [
+          16000,
+          500
+        ],
+        "P70": [
+          18000,
+          750
+        ],
+        "P80": [
+          20000,
+          900
+        ]
+      }
+    },
+    "standard-ssd": {
+      "product": "Standard SSD Managed Disks",
+      "prefix": "E",
+      "redundancy": [
+        "LRS",
+        "ZRS"
+      ],
+      "tiers": [
+        [
+          "E1",
+          4
+        ],
+        [
+          "E2",
+          8
+        ],
+        [
+          "E3",
+          16
+        ],
+        [
+          "E4",
+          32
+        ],
+        [
+          "E6",
+          64
+        ],
+        [
+          "E10",
+          128
+        ],
+        [
+          "E15",
+          256
+        ],
+        [
+          "E20",
+          512
+        ],
+        [
+          "E30",
+          1024
+        ],
+        [
+          "E40",
+          2048
+        ],
+        [
+          "E50",
+          4096
+        ],
+        [
+          "E60",
+          8192
+        ],
+        [
+          "E70",
+          16384
+        ],
+        [
+          "E80",
+          32767
+        ]
+      ],
+      "perf": {
+        "E1": [
+          500,
+          100
+        ],
+        "E2": [
+          500,
+          100
+        ],
+        "E3": [
+          500,
+          100
+        ],
+        "E4": [
+          500,
+          100
+        ],
+        "E6": [
+          500,
+          100
+        ],
+        "E10": [
+          500,
+          100
+        ],
+        "E15": [
+          500,
+          100
+        ],
+        "E20": [
+          500,
+          100
+        ],
+        "E30": [
+          500,
+          100
+        ],
+        "E40": [
+          500,
+          100
+        ],
+        "E50": [
+          500,
+          100
+        ],
+        "E60": [
+          2000,
+          400
+        ],
+        "E70": [
+          4000,
+          600
+        ],
+        "E80": [
+          6000,
+          750
+        ]
+      }
+    },
+    "standard-hdd": {
+      "product": "Standard HDD Managed Disks",
+      "prefix": "S",
+      "redundancy": [
+        "LRS"
+      ],
+      "tiers": [
+        [
+          "S4",
+          32
+        ],
+        [
+          "S6",
+          64
+        ],
+        [
+          "S10",
+          128
+        ],
+        [
+          "S15",
+          256
+        ],
+        [
+          "S20",
+          512
+        ],
+        [
+          "S30",
+          1024
+        ],
+        [
+          "S40",
+          2048
+        ],
+        [
+          "S50",
+          4096
+        ],
+        [
+          "S60",
+          8192
+        ],
+        [
+          "S70",
+          16384
+        ],
+        [
+          "S80",
+          32767
+        ]
+      ],
+      "perf": {
+        "S4": [
+          500,
+          60
+        ],
+        "S6": [
+          500,
+          60
+        ],
+        "S10": [
+          500,
+          60
+        ],
+        "S15": [
+          500,
+          60
+        ],
+        "S20": [
+          500,
+          60
+        ],
+        "S30": [
+          500,
+          60
+        ],
+        "S40": [
+          500,
+          60
+        ],
+        "S50": [
+          500,
+          60
+        ],
+        "S60": [
+          1300,
+          300
+        ],
+        "S70": [
+          2000,
+          500
+        ],
+        "S80": [
+          2000,
+          500
+        ]
+      }
+    }
+  },
+  "premiumV2": {
+    "product": "Azure Premium SSD v2",
+    "freeIops": 3000,
+    "freeMBps": 125,
+    "maxIops": 80000,
+    "maxMBps": 2000,
+    "iopsPerGiB": 500,
+    "mbpsPerIops": 0.25,
+    "learn": "https://learn.microsoft.com/azure/virtual-machines/disks-types"
+  },
+  "appService": {
+    "B1": {
+      "vcpu": 1,
+      "memGiB": 1.75,
+      "product": "Basic Plan"
+    },
+    "B2": {
+      "vcpu": 2,
+      "memGiB": 3.5,
+      "product": "Basic Plan"
+    },
+    "B3": {
+      "vcpu": 4,
+      "memGiB": 7,
+      "product": "Basic Plan"
+    },
+    "S1": {
+      "vcpu": 1,
+      "memGiB": 1.75,
+      "product": "Standard Plan"
+    },
+    "S2": {
+      "vcpu": 2,
+      "memGiB": 3.5,
+      "product": "Standard Plan"
+    },
+    "S3": {
+      "vcpu": 4,
+      "memGiB": 7,
+      "product": "Standard Plan"
+    },
+    "P0v3": {
+      "vcpu": 1,
+      "memGiB": 4,
+      "product": "Premium v3 Plan",
+      "sku": "P0 v3"
+    },
+    "P1v3": {
+      "vcpu": 2,
+      "memGiB": 8,
+      "product": "Premium v3 Plan",
+      "sku": "P1 v3"
+    },
+    "P2v3": {
+      "vcpu": 4,
+      "memGiB": 16,
+      "product": "Premium v3 Plan",
+      "sku": "P2 v3"
+    },
+    "P3v3": {
+      "vcpu": 8,
+      "memGiB": 32,
+      "product": "Premium v3 Plan",
+      "sku": "P3 v3"
+    },
+    "P1mv3": {
+      "vcpu": 2,
+      "memGiB": 16,
+      "product": "Premium v3 Plan",
+      "sku": "P1mv3"
+    },
+    "P2mv3": {
+      "vcpu": 4,
+      "memGiB": 32,
+      "product": "Premium v3 Plan",
+      "sku": "P2mv3"
+    },
+    "P3mv3": {
+      "vcpu": 8,
+      "memGiB": 64,
+      "product": "Premium v3 Plan",
+      "sku": "P3mv3"
+    },
+    "P4mv3": {
+      "vcpu": 16,
+      "memGiB": 128,
+      "product": "Premium v3 Plan",
+      "sku": "P4mv3"
+    },
+    "P5mv3": {
+      "vcpu": 32,
+      "memGiB": 256,
+      "product": "Premium v3 Plan",
+      "sku": "P5mv3"
+    },
+    "P0v4": {
+      "vcpu": 1,
+      "memGiB": null,
+      "product": "Premium v4 Plan",
+      "sku": "P0v4"
+    },
+    "P1v4": {
+      "vcpu": 2,
+      "memGiB": null,
+      "product": "Premium v4 Plan",
+      "sku": "P1v4"
+    },
+    "P2v4": {
+      "vcpu": 4,
+      "memGiB": null,
+      "product": "Premium v4 Plan",
+      "sku": "P2v4"
+    },
+    "P3v4": {
+      "vcpu": 8,
+      "memGiB": null,
+      "product": "Premium v4 Plan",
+      "sku": "P3v4"
+    }
+  },
+  "vmLifecycle": {
+    "overview": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/lifecycle-overview",
+    "restrictions": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/retirements-and-capacity-restrictions",
+    "endOfLifeList": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/end-of-life-sizes-list",
+    "verified": "2026-10-01 against pages dated 2026-09-25",
+    "policy": "Only Current and Extended size series are priced. Every series on the End of Life list, or retired, is refused.",
+    "retire2029Pattern": "^Standard_[DE]\\d+(-\\d+)?s?_v3$",
+    "endOfLife": [
+      {
+        "series": "B-series (v1)",
+        "pattern": "^Standard_B\\d+(ls|ms|s|ts)$"
+      },
+      {
+        "series": "Standard D-series (v1) and memory-optimized D-series",
+        "pattern": "^Standard_D\\d+$"
+      },
+      {
+        "series": "DS-series and memory-optimized DS-series",
+        "pattern": "^Standard_DS\\d+(-\\d+)?$"
+      },
+      {
+        "series": "Dv2 and Dsv2",
+        "pattern": "^Standard_DS?\\d+(-\\d+)?_v2(_Promo)?$"
+      },
+      {
+        "series": "Dv3 and Dsv3",
+        "pattern": "^Standard_D\\d+s?_v3$"
+      },
+      {
+        "series": "Av2 and Amv2",
+        "pattern": "^Standard_A\\d+m?_v2$"
+      },
+      {
+        "series": "DCsv3 and DCdsv3",
+        "pattern": "^Standard_DC\\d+d?s_v3$"
+      },
+      {
+        "series": "F, Fs and Fsv2",
+        "pattern": "^Standard_F\\d+s?(_v2)?$"
+      },
+      {
+        "series": "Ev3 and Esv3",
+        "pattern": "^Standard_E\\d+(-\\d+)?s?_v3$"
+      },
+      {
+        "series": "G and GS",
+        "pattern": "^Standard_GS?\\d+(-\\d+)?$"
+      },
+      {
+        "series": "Msv2 and Mdsv2 isolated sizes",
+        "pattern": "^Standard_M192id?m?s_v2$"
+      },
+      {
+        "series": "Lsv1 and Lsv2",
+        "pattern": "^Standard_L\\d+s(_v2)?$"
+      },
+      {
+        "series": "NVv3",
+        "pattern": "^Standard_NV\\d+s_v3$"
+      },
+      {
+        "series": "NVv4",
+        "pattern": "^Standard_NV\\d+as_v4$"
+      },
+      {
+        "series": "NP",
+        "pattern": "^Standard_NP\\d+s$"
+      },
+      {
+        "series": "HC",
+        "pattern": "^Standard_HC\\d+(-\\d+)?r?s$"
+      },
+      {
+        "series": "HBv2",
+        "pattern": "^Standard_HB\\d+(-\\d+)?r?s_v2$"
+      },
+      {
+        "series": "A-series (v1) and Basic A",
+        "stage": "Retired",
+        "pattern": "^(Basic|Standard)_A\\d+$"
+      },
+      {
+        "series": "NC v1 to v3, ND v1, NV v1 and v2",
+        "stage": "Retired",
+        "pattern": "^Standard_(NC\\d+r?|NC\\d+r?s_v[23]|ND\\d+r?s|NV\\d+|NV\\d+s_v2)$"
+      },
+      {
+        "series": "H and HB (v1)",
+        "stage": "Retired",
+        "pattern": "^Standard_(H\\d+[mr]*|HB60(-\\d+)?rs)$"
+      }
+    ]
+  },
+  "aks": {
+    "learn": "https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers"
+  },
+  "bandwidth": {
+    "learn": "https://azure.microsoft.com/pricing/details/bandwidth/"
+  }
+}

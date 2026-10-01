@@ -1,0 +1,23 @@
+{
+  "_source": "Foundry Models meters, Azure Retail Prices API, Global Standard deployment, verified 2026-09-30 in eastus2. Meter names are exact; unitOfMeasure varies (1K vs 1M) and is read from the API at price time.",
+  "_deploymentNote": "Global Standard routes inference worldwide; creating the deployment still needs an Azure OpenAI/Foundry resource and quota in some region. Data Zone and Regional deployments price differently and are not modeled here; use the generic 'meter' component for them.",
+  "models": {
+    "gpt-5.6-luna":  {"product": "Azure OpenAI GPT5", "input": "5.6 luna ShortCo Inp Std Gl 1M Tokens",  "cached": "5.6 luna ShortCo Cd Inp Std Gl 1M Tokens",  "output": "5.6 luna ShortCo Opt Std Gl 1M Tokens", "class": "small", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
+    "gpt-5.6-terra": {"product": "Azure OpenAI GPT5", "input": "5.6 terra ShortCo Inp Std Gl 1M Tokens", "cached": "5.6 terra ShortCo Cd Inp Std Gl 1M Tokens", "output": "5.6 terra ShortCo Opt Std Gl 1M Tokens", "class": "mid", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
+    "gpt-5.6-sol":   {"product": "Azure OpenAI GPT5", "input": "5.6 sol ShortCo Inp Std Gl 1M Tokens",   "cached": "5.6 sol ShortCo Cd Inp Std Gl 1M Tokens",   "output": "5.6 sol ShortCo Opt Std Gl 1M Tokens", "class": "large", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
+    "gpt-5.5":       {"product": "Azure OpenAI GPT5", "input": "5.5 ShortCo inp Gl 1M Tokens", "cached": "5.5 ShortCo cd inp Gl 1M Tokens", "output": "5.5 ShortCo opt Gl 1M Tokens", "class": "large"},
+    "gpt-5.4":       {"product": "Azure OpenAI GPT5", "input": "5.4 inp Gl 1M Tokens", "cached": "5.4 cd inp Gl 1M Tokens", "output": "5.4 opt Gl 1M Tokens", "class": "large"},
+    "gpt-5.4-mini":  {"product": "Azure OpenAI GPT5", "input": "5.4 mini Inp Gl 1M Tokens", "cached": "5.4 mini cd Inp Gl 1M Tokens", "output": "5.4 mini Opt Gl 1M Tokens", "class": "small"},
+    "gpt-5.4-nano":  {"product": "Azure OpenAI GPT5", "input": "5.4 nano Inp Gl 1M Tokens", "cached": "5.4 nano cd Inp Gl 1M Tokens", "output": "5.4 nano Opt Gl 1M Tokens", "class": "tiny"},
+    "gpt-5.2":       {"product": "Azure OpenAI GPT5", "input": "GPT 5.2 inp Gl 1M Tokens", "cached": "GPT 5.2 cd inp Gl 1M Tokens", "output": "GPT 5.2 opt Gl 1M Tokens", "class": "large"},
+    "gpt-5.1":       {"product": "Azure OpenAI GPT5", "input": "GPT 5.1 inp Gl 1M Tokens", "cached": "GPT 5.1 cd inp Gl 1M Tokens", "output": "GPT 5.1 opt Gl 1M Tokens", "class": "large"},
+    "gpt-5":         {"product": "Azure OpenAI GPT5", "input": "GPT 5 Inpt Glbl 1M Tokens", "cached": "GPT 5 cchd Inpt Glbl 1M Tokens", "output": "GPT 5 outpt Glbl 1M Tokens", "class": "large"},
+    "gpt-5-mini":    {"product": "Azure OpenAI GPT5", "input": "GPT 5 Mini Inpt Glbl 1M Tokens", "cached": "GPT 5 Mini cchd Inpt Glbl 1M Tokens", "output": "GPT 5 Mini outpt Glbl 1M Tokens", "class": "small"},
+    "gpt-5-nano":    {"product": "Azure OpenAI GPT5", "input": "GPT 5 Nano Inpt Glbl 1M Tokens", "cached": "GPT 5 Nano cchd Inpt Glbl 1M Tokens", "output": "GPT 5 Nano outpt Glbl 1M Tokens", "class": "tiny"},
+    "gpt-4.1":       {"product": "Azure OpenAI", "input": "gpt 4.1 Inp glbl Tokens", "cached": "gpt 4.1 cached Inp glbl Tokens", "output": "gpt 4.1 Outp glbl Tokens", "class": "large", "legacy": true},
+    "gpt-4.1-mini":  {"product": "Azure OpenAI", "input": "gpt 4.1 mini Inp glbl Tokens", "cached": "gpt 4.1 mini cached Inp glbl Tokens", "output": "gpt 4.1 mini Outp glbl Tokens", "class": "small", "legacy": true},
+    "gpt-4.1-nano":  {"product": "Azure OpenAI", "input": "gpt 4.1 nano Inp glbl Tokens", "cached": "gpt 4.1 nano cached Inp glbl Tokens", "output": "gpt 4.1 nano Outp glbl Tokens", "class": "tiny", "legacy": true},
+    "gpt-4o-mini":   {"product": "Azure OpenAI", "input": "gpt-4o-mini-0718-Inp-glbl Tokens", "cached": "gpt 4o mini 0718 cached Inp glbl Tokens", "output": "gpt-4o-mini-0718-Outp-glbl Tokens", "class": "small", "legacy": true},
+    "o4-mini":       {"product": "Azure OpenAI Reasoning", "input": "o4-mini 0416 Inp glbl Tokens", "cached": "o4-mini 0416 cached Inp glbl Tokens", "output": "o4-mini 0416 Outp glbl Tokens", "class": "small", "legacy": true}
+  }
+}

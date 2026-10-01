@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-labelledby="ap-title ap-desc">
+  <title id="ap-title">azure-pricing-skill</title>
+  <desc id="ap-desc">A price tag over an estimate sheet: an agent skill that builds Azure pricing estimates.</desc>
+
+  <defs>
+    <linearGradient id="ap-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1F3350"/>
+      <stop offset="0.55" stop-color="#0F1E33"/>
+      <stop offset="1" stop-color="#081322"/>
+    </linearGradient>
+    <linearGradient id="ap-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7FD3FF"/>
+      <stop offset="0.5" stop-color="#2B9AF3"/>
+      <stop offset="1" stop-color="#0063B1"/>
+    </linearGradient>
+    <radialGradient id="ap-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2B9AF3" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#2B9AF3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#ap-bg)"/>
+  <rect x="4" y="4" width="504" height="504" rx="108" fill="none" stroke="#2B9AF3" stroke-opacity="0.14" stroke-width="2"/>
+
+  <!-- estimate sheet -->
+  <g>
+    <path d="M140 132 Q140 118 154 118 L338 118 Q352 118 352 132 L352 398 Q352 412 338 412 L154 412 Q140 412 140 398 Z"
+          fill="#000000" opacity="0.28" transform="translate(6 10)"/>
+    <path d="M140 126 Q140 112 154 112 L338 112 Q352 112 352 126 L352 392 Q352 406 338 406 L154 406 Q140 406 140 392 Z"
+          fill="#F8FAFC"/>
+    <!-- table rows: label + amount -->
+    <g fill="#94A3B8">
+      <rect x="168" y="150" width="96" height="12" rx="6"/><rect x="282" y="150" width="44" height="12" rx="6"/>
+      <rect x="168" y="182" width="120" height="12" rx="6"/><rect x="292" y="182" width="34" height="12" rx="6"/>
+      <rect x="168" y="214" width="84" height="12" rx="6"/><rect x="282" y="214" width="44" height="12" rx="6"/>
+      <rect x="168" y="246" width="108" height="12" rx="6"/><rect x="292" y="246" width="34" height="12" rx="6"/>
+    </g>
+    <!-- total rule + highlighted total -->
+    <rect x="168" y="282" width="158" height="3" rx="1.5" fill="#CBD5E1"/>
+    <rect x="168" y="300" width="70" height="14" rx="7" fill="#64748B"/>
+    <rect x="262" y="300" width="64" height="14" rx="7" fill="url(#ap-blue)"/>
+    <rect x="168" y="338" width="118" height="12" rx="6" fill="#CBD5E1"/>
+    <rect x="168" y="364" width="92" height="12" rx="6" fill="#CBD5E1"/>
+  </g>
+
+  <!-- price tag -->
+  <g transform="rotate(-18 360 330)">
+    <circle cx="372" cy="320" r="96" fill="url(#ap-glow)"/>
+    <path d="M300 268 L392 268 L436 320 L392 372 L300 372 Q286 372 286 358 L286 282 Q286 268 300 268 Z"
+          fill="url(#ap-blue)"/>
+    <circle cx="404" cy="320" r="11" fill="#0F1E33"/>
+    <text x="336" y="342" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="#FFFFFF">$</text>
+  </g>
+</svg>

@@ -1,0 +1,45 @@
+{
+  "name": "azure-pricing-skill",
+  "version": "1.0.0",
+  "description": "AI agent skill for Azure pricing estimates: plain-language interview, live Azure Retail Prices, customer discounts, Microsoft-cited advice, one finished HTML estimate. Zero runtime dependencies.",
+  "keywords": [
+    "azure",
+    "pricing",
+    "cost-estimate",
+    "retail-prices",
+    "github-copilot",
+    "agent-skill",
+    "well-architected",
+    "finops"
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrislittle/azure-pricing-skill.git"
+  },
+  "bin": {
+    "azure-pricing-skill": "scripts/cli.js",
+    "azp": "scripts/azp.js"
+  },
+  "main": "scripts/azp.js",
+  "files": [
+    "scripts/",
+    "catalog/",
+    "assets/",
+    "SKILL.md",
+    "MANIFEST.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tests/unit/engine-vs-oracle.js && node tests/unit/split-invariance.js && node tests/unit/rule-tests.js",
+    "check-citations": "node scripts/azp.js check-citations",
+    "seal": "node tests/tools/seal.js"
+  }
+}

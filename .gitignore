@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Generated estimates and specs (they are written wherever you work)
+out/
+*.estimate.json
+
+# Local price cache and install metadata (per-machine)
+.cache/
+.install-meta.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

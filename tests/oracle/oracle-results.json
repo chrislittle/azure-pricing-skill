@@ -1,0 +1,4575 @@
+{
+  "capturedAt": "2026-10-01T11:18:21.286Z",
+  "apiVersion": "2023-01-01-preview",
+  "hoursPerMonth": 730,
+  "scenarios": {
+    "s01-small-web-linux": {
+      "title": "Small Linux web server",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D2as_v5 Linux x1 @ 730 h/mo",
+            "meterId": "64f3748d-495a-5927-9e0f-3fc2d4cd2801",
+            "meterName": "D2as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D2as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.0972,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 70.96
+          },
+          {
+            "desc": "Managed disk E10 LRS (128 GiB requirement) x1",
+            "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+            "meterName": "E10 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E10 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 9.6,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 9.6
+          }
+        ],
+        "monthlyList": 80.56,
+        "monthlyDiscounted": 67.67
+      },
+      "variants": {
+        "vm": {
+          "Standard_D2as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 70.96,
+            "perInstanceMonthlyDiscounted": 59.61,
+            "totalMonthlyList": 70.96,
+            "totalMonthlyDiscounted": 59.61,
+            "lines": [
+              {
+                "desc": "VM Standard_D2as_v5 Linux x1 @ 730 h/mo",
+                "meterId": "64f3748d-495a-5927-9e0f-3fc2d4cd2801",
+                "meterName": "D2as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D2as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0972,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 70.96
+              }
+            ]
+          },
+          "Standard_D2s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 78.84,
+            "perInstanceMonthlyDiscounted": 66.23,
+            "totalMonthlyList": 78.84,
+            "totalMonthlyDiscounted": 66.23,
+            "lines": [
+              {
+                "desc": "VM Standard_D2s_v5 Linux x1 @ 730 h/mo",
+                "meterId": "1f914320-b72c-544a-9378-f49903c39a68",
+                "meterName": "D2s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D2s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.108,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 78.84
+              }
+            ]
+          },
+          "Standard_D2as_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 75.19,
+            "perInstanceMonthlyDiscounted": 63.16,
+            "totalMonthlyList": 75.19,
+            "totalMonthlyDiscounted": 63.16,
+            "lines": [
+              {
+                "desc": "VM Standard_D2as_v6 Linux x1 @ 730 h/mo",
+                "meterId": "7cff7f78-db58-574b-a595-ac82b477b718",
+                "meterName": "D2as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D2as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.103,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 75.19
+              }
+            ]
+          },
+          "Standard_D2s_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 83.22,
+            "perInstanceMonthlyDiscounted": 69.9,
+            "totalMonthlyList": 83.22,
+            "totalMonthlyDiscounted": 69.9,
+            "lines": [
+              {
+                "desc": "VM Standard_D2s_v6 Linux x1 @ 730 h/mo",
+                "meterId": "6e0406b1-b070-5921-b2c5-09d1dd12ede9",
+                "meterName": "D2s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D2s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.114,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 83.22
+              }
+            ]
+          },
+          "Standard_D2ads_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 84.68,
+            "perInstanceMonthlyDiscounted": 71.13,
+            "totalMonthlyList": 84.68,
+            "totalMonthlyDiscounted": 71.13,
+            "lines": [
+              {
+                "desc": "VM Standard_D2ads_v5 Linux x1 @ 730 h/mo",
+                "meterId": "8f24b7cc-6240-56b7-b512-958badb6886f",
+                "meterName": "D2ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D2ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.116,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.68
+              }
+            ]
+          },
+          "Standard_D2ds_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 93.44,
+            "perInstanceMonthlyDiscounted": 78.49,
+            "totalMonthlyList": 93.44,
+            "totalMonthlyDiscounted": 78.49,
+            "lines": [
+              {
+                "desc": "VM Standard_D2ds_v5 Linux x1 @ 730 h/mo",
+                "meterId": "03b17be4-0bba-5131-a8ab-5c753597d09f",
+                "meterName": "D2ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D2ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.128,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 93.44
+              }
+            ]
+          },
+          "Standard_B2ms": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 72.85,
+            "perInstanceMonthlyDiscounted": 61.19,
+            "totalMonthlyList": 72.85,
+            "totalMonthlyDiscounted": 61.19,
+            "lines": [
+              {
+                "desc": "VM Standard_B2ms Linux x1 @ 730 h/mo",
+                "meterId": "1b11e705-3c17-40d8-b478-71f9b9e6d1de",
+                "meterName": "B2ms",
+                "productName": "Virtual Machines BS Series",
+                "skuName": "B2ms",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0998,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 72.85
+              }
+            ]
+          },
+          "Standard_D2als_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 66.28,
+            "perInstanceMonthlyDiscounted": 55.68,
+            "totalMonthlyList": 66.28,
+            "totalMonthlyDiscounted": 55.68,
+            "lines": [
+              {
+                "desc": "VM Standard_D2als_v6 Linux x1 @ 730 h/mo",
+                "meterId": "20d33cc4-a792-5b35-bace-dc265fea946c",
+                "meterName": "D2als v6",
+                "productName": "Virtual Machines Dalsv6 Series",
+                "skuName": "D2als v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0908,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 66.28
+              }
+            ]
+          },
+          "Standard_D2ls_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 70.15,
+            "perInstanceMonthlyDiscounted": 58.93,
+            "totalMonthlyList": 70.15,
+            "totalMonthlyDiscounted": 58.93,
+            "lines": [
+              {
+                "desc": "VM Standard_D2ls_v5 Linux x1 @ 730 h/mo",
+                "meterId": "a9bc9425-d404-5b96-a1ef-3b185f63b315",
+                "meterName": "D2ls v5",
+                "productName": "Virtual Machines Dlsv5 Series",
+                "skuName": "D2ls v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0961,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 70.15
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 1,
+            "monthlyList": 9.6,
+            "monthlyDiscounted": 8.06,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x1",
+                "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 9.6
+              }
+            ]
+          },
+          "P10": {
+            "perDiskMonthlyList": 19.71,
+            "count": 1,
+            "monthlyList": 19.71,
+            "monthlyDiscounted": 16.56,
+            "lines": [
+              {
+                "desc": "Managed disk P10 LRS x1",
+                "meterId": "a6090bfb-2191-45ad-aa55-62b1b0645a35",
+                "meterName": "P10 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 19.71,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 19.71
+              }
+            ]
+          },
+          "S10": {
+            "perDiskMonthlyList": 5.89,
+            "count": 1,
+            "monthlyList": 5.89,
+            "monthlyDiscounted": 4.95,
+            "lines": [
+              {
+                "desc": "Managed disk S10 LRS x1",
+                "meterId": "d8af8105-595e-4b78-b9d8-b22a005472bc",
+                "meterName": "S10 LRS Disk",
+                "productName": "Standard HDD Managed Disks",
+                "skuName": "S10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 5.888,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 5.89
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "E10 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s02-rhel-8x64": {
+      "title": "RHEL 8 vCPU / 64 GB with 2 TB storage (reference quote)",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_E8as_v6 RHEL (compute only) x1 @ 730 h/mo",
+            "meterId": "86d0a93d-01d0-5ec4-8c0b-08cc782d970b",
+            "meterName": "E8as v6",
+            "productName": "Virtual Machines Easv6 Series",
+            "skuName": "E8as v6",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.477,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 348.21
+          },
+          {
+            "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+            "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+            "meterName": "8 vCPU VM License",
+            "productName": "Red Hat Enterprise Linux",
+            "skuName": "8 vCPU VM",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.1152,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 84.1
+          },
+          {
+            "desc": "Managed disk P40 LRS (2048 GiB requirement) x1",
+            "meterId": "19ca1ef9-e3c7-4a64-9184-b1e44de02430",
+            "meterName": "P40 LRS Disk",
+            "productName": "Premium SSD Managed Disks",
+            "skuName": "P40 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 235.52,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 235.52
+          },
+          {
+            "desc": "Managed disk P6 LRS (64 GiB requirement) x1",
+            "meterId": "8b8ea5c2-3db4-4e90-9c45-e591e316a2ad",
+            "meterName": "P6 LRS Disk",
+            "productName": "Premium SSD Managed Disks",
+            "skuName": "P6 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 9.2801,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 9.28
+          }
+        ],
+        "monthlyList": 677.11,
+        "monthlyDiscounted": 568.78
+      },
+      "variants": {
+        "vm": {
+          "Standard_E8as_v6": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 432.31,
+            "perInstanceMonthlyDiscounted": 363.14,
+            "totalMonthlyList": 432.31,
+            "totalMonthlyDiscounted": 363.14,
+            "lines": [
+              {
+                "desc": "VM Standard_E8as_v6 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "86d0a93d-01d0-5ec4-8c0b-08cc782d970b",
+                "meterName": "E8as v6",
+                "productName": "Virtual Machines Easv6 Series",
+                "skuName": "E8as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.477,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 348.21
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8s_v6": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 470.27,
+            "perInstanceMonthlyDiscounted": 395.02,
+            "totalMonthlyList": 470.27,
+            "totalMonthlyDiscounted": 395.02,
+            "lines": [
+              {
+                "desc": "VM Standard_E8s_v6 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "15d49b53-9b62-5607-ac8c-b3350d8de76f",
+                "meterName": "E8s v6",
+                "productName": "Virtual Machines Esv6 Series",
+                "skuName": "E8s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.529,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 386.17
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8as_v5": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 414.06,
+            "perInstanceMonthlyDiscounted": 347.81,
+            "totalMonthlyList": 414.06,
+            "totalMonthlyDiscounted": 347.81,
+            "lines": [
+              {
+                "desc": "VM Standard_E8as_v5 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "8497e359-8a9e-54bd-9eda-f13338634057",
+                "meterName": "E8as v5",
+                "productName": "Virtual Machines Easv5 Series",
+                "skuName": "E8as v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.452,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 329.96
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8s_v5": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 452.02,
+            "perInstanceMonthlyDiscounted": 379.69,
+            "totalMonthlyList": 452.02,
+            "totalMonthlyDiscounted": 379.69,
+            "lines": [
+              {
+                "desc": "VM Standard_E8s_v5 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "d48ad1cd-746d-58d6-96b3-4b25141a6d31",
+                "meterName": "E8s v5",
+                "productName": "Virtual Machines Esv5 Series",
+                "skuName": "E8s v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.504,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 367.92
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8ads_v5": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 466.62,
+            "perInstanceMonthlyDiscounted": 391.96,
+            "totalMonthlyList": 466.62,
+            "totalMonthlyDiscounted": 391.96,
+            "lines": [
+              {
+                "desc": "VM Standard_E8ads_v5 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "2c82ae70-0cdb-5ef2-9300-01633d113e77",
+                "meterName": "E8ads v5",
+                "productName": "Virtual Machines Eadsv5 Series",
+                "skuName": "E8ads v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.524,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 382.52
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8ds_v5": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 504.58,
+            "perInstanceMonthlyDiscounted": 423.84,
+            "totalMonthlyList": 504.58,
+            "totalMonthlyDiscounted": 423.84,
+            "lines": [
+              {
+                "desc": "VM Standard_E8ds_v5 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "cd894860-f2c4-5c6a-8e62-475c3667e9c9",
+                "meterName": "E8ds v5",
+                "productName": "Virtual Machines Edsv5 Series",
+                "skuName": "E8ds v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.576,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 420.48
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8ads_v6": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 508.23,
+            "perInstanceMonthlyDiscounted": 426.91,
+            "totalMonthlyList": 508.23,
+            "totalMonthlyDiscounted": 426.91,
+            "lines": [
+              {
+                "desc": "VM Standard_E8ads_v6 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "932d1d00-fe47-5f63-b9d5-54694aae37c0",
+                "meterName": "E8ads v6",
+                "productName": "Virtual Machines Eadsv6 Series",
+                "skuName": "E8ads v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.581,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 424.13
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          },
+          "Standard_E8ds_v6": {
+            "os": "rhel",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": true,
+            "perInstanceMonthlyList": 561.52,
+            "perInstanceMonthlyDiscounted": 471.67,
+            "totalMonthlyList": 561.52,
+            "totalMonthlyDiscounted": 471.67,
+            "lines": [
+              {
+                "desc": "VM Standard_E8ds_v6 RHEL (compute only) x1 @ 730 h/mo",
+                "meterId": "7f92050a-b7d8-5678-9a09-d1e813a05551",
+                "meterName": "E8ds v6",
+                "productName": "Virtual Machines Edsv6 Series",
+                "skuName": "E8ds v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.654,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 477.42
+              },
+              {
+                "desc": "RHEL PAYG license, 8 vCPU x1 @ 730 h/mo (regionless meter)",
+                "meterId": "307cf471-630e-51d0-8375-0579b30c664f",
+                "meterName": "8 vCPU VM License",
+                "productName": "Red Hat Enterprise Linux",
+                "skuName": "8 vCPU VM",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.1152,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 84.1
+              }
+            ]
+          }
+        },
+        "disk": {
+          "P40": {
+            "perDiskMonthlyList": 235.52,
+            "count": 1,
+            "monthlyList": 235.52,
+            "monthlyDiscounted": 197.84,
+            "lines": [
+              {
+                "desc": "Managed disk P40 LRS x1",
+                "meterId": "19ca1ef9-e3c7-4a64-9184-b1e44de02430",
+                "meterName": "P40 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P40 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 235.52,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 235.52
+              }
+            ]
+          },
+          "E40": {
+            "perDiskMonthlyList": 153.6,
+            "count": 1,
+            "monthlyList": 153.6,
+            "monthlyDiscounted": 129.02,
+            "lines": [
+              {
+                "desc": "Managed disk E40 LRS x1",
+                "meterId": "a9901600-9e21-4aa9-9cb7-d8099f8b0263",
+                "meterName": "E40 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E40 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 153.6,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 153.6
+              }
+            ]
+          },
+          "PremiumV2": {
+            "perDiskMonthlyList": 164.45,
+            "monthlyList": 164.45,
+            "monthlyDiscounted": 138.14,
+            "lines": [
+              {
+                "desc": "Premium SSD v2 provisioned capacity 2048 GiB",
+                "meterId": "49521633-9f11-5dfc-8ddf-f26aa7f47b1c",
+                "meterName": "Premium LRS Provisioned Capacity",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1 GiB/Hour",
+                "unitPrice": 0.00011,
+                "qty": 1495040,
+                "qtyUnitsNote": "2048 GiB x 730 h",
+                "monthlyList": 164.45
+              },
+              {
+                "desc": "Premium SSD v2 provisioned IOPS 3000 (first 3000 free)",
+                "meterId": "82c0fe05-4793-5668-a980-f636ba84316a",
+                "meterName": "Premium LRS Provisioned IOPS",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000007,
+                "qty": 2190000,
+                "qtyUnitsNote": "3000 IOPS x 730 h; first 3000 IOPS are a $0 band",
+                "monthlyList": 0,
+                "bands": [
+                  {
+                    "fromUnits": 0,
+                    "toUnits": 3000,
+                    "units": 3000,
+                    "unitPrice": 0,
+                    "cost": 0
+                  }
+                ]
+              },
+              {
+                "desc": "Premium SSD v2 provisioned throughput 125 MB/s (first 125 free)",
+                "meterId": "bd8ed25e-cc05-5255-9b21-3a30de6ee476",
+                "meterName": "Premium LRS Provisioned Throughput (MBps)",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000055,
+                "qty": 91250,
+                "qtyUnitsNote": "125 MB/s x 730 h; first 125 MB/s are a $0 band",
+                "monthlyList": 0,
+                "bands": [
+                  {
+                    "fromUnits": 0,
+                    "toUnits": 125,
+                    "units": 125,
+                    "unitPrice": 0,
+                    "cost": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "P6": {
+            "perDiskMonthlyList": 9.28,
+            "count": 1,
+            "monthlyList": 9.28,
+            "monthlyDiscounted": 7.8,
+            "lines": [
+              {
+                "desc": "Managed disk P6 LRS x1",
+                "meterId": "8b8ea5c2-3db4-4e90-9c45-e591e316a2ad",
+                "meterName": "P6 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P6 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.2801,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 9.28
+              }
+            ]
+          },
+          "E6": {
+            "perDiskMonthlyList": 4.8,
+            "count": 1,
+            "monthlyList": 4.8,
+            "monthlyDiscounted": 4.03,
+            "lines": [
+              {
+                "desc": "Managed disk E6 LRS x1",
+                "meterId": "33e16a00-97e4-425d-8ed1-0682867920f3",
+                "meterName": "E6 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E6 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 4.8,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 4.8
+              }
+            ]
+          },
+          "P10": {
+            "perDiskMonthlyList": 17.92,
+            "count": 1,
+            "monthlyList": 17.92,
+            "monthlyDiscounted": 15.05,
+            "lines": [
+              {
+                "desc": "Managed disk P10 LRS x1",
+                "meterId": "37f4764d-a5d4-4e3f-adc4-5da17d28498d",
+                "meterName": "P10 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 17.92,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 17.92
+              }
+            ]
+          },
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 1,
+            "monthlyList": 9.6,
+            "monthlyDiscounted": 8.06,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x1",
+                "meterId": "9a08b750-3a9b-450f-ab79-a01dbfaf3026",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 9.6
+              }
+            ]
+          },
+          "P4": {
+            "perDiskMonthlyList": 4.8,
+            "count": 1,
+            "monthlyList": 4.8,
+            "monthlyDiscounted": 4.03,
+            "lines": [
+              {
+                "desc": "Managed disk P4 LRS x1",
+                "meterId": "5d7fe7a4-ecb9-4228-8de8-43a5e332f55c",
+                "meterName": "P4 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P4 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 4.8001,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 4.8
+              }
+            ]
+          },
+          "E4": {
+            "perDiskMonthlyList": 2.4,
+            "count": 1,
+            "monthlyList": 2.4,
+            "monthlyDiscounted": 2.02,
+            "lines": [
+              {
+                "desc": "Managed disk E4 LRS x1",
+                "meterId": "8c48b19a-c815-401e-b675-a94b6053b296",
+                "meterName": "E4 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E4 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 2.4,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 2.4
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "RHEL license meter is regionless (armRegionName ''). vCPU band meter \"8 vCPU VM License\" under skuName \"8 vCPU VM\" @ 0.1152/hr. Red Hat support is bundled into the PAYG license price, so the separate \"*vCPU VM Support\" meters are NOT added.",
+        "P40 LRS is a fixed-size tier billed per disk per month, not per GiB.",
+        "P6 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s03-windows-ahb": {
+      "title": "Windows Server VM with existing licenses",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.1,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D4as_v5 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+            "meterId": "0dd7d35c-8048-568f-9e43-7ee85f6d3408",
+            "meterName": "D4as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D4as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.172,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 125.56
+          },
+          {
+            "desc": "Managed disk E15 LRS (256 GiB requirement) x1",
+            "meterId": "211cf19f-7567-479e-b92a-e2e8e2b4de59",
+            "meterName": "E15 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E15 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 19.2,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 19.2
+          }
+        ],
+        "monthlyList": 144.76,
+        "monthlyDiscounted": 130.28
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4as_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 125.56,
+            "perInstanceMonthlyDiscounted": 113,
+            "totalMonthlyList": 125.56,
+            "totalMonthlyDiscounted": 113,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "0dd7d35c-8048-568f-9e43-7ee85f6d3408",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.172,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 125.56
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 140.16,
+            "perInstanceMonthlyDiscounted": 126.14,
+            "totalMonthlyList": 140.16,
+            "totalMonthlyDiscounted": 126.14,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "ee39e5c1-268f-547c-b3b2-f318b5552e79",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.192,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 140.16
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 132.86,
+            "perInstanceMonthlyDiscounted": 119.57,
+            "totalMonthlyList": 132.86,
+            "totalMonthlyDiscounted": 119.57,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "2bf937c2-8061-5a5b-974b-de3e65aeec7e",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.182,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 132.86
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 147.46,
+            "perInstanceMonthlyDiscounted": 132.71,
+            "totalMonthlyList": 147.46,
+            "totalMonthlyDiscounted": 132.71,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "a70078b1-bbd0-5328-8295-4085a24cfbde",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.202,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 147.46
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 150.38,
+            "perInstanceMonthlyDiscounted": 135.34,
+            "totalMonthlyList": 150.38,
+            "totalMonthlyDiscounted": 135.34,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "2565b464-c3c2-582c-b4bc-b90de6463143",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.206,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 150.38
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 164.98,
+            "perInstanceMonthlyDiscounted": 148.48,
+            "totalMonthlyList": 164.98,
+            "totalMonthlyDiscounted": 148.48,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "90712539-c61b-5eac-9ccf-7fb9379001d7",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.226,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 164.98
+              }
+            ]
+          },
+          "Standard_B4ms": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 121.18,
+            "perInstanceMonthlyDiscounted": 109.06,
+            "totalMonthlyList": 121.18,
+            "totalMonthlyDiscounted": 109.06,
+            "lines": [
+              {
+                "desc": "VM Standard_B4ms Windows + Azure Hybrid Benefit x1 @ 730 h/mo",
+                "meterId": "3195314f-9a58-4b04-a83e-08eb5e10d697",
+                "meterName": "B4ms",
+                "productName": "Virtual Machines BS Series",
+                "skuName": "B4ms",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.166,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 121.18
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E15": {
+            "perDiskMonthlyList": 19.2,
+            "count": 1,
+            "monthlyList": 19.2,
+            "monthlyDiscounted": 17.28,
+            "lines": [
+              {
+                "desc": "Managed disk E15 LRS x1",
+                "meterId": "211cf19f-7567-479e-b92a-e2e8e2b4de59",
+                "meterName": "E15 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E15 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 19.2,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 19.2
+              }
+            ]
+          },
+          "P15": {
+            "perDiskMonthlyList": 34.56,
+            "count": 1,
+            "monthlyList": 34.56,
+            "monthlyDiscounted": 31.1,
+            "lines": [
+              {
+                "desc": "Managed disk P15 LRS x1",
+                "meterId": "251460e0-ac68-4e30-9f8d-eb0e2d77b03f",
+                "meterName": "P15 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P15 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 34.56,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 34.56
+              }
+            ]
+          },
+          "S15": {
+            "perDiskMonthlyList": 11.33,
+            "count": 1,
+            "monthlyList": 11.33,
+            "monthlyDiscounted": 10.2,
+            "lines": [
+              {
+                "desc": "Managed disk S15 LRS x1",
+                "meterId": "acb09be1-9b94-4816-b1b9-331672a0408a",
+                "meterName": "S15 LRS Disk",
+                "productName": "Standard HDD Managed Disks",
+                "skuName": "S15 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 11.328,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 11.33
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "Azure Hybrid Benefit: priced on the non-Windows product meter, so the Windows Server license component is $0.",
+        "E15 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s04-web-vm-public-ip": {
+      "title": "Public web server with a public IP on the VM",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_B2s Linux x1 @ 730 h/mo",
+            "meterId": "ad15b21a-263a-4f5b-8def-f0eb22eb3ddb",
+            "meterName": "B2s",
+            "productName": "Virtual Machines BS Series",
+            "skuName": "B2s",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.0499,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 36.43
+          },
+          {
+            "desc": "Managed disk E6 LRS (64 GiB requirement) x1",
+            "meterId": "c0aff438-f031-4e39-ba9d-6a99d62f3df4",
+            "meterName": "E6 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E6 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 4.8,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 4.8
+          },
+          {
+            "desc": "Standard static public IPv4 x1 @ 730 h/mo",
+            "meterId": "9c150bf9-2bad-430e-a53c-c213804f49ef",
+            "meterName": "Standard IPv4 Static Public IP",
+            "productName": "IP Addresses",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.005,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 IP(s)",
+            "monthlyList": 3.65
+          },
+          {
+            "desc": "Internet egress 200 GB (first 100 GB free, tiered)",
+            "meterId": "9995d93a-7d35-4d3f-9c69-7a7fea447ef4",
+            "meterName": "Standard Data Transfer Out",
+            "productName": "Rtn Preference: MGN",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 GB",
+            "unitPrice": 0.087,
+            "qty": 200,
+            "qtyUnitsNote": "200 GB in the month, banded by tierMinimumUnits",
+            "monthlyList": 8.7,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 100,
+                "units": 100,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 100,
+                "toUnits": 10335,
+                "units": 100,
+                "unitPrice": 0.087,
+                "cost": 8.7
+              }
+            ]
+          }
+        ],
+        "monthlyList": 53.58,
+        "monthlyDiscounted": 53.58
+      },
+      "variants": {
+        "vm": {
+          "Standard_B2s": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 36.43,
+            "perInstanceMonthlyDiscounted": 36.43,
+            "totalMonthlyList": 36.43,
+            "totalMonthlyDiscounted": 36.43,
+            "lines": [
+              {
+                "desc": "VM Standard_B2s Linux x1 @ 730 h/mo",
+                "meterId": "ad15b21a-263a-4f5b-8def-f0eb22eb3ddb",
+                "meterName": "B2s",
+                "productName": "Virtual Machines BS Series",
+                "skuName": "B2s",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0499,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 36.43
+              }
+            ]
+          },
+          "Standard_B2als_v2": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 31.03,
+            "perInstanceMonthlyDiscounted": 31.03,
+            "totalMonthlyList": 31.03,
+            "totalMonthlyDiscounted": 31.03,
+            "lines": [
+              {
+                "desc": "VM Standard_B2als_v2 Linux x1 @ 730 h/mo",
+                "meterId": "36f35d51-047f-5287-8f9d-dde217681983",
+                "meterName": "B2als v2",
+                "productName": "Virtual Machines Basv2 Series",
+                "skuName": "B2als v2",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0425,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 31.03
+              }
+            ]
+          },
+          "Standard_B2ls_v2": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 34.31,
+            "perInstanceMonthlyDiscounted": 34.31,
+            "totalMonthlyList": 34.31,
+            "totalMonthlyDiscounted": 34.31,
+            "lines": [
+              {
+                "desc": "VM Standard_B2ls_v2 Linux x1 @ 730 h/mo",
+                "meterId": "62f7700b-69c3-5399-b58f-d32767e10f31",
+                "meterName": "B2ls v2",
+                "productName": "Virtual Machines Bsv2 Series",
+                "skuName": "B2ls v2",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.047,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 34.31
+              }
+            ]
+          },
+          "Standard_D2als_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 66.28,
+            "perInstanceMonthlyDiscounted": 66.28,
+            "totalMonthlyList": 66.28,
+            "totalMonthlyDiscounted": 66.28,
+            "lines": [
+              {
+                "desc": "VM Standard_D2als_v6 Linux x1 @ 730 h/mo",
+                "meterId": "20d33cc4-a792-5b35-bace-dc265fea946c",
+                "meterName": "D2als v6",
+                "productName": "Virtual Machines Dalsv6 Series",
+                "skuName": "D2als v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0908,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 66.28
+              }
+            ]
+          },
+          "Standard_D2ls_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 70.15,
+            "perInstanceMonthlyDiscounted": 70.15,
+            "totalMonthlyList": 70.15,
+            "totalMonthlyDiscounted": 70.15,
+            "lines": [
+              {
+                "desc": "VM Standard_D2ls_v5 Linux x1 @ 730 h/mo",
+                "meterId": "a9bc9425-d404-5b96-a1ef-3b185f63b315",
+                "meterName": "D2ls v5",
+                "productName": "Virtual Machines Dlsv5 Series",
+                "skuName": "D2ls v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0961,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 70.15
+              }
+            ]
+          },
+          "Standard_D2als_v5": {
+            "error": "Oracle: no meter row found for Standard_D2als_v5 linux Consumption in Central US"
+          },
+          "Standard_F2s_v2": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 74.46,
+            "perInstanceMonthlyDiscounted": 74.46,
+            "totalMonthlyList": 74.46,
+            "totalMonthlyDiscounted": 74.46,
+            "lines": [
+              {
+                "desc": "VM Standard_F2s_v2 Linux x1 @ 730 h/mo",
+                "meterId": "5688da5c-0983-4e33-b254-abd014fc9299",
+                "meterName": "F2s v2",
+                "productName": "Virtual Machines FSv2 Series",
+                "skuName": "F2s v2",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.102,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 74.46
+              }
+            ]
+          },
+          "Standard_D2as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 70.96,
+            "perInstanceMonthlyDiscounted": 70.96,
+            "totalMonthlyList": 70.96,
+            "totalMonthlyDiscounted": 70.96,
+            "lines": [
+              {
+                "desc": "VM Standard_D2as_v5 Linux x1 @ 730 h/mo",
+                "meterId": "64f3748d-495a-5927-9e0f-3fc2d4cd2801",
+                "meterName": "D2as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D2as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0972,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 70.96
+              }
+            ]
+          },
+          "Standard_D2s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 78.84,
+            "perInstanceMonthlyDiscounted": 78.84,
+            "totalMonthlyList": 78.84,
+            "totalMonthlyDiscounted": 78.84,
+            "lines": [
+              {
+                "desc": "VM Standard_D2s_v5 Linux x1 @ 730 h/mo",
+                "meterId": "1f914320-b72c-544a-9378-f49903c39a68",
+                "meterName": "D2s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D2s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.108,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 78.84
+              }
+            ]
+          },
+          "Standard_B2ats_v2": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 7.74,
+            "perInstanceMonthlyDiscounted": 7.74,
+            "totalMonthlyList": 7.74,
+            "totalMonthlyDiscounted": 7.74,
+            "lines": [
+              {
+                "desc": "VM Standard_B2ats_v2 Linux x1 @ 730 h/mo",
+                "meterId": "25b40d1e-ad54-547d-ae76-2b80983c0bf0",
+                "meterName": "B2ats v2",
+                "productName": "Virtual Machines Basv2 Series",
+                "skuName": "B2ats v2",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0106,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 7.74
+              }
+            ]
+          },
+          "Standard_B2ts_v2": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 8.61,
+            "perInstanceMonthlyDiscounted": 8.61,
+            "totalMonthlyList": 8.61,
+            "totalMonthlyDiscounted": 8.61,
+            "lines": [
+              {
+                "desc": "VM Standard_B2ts_v2 Linux x1 @ 730 h/mo",
+                "meterId": "eeba2f52-244c-5c24-8d1f-c113b49b4b6c",
+                "meterName": "B2ts v2",
+                "productName": "Virtual Machines Bsv2 Series",
+                "skuName": "B2ts v2",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.0118,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 8.61
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E6": {
+            "perDiskMonthlyList": 4.8,
+            "count": 1,
+            "monthlyList": 4.8,
+            "monthlyDiscounted": 4.8,
+            "lines": [
+              {
+                "desc": "Managed disk E6 LRS x1",
+                "meterId": "c0aff438-f031-4e39-ba9d-6a99d62f3df4",
+                "meterName": "E6 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E6 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 4.8,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 4.8
+              }
+            ]
+          },
+          "P6": {
+            "perDiskMonthlyList": 10.21,
+            "count": 1,
+            "monthlyList": 10.21,
+            "monthlyDiscounted": 10.21,
+            "lines": [
+              {
+                "desc": "Managed disk P6 LRS x1",
+                "meterId": "296fcab9-040b-4a66-898f-5efe0419ac43",
+                "meterName": "P6 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P6 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 10.207,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 10.21
+              }
+            ]
+          },
+          "S6": {
+            "perDiskMonthlyList": 3.01,
+            "count": 1,
+            "monthlyList": 3.01,
+            "monthlyDiscounted": 3.01,
+            "lines": [
+              {
+                "desc": "Managed disk S6 LRS x1",
+                "meterId": "fb692358-1072-4e8d-be2b-1fdff72517e4",
+                "meterName": "S6 LRS Disk",
+                "productName": "Standard HDD Managed Disks",
+                "skuName": "S6 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 3.008,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 3.01
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "E6 LRS is a fixed-size tier billed per disk per month, not per GiB.",
+        "Egress priced on the default Microsoft-network routing preference meter (productName 'Rtn Preference: MGN'). First 100 GB/month are free (a $0 band at tierMinimumUnits 0)."
+      ]
+    },
+    "s05-aks-prod": {
+      "title": "Production AKS cluster",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "AKS Standard tier control plane (uptime SLA) @ 730 h/mo",
+            "meterId": "251a08e1-40d6-48e6-8368-4c3e5ee3bbff",
+            "meterName": "Standard Uptime SLA",
+            "productName": "Azure Kubernetes Service",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.1,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours",
+            "monthlyList": 73
+          },
+          {
+            "desc": "VM Standard_D4as_v5 Linux x3 @ 730 h/mo",
+            "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+            "meterName": "D4as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D4as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.194,
+            "qty": 2190,
+            "qtyUnitsNote": "730 hours x 3 instance(s)",
+            "monthlyList": 424.86
+          },
+          {
+            "desc": "Managed disk P10 LRS (128 GiB requirement) x3",
+            "meterId": "a6090bfb-2191-45ad-aa55-62b1b0645a35",
+            "meterName": "P10 LRS Disk",
+            "productName": "Premium SSD Managed Disks",
+            "skuName": "P10 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 19.71,
+            "qty": 3,
+            "qtyUnitsNote": "3 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 59.13
+          }
+        ],
+        "monthlyList": 556.99,
+        "monthlyDiscounted": 556.99
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 141.62,
+            "perInstanceMonthlyDiscounted": 141.62,
+            "totalMonthlyList": 424.86,
+            "totalMonthlyDiscounted": 424.86,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x3 @ 730 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.194,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 424.86
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 158.41,
+            "perInstanceMonthlyDiscounted": 158.41,
+            "totalMonthlyList": 475.23,
+            "totalMonthlyDiscounted": 475.23,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Linux x3 @ 730 h/mo",
+                "meterId": "a703efcb-d9d1-5ae6-973d-aeaec5d53773",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.217,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 475.23
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 149.65,
+            "perInstanceMonthlyDiscounted": 149.65,
+            "totalMonthlyList": 448.95,
+            "totalMonthlyDiscounted": 448.95,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Linux x3 @ 730 h/mo",
+                "meterId": "f3b1120c-9b6c-5712-9026-b20848def370",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.205,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 448.95
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 166.44,
+            "perInstanceMonthlyDiscounted": 166.44,
+            "totalMonthlyList": 499.32,
+            "totalMonthlyDiscounted": 499.32,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Linux x3 @ 730 h/mo",
+                "meterId": "1b3fa6d6-532d-55e2-8a78-a3ce7a8a4764",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.228,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 499.32
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 186.15,
+            "perInstanceMonthlyDiscounted": 186.15,
+            "totalMonthlyList": 558.45,
+            "totalMonthlyDiscounted": 558.45,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Linux x3 @ 730 h/mo",
+                "meterId": "d7fc46a0-4348-5011-a97f-24664199c002",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.255,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 558.45
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 3,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 170.09,
+            "perInstanceMonthlyDiscounted": 170.09,
+            "totalMonthlyList": 510.27,
+            "totalMonthlyDiscounted": 510.27,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Linux x3 @ 730 h/mo",
+                "meterId": "0fd2a8b8-d4fb-58b7-96cc-e59d6939336a",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.233,
+                "qty": 2190,
+                "qtyUnitsNote": "730 hours x 3 instance(s)",
+                "monthlyList": 510.27
+              }
+            ]
+          }
+        },
+        "disk": {
+          "P10": {
+            "perDiskMonthlyList": 19.71,
+            "count": 3,
+            "monthlyList": 59.13,
+            "monthlyDiscounted": 59.13,
+            "lines": [
+              {
+                "desc": "Managed disk P10 LRS x3",
+                "meterId": "a6090bfb-2191-45ad-aa55-62b1b0645a35",
+                "meterName": "P10 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 19.71,
+                "qty": 3,
+                "qtyUnitsNote": "3 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 59.13
+              }
+            ]
+          },
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 3,
+            "monthlyList": 28.8,
+            "monthlyDiscounted": 28.8,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x3",
+                "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 3,
+                "qtyUnitsNote": "3 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 28.8
+              }
+            ]
+          },
+          "Ephemeral": {
+            "perDiskMonthlyList": 0,
+            "monthlyList": 0,
+            "monthlyDiscounted": 0,
+            "lines": [],
+            "note": "Ephemeral OS disks have no managed-disk charge (they use the VM cache/temp storage that is already in the VM price)."
+          }
+        }
+      },
+      "notes": [
+        "AKS Free tier has no control-plane charge; Standard tier (financially backed uptime SLA) is the \"Standard Uptime SLA\" meter.",
+        "P10 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s06-appservice-sql": {
+      "title": "Web app on App Service with Azure SQL Database",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.12,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "App Service P1v3 windows x2 @ 730 h/mo",
+            "meterId": "953b4a88-c50e-5d95-b702-08740ee283f0",
+            "meterName": "P1 v3 App",
+            "productName": "Azure App Service Premium v3 Plan",
+            "skuName": "P1 v3",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.315,
+            "qty": 1460,
+            "qtyUnitsNote": "730 hours x 2 instance(s)",
+            "monthlyList": 459.9
+          },
+          {
+            "desc": "Azure SQL DB General Purpose Gen5 4 vCore - base compute @ 730 h/mo",
+            "meterId": "605074a2-62f8-420b-9800-fa91d15a7dbc",
+            "meterName": "vCore",
+            "productName": "SQL Database Single/Elastic Pool General Purpose - Compute Gen5",
+            "skuName": "4 vCore",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.608868,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours; the '4 vCore' row price is the base-compute hourly rate for the whole 4-vCore database (this is also the Azure Hybrid Benefit price)",
+            "monthlyList": 444.47
+          },
+          {
+            "desc": "Azure SQL DB General Purpose SQL Server license - 4 vCore @ 730 h/mo",
+            "meterId": "6f344f4b-7c91-4026-915a-a1b597793be1",
+            "meterName": "vCore",
+            "productName": "SQL Database Single/Elastic Pool General Purpose - SQL License",
+            "skuName": "vCore",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.099966,
+            "qty": 2920,
+            "qtyUnitsNote": "4 vCore x 730 hours = 2920 vCore-hours; GLOBAL meter, per-vCore rate",
+            "monthlyList": 291.9
+          },
+          {
+            "desc": "Azure SQL DB General Purpose data storage 250 GB",
+            "meterId": "1450c4f7-f8db-4fc1-84be-701b1bb30d70",
+            "meterName": "General Purpose Data Stored",
+            "productName": "SQL Database Single/Elastic Pool General Purpose - Storage",
+            "skuName": "General Purpose",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.115,
+            "qty": 250,
+            "qtyUnitsNote": "250 GB provisioned",
+            "monthlyList": 28.75
+          }
+        ],
+        "monthlyList": 1225.02,
+        "monthlyDiscounted": 1078.01
+      },
+      "variants": {
+        "sqlLicensing": {
+          "licenseIncluded": {
+            "monthlyList": 765.12,
+            "monthlyDiscounted": 673.3,
+            "lines": [
+              {
+                "desc": "Azure SQL DB General Purpose Gen5 4 vCore - base compute @ 730 h/mo",
+                "meterId": "605074a2-62f8-420b-9800-fa91d15a7dbc",
+                "meterName": "vCore",
+                "productName": "SQL Database Single/Elastic Pool General Purpose - Compute Gen5",
+                "skuName": "4 vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.608868,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours; the '4 vCore' row price is the base-compute hourly rate for the whole 4-vCore database (this is also the Azure Hybrid Benefit price)",
+                "monthlyList": 444.47
+              },
+              {
+                "desc": "Azure SQL DB General Purpose SQL Server license - 4 vCore @ 730 h/mo",
+                "meterId": "6f344f4b-7c91-4026-915a-a1b597793be1",
+                "meterName": "vCore",
+                "productName": "SQL Database Single/Elastic Pool General Purpose - SQL License",
+                "skuName": "vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.099966,
+                "qty": 2920,
+                "qtyUnitsNote": "4 vCore x 730 hours = 2920 vCore-hours; GLOBAL meter, per-vCore rate",
+                "monthlyList": 291.9
+              },
+              {
+                "desc": "Azure SQL DB General Purpose data storage 250 GB",
+                "meterId": "1450c4f7-f8db-4fc1-84be-701b1bb30d70",
+                "meterName": "General Purpose Data Stored",
+                "productName": "SQL Database Single/Elastic Pool General Purpose - Storage",
+                "skuName": "General Purpose",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.115,
+                "qty": 250,
+                "qtyUnitsNote": "250 GB provisioned",
+                "monthlyList": 28.75
+              }
+            ]
+          },
+          "azureHybridBenefit": {
+            "monthlyList": 473.22,
+            "monthlyDiscounted": 416.43,
+            "lines": [
+              {
+                "desc": "Azure SQL DB General Purpose Gen5 4 vCore - base compute @ 730 h/mo",
+                "meterId": "605074a2-62f8-420b-9800-fa91d15a7dbc",
+                "meterName": "vCore",
+                "productName": "SQL Database Single/Elastic Pool General Purpose - Compute Gen5",
+                "skuName": "4 vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.608868,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours; the '4 vCore' row price is the base-compute hourly rate for the whole 4-vCore database (this is also the Azure Hybrid Benefit price)",
+                "monthlyList": 444.47
+              },
+              {
+                "desc": "Azure SQL DB General Purpose data storage 250 GB",
+                "meterId": "1450c4f7-f8db-4fc1-84be-701b1bb30d70",
+                "meterName": "General Purpose Data Stored",
+                "productName": "SQL Database Single/Elastic Pool General Purpose - Storage",
+                "skuName": "General Purpose",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.115,
+                "qty": 250,
+                "qtyUnitsNote": "250 GB provisioned",
+                "monthlyList": 28.75
+              }
+            ]
+          },
+          "canonicalChoice": "licenseIncluded",
+          "why": "The scenario facts state the customer has no SQL Server licenses, so license-included pricing applies (base compute + the global \"General Purpose - SQL License\" meter at $0.099966 per vCore-hour)."
+        }
+      },
+      "notes": [
+        "Windows App Service uses productName 'Azure App Service Premium v3 Plan' (the Linux variant is a separate, cheaper product).",
+        "License-included pricing: base compute meter PLUS the global \"General Purpose - SQL License\" meter ($0.099966 per vCore-hour). With Azure Hybrid Benefit the license line disappears and only base compute is paid.",
+        "Backup/PITR storage is not included in this estimate - the customer did not specify retention beyond the default."
+      ]
+    },
+    "s07-functions": {
+      "title": "Serverless Azure Functions API",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Functions Consumption executions: 5,000,000 (first 1,000,000 free)",
+            "meterId": "4e5cd9e2-c20f-4d7f-acbe-58931b8b49ef",
+            "meterName": "Standard Total Executions",
+            "productName": "Functions",
+            "skuName": "Standard",
+            "unitOfMeasure": "10",
+            "unitPrice": 0.000002,
+            "qty": 500000,
+            "qtyUnitsNote": "5000000 executions / 10 per billing unit = 500000 units",
+            "monthlyList": 0.8,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 100000,
+                "units": 100000,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 100000,
+                "toUnits": null,
+                "units": 400000,
+                "unitPrice": 0.000002,
+                "cost": 0.7999999999999999
+              }
+            ]
+          },
+          {
+            "desc": "Functions Consumption execution time: 500,000 GB-s (first 400,000 GB-s free)",
+            "meterId": "2a384075-01d7-4f66-a84a-0eed3ca58876",
+            "meterName": "Standard Execution Time",
+            "productName": "Functions",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 GB Second",
+            "unitPrice": 0.000016,
+            "qty": 500000,
+            "qtyUnitsNote": "500000 GB-seconds",
+            "monthlyList": 1.6,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 400000,
+                "units": 400000,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 400000,
+                "toUnits": null,
+                "units": 100000,
+                "unitPrice": 0.000016,
+                "cost": 1.5999999999999999
+              }
+            ]
+          }
+        ],
+        "monthlyList": 2.4,
+        "monthlyDiscounted": 2.01
+      },
+      "variants": {},
+      "notes": [
+        "Free grants come straight from the API tier structure: executions meter unitOfMeasure '10' with a $0 band up to tierMinimumUnits 100000 (= 1000000 executions), and execution time $0 up to 400000 GB-s."
+      ]
+    },
+    "s08-blob-archive": {
+      "title": "Long-term backup archive in Blob",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Blob Archive LRS data stored 51200 GB",
+            "meterId": "2abcf153-3af6-4e59-b9d2-7a756f1d2b02",
+            "meterName": "Archive LRS Data Stored",
+            "productName": "General Block Blob v2",
+            "skuName": "Archive LRS",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.002,
+            "qty": 51200,
+            "qtyUnitsNote": "51200 GB/month",
+            "monthlyList": 102.4
+          },
+          {
+            "desc": "Blob Archive LRS write operations 100,000",
+            "meterId": "4b67c2f3-9a16-437a-ac3a-918907fdc6a2",
+            "meterName": "Archive LRS Write Operations",
+            "productName": "General Block Blob v2",
+            "skuName": "Archive LRS",
+            "unitOfMeasure": "10K",
+            "unitPrice": 0.1,
+            "qty": 10,
+            "qtyUnitsNote": "100000 ops / 10000 per billing unit = 10 units",
+            "monthlyList": 1
+          }
+        ],
+        "monthlyList": 103.4,
+        "monthlyDiscounted": 86.86
+      },
+      "variants": {},
+      "notes": [
+        "Operation meters are per 10000 operations (unitOfMeasure '10K') - dividing by 10,000 is mandatory."
+      ]
+    },
+    "s09-openai-chatbot": {
+      "title": "Internal chatbot on Azure OpenAI",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "gpt-5-nano Global Standard input tokens: 200,000,000",
+            "meterId": "bb3530f3-00a2-5a99-ac10-5f0a15ce6705",
+            "meterName": "GPT 5 Nano Inpt Glbl 1M Tokens",
+            "productName": "Azure OpenAI GPT5",
+            "skuName": "GPT 5 Nano Inpt Glbl",
+            "unitOfMeasure": "1M",
+            "unitPrice": 0.05,
+            "qty": 200,
+            "qtyUnitsNote": "200000000 tokens / 1000000 per billing unit ('1M') = 200 units",
+            "monthlyList": 10
+          },
+          {
+            "desc": "gpt-5-nano Global Standard output tokens: 40,000,000",
+            "meterId": "e7a655a7-30f1-5aa7-a06c-2f525ee584aa",
+            "meterName": "GPT 5 Nano outpt Glbl 1M Tokens",
+            "productName": "Azure OpenAI GPT5",
+            "skuName": "GPT 5 Nano outpt Glbl",
+            "unitOfMeasure": "1M",
+            "unitPrice": 0.4,
+            "qty": 40,
+            "qtyUnitsNote": "40000000 tokens / 1000000 per billing unit ('1M') = 40 units",
+            "monthlyList": 16
+          }
+        ],
+        "monthlyList": 26,
+        "monthlyDiscounted": 21.84
+      },
+      "variants": {
+        "openai": {
+          "gpt-4.1-mini": {
+            "monthlyList": 144,
+            "monthlyDiscounted": 120.96,
+            "lines": [
+              {
+                "desc": "gpt-4.1-mini Global Standard input tokens: 200,000,000",
+                "meterId": "57521dfc-bef8-5487-b986-74c323006a82",
+                "meterName": "gpt 4.1 mini Inp glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt 4.1 mini Inp glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.0004,
+                "qty": 200000,
+                "qtyUnitsNote": "200000000 tokens / 1000 per billing unit ('1K') = 200000 units",
+                "monthlyList": 80
+              },
+              {
+                "desc": "gpt-4.1-mini Global Standard output tokens: 40,000,000",
+                "meterId": "9e3ce534-5dc7-5335-974b-9d0c96250659",
+                "meterName": "gpt 4.1 mini Outp glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt 4.1 mini Outp glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.0016,
+                "qty": 40000,
+                "qtyUnitsNote": "40000000 tokens / 1000 per billing unit ('1K') = 40000 units",
+                "monthlyList": 64
+              }
+            ]
+          },
+          "gpt-4o-mini": {
+            "monthlyList": 54,
+            "monthlyDiscounted": 45.36,
+            "lines": [
+              {
+                "desc": "gpt-4o-mini Global Standard input tokens: 200,000,000",
+                "meterId": "d11e204d-d190-546c-9927-f9887ce16ed2",
+                "meterName": "gpt-4o-mini-0718-Inp-glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt-4o-mini-0718-Inp-glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.00015,
+                "qty": 200000,
+                "qtyUnitsNote": "200000000 tokens / 1000 per billing unit ('1K') = 200000 units",
+                "monthlyList": 30
+              },
+              {
+                "desc": "gpt-4o-mini Global Standard output tokens: 40,000,000",
+                "meterId": "5ed304ac-5888-55fb-baa2-8780d3698f81",
+                "meterName": "gpt-4o-mini-0718-Outp-glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt-4o-mini-0718-Outp-glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.0006,
+                "qty": 40000,
+                "qtyUnitsNote": "40000000 tokens / 1000 per billing unit ('1K') = 40000 units",
+                "monthlyList": 24
+              }
+            ]
+          },
+          "gpt-5-mini": {
+            "monthlyList": 130,
+            "monthlyDiscounted": 109.2,
+            "lines": [
+              {
+                "desc": "gpt-5-mini Global Standard input tokens: 200,000,000",
+                "meterId": "c49bbc0f-4a04-5700-b71a-92aa11ab9cee",
+                "meterName": "GPT 5 Mini Inpt Glbl 1M Tokens",
+                "productName": "Azure OpenAI GPT5",
+                "skuName": "GPT 5 Mini Inpt Glbl",
+                "unitOfMeasure": "1M",
+                "unitPrice": 0.25,
+                "qty": 200,
+                "qtyUnitsNote": "200000000 tokens / 1000000 per billing unit ('1M') = 200 units",
+                "monthlyList": 50
+              },
+              {
+                "desc": "gpt-5-mini Global Standard output tokens: 40,000,000",
+                "meterId": "b9ce889d-2272-584c-a68c-c9f120813746",
+                "meterName": "GPT 5 Mini outpt Glbl 1M Tokens",
+                "productName": "Azure OpenAI GPT5",
+                "skuName": "GPT 5 Mini outpt Glbl",
+                "unitOfMeasure": "1M",
+                "unitPrice": 2,
+                "qty": 40,
+                "qtyUnitsNote": "40000000 tokens / 1000000 per billing unit ('1M') = 40 units",
+                "monthlyList": 80
+              }
+            ]
+          },
+          "gpt-4.1-nano": {
+            "monthlyList": 36,
+            "monthlyDiscounted": 30.24,
+            "lines": [
+              {
+                "desc": "gpt-4.1-nano Global Standard input tokens: 200,000,000",
+                "meterId": "4c589c44-ce68-5972-a41e-8a9ecff0b87e",
+                "meterName": "gpt 4.1 nano Inp glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt 4.1 nano Inp glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.0001,
+                "qty": 200000,
+                "qtyUnitsNote": "200000000 tokens / 1000 per billing unit ('1K') = 200000 units",
+                "monthlyList": 20
+              },
+              {
+                "desc": "gpt-4.1-nano Global Standard output tokens: 40,000,000",
+                "meterId": "add6ade7-2fe1-57aa-b94a-adaf767084c3",
+                "meterName": "gpt 4.1 nano Outp glbl Tokens",
+                "productName": "Azure OpenAI",
+                "skuName": "gpt 4.1 nano Outp glbl",
+                "unitOfMeasure": "1K",
+                "unitPrice": 0.0004,
+                "qty": 40000,
+                "qtyUnitsNote": "40000000 tokens / 1000 per billing unit ('1K') = 40000 units",
+                "monthlyList": 16
+              }
+            ]
+          },
+          "gpt-5-nano": {
+            "monthlyList": 26,
+            "monthlyDiscounted": 21.84,
+            "lines": [
+              {
+                "desc": "gpt-5-nano Global Standard input tokens: 200,000,000",
+                "meterId": "bb3530f3-00a2-5a99-ac10-5f0a15ce6705",
+                "meterName": "GPT 5 Nano Inpt Glbl 1M Tokens",
+                "productName": "Azure OpenAI GPT5",
+                "skuName": "GPT 5 Nano Inpt Glbl",
+                "unitOfMeasure": "1M",
+                "unitPrice": 0.05,
+                "qty": 200,
+                "qtyUnitsNote": "200000000 tokens / 1000000 per billing unit ('1M') = 200 units",
+                "monthlyList": 10
+              },
+              {
+                "desc": "gpt-5-nano Global Standard output tokens: 40,000,000",
+                "meterId": "e7a655a7-30f1-5aa7-a06c-2f525ee584aa",
+                "meterName": "GPT 5 Nano outpt Glbl 1M Tokens",
+                "productName": "Azure OpenAI GPT5",
+                "skuName": "GPT 5 Nano outpt Glbl",
+                "unitOfMeasure": "1M",
+                "unitPrice": 0.4,
+                "qty": 40,
+                "qtyUnitsNote": "40000000 tokens / 1000000 per billing unit ('1M') = 40 units",
+                "monthlyList": 16
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "Cheapest Global Standard model of gpt-5-nano, gpt-4.1-nano, gpt-4o-mini, gpt-5-mini, gpt-4.1-mini is gpt-5-nano at 26/month.",
+        "Meters: 'GPT 5 Nano Inpt Glbl 1M Tokens' (1M) and 'GPT 5 Nano outpt Glbl 1M Tokens' (1M) under productName 'Azure OpenAI GPT5'. Batch, cached-input, provisioned and fine-tuned meters are deliberately excluded.",
+        "  gpt-5-nano: 26/month list",
+        "  gpt-4.1-nano: 36/month list",
+        "  gpt-4o-mini: 54/month list",
+        "  gpt-5-mini: 130/month list",
+        "  gpt-4.1-mini: 144/month list",
+        "(openai model alternatives captured under variants.openai)"
+      ]
+    },
+    "s10-cosmos": {
+      "title": "Cosmos DB for a product catalog",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Cosmos DB autoscale up to 4000 RU/s @ 730 h/mo",
+            "meterId": "09e01d24-67c6-479c-bf49-788c7e80f673",
+            "meterName": "AP2 100 RUs",
+            "productName": "Azure Cosmos DB autoscale",
+            "skuName": "AP2",
+            "unitOfMeasure": "1/Hour",
+            "unitPrice": 0.012,
+            "qty": 29200,
+            "qtyUnitsNote": "4000/100 = 40 units of 100 RU/s x 730 hours = 29200 unit-hours",
+            "monthlyList": 350.4
+          },
+          {
+            "desc": "Cosmos DB transactional storage 100 GB",
+            "meterId": "56f07b6a-c7d9-490f-a196-a7ee08e28712",
+            "meterName": "Data Stored",
+            "productName": "Azure Cosmos DB",
+            "skuName": "RUs",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.25,
+            "qty": 100,
+            "qtyUnitsNote": "100 GB/month",
+            "monthlyList": 25
+          }
+        ],
+        "monthlyList": 375.4,
+        "monthlyDiscounted": 375.4
+      },
+      "variants": {},
+      "notes": [
+        "Autoscale is billed per 100 RU/s per hour on the MAXIMUM provisioned throughput. All autoscale AP1-AP4 meters carry the same price (0.012); 'AP2 100 RUs' is used. Single region, so no multi-region multiplier. Backup: two free periodic backup copies are included, so no backup line."
+      ]
+    },
+    "s11-postgres-ha": {
+      "title": "PostgreSQL Flexible Server with HA",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "PostgreSQL Flexible Server D4ds_v5 General Purpose 4 vCore x2 (zone-redundant HA: primary + standby) @ 730 h/mo",
+            "meterId": "a73b46eb-04f8-5805-a2b0-1d34a180950c",
+            "meterName": "vCore",
+            "productName": "Azure Database for PostgreSQL Flexible Server General Purpose Ddsv5 Series Compute",
+            "skuName": "4 vCore",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.356,
+            "qty": 1460,
+            "qtyUnitsNote": "730 hours x 2 server(s)",
+            "monthlyList": 519.76
+          },
+          {
+            "desc": "PostgreSQL Flexible Server storage 512 GB x2 (primary + standby)",
+            "meterId": "ad50239a-df4f-5c24-8955-066731709372",
+            "meterName": "Storage Data Stored",
+            "productName": "Azure Database for PostgreSQL Flex Server Storage",
+            "skuName": "Storage",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.115,
+            "qty": 1024,
+            "qtyUnitsNote": "512 GB x 2",
+            "monthlyList": 117.76
+          }
+        ],
+        "monthlyList": 637.52,
+        "monthlyDiscounted": 535.52
+      },
+      "variants": {},
+      "notes": [
+        "Zone-redundant HA provisions a standby billed at the same rate as the primary; Learn: \"This option doubles your deployment costs\" and \"If you use the v5 tier with HA-enabled servers, you now see billing quantities multiplied by 2\". Compute AND storage are doubled.",
+        "Default 7-day backup retention is free up to 100% of provisioned storage, so no backup storage line is added."
+      ]
+    },
+    "s12-three-tier": {
+      "title": "Three-tier app: web VMs, load balancer, SQL Managed Instance, monitoring",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D4as_v5 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+            "meterId": "0dd7d35c-8048-568f-9e43-7ee85f6d3408",
+            "meterName": "D4as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D4as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.172,
+            "qty": 1460,
+            "qtyUnitsNote": "730 hours x 2 instance(s)",
+            "monthlyList": 251.12
+          },
+          {
+            "desc": "Managed disk E10 LRS (128 GiB requirement) x2",
+            "meterId": "9a08b750-3a9b-450f-ab79-a01dbfaf3026",
+            "meterName": "E10 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E10 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 9.6,
+            "qty": 2,
+            "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 19.2
+          },
+          {
+            "desc": "Standard Load Balancer, first 5 rules @ 730 h/mo",
+            "meterId": "27827eb0-7f60-4928-940b-f5fe15e7a4cb",
+            "meterName": "Standard Included LB Rules and Outbound Rules",
+            "productName": "Load Balancer",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.025,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours (flat, covers up to 5 rules)",
+            "monthlyList": 18.25
+          },
+          {
+            "desc": "Standard Load Balancer data processed 1024 GB",
+            "meterId": "dfc7cc11-fbe2-41c8-b6fa-24a574223938",
+            "meterName": "Standard Data Processed",
+            "productName": "Load Balancer",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 GB",
+            "unitPrice": 0.005,
+            "qty": 1024,
+            "qtyUnitsNote": "1024 GB",
+            "monthlyList": 5.12
+          },
+          {
+            "desc": "Azure SQL Managed Instance GP Gen5 8 vCore - base compute @ 730 h/mo",
+            "meterId": "bbda07af-6ec3-45ad-8b31-349063b2fe1d",
+            "meterName": "vCore",
+            "productName": "SQL Managed Instance General Purpose - Compute Gen5",
+            "skuName": "8 vCore",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 1.217744,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours; the '8 vCore' row price is the base-compute hourly rate for the whole 8-vCore instance (this is also the Azure Hybrid Benefit price)",
+            "monthlyList": 888.95
+          },
+          {
+            "desc": "SQL Managed Instance GP SQL Server license - 8 vCore @ 730 h/mo",
+            "meterId": "e52d6d04-c8a8-4387-9e76-0ceab532a294",
+            "meterName": "vCore",
+            "productName": "SQL Managed Instance General Purpose - SQL License",
+            "skuName": "vCore",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.099966,
+            "qty": 5840,
+            "qtyUnitsNote": "8 vCore x 730 hours = 5840 vCore-hours; GLOBAL meter, per-vCore rate",
+            "monthlyList": 583.8
+          },
+          {
+            "desc": "SQL MI GP storage 512 GB (first 32 GB included free)",
+            "meterId": "072c8f57-22ab-4641-84c5-9931ef9c1e08",
+            "meterName": "General Purpose Data Stored",
+            "productName": "SQL Managed Instance General Purpose - Storage",
+            "skuName": "General Purpose",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.115,
+            "qty": 480,
+            "qtyUnitsNote": "512 GB provisioned minus 32 GB included = 480 GB billed",
+            "monthlyList": 55.2
+          },
+          {
+            "desc": "Log Analytics Analytics-Logs ingestion 304.17 GB/month (10 GB/day, first 5 GB free)",
+            "meterId": "ec00a25a-ab14-4b7b-a94f-66581f123295",
+            "meterName": "Analytics Logs Data Ingestion",
+            "productName": "Log Analytics",
+            "skuName": "Analytics Logs",
+            "unitOfMeasure": "1 GB",
+            "unitPrice": 2.76,
+            "qty": 304.1666666666667,
+            "qtyUnitsNote": "10 GB/day x 30.4167 days = 304.1667 GB",
+            "monthlyList": 825.7,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 5,
+                "units": 5,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 5,
+                "toUnits": null,
+                "units": 299.1666666666667,
+                "unitPrice": 2.76,
+                "cost": 825.6999999999999
+              }
+            ]
+          }
+        ],
+        "monthlyList": 2647.34,
+        "monthlyDiscounted": 2223.77
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4as_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 125.56,
+            "perInstanceMonthlyDiscounted": 105.47,
+            "totalMonthlyList": 251.12,
+            "totalMonthlyDiscounted": 210.94,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "0dd7d35c-8048-568f-9e43-7ee85f6d3408",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.172,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 251.12
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 140.16,
+            "perInstanceMonthlyDiscounted": 117.73,
+            "totalMonthlyList": 280.32,
+            "totalMonthlyDiscounted": 235.47,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "ee39e5c1-268f-547c-b3b2-f318b5552e79",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.192,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 280.32
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 132.86,
+            "perInstanceMonthlyDiscounted": 111.6,
+            "totalMonthlyList": 265.72,
+            "totalMonthlyDiscounted": 223.2,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "2bf937c2-8061-5a5b-974b-de3e65aeec7e",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.182,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 265.72
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 147.46,
+            "perInstanceMonthlyDiscounted": 123.87,
+            "totalMonthlyList": 294.92,
+            "totalMonthlyDiscounted": 247.73,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "a70078b1-bbd0-5328-8295-4085a24cfbde",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.202,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 294.92
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 150.38,
+            "perInstanceMonthlyDiscounted": 126.32,
+            "totalMonthlyList": 300.76,
+            "totalMonthlyDiscounted": 252.64,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "2565b464-c3c2-582c-b4bc-b90de6463143",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.206,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 300.76
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "windows-ahb",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 164.98,
+            "perInstanceMonthlyDiscounted": 138.58,
+            "totalMonthlyList": 329.96,
+            "totalMonthlyDiscounted": 277.17,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Windows + Azure Hybrid Benefit x2 @ 730 h/mo",
+                "meterId": "90712539-c61b-5eac-9ccf-7fb9379001d7",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.226,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 329.96
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 2,
+            "monthlyList": 19.2,
+            "monthlyDiscounted": 16.13,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x2",
+                "meterId": "9a08b750-3a9b-450f-ab79-a01dbfaf3026",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 2,
+                "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 19.2
+              }
+            ]
+          },
+          "P10": {
+            "perDiskMonthlyList": 17.92,
+            "count": 2,
+            "monthlyList": 35.84,
+            "monthlyDiscounted": 30.11,
+            "lines": [
+              {
+                "desc": "Managed disk P10 LRS x2",
+                "meterId": "37f4764d-a5d4-4e3f-adc4-5da17d28498d",
+                "meterName": "P10 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 17.92,
+                "qty": 2,
+                "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 35.84
+              }
+            ]
+          },
+          "S10": {
+            "perDiskMonthlyList": 5.89,
+            "count": 2,
+            "monthlyList": 11.78,
+            "monthlyDiscounted": 9.9,
+            "lines": [
+              {
+                "desc": "Managed disk S10 LRS x2",
+                "meterId": "24fc3504-f2fe-4534-8833-38837ff09a7e",
+                "meterName": "S10 LRS Disk",
+                "productName": "Standard HDD Managed Disks",
+                "skuName": "S10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 5.888,
+                "qty": 2,
+                "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 11.78
+              }
+            ]
+          }
+        },
+        "sqlLicensing": {
+          "licenseIncluded": {
+            "monthlyList": 1527.95,
+            "monthlyDiscounted": 1283.48,
+            "lines": [
+              {
+                "desc": "Azure SQL Managed Instance GP Gen5 8 vCore - base compute @ 730 h/mo",
+                "meterId": "bbda07af-6ec3-45ad-8b31-349063b2fe1d",
+                "meterName": "vCore",
+                "productName": "SQL Managed Instance General Purpose - Compute Gen5",
+                "skuName": "8 vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 1.217744,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours; the '8 vCore' row price is the base-compute hourly rate for the whole 8-vCore instance (this is also the Azure Hybrid Benefit price)",
+                "monthlyList": 888.95
+              },
+              {
+                "desc": "SQL Managed Instance GP SQL Server license - 8 vCore @ 730 h/mo",
+                "meterId": "e52d6d04-c8a8-4387-9e76-0ceab532a294",
+                "meterName": "vCore",
+                "productName": "SQL Managed Instance General Purpose - SQL License",
+                "skuName": "vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.099966,
+                "qty": 5840,
+                "qtyUnitsNote": "8 vCore x 730 hours = 5840 vCore-hours; GLOBAL meter, per-vCore rate",
+                "monthlyList": 583.8
+              },
+              {
+                "desc": "SQL MI GP storage 512 GB (first 32 GB included free)",
+                "meterId": "072c8f57-22ab-4641-84c5-9931ef9c1e08",
+                "meterName": "General Purpose Data Stored",
+                "productName": "SQL Managed Instance General Purpose - Storage",
+                "skuName": "General Purpose",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.115,
+                "qty": 480,
+                "qtyUnitsNote": "512 GB provisioned minus 32 GB included = 480 GB billed",
+                "monthlyList": 55.2
+              }
+            ]
+          },
+          "azureHybridBenefit": {
+            "monthlyList": 944.15,
+            "monthlyDiscounted": 793.09,
+            "lines": [
+              {
+                "desc": "Azure SQL Managed Instance GP Gen5 8 vCore - base compute @ 730 h/mo",
+                "meterId": "bbda07af-6ec3-45ad-8b31-349063b2fe1d",
+                "meterName": "vCore",
+                "productName": "SQL Managed Instance General Purpose - Compute Gen5",
+                "skuName": "8 vCore",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 1.217744,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours; the '8 vCore' row price is the base-compute hourly rate for the whole 8-vCore instance (this is also the Azure Hybrid Benefit price)",
+                "monthlyList": 888.95
+              },
+              {
+                "desc": "SQL MI GP storage 512 GB (first 32 GB included free)",
+                "meterId": "072c8f57-22ab-4641-84c5-9931ef9c1e08",
+                "meterName": "General Purpose Data Stored",
+                "productName": "SQL Managed Instance General Purpose - Storage",
+                "skuName": "General Purpose",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.115,
+                "qty": 480,
+                "qtyUnitsNote": "512 GB provisioned minus 32 GB included = 480 GB billed",
+                "monthlyList": 55.2
+              }
+            ]
+          },
+          "canonicalChoice": "licenseIncluded",
+          "why": "The scenario facts state the customer has no SQL Server licenses, so license-included pricing applies (base compute + the global \"General Purpose - SQL License\" meter at $0.099966 per vCore-hour)."
+        },
+        "logAnalytics": {
+          "monthlyList": 825.7,
+          "monthlyDiscounted": 693.59,
+          "notes": [
+            "Month length = 730/24 = 30.4167 days, for consistency with 730 hours/month.",
+            "The 5 GB/month free Analytics Logs allowance is taken straight from the API ($0 band, paid band starts at tierMinimumUnits 5). It is a per-billing-account allowance, so if the customer already consumes it elsewhere the true cost is 839.5.",
+            "100 GB/day commitment tier would cost 5961.67/month - more expensive here, so PAYG is used.",
+            "Analytics Logs include 31 days of retention at no extra charge; no retention line is added because the customer did not ask for longer retention."
+          ]
+        }
+      },
+      "notes": [
+        "Azure Hybrid Benefit: priced on the non-Windows product meter, so the Windows Server license component is $0.",
+        "E10 LRS is a fixed-size tier billed per disk per month, not per GiB.",
+        "Standard Load Balancer meters are global (armRegionName \"Global\"); the first 5 rules are covered by the flat hourly \"Included\" meter.",
+        "License-included pricing: base compute meter PLUS the global \"General Purpose - SQL License\" meter ($0.099966 per vCore-hour). With Azure Hybrid Benefit the license line disappears and only base compute is paid.",
+        "SQL Managed Instance includes the first 32 GB of storage free; you are billed on the MAXIMUM configured storage, not consumed.",
+        "Month length = 730/24 = 30.4167 days, for consistency with 730 hours/month.",
+        "The 5 GB/month free Analytics Logs allowance is taken straight from the API ($0 band, paid band starts at tierMinimumUnits 5). It is a per-billing-account allowance, so if the customer already consumes it elsewhere the true cost is 839.5.",
+        "100 GB/day commitment tier would cost 5961.67/month - more expensive here, so PAYG is used.",
+        "Analytics Logs include 31 days of retention at no extra charge; no retention line is added because the customer did not ask for longer retention."
+      ]
+    },
+    "s13-reservations": {
+      "title": "Fleet of VMs, compare PAYG vs reservations vs savings plan",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D8as_v5 Linux x10 @ 730 h/mo",
+            "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+            "meterName": "D8as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D8as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.389,
+            "qty": 7300,
+            "qtyUnitsNote": "730 hours x 10 instance(s)",
+            "monthlyList": 2839.7
+          }
+        ],
+        "monthlyList": 2839.7,
+        "monthlyDiscounted": 2385.35
+      },
+      "variants": {
+        "vm": {
+          "Standard_D8as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 283.97,
+            "perInstanceMonthlyDiscounted": 238.53,
+            "totalMonthlyList": 2839.7,
+            "totalMonthlyDiscounted": 2385.35,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 @ 730 h/mo",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.389,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 2839.7
+              }
+            ]
+          },
+          "Standard_D8s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 316.82,
+            "perInstanceMonthlyDiscounted": 266.13,
+            "totalMonthlyList": 3168.2,
+            "totalMonthlyDiscounted": 2661.29,
+            "lines": [
+              {
+                "desc": "VM Standard_D8s_v5 Linux x10 @ 730 h/mo",
+                "meterId": "d6b0254d-9b6b-53e6-8c8f-f51b6d63f656",
+                "meterName": "D8s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D8s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.434,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 3168.2
+              }
+            ]
+          },
+          "Standard_D8as_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 299.3,
+            "perInstanceMonthlyDiscounted": 251.41,
+            "totalMonthlyList": 2993,
+            "totalMonthlyDiscounted": 2514.12,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v6 Linux x10 @ 730 h/mo",
+                "meterId": "e9a691eb-dc2b-5427-bd2e-1c800336d5a7",
+                "meterName": "D8as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D8as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.41,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 2993
+              }
+            ]
+          },
+          "Standard_D8s_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 332.88,
+            "perInstanceMonthlyDiscounted": 279.62,
+            "totalMonthlyList": 3328.8,
+            "totalMonthlyDiscounted": 2796.19,
+            "lines": [
+              {
+                "desc": "VM Standard_D8s_v6 Linux x10 @ 730 h/mo",
+                "meterId": "dc7875ea-f85d-580f-a6d7-5869dbc40d64",
+                "meterName": "D8s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D8s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.456,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 3328.8
+              }
+            ]
+          },
+          "Standard_D8ads_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 340.18,
+            "perInstanceMonthlyDiscounted": 285.75,
+            "totalMonthlyList": 3401.8,
+            "totalMonthlyDiscounted": 2857.51,
+            "lines": [
+              {
+                "desc": "VM Standard_D8ads_v5 Linux x10 @ 730 h/mo",
+                "meterId": "c323c555-4b0c-52dd-afca-b5e4a5320637",
+                "meterName": "D8ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D8ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.466,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 3401.8
+              }
+            ]
+          },
+          "Standard_D8ds_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 10,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 373.03,
+            "perInstanceMonthlyDiscounted": 313.35,
+            "totalMonthlyList": 3730.3,
+            "totalMonthlyDiscounted": 3133.45,
+            "lines": [
+              {
+                "desc": "VM Standard_D8ds_v5 Linux x10 @ 730 h/mo",
+                "meterId": "313104eb-19b7-528b-9e25-5a4dd42e732e",
+                "meterName": "D8ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D8ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.511,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 3730.3
+              }
+            ]
+          }
+        },
+        "commitment": {
+          "payg": {
+            "sku": "Standard_D8as_v5",
+            "perInstanceMonthlyList": 283.97,
+            "perInstanceMonthlyDiscounted": 238.53,
+            "fleetMonthlyList": 2839.7,
+            "fleetMonthlyDiscounted": 2385.35,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 @ 730 h/mo",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.389,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s)",
+                "monthlyList": 2839.7
+              }
+            ]
+          },
+          "ri1y": {
+            "sku": "Standard_D8as_v5",
+            "perInstanceMonthlyList": 148.17,
+            "perInstanceMonthlyDiscounted": 124.46,
+            "fleetMonthlyList": 1481.67,
+            "fleetMonthlyDiscounted": 1244.6,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 - 1 Year reserved instance (amortized)",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 1778,
+                "qty": 10,
+                "qtyUnitsNote": "10 instance(s); retailPrice 1778 is the WHOLE-TERM total, divided by 12 months",
+                "monthlyList": 1481.67,
+                "wholeTermPrice": 1778,
+                "termMonths": 12
+              }
+            ]
+          },
+          "ri3y": {
+            "sku": "Standard_D8as_v5",
+            "perInstanceMonthlyList": 95.42,
+            "perInstanceMonthlyDiscounted": 80.15,
+            "fleetMonthlyList": 954.17,
+            "fleetMonthlyDiscounted": 801.5,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 - 3 Years reserved instance (amortized)",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 3435,
+                "qty": 10,
+                "qtyUnitsNote": "10 instance(s); retailPrice 3435 is the WHOLE-TERM total, divided by 36 months",
+                "monthlyList": 954.17,
+                "wholeTermPrice": 3435,
+                "termMonths": 36
+              }
+            ]
+          },
+          "sp1y": {
+            "sku": "Standard_D8as_v5",
+            "perInstanceMonthlyList": 171.52,
+            "perInstanceMonthlyDiscounted": 144.08,
+            "fleetMonthlyList": 1715.18,
+            "fleetMonthlyDiscounted": 1440.75,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 - 1 Year compute savings plan @ 730 h/mo",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.234956,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s) at savings-plan effective hourly rate",
+                "monthlyList": 1715.18,
+                "savingsPlanTerm": "1 Year"
+              }
+            ]
+          },
+          "sp3y": {
+            "sku": "Standard_D8as_v5",
+            "perInstanceMonthlyList": 115.01,
+            "perInstanceMonthlyDiscounted": 96.61,
+            "fleetMonthlyList": 1150.08,
+            "fleetMonthlyDiscounted": 966.07,
+            "lines": [
+              {
+                "desc": "VM Standard_D8as_v5 Linux x10 - 3 Years compute savings plan @ 730 h/mo",
+                "meterId": "628f5730-b7e4-5776-86dd-e7e92766e68e",
+                "meterName": "D8as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D8as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.157545,
+                "qty": 7300,
+                "qtyUnitsNote": "730 hours x 10 instance(s) at savings-plan effective hourly rate",
+                "monthlyList": 1150.08,
+                "savingsPlanTerm": "3 Years"
+              }
+            ]
+          }
+        },
+        "commitmentBySku": {
+          "Standard_D8as_v5": {
+            "payg": {
+              "perInstanceMonthlyList": 283.97,
+              "perInstanceMonthlyDiscounted": 238.53,
+              "fleetMonthlyList": 2839.7,
+              "fleetMonthlyDiscounted": 2385.35
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 148.17,
+              "perInstanceMonthlyDiscounted": 124.46,
+              "fleetMonthlyList": 1481.67,
+              "fleetMonthlyDiscounted": 1244.6
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 95.42,
+              "perInstanceMonthlyDiscounted": 80.15,
+              "fleetMonthlyList": 954.17,
+              "fleetMonthlyDiscounted": 801.5
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 171.52,
+              "perInstanceMonthlyDiscounted": 144.08,
+              "fleetMonthlyList": 1715.18,
+              "fleetMonthlyDiscounted": 1440.75
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 115.01,
+              "perInstanceMonthlyDiscounted": 96.61,
+              "fleetMonthlyList": 1150.08,
+              "fleetMonthlyDiscounted": 966.07
+            }
+          },
+          "Standard_D8s_v5": {
+            "payg": {
+              "perInstanceMonthlyList": 316.82,
+              "perInstanceMonthlyDiscounted": 266.13,
+              "fleetMonthlyList": 3168.2,
+              "fleetMonthlyDiscounted": 2661.29
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 165.42,
+              "perInstanceMonthlyDiscounted": 138.95,
+              "fleetMonthlyList": 1654.17,
+              "fleetMonthlyDiscounted": 1389.5
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 103.72,
+              "perInstanceMonthlyDiscounted": 87.12,
+              "fleetMonthlyList": 1037.22,
+              "fleetMonthlyDiscounted": 871.26
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 191.99,
+              "perInstanceMonthlyDiscounted": 161.27,
+              "fleetMonthlyList": 1919.93,
+              "fleetMonthlyDiscounted": 1612.74
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 128.95,
+              "perInstanceMonthlyDiscounted": 108.32,
+              "fleetMonthlyList": 1289.46,
+              "fleetMonthlyDiscounted": 1083.15
+            }
+          },
+          "Standard_D8as_v6": {
+            "payg": {
+              "perInstanceMonthlyList": 299.3,
+              "perInstanceMonthlyDiscounted": 251.41,
+              "fleetMonthlyList": 2993,
+              "fleetMonthlyDiscounted": 2514.12
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 156.42,
+              "perInstanceMonthlyDiscounted": 131.39,
+              "fleetMonthlyList": 1564.17,
+              "fleetMonthlyDiscounted": 1313.9
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 100.75,
+              "perInstanceMonthlyDiscounted": 84.63,
+              "fleetMonthlyList": 1007.5,
+              "fleetMonthlyDiscounted": 846.3
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 181.97,
+              "perInstanceMonthlyDiscounted": 152.85,
+              "fleetMonthlyList": 1819.74,
+              "fleetMonthlyDiscounted": 1528.58
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 121.22,
+              "perInstanceMonthlyDiscounted": 101.82,
+              "fleetMonthlyList": 1212.17,
+              "fleetMonthlyDiscounted": 1018.22
+            }
+          },
+          "Standard_D8s_v6": {
+            "payg": {
+              "perInstanceMonthlyList": 332.88,
+              "perInstanceMonthlyDiscounted": 279.62,
+              "fleetMonthlyList": 3328.8,
+              "fleetMonthlyDiscounted": 2796.19
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 182.5,
+              "perInstanceMonthlyDiscounted": 153.3,
+              "fleetMonthlyList": 1825,
+              "fleetMonthlyDiscounted": 1533
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 114.78,
+              "perInstanceMonthlyDiscounted": 96.42,
+              "fleetMonthlyList": 1147.78,
+              "fleetMonthlyDiscounted": 964.14
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 202.72,
+              "perInstanceMonthlyDiscounted": 170.28,
+              "fleetMonthlyList": 2027.24,
+              "fleetMonthlyDiscounted": 1702.88
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 135.15,
+              "perInstanceMonthlyDiscounted": 113.53,
+              "fleetMonthlyList": 1351.49,
+              "fleetMonthlyDiscounted": 1135.25
+            }
+          },
+          "Standard_D8ads_v5": {
+            "payg": {
+              "perInstanceMonthlyList": 340.18,
+              "perInstanceMonthlyDiscounted": 285.75,
+              "fleetMonthlyList": 3401.8,
+              "fleetMonthlyDiscounted": 2857.51
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 177.42,
+              "perInstanceMonthlyDiscounted": 149.03,
+              "fleetMonthlyList": 1774.17,
+              "fleetMonthlyDiscounted": 1490.3
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 114.28,
+              "perInstanceMonthlyDiscounted": 96,
+              "fleetMonthlyList": 1142.78,
+              "fleetMonthlyDiscounted": 959.94
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 206.49,
+              "perInstanceMonthlyDiscounted": 173.45,
+              "fleetMonthlyList": 2064.89,
+              "fleetMonthlyDiscounted": 1734.51
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 137.77,
+              "perInstanceMonthlyDiscounted": 115.73,
+              "fleetMonthlyList": 1377.73,
+              "fleetMonthlyDiscounted": 1157.29
+            }
+          },
+          "Standard_D8ds_v5": {
+            "payg": {
+              "perInstanceMonthlyList": 373.03,
+              "perInstanceMonthlyDiscounted": 313.35,
+              "fleetMonthlyList": 3730.3,
+              "fleetMonthlyDiscounted": 3133.45
+            },
+            "ri1y": {
+              "perInstanceMonthlyList": 194.67,
+              "perInstanceMonthlyDiscounted": 163.52,
+              "fleetMonthlyList": 1946.67,
+              "fleetMonthlyDiscounted": 1635.2
+            },
+            "ri3y": {
+              "perInstanceMonthlyList": 125.39,
+              "perInstanceMonthlyDiscounted": 105.33,
+              "fleetMonthlyList": 1253.89,
+              "fleetMonthlyDiscounted": 1053.27
+            },
+            "sp1y": {
+              "perInstanceMonthlyList": 224.94,
+              "perInstanceMonthlyDiscounted": 188.95,
+              "fleetMonthlyList": 2249.37,
+              "fleetMonthlyDiscounted": 1889.47
+            },
+            "sp3y": {
+              "perInstanceMonthlyList": 150.33,
+              "perInstanceMonthlyDiscounted": 126.28,
+              "fleetMonthlyList": 1503.31,
+              "fleetMonthlyDiscounted": 1262.78
+            }
+          }
+        }
+      },
+      "notes": []
+    },
+    "s14-dev-business-hours": {
+      "title": "Dev VMs that run business hours only — savings plan trap",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D4as_v5 Linux x8 @ 220 h/mo",
+            "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+            "meterName": "D4as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D4as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.194,
+            "qty": 1760,
+            "qtyUnitsNote": "220 hours x 8 instance(s)",
+            "monthlyList": 341.44
+          },
+          {
+            "desc": "Managed disk E10 LRS (128 GiB requirement) x8",
+            "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+            "meterName": "E10 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E10 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 9.6,
+            "qty": 8,
+            "qtyUnitsNote": "8 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 76.8
+          }
+        ],
+        "monthlyList": 418.24,
+        "monthlyDiscounted": 351.32
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4as_v5": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 42.68,
+            "perInstanceMonthlyDiscounted": 35.85,
+            "totalMonthlyList": 341.44,
+            "totalMonthlyDiscounted": 286.81,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 @ 220 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.194,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 341.44
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 47.74,
+            "perInstanceMonthlyDiscounted": 40.1,
+            "totalMonthlyList": 381.92,
+            "totalMonthlyDiscounted": 320.81,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Linux x8 @ 220 h/mo",
+                "meterId": "a703efcb-d9d1-5ae6-973d-aeaec5d53773",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.217,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 381.92
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 45.1,
+            "perInstanceMonthlyDiscounted": 37.88,
+            "totalMonthlyList": 360.8,
+            "totalMonthlyDiscounted": 303.07,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Linux x8 @ 220 h/mo",
+                "meterId": "f3b1120c-9b6c-5712-9026-b20848def370",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.205,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 360.8
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 50.16,
+            "perInstanceMonthlyDiscounted": 42.13,
+            "totalMonthlyList": 401.28,
+            "totalMonthlyDiscounted": 337.08,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Linux x8 @ 220 h/mo",
+                "meterId": "1b3fa6d6-532d-55e2-8a78-a3ce7a8a4764",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.228,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 401.28
+              }
+            ]
+          },
+          "Standard_B4ms": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 44,
+            "perInstanceMonthlyDiscounted": 36.96,
+            "totalMonthlyList": 352,
+            "totalMonthlyDiscounted": 295.68,
+            "lines": [
+              {
+                "desc": "VM Standard_B4ms Linux x8 @ 220 h/mo",
+                "meterId": "2269437a-3c57-485d-b415-a51e0f423a62",
+                "meterName": "B4ms",
+                "productName": "Virtual Machines BS Series",
+                "skuName": "B4ms",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.2,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 352
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 51.26,
+            "perInstanceMonthlyDiscounted": 43.06,
+            "totalMonthlyList": 410.08,
+            "totalMonthlyDiscounted": 344.47,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Linux x8 @ 220 h/mo",
+                "meterId": "0fd2a8b8-d4fb-58b7-96cc-e59d6939336a",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.233,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 410.08
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "linux",
+            "hours": 220,
+            "count": 8,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 56.1,
+            "perInstanceMonthlyDiscounted": 47.12,
+            "totalMonthlyList": 448.8,
+            "totalMonthlyDiscounted": 376.99,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Linux x8 @ 220 h/mo",
+                "meterId": "d7fc46a0-4348-5011-a97f-24664199c002",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.255,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 448.8
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 8,
+            "monthlyList": 76.8,
+            "monthlyDiscounted": 64.51,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x8",
+                "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 8,
+                "qtyUnitsNote": "8 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 76.8
+              }
+            ]
+          }
+        },
+        "commitment": {
+          "payg": {
+            "hours": 220,
+            "fleetMonthlyList": 341.44,
+            "fleetMonthlyDiscounted": 286.81,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 @ 220 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.194,
+                "qty": 1760,
+                "qtyUnitsNote": "220 hours x 8 instance(s)",
+                "monthlyList": 341.44
+              }
+            ]
+          },
+          "sp1y": {
+            "hours": 730,
+            "note": "Savings plan commitment is billed for all 730 hours/month whether the VMs run or not.",
+            "fleetMonthlyList": 684.31,
+            "fleetMonthlyDiscounted": 574.82,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 - 1 Year compute savings plan @ 730 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.117176,
+                "qty": 5840,
+                "qtyUnitsNote": "730 hours x 8 instance(s) at savings-plan effective hourly rate",
+                "monthlyList": 684.31,
+                "savingsPlanTerm": "1 Year"
+              }
+            ]
+          },
+          "sp3y": {
+            "hours": 730,
+            "note": "Savings plan commitment is billed for all 730 hours/month whether the VMs run or not.",
+            "fleetMonthlyList": 458.85,
+            "fleetMonthlyDiscounted": 385.43,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 - 3 Years compute savings plan @ 730 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.07857,
+                "qty": 5840,
+                "qtyUnitsNote": "730 hours x 8 instance(s) at savings-plan effective hourly rate",
+                "monthlyList": 458.85,
+                "savingsPlanTerm": "3 Years"
+              }
+            ]
+          },
+          "ri1y": {
+            "note": "Reservation is billed for the whole term regardless of VM uptime.",
+            "fleetMonthlyList": 592.67,
+            "fleetMonthlyDiscounted": 497.84,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 - 1 Year reserved instance (amortized)",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 889,
+                "qty": 8,
+                "qtyUnitsNote": "8 instance(s); retailPrice 889 is the WHOLE-TERM total, divided by 12 months",
+                "monthlyList": 592.67,
+                "wholeTermPrice": 889,
+                "termMonths": 12
+              }
+            ]
+          },
+          "ri3y": {
+            "note": "Reservation is billed for the whole term regardless of VM uptime.",
+            "fleetMonthlyList": 381.78,
+            "fleetMonthlyDiscounted": 320.7,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x8 - 3 Years reserved instance (amortized)",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 1718,
+                "qty": 8,
+                "qtyUnitsNote": "8 instance(s); retailPrice 1718 is the WHOLE-TERM total, divided by 36 months",
+                "monthlyList": 381.78,
+                "wholeTermPrice": 1718,
+                "termMonths": 36
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "E10 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s15-disk-cliff": {
+      "title": "Database VM needing 1.1 TB of fast disk",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Premium SSD v2 provisioned capacity 1126 GiB",
+            "meterId": "49521633-9f11-5dfc-8ddf-f26aa7f47b1c",
+            "meterName": "Premium LRS Provisioned Capacity",
+            "productName": "Azure Premium SSD v2",
+            "skuName": "Premium LRS",
+            "unitOfMeasure": "1 GiB/Hour",
+            "unitPrice": 0.00011,
+            "qty": 821980,
+            "qtyUnitsNote": "1126 GiB x 730 h",
+            "monthlyList": 90.42
+          },
+          {
+            "desc": "Premium SSD v2 provisioned IOPS 5000 (first 3000 free)",
+            "meterId": "82c0fe05-4793-5668-a980-f636ba84316a",
+            "meterName": "Premium LRS Provisioned IOPS",
+            "productName": "Azure Premium SSD v2",
+            "skuName": "Premium LRS",
+            "unitOfMeasure": "1/Hour",
+            "unitPrice": 0.000007,
+            "qty": 3650000,
+            "qtyUnitsNote": "5000 IOPS x 730 h; first 3000 IOPS are a $0 band",
+            "monthlyList": 10.22,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 3000,
+                "units": 3000,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 3000,
+                "toUnits": null,
+                "units": 2000,
+                "unitPrice": 0.000007,
+                "cost": 0.014
+              }
+            ]
+          },
+          {
+            "desc": "Premium SSD v2 provisioned throughput 200 MB/s (first 125 free)",
+            "meterId": "bd8ed25e-cc05-5255-9b21-3a30de6ee476",
+            "meterName": "Premium LRS Provisioned Throughput (MBps)",
+            "productName": "Azure Premium SSD v2",
+            "skuName": "Premium LRS",
+            "unitOfMeasure": "1/Hour",
+            "unitPrice": 0.000055,
+            "qty": 146000,
+            "qtyUnitsNote": "200 MB/s x 730 h; first 125 MB/s are a $0 band",
+            "monthlyList": 3.01,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 125,
+                "units": 125,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 125,
+                "toUnits": null,
+                "units": 75,
+                "unitPrice": 0.000055,
+                "cost": 0.004125
+              }
+            ]
+          }
+        ],
+        "monthlyList": 103.65,
+        "monthlyDiscounted": 87.06
+      },
+      "variants": {
+        "disk": {
+          "PremiumV2": {
+            "perDiskMonthlyList": 103.65,
+            "monthlyList": 103.65,
+            "monthlyDiscounted": 87.06,
+            "lines": [
+              {
+                "desc": "Premium SSD v2 provisioned capacity 1126 GiB",
+                "meterId": "49521633-9f11-5dfc-8ddf-f26aa7f47b1c",
+                "meterName": "Premium LRS Provisioned Capacity",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1 GiB/Hour",
+                "unitPrice": 0.00011,
+                "qty": 821980,
+                "qtyUnitsNote": "1126 GiB x 730 h",
+                "monthlyList": 90.42
+              },
+              {
+                "desc": "Premium SSD v2 provisioned IOPS 5000 (first 3000 free)",
+                "meterId": "82c0fe05-4793-5668-a980-f636ba84316a",
+                "meterName": "Premium LRS Provisioned IOPS",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000007,
+                "qty": 3650000,
+                "qtyUnitsNote": "5000 IOPS x 730 h; first 3000 IOPS are a $0 band",
+                "monthlyList": 10.22,
+                "bands": [
+                  {
+                    "fromUnits": 0,
+                    "toUnits": 3000,
+                    "units": 3000,
+                    "unitPrice": 0,
+                    "cost": 0
+                  },
+                  {
+                    "fromUnits": 3000,
+                    "toUnits": null,
+                    "units": 2000,
+                    "unitPrice": 0.000007,
+                    "cost": 0.014
+                  }
+                ]
+              },
+              {
+                "desc": "Premium SSD v2 provisioned throughput 200 MB/s (first 125 free)",
+                "meterId": "bd8ed25e-cc05-5255-9b21-3a30de6ee476",
+                "meterName": "Premium LRS Provisioned Throughput (MBps)",
+                "productName": "Azure Premium SSD v2",
+                "skuName": "Premium LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000055,
+                "qty": 146000,
+                "qtyUnitsNote": "200 MB/s x 730 h; first 125 MB/s are a $0 band",
+                "monthlyList": 3.01,
+                "bands": [
+                  {
+                    "fromUnits": 0,
+                    "toUnits": 125,
+                    "units": 125,
+                    "unitPrice": 0,
+                    "cost": 0
+                  },
+                  {
+                    "fromUnits": 125,
+                    "toUnits": null,
+                    "units": 75,
+                    "unitPrice": 0.000055,
+                    "cost": 0.004125
+                  }
+                ]
+              }
+            ]
+          },
+          "P40": {
+            "perDiskMonthlyList": 235.52,
+            "count": 1,
+            "monthlyList": 235.52,
+            "monthlyDiscounted": 197.84,
+            "lines": [
+              {
+                "desc": "Managed disk P40 LRS x1",
+                "meterId": "19ca1ef9-e3c7-4a64-9184-b1e44de02430",
+                "meterName": "P40 LRS Disk",
+                "productName": "Premium SSD Managed Disks",
+                "skuName": "P40 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 235.52,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 235.52
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "Premium SSD v2 includes 3,000 IOPS and 125 MB/s free with the provisioned capacity; the API encodes this as a $0 band with the paid band starting at tierMinimumUnits 3000 / 125."
+      ]
+    },
+    "s16-egress-heavy": {
+      "title": "Content distribution with heavy internet egress",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Blob Hot LRS data stored 2048 GB",
+            "meterId": "06cd85e2-e7d6-49a3-bc94-2c31c8f7d433",
+            "meterName": "Hot LRS Data Stored",
+            "productName": "General Block Blob v2",
+            "skuName": "Hot LRS",
+            "unitOfMeasure": "1 GB/Month",
+            "unitPrice": 0.0184,
+            "qty": 2048,
+            "qtyUnitsNote": "2048 GB/month",
+            "monthlyList": 37.68,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 51200,
+                "units": 2048,
+                "unitPrice": 0.0184,
+                "cost": 37.6832
+              }
+            ]
+          },
+          {
+            "desc": "Blob Hot LRS read operations 4,000,000",
+            "meterId": "8b6d2696-456c-41e1-a09e-73efeb109a63",
+            "meterName": "Hot Read Operations",
+            "productName": "General Block Blob v2",
+            "skuName": "Hot LRS",
+            "unitOfMeasure": "10K",
+            "unitPrice": 0.004,
+            "qty": 400,
+            "qtyUnitsNote": "4000000 ops / 10000 per billing unit = 400 units",
+            "monthlyList": 1.6
+          },
+          {
+            "desc": "Internet egress 20480 GB (first 100 GB free, tiered)",
+            "meterId": "9995d93a-7d35-4d3f-9c69-7a7fea447ef4",
+            "meterName": "Standard Data Transfer Out",
+            "productName": "Rtn Preference: MGN",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 GB",
+            "unitPrice": 0.087,
+            "qty": 20480,
+            "qtyUnitsNote": "20480 GB in the month, banded by tierMinimumUnits",
+            "monthlyList": 1732.48,
+            "bands": [
+              {
+                "fromUnits": 0,
+                "toUnits": 100,
+                "units": 100,
+                "unitPrice": 0,
+                "cost": 0
+              },
+              {
+                "fromUnits": 100,
+                "toUnits": 10335,
+                "units": 10235,
+                "unitPrice": 0.087,
+                "cost": 890.4449999999999
+              },
+              {
+                "fromUnits": 10335,
+                "toUnits": 51295,
+                "units": 10145,
+                "unitPrice": 0.083,
+                "cost": 1732.48
+              }
+            ]
+          }
+        ],
+        "monthlyList": 1771.76,
+        "monthlyDiscounted": 1488.27
+      },
+      "variants": {},
+      "notes": [
+        "Operation meters are per 10000 operations (unitOfMeasure '10K') - dividing by 10,000 is mandatory.",
+        "Egress priced on the default Microsoft-network routing preference meter (productName 'Rtn Preference: MGN'). First 100 GB/month are free (a $0 band at tierMinimumUnits 0)."
+      ]
+    },
+    "s17-eur-germany": {
+      "title": "Two VMs in Germany, priced in euros",
+      "region": "Germany West Central",
+      "currency": "EUR",
+      "discountPct": 0.2,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D4as_v5 Linux x2 @ 730 h/mo",
+            "meterId": "6e39dbef-cc24-5924-adb2-b9d388bac084",
+            "meterName": "D4as v5",
+            "productName": "Virtual Machines Dasv5 Series",
+            "skuName": "Standard_D4as_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.183034,
+            "qty": 1460,
+            "qtyUnitsNote": "730 hours x 2 instance(s)",
+            "monthlyList": 267.23
+          },
+          {
+            "desc": "Managed disk E15 LRS (256 GiB requirement) x2",
+            "meterId": "03858686-d4b3-4dc6-8adc-89be5e4d691b",
+            "meterName": "E15 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E15 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 16.895459,
+            "qty": 2,
+            "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 33.79
+          }
+        ],
+        "monthlyList": 301.02,
+        "monthlyDiscounted": 240.81
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 133.61,
+            "perInstanceMonthlyDiscounted": 106.89,
+            "totalMonthlyList": 267.23,
+            "totalMonthlyDiscounted": 213.78,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x2 @ 730 h/mo",
+                "meterId": "6e39dbef-cc24-5924-adb2-b9d388bac084",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.183034,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 267.23
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 147.75,
+            "perInstanceMonthlyDiscounted": 118.2,
+            "totalMonthlyList": 295.5,
+            "totalMonthlyDiscounted": 236.4,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Linux x2 @ 730 h/mo",
+                "meterId": "4e09681c-b48b-52a2-b86b-39b81a797216",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.202394,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 295.5
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 141.32,
+            "perInstanceMonthlyDiscounted": 113.06,
+            "totalMonthlyList": 282.65,
+            "totalMonthlyDiscounted": 226.12,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Linux x2 @ 730 h/mo",
+                "meterId": "981ed1ab-f2da-5498-ba92-d11b0b35d68d",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.193594,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 282.65
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 155.46,
+            "perInstanceMonthlyDiscounted": 124.37,
+            "totalMonthlyList": 310.91,
+            "totalMonthlyDiscounted": 248.73,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Linux x2 @ 730 h/mo",
+                "meterId": "3fa5b344-becc-5343-8f24-e2713f9e26f6",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.212953,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 310.91
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 160.59,
+            "perInstanceMonthlyDiscounted": 128.47,
+            "totalMonthlyList": 321.19,
+            "totalMonthlyDiscounted": 256.95,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Linux x2 @ 730 h/mo",
+                "meterId": "ec8277ba-e150-5531-859f-26617b733920",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.219993,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 321.19
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 2,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 174.73,
+            "perInstanceMonthlyDiscounted": 139.78,
+            "totalMonthlyList": 349.45,
+            "totalMonthlyDiscounted": 279.56,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Linux x2 @ 730 h/mo",
+                "meterId": "efe0f1b1-9534-5a43-af8f-4653b4de0dea",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.239352,
+                "qty": 1460,
+                "qtyUnitsNote": "730 hours x 2 instance(s)",
+                "monthlyList": 349.45
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E15": {
+            "perDiskMonthlyList": 16.9,
+            "count": 2,
+            "monthlyList": 33.79,
+            "monthlyDiscounted": 27.03,
+            "lines": [
+              {
+                "desc": "Managed disk E15 LRS x2",
+                "meterId": "03858686-d4b3-4dc6-8adc-89be5e4d691b",
+                "meterName": "E15 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E15 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 16.895459,
+                "qty": 2,
+                "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 33.79
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "E15 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s18-container-apps": {
+      "title": "Container Apps, no discount",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Container Apps vCPU active usage: 2,628,000 vCPU-s (first 180,000 free)",
+            "meterId": "231e4822-3df5-5135-9bf7-f5bb98528b0a",
+            "meterName": "Standard vCPU Active Usage",
+            "productName": "Azure Container Apps",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 Second",
+            "unitPrice": 0.000024,
+            "qty": 2448000,
+            "qtyUnitsNote": "2 app(s) x 1 replica(s) x 0.5 vCPU x 730 h x 3600 s = 2628000 vCPU-s; minus 180000 free grant",
+            "monthlyList": 58.75
+          },
+          {
+            "desc": "Container Apps memory active usage: 5,256,000 GiB-s (first 360,000 free)",
+            "meterId": "eaadacd7-1442-5180-973e-9da5c510aa95",
+            "meterName": "Standard Memory Active Usage",
+            "productName": "Azure Container Apps",
+            "skuName": "Standard",
+            "unitOfMeasure": "1 GiB Second",
+            "unitPrice": 0.000003,
+            "qty": 4896000,
+            "qtyUnitsNote": "2 app(s) x 1 replica(s) x 1 GiB x 730 h x 3600 s = 5256000 GiB-s; minus 360000 free grant",
+            "monthlyList": 14.69
+          },
+          {
+            "desc": "Container Apps HTTP requests: 3,000,000 (first 2,000,000 free)",
+            "meterId": "152ca9e2-21e4-50ec-a34c-ef0b954b167c",
+            "meterName": "Standard Requests",
+            "productName": "Azure Container Apps",
+            "skuName": "Standard",
+            "unitOfMeasure": "1M",
+            "unitPrice": 0.4,
+            "qty": 1,
+            "qtyUnitsNote": "3000000 - 2000000 free = 1000000; / 1000000 per billing unit = 1 units",
+            "monthlyList": 0.4
+          }
+        ],
+        "monthlyList": 73.84,
+        "monthlyDiscounted": 73.84
+      },
+      "variants": {
+        "containerApps": {
+          "idleRate": {
+            "monthlyList": 22.43,
+            "monthlyDiscounted": 22.43,
+            "lines": [
+              {
+                "desc": "Container Apps vCPU idle usage: 2,628,000 vCPU-s (first 180,000 free)",
+                "meterId": "87697b08-bcce-5ead-9b1e-bc56ba8a9b04",
+                "meterName": "Standard vCPU Idle Usage",
+                "productName": "Azure Container Apps",
+                "skuName": "Standard",
+                "unitOfMeasure": "1 Second",
+                "unitPrice": 0.000003,
+                "qty": 2448000,
+                "qtyUnitsNote": "2 app(s) x 1 replica(s) x 0.5 vCPU x 730 h x 3600 s = 2628000 vCPU-s; minus 180000 free grant",
+                "monthlyList": 7.34
+              },
+              {
+                "desc": "Container Apps memory idle usage: 5,256,000 GiB-s (first 360,000 free)",
+                "meterId": "b71b27f9-4f06-5914-be8c-08e47b29cb1b",
+                "meterName": "Standard Memory Idle Usage",
+                "productName": "Azure Container Apps",
+                "skuName": "Standard",
+                "unitOfMeasure": "1 GiB Second",
+                "unitPrice": 0.000003,
+                "qty": 4896000,
+                "qtyUnitsNote": "2 app(s) x 1 replica(s) x 1 GiB x 730 h x 3600 s = 5256000 GiB-s; minus 360000 free grant",
+                "monthlyList": 14.69
+              },
+              {
+                "desc": "Container Apps HTTP requests: 3,000,000 (first 2,000,000 free)",
+                "meterId": "152ca9e2-21e4-50ec-a34c-ef0b954b167c",
+                "meterName": "Standard Requests",
+                "productName": "Azure Container Apps",
+                "skuName": "Standard",
+                "unitOfMeasure": "1M",
+                "unitPrice": 0.4,
+                "qty": 1,
+                "qtyUnitsNote": "3000000 - 2000000 free = 1000000; / 1000000 per billing unit = 1 units",
+                "monthlyList": 0.4
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "Free grants (180,000 vCPU-s, 360,000 GiB-s, 2M requests per subscription per calendar month) are NOT represented in the retail price API - all tierMinimumUnits are 0 - so they are subtracted explicitly per Learn \"Billing in Azure Container Apps\".",
+        "Priced at the ACTIVE rate. Idle rates only apply when a replica has started, is processing no HTTP requests, uses <0.01 vCPU and receives <1000 B/s; that cannot be assumed for a production microservice, so active is the correct (and conservative) estimate."
+      ]
+    },
+    "s19-legacy-v3": {
+      "title": "Customer asks for a legacy v3 size",
+      "region": "Central US",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "VM Standard_D4s_v5 Linux x1 @ 730 h/mo",
+            "meterId": "a703efcb-d9d1-5ae6-973d-aeaec5d53773",
+            "meterName": "D4s v5",
+            "productName": "Virtual Machines Dsv5 Series",
+            "skuName": "Standard_D4s_v5",
+            "unitOfMeasure": "1 Hour",
+            "unitPrice": 0.217,
+            "qty": 730,
+            "qtyUnitsNote": "730 hours x 1 instance(s)",
+            "monthlyList": 158.41
+          },
+          {
+            "desc": "Managed disk E10 LRS (128 GiB requirement) x1",
+            "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+            "meterName": "E10 LRS Disk",
+            "productName": "Standard SSD Managed Disks",
+            "skuName": "E10 LRS",
+            "unitOfMeasure": "1/Month",
+            "unitPrice": 9.6,
+            "qty": 1,
+            "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+            "monthlyList": 9.6
+          }
+        ],
+        "monthlyList": 168.01,
+        "monthlyDiscounted": 141.12
+      },
+      "variants": {
+        "vm": {
+          "Standard_D4s_v3": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 160.6,
+            "perInstanceMonthlyDiscounted": 134.9,
+            "totalMonthlyList": 160.6,
+            "totalMonthlyDiscounted": 134.9,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v3 Linux x1 @ 730 h/mo",
+                "meterId": "41d09603-d895-445f-9a77-b3b2f6453eeb",
+                "meterName": "D4s v3",
+                "productName": "Virtual Machines DSv3 Series",
+                "skuName": "D4s v3",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.22,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 160.6
+              }
+            ]
+          },
+          "Standard_D4s_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 158.41,
+            "perInstanceMonthlyDiscounted": 133.06,
+            "totalMonthlyList": 158.41,
+            "totalMonthlyDiscounted": 133.06,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v5 Linux x1 @ 730 h/mo",
+                "meterId": "a703efcb-d9d1-5ae6-973d-aeaec5d53773",
+                "meterName": "D4s v5",
+                "productName": "Virtual Machines Dsv5 Series",
+                "skuName": "Standard_D4s_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.217,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 158.41
+              }
+            ]
+          },
+          "Standard_D4as_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 141.62,
+            "perInstanceMonthlyDiscounted": 118.96,
+            "totalMonthlyList": 141.62,
+            "totalMonthlyDiscounted": 118.96,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v5 Linux x1 @ 730 h/mo",
+                "meterId": "bca8ad5a-dfac-50d0-8c16-e57d62f8e721",
+                "meterName": "D4as v5",
+                "productName": "Virtual Machines Dasv5 Series",
+                "skuName": "Standard_D4as_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.194,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 141.62
+              }
+            ]
+          },
+          "Standard_D4s_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 166.44,
+            "perInstanceMonthlyDiscounted": 139.81,
+            "totalMonthlyList": 166.44,
+            "totalMonthlyDiscounted": 139.81,
+            "lines": [
+              {
+                "desc": "VM Standard_D4s_v6 Linux x1 @ 730 h/mo",
+                "meterId": "1b3fa6d6-532d-55e2-8a78-a3ce7a8a4764",
+                "meterName": "D4s v6",
+                "productName": "Virtual Machines Dsv6 Series",
+                "skuName": "D4s v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.228,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 166.44
+              }
+            ]
+          },
+          "Standard_D4as_v6": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 149.65,
+            "perInstanceMonthlyDiscounted": 125.71,
+            "totalMonthlyList": 149.65,
+            "totalMonthlyDiscounted": 125.71,
+            "lines": [
+              {
+                "desc": "VM Standard_D4as_v6 Linux x1 @ 730 h/mo",
+                "meterId": "f3b1120c-9b6c-5712-9026-b20848def370",
+                "meterName": "D4as v6",
+                "productName": "Virtual Machines Dasv6 Series",
+                "skuName": "D4as v6",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.205,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 149.65
+              }
+            ]
+          },
+          "Standard_D4ds_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 186.15,
+            "perInstanceMonthlyDiscounted": 156.37,
+            "totalMonthlyList": 186.15,
+            "totalMonthlyDiscounted": 156.37,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ds_v5 Linux x1 @ 730 h/mo",
+                "meterId": "d7fc46a0-4348-5011-a97f-24664199c002",
+                "meterName": "D4ds v5",
+                "productName": "Virtual Machines Ddsv5 Series",
+                "skuName": "Standard_D4ds_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.255,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 186.15
+              }
+            ]
+          },
+          "Standard_D4ads_v5": {
+            "os": "linux",
+            "hours": 730,
+            "count": 1,
+            "includesRhelLicense": false,
+            "perInstanceMonthlyList": 170.09,
+            "perInstanceMonthlyDiscounted": 142.88,
+            "totalMonthlyList": 170.09,
+            "totalMonthlyDiscounted": 142.88,
+            "lines": [
+              {
+                "desc": "VM Standard_D4ads_v5 Linux x1 @ 730 h/mo",
+                "meterId": "0fd2a8b8-d4fb-58b7-96cc-e59d6939336a",
+                "meterName": "D4ads v5",
+                "productName": "Virtual Machines Dadsv5 Series",
+                "skuName": "Standard_D4ads_v5",
+                "unitOfMeasure": "1 Hour",
+                "unitPrice": 0.233,
+                "qty": 730,
+                "qtyUnitsNote": "730 hours x 1 instance(s)",
+                "monthlyList": 170.09
+              }
+            ]
+          }
+        },
+        "disk": {
+          "E10": {
+            "perDiskMonthlyList": 9.6,
+            "count": 1,
+            "monthlyList": 9.6,
+            "monthlyDiscounted": 8.06,
+            "lines": [
+              {
+                "desc": "Managed disk E10 LRS x1",
+                "meterId": "cac6aadf-4353-41e9-b83a-2cf35ebe3e62",
+                "meterName": "E10 LRS Disk",
+                "productName": "Standard SSD Managed Disks",
+                "skuName": "E10 LRS",
+                "unitOfMeasure": "1/Month",
+                "unitPrice": 9.6,
+                "qty": 1,
+                "qtyUnitsNote": "1 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
+                "monthlyList": 9.6
+              }
+            ]
+          }
+        }
+      },
+      "notes": [
+        "E10 LRS is a fixed-size tier billed per disk per month, not per GiB."
+      ]
+    },
+    "s20-azure-files": {
+      "title": "Azure Files for user shares",
+      "region": "East US 2",
+      "currency": "USD",
+      "discountPct": 0.16,
+      "canonical": {
+        "lines": [
+          {
+            "desc": "Azure Files provisioned v2 HDD LRS: 5120 GiB provisioned storage",
+            "meterId": "01c1e28d-63c8-593d-83c8-4f4df2641ec5",
+            "meterName": "HDD LRS Provisioned Storage",
+            "productName": "Azure Files Provisioned v2",
+            "skuName": "HDD LRS",
+            "unitOfMeasure": "1 GiB/Hour",
+            "unitPrice": 0.00001,
+            "qty": 3737600,
+            "qtyUnitsNote": "5120 GiB x 730 h",
+            "monthlyList": 37.38
+          },
+          {
+            "desc": "Azure Files provisioned v2 HDD LRS: 2024 provisioned IOPS (Learn default baseline)",
+            "meterId": "778cde41-17e8-5034-b011-f739949eec8c",
+            "meterName": "HDD LRS Provisioned IOPS",
+            "productName": "Azure Files Provisioned v2",
+            "skuName": "HDD LRS",
+            "unitOfMeasure": "1/Hour",
+            "unitPrice": 0.000055,
+            "qty": 1477520,
+            "qtyUnitsNote": "MIN(MAX(1000 + CEILING(0.2 x 5120), 500), 50000) = 2024 IOPS x 730 h",
+            "monthlyList": 81.26
+          },
+          {
+            "desc": "Azure Files provisioned v2 HDD LRS: 163 MiB/s provisioned throughput (Learn default baseline)",
+            "meterId": "b2d2a7b9-9e92-5a4c-9dc9-f43cd1af121c",
+            "meterName": "HDD LRS Provisioned Throughput MiBPS",
+            "productName": "Azure Files Provisioned v2",
+            "skuName": "HDD LRS",
+            "unitOfMeasure": "1/Hour",
+            "unitPrice": 0.000082,
+            "qty": 118990,
+            "qtyUnitsNote": "MIN(MAX(60 + CEILING(0.02 x 5120), 60), 5120) = 163 MiB/s x 730 h",
+            "monthlyList": 9.76
+          }
+        ],
+        "monthlyList": 128.4,
+        "monthlyDiscounted": 107.86
+      },
+      "variants": {
+        "files": {
+          "ProvisionedV2HDD": {
+            "monthlyList": 128.4,
+            "monthlyDiscounted": 107.86,
+            "lines": [
+              {
+                "desc": "Azure Files provisioned v2 HDD LRS: 5120 GiB provisioned storage",
+                "meterId": "01c1e28d-63c8-593d-83c8-4f4df2641ec5",
+                "meterName": "HDD LRS Provisioned Storage",
+                "productName": "Azure Files Provisioned v2",
+                "skuName": "HDD LRS",
+                "unitOfMeasure": "1 GiB/Hour",
+                "unitPrice": 0.00001,
+                "qty": 3737600,
+                "qtyUnitsNote": "5120 GiB x 730 h",
+                "monthlyList": 37.38
+              },
+              {
+                "desc": "Azure Files provisioned v2 HDD LRS: 2024 provisioned IOPS (Learn default baseline)",
+                "meterId": "778cde41-17e8-5034-b011-f739949eec8c",
+                "meterName": "HDD LRS Provisioned IOPS",
+                "productName": "Azure Files Provisioned v2",
+                "skuName": "HDD LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000055,
+                "qty": 1477520,
+                "qtyUnitsNote": "MIN(MAX(1000 + CEILING(0.2 x 5120), 500), 50000) = 2024 IOPS x 730 h",
+                "monthlyList": 81.26
+              },
+              {
+                "desc": "Azure Files provisioned v2 HDD LRS: 163 MiB/s provisioned throughput (Learn default baseline)",
+                "meterId": "b2d2a7b9-9e92-5a4c-9dc9-f43cd1af121c",
+                "meterName": "HDD LRS Provisioned Throughput MiBPS",
+                "productName": "Azure Files Provisioned v2",
+                "skuName": "HDD LRS",
+                "unitOfMeasure": "1/Hour",
+                "unitPrice": 0.000082,
+                "qty": 118990,
+                "qtyUnitsNote": "MIN(MAX(60 + CEILING(0.02 x 5120), 60), 5120) = 163 MiB/s x 730 h",
+                "monthlyList": 9.76
+              }
+            ],
+            "notes": [
+              "Provisioned v2 HDD has no free IOPS/throughput band in the API (unlike SSD, which has explicit \"... Free\" meters), so the Learn recommendation-formula defaults are provisioned and billed: 2024 IOPS and 163 MiB/s for 5120 GiB."
+            ]
+          },
+          "Hot": {
+            "monthlyList": 130.56,
+            "monthlyDiscounted": 109.67,
+            "lines": [
+              {
+                "desc": "Azure Files pay-as-you-go hot LRS: 5120 GB stored",
+                "meterId": "cfdd14e3-8039-4c17-947d-4e7e541831d3",
+                "meterName": "Hot LRS Data Stored",
+                "productName": "Files v2",
+                "skuName": "Hot LRS",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.0255,
+                "qty": 5120,
+                "qtyUnitsNote": "5120 GB/month",
+                "monthlyList": 130.56
+              }
+            ],
+            "notes": [
+              "Pay-as-you-go Azure Files bills data stored plus transactions; no transaction volume was supplied by the customer, so only the data-stored component is priced."
+            ]
+          },
+          "TransactionOptimized": {
+            "monthlyList": 307.2,
+            "monthlyDiscounted": 258.05,
+            "lines": [
+              {
+                "desc": "Azure Files pay-as-you-go transaction optimized LRS: 5120 GB stored",
+                "meterId": "ed8a651a-e0a3-4de6-a8ae-3b4ce8cb72cf",
+                "meterName": "LRS Data Stored",
+                "productName": "Files v2",
+                "skuName": "Standard LRS",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.06,
+                "qty": 5120,
+                "qtyUnitsNote": "5120 GB/month",
+                "monthlyList": 307.2
+              }
+            ],
+            "notes": [
+              "Pay-as-you-go Azure Files bills data stored plus transactions; no transaction volume was supplied by the customer, so only the data-stored component is priced."
+            ]
+          },
+          "Cool": {
+            "monthlyList": 76.8,
+            "monthlyDiscounted": 64.51,
+            "lines": [
+              {
+                "desc": "Azure Files pay-as-you-go cool LRS: 5120 GB stored",
+                "meterId": "2d9ada9a-894e-4c86-aefa-271fedd07472",
+                "meterName": "Cool LRS Data Stored",
+                "productName": "Files v2",
+                "skuName": "Cool LRS",
+                "unitOfMeasure": "1 GB/Month",
+                "unitPrice": 0.015,
+                "qty": 5120,
+                "qtyUnitsNote": "5120 GB/month",
+                "monthlyList": 76.8
+              }
+            ],
+            "notes": [
+              "Pay-as-you-go Azure Files bills data stored plus transactions; no transaction volume was supplied by the customer, so only the data-stored component is priced."
+            ]
+          }
+        }
+      },
+      "notes": [
+        "Provisioned v2 HDD has no free IOPS/throughput band in the API (unlike SSD, which has explicit \"... Free\" meters), so the Learn recommendation-formula defaults are provisioned and billed: 2024 IOPS and 163 MiB/s for 5120 GiB."
+      ]
+    }
+  }
+}
