@@ -27,7 +27,7 @@ describe what they need, not SKU names, and the skill does the rest.
 | ✅ | [Why you can trust the numbers](#why-you-can-trust-the-numbers) | Engine math, readback, verified answers |
 | 📚 | [Advice backed by Microsoft guidance](#advice-backed-by-microsoft-guidance) | 97 cited rules |
 | 🖥️ | [VM sizes: Current and Extended only](#vm-sizes-current-and-extended-only) | End of Life sizes are never priced |
-| 🧩 | [Coverage](#coverage) | Services the engine prices |
+| 🧩 | [Coverage](#coverage) | 21 services in depth, any other service via the generic meter |
 | ⚠️ | [Limits](#limits) | What it is and is not |
 | 🛠️ | [CLI reference](#cli-reference) | Setup commands |
 | ⚙️ | [Advanced](#advanced-running-the-engine-directly) | Running the engine directly |
@@ -227,13 +227,32 @@ November 15, 2029), and prices the current equivalent instead.
 
 ## Coverage
 
+The engine prices Azure services in two tiers.
+
+**Tier 1, dedicated recipes (deep coverage).** These services have their own interview questions,
+correct units, graduated tiers and free grants, cited Microsoft advice, and prices checked against an
+independent oracle:
+
 VMs (Linux, Windows, Windows with Azure Hybrid Benefit, Red Hat, SUSE; pay-as-you-go, 1- and 3-year
 reservations, 1- and 3-year savings plans), managed disks (Standard HDD, Standard SSD, Premium SSD,
 Premium SSD v2), public IPs, internet egress, Standard Load Balancer, Application Gateway v2, AKS,
 App Service, Azure Functions (Consumption, Flex Consumption), Container Apps, Azure SQL Database,
 SQL Managed Instance, PostgreSQL and MySQL flexible server, Cosmos DB, Blob storage, Azure Files,
-Log Analytics, Azure OpenAI models, and any other meter through a generic component. Prices in any
-currency the Retail Prices API supports.
+Log Analytics and Azure OpenAI models.
+
+**Tier 2, generic meter (any other service).** Anything else in the Azure Retail Prices API, for
+example Key Vault, Azure Backup, Redis, Event Hubs, Azure Bastion, VPN Gateway, Azure Firewall,
+Data Factory or AI Search, can be priced: the agent finds the exact meter with `azp search` and the
+engine prices it live and adds it to the itemization. This tier is weaker than tier 1: the agent has
+to choose the right meter and quantity, there are no service-specific questions or advice, and these
+prices are not covered by the oracle tests. The estimate labels these lines as priced from a generic
+meter.
+
+**Roadmap:** the goal is tier 1 coverage in line with the
+[Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/), adding dedicated
+recipes service by service.
+
+Prices are available in any currency the Retail Prices API supports.
 
 ## Limits
 
