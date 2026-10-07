@@ -1,0 +1,142 @@
+{
+  "rules": {
+    "virtual-desktop-per-user-external-only": {
+      "level": "warn",
+      "title": "Per-user access pricing is only for external users",
+      "body": "This estimate charges per-user access for external users. That pricing does not cover your own employees, students or contractors, who need a Microsoft 365 or Windows Enterprise licence instead. Confirm every counted user is a customer or other outside party.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Virtual Desktop licensing",
+        "url": "https://learn.microsoft.com/azure/virtual-desktop/licensing",
+        "quote": "It doesn't grant access to members of your own organization or contractors for internal business purposes"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-desktop",
+            "where": {
+              "facts.externalUsers": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "virtual-desktop-separate-subscription": {
+      "level": "warn",
+      "title": "Keep licensed staff on a separate subscription from per-user access pricing",
+      "body": "This estimate has external users on per-user access pricing and also session hosts for more users than those external ones, so some staff or contractors are using the session hosts. Staff covered by their own licences should connect through a subscription that is not enrolled in per-user access pricing, or you pay twice for them.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Virtual Desktop licensing",
+        "url": "https://learn.microsoft.com/azure/virtual-desktop/licensing",
+        "quote": "we recommend you give them access to Azure Virtual Desktop through a separate subscription that isn't enrolled in per-user access pricing to avoid effectively paying twice for those users"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-desktop",
+            "where": {
+              "facts.externalUsers": {
+                ">": 0
+              },
+              "facts.internalUsers": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "virtual-desktop-windows-server-no-per-user": {
+      "level": "warn",
+      "title": "Per-user access pricing is not available for Windows Server session hosts",
+      "body": "This estimate uses Windows Server session hosts and also charges per-user access. Microsoft says per-user access pricing is not available for Windows Server operating systems; use Windows 11 or Windows 10 session hosts for those users, or license them another way.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Virtual Desktop licensing",
+        "url": "https://learn.microsoft.com/azure/virtual-desktop/licensing",
+        "quote": "Per-user access pricing isn't available for Windows Server operating systems"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-desktop",
+            "where": {
+              "facts.hostOs": {
+                "in": [
+                  "windows-server",
+                  "windows-server-ahb"
+                ]
+              },
+              "facts.externalUsers": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "virtual-desktop-scaling-plan": {
+      "level": "info",
+      "title": "A scaling plan can cut session host hours",
+      "body": "The session hosts in this estimate run all month. A scaling plan (autoscale) switches hosts off or down outside busy hours, which usually saves a large share of the host cost for pooled desktops. Compare the scaling-plan option.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Autoscale for Azure Virtual Desktop session hosts",
+        "url": "https://learn.microsoft.com/azure/virtual-desktop/autoscale-scaling-plan",
+        "quote": "Autoscale lets you scale your session host virtual machines in a host pool up or down according to schedule to optimize deployment costs"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-desktop",
+            "where": {
+              "facts.scaling": "always-on"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "virtual-desktop-linux-rates": {
+      "level": "warn",
+      "title": "Windows 10/11 session hosts are billed at Linux rates",
+      "body": "This estimate prices an Azure Virtual Desktop component and also a separate VM with Windows Server licensing included. If that VM is an Azure Virtual Desktop session host running Windows 11 or Windows 10, it is billed at Linux compute rates and the Windows price overstates it (use os linux, or give the users to the virtual-desktop component). Ignore this if the VM is an unrelated Windows server.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Virtual Desktop pricing",
+        "url": "https://azure.microsoft.com/pricing/details/virtual-desktop/",
+        "quote": "Azure Virtual Desktop virtual machines (VMs) are charged at Linux compute rates for Windows 11 and Windows 10 single-session and multi-session operating systems"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-desktop"
+          },
+          {
+            "type": "vm",
+            "where": {
+              "facts.os": "windows"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "rules": {
+    "redis-classic-retirement": {
+      "test": {
+        "fires": {
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "redis",
+                  "tier": "standard",
+                  "size": "c1"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "region": "eastus2",
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "size": "b5",
+                  "type": "managed-redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "redis-basic-production": {
+      "test": {
+        "fires": {
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "redis",
+                  "tier": "basic",
+                  "size": "c1"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "redis",
+                  "tier": "standard",
+                  "size": "c1"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "redis-enterprise-blocked": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "enterprise",
+                  "size": "e10",
+                  "type": "redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "premium",
+                  "size": "p1",
+                  "type": "redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "redis-enterprise-software-license": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "enterprise",
+                  "size": "e10",
+                  "type": "redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "enterprise",
+                  "size": "e1",
+                  "type": "redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

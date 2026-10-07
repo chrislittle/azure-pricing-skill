@@ -1,0 +1,85 @@
+{
+  "rules": {
+    "cassandra-mi-nodes-multiple-of-3": {
+      "level": "warn",
+      "title": "Node count is not a multiple of 3",
+      "body": "Microsoft recommends the number of nodes per datacenter be a multiple of the replication factor (3), so 3, 6, 9... Uneven counts leave data unevenly spread. Confirm the node count or round it to a multiple of 3.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Best practices for optimal performance in Azure Managed Instance for Apache Cassandra",
+        "url": "https://learn.microsoft.com/azure/managed-instance-apache-cassandra/best-practice-performance",
+        "quote": "We also recommend that you specify a multiple of the replication factor as the number of nodes."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cassandra-mi",
+            "where": {
+              "facts.nodesMultipleOf3": {
+                "!=": true
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "cassandra-mi-production-small-nodes": {
+      "level": "warn",
+      "title": "Nodes under 16 cores for production",
+      "body": "This production estimate uses Cassandra nodes with fewer than 16 cores. Microsoft says most workloads need at least 16 cores to perform properly. Confirm the workload is small, or price a larger node size.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Best practices for optimal performance in Azure Managed Instance for Apache Cassandra",
+        "url": "https://learn.microsoft.com/azure/managed-instance-apache-cassandra/best-practice-performance",
+        "quote": "Most workloads need a minimum of 16 cores to perform properly."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "cassandra-mi",
+            "where": {
+              "facts.vcpus": {
+                "<": 16
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "cassandra-mi-few-disks": {
+      "level": "warn",
+      "title": "Fewer than 4 data disks per node",
+      "body": "Microsoft strongly recommends at least four P30 disks on each Cassandra node. Fewer disks give less storage and less disk throughput per node.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Quickstart: Create an Azure Managed Instance for Apache Cassandra cluster from the Azure portal",
+        "url": "https://learn.microsoft.com/azure/managed-instance-apache-cassandra/create-cluster-portal",
+        "quote": "Select the number of P30 disks to attach to each Cassandra node (a minimum of four is strongly recommended)."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cassandra-mi",
+            "where": {
+              "facts.disksPerNode": {
+                "<": 4
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    }
+  }
+}

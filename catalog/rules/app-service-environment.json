@@ -1,0 +1,143 @@
+{
+  "rules": {
+    "app-service-environment-dedicated-host-two-hosts": {
+      "level": "info",
+      "title": "A dedicated host environment bills two hosts from the start",
+      "body": "This estimate deploys the environment on dedicated hosts. Microsoft states you pay for two dedicated hosts when the environment is created, plus a per-vCPU rate as you scale, so even a small environment carries the fixed host cost.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "App Service Environment overview",
+        "url": "https://learn.microsoft.com/azure/app-service/environment/overview",
+        "quote": "You pay for two dedicated hosts at the time of environment creation, based on current pricing."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-service-environment",
+            "where": {
+              "facts.deployment": "dedicated-host"
+            }
+          }
+        ]
+      },
+      "group": "web"
+    },
+    "app-service-environment-empty-charge": {
+      "level": "info",
+      "title": "An empty App Service Environment is still charged",
+      "body": "This estimate has an environment with no instances. Microsoft states that an empty App Service Environment v3 is charged as one Windows I1v2 instance, so delete environments you are not using.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "App Service Environment overview",
+        "url": "https://learn.microsoft.com/azure/app-service/environment/overview",
+        "quote": "If the environment is empty, you're charged as if you have one instance of Windows I1v2."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-service-environment",
+            "where": {
+              "facts.empty": true
+            }
+          }
+        ]
+      },
+      "group": "web"
+    },
+    "app-service-environment-reserved-pricing": {
+      "level": "info",
+      "title": "Reserved pricing is available for Isolated v2 instances",
+      "body": "You said you will keep running this for a year or longer, but the environment is priced pay-as-you-go. Microsoft states reserved instance pricing is available for Isolated v2; compare it with the commitment option in this estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "App Service Environment overview",
+        "url": "https://learn.microsoft.com/azure/app-service/environment/overview",
+        "quote": "You can also use reserved instance pricing for Iv2"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "app-service-environment",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.instances": {
+                ">": 0
+              },
+              "facts.hours": {
+                ">=": 730
+              },
+              "facts.generation": "v2"
+            }
+          }
+        ]
+      },
+      "group": "web"
+    },
+    "app-service-environment-zone-redundancy-two-instances": {
+      "level": "warn",
+      "title": "Zone redundancy needs at least two instances per plan",
+      "body": "You asked for zone resilience, but this plan has fewer than two instances. Microsoft states each zone-redundant App Service plan needs at least two instances to spread across zones; zone redundancy itself adds no charge, but the second instance does.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "App Service Environment overview",
+        "url": "https://learn.microsoft.com/azure/app-service/environment/overview",
+        "quote": "Each App Service plan must have at least two instances to distribute them across zones."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "app-service-environment",
+            "where": {
+              "facts.deployment": "standard",
+              "facts.instances": {
+                "<": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "web"
+    },
+    "app-service-environment-dedicated-host-not-zone-redundant": {
+      "level": "warn",
+      "title": "Dedicated host environments are not zone redundant",
+      "body": "You asked for zone resilience, but this environment runs on dedicated hosts. Microsoft states host group deployments are not zone redundant; use the standard deployment if zone resilience matters.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "App Service Environment overview",
+        "url": "https://learn.microsoft.com/azure/app-service/environment/overview",
+        "quote": "Host group deployments aren't zone redundant."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "app-service-environment",
+            "where": {
+              "facts.deployment": "dedicated-host"
+            }
+          }
+        ]
+      },
+      "group": "web"
+    }
+  }
+}

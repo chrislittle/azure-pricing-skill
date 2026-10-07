@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "ai-search-free-no-sla": {
+      "level": "warn",
+      "title": "The Free tier of Azure AI Search has no SLA",
+      "body": "This workload is production but uses the Free tier of Azure AI Search. Microsoft says not to use the Free tier for production and that it carries no SLA and a single replica. Choose Basic or higher.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure AI Search",
+        "url": "https://learn.microsoft.com/azure/search/search-reliability",
+        "quote": "Don't use the Free tier for production use. AI Search doesn't provide an SLA for the Free tier, which is limited to one replica."
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "ai-search", "where": { "facts.tier": "free" } } ] },
+      "group": "ai"
+    },
+    "ai-search-production-replicas": {
+      "level": "warn",
+      "title": "Production Azure AI Search should have at least two replicas",
+      "body": "This workload is production but the paid Azure AI Search service has a single replica. Microsoft recommends at least two replicas so the service survives maintenance and transient faults (and three or more if it also writes while serving). Each extra replica adds one search unit per partition to the hourly cost.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure AI Search",
+        "url": "https://learn.microsoft.com/azure/search/search-reliability",
+        "quote": "Use a billable tier that has at least two replicas"
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "ai-search", "where": { "facts.tier": { "in": ["basic", "s1", "s2", "s3", "l1", "l2"] }, "facts.replicas": { "<": 2 } } } ] },
+      "group": "ai"
+    },
+    "ai-search-zone-redundancy-replicas": {
+      "level": "warn",
+      "title": "Zone-redundant Azure AI Search needs at least two replicas",
+      "body": "This workload needs zone resilience but the paid Azure AI Search service has a single replica. Microsoft says replicas are what spread across availability zones, so use at least two (each extra replica adds one search unit per partition to the hourly cost).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure AI Search",
+        "url": "https://learn.microsoft.com/azure/search/search-reliability",
+        "quote": "Your service must have at least two replicas"
+      },
+      "when": { "scope": "option", "context": { "zoneResilience": true }, "all": [ { "type": "ai-search", "where": { "facts.tier": { "in": ["basic", "s1", "s2", "s3", "l1", "l2"] }, "facts.replicas": { "<": 2 } } } ] },
+      "group": "ai"
+    }
+  }
+}

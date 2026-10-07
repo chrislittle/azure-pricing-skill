@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "sentinel-payg-high-volume-commitment-tier": {
+      "level": "info",
+      "title": "A commitment tier is likely cheaper than pay-as-you-go at this volume",
+      "body": "This estimate prices 35 GB/day or more of analytics logs at pay-as-you-go. Sentinel commitment tiers (a fixed daily amount, with overage billed at the same effective rate) are priced below pay-as-you-go from about 34 GB/day (the 50 GB/day tier), so compare them before committing to the pay-as-you-go rate; set commitment to cheapest to see the lowest option.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan costs and understand Microsoft Sentinel pricing and billing",
+        "url": "https://learn.microsoft.com/azure/sentinel/billing",
+        "quote": "These pricing tiers are combined into simplified pricing tiers that are more predictable and offer substantial savings compared to"
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "sentinel", "where": { "facts.commitment": "payg", "facts.analyticsGBPerDay": { ">=": 35 } } } ] },
+      "group": "cost"
+    }
+  }
+}
+

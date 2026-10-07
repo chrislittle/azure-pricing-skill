@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "virtual-enclaves-full-hour-billing": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "virtual-enclaves", "enclaves": 2, "hours": 100 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "virtual-enclaves", "enclaves": 2 } ] } ] } } }
+  }
+}

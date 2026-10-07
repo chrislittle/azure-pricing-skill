@@ -1,0 +1,102 @@
+{
+  "rules": {
+    "app-insights-multistep-legacy": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 10,
+                  "multiStepTests": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 10,
+                  "standardTests": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-insights-commitment-tier": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 4000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-insights-sampling": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 200
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-insights",
+                  "ingestGbPerMonth": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "nat-gateway-standardv2-zone-redundant": {
+      "level": "info",
+      "title": "NAT Gateway StandardV2 is zone-redundant at the same price",
+      "body": "This estimate must keep running through a datacenter (zone) failure but uses NAT Gateway Standard, which supports a single availability zone. Microsoft states StandardV2 provides zone redundancy and costs the same, so choose standardv2.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure NAT Gateway pricing",
+        "url": "https://azure.microsoft.com/pricing/details/azure-nat-gateway/",
+        "quote": "Standard provides single availability zone support, whereas StandardV2 provides zone redundancy. Both are matched in price."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "nat-gateway",
+            "where": {
+              "facts.sku": "standard"
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

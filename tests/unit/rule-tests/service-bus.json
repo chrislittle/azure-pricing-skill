@@ -1,0 +1,173 @@
+{
+  "rules": {
+    "service-bus-standard-production-latency": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "standard",
+                  "operations": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "premium",
+                  "operations": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "service-bus-batching-high-volume": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "standard",
+                  "operations": 200000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "standard",
+                  "operations": 20000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "service-bus-premium-non-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "premium",
+                  "operations": 0,
+                  "messagingUnits": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": false
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "standard",
+                  "operations": 1000000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": false
+          }
+        }
+      }
+    },
+    "service-bus-premium-geo-replication-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "premium",
+                  "operations": 0,
+                  "messagingUnits": 2
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "service-bus",
+                  "tier": "premium",
+                  "operations": 0,
+                  "messagingUnits": 2,
+                  "geoReplicas": 1,
+                  "geoReplicationGb": 100
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          }
+        }
+      }
+    }
+  }
+}

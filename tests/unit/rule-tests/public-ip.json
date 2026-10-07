@@ -1,0 +1,68 @@
+{
+  "rules": {
+    "public-ip-prefix-above-default": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "prefixAddresses": 32
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "prefixAddresses": 16
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "public-ip-basic-retired": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "tier": "basic-static"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "public-ip",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

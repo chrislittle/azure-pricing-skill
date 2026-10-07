@@ -1,0 +1,95 @@
+{
+  "rules": {
+    "event-grid-standard-without-mqtt": {
+      "level": "info",
+      "title": "Standard Event Grid adds a fixed hourly cost",
+      "body": "This Event Grid namespace has no MQTT traffic. Basic bills per operation only, while Standard adds throughput units billed every hour. Unless the workload needs pull delivery or namespace features, price Basic as well.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Event Grid",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-event-grid",
+        "quote": "The Basic tier uses per-operation pricing, which provides predictable costs for low-volume, simple push delivery scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "event-grid",
+            "where": {
+              "facts.mqttOperations": {
+                "<": 1
+              },
+              "facts.tier": {
+                "in": [
+                  "standard"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "event-grid-throughput-units-fixed-cost": {
+      "level": "info",
+      "title": "Throughput units cost the same whether used or not",
+      "body": "This namespace runs more than one throughput unit. Each unit is billed every hour, so check the expected peak rate before adding units; extra units cannot be switched off between bursts.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Event Grid",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-event-grid",
+        "quote": "TUs have a fixed hourly cost regardless of usage."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "event-grid",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "standard"
+                ]
+              },
+              "facts.throughputUnits": {
+                ">": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "event-grid-batching-high-volume": {
+      "level": "info",
+      "title": "Batch events to cut per-operation costs",
+      "body": "This estimate has a very large number of operations. Delivering several events per operation lowers the operation count, so ask whether the subscribers can accept batches.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Event Grid",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-event-grid",
+        "quote": "Configure event batching to deliver multiple events in single operations and reduce per-operation costs."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "event-grid",
+            "where": {
+              "facts.operations": {
+                ">": 100000000
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    }
+  }
+}

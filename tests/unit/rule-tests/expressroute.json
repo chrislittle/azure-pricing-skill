@@ -1,0 +1,122 @@
+{
+  "rules": {
+    "expressroute-gateway-not-zone-redundant": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "gateway",
+                  "gatewaySku": "standard"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "gateway",
+                  "gatewaySku": "ergw1az"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        }
+      }
+    },
+    "expressroute-single-circuit-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "circuit",
+                  "circuits": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "circuit",
+                  "circuits": 1
+                },
+                {
+                  "type": "expressroute",
+                  "kind": "circuit",
+                  "circuits": 1,
+                  "zone": "zone2"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expressroute-delete-unused-circuits": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "circuit"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "expressroute",
+                  "kind": "gateway"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

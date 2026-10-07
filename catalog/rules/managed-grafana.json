@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "managed-grafana-essential-deprecated": {
+      "level": "warn",
+      "title": "The Essential Grafana plan is deprecated",
+      "body": "This estimate uses the Essential plan. Microsoft has deprecated it: new Essential workspaces cannot be created. Standard adds a per-hour compute charge on top of the per-user charge; Microsoft also offers a free Azure-native alternative, Azure Monitor dashboards with Grafana, for teams that only need dashboards.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Migrate from Azure Managed Grafana Essential to Standard",
+        "url": "https://learn.microsoft.com/azure/managed-grafana/how-to-migrate-essential-service-tier",
+        "quote": "The Azure Managed Grafana Essential service tier is deprecated and is scheduled for complete deprecation by March 31, 2027.",
+        "more": [
+          {
+            "source": "Migrate from Azure Managed Grafana Essential to Standard",
+            "quote": "Migrate to Azure Monitor dashboards with Grafana: Move your dashboards to a free, Azure-native alternative.",
+            "url": "https://learn.microsoft.com/azure/managed-grafana/how-to-migrate-essential-service-tier"
+          }
+        ]
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "managed-grafana",
+            "where": {
+              "facts.tier": "essential"
+            }
+          }
+        ]
+      },
+      "group": "management"
+    },
+    "managed-grafana-zone-redundancy-choice": {
+      "level": "info",
+      "title": "Zone redundancy can only be chosen at creation",
+      "body": "This production estimate uses a Standard workspace without zone redundancy. Microsoft states that zone redundancy can be enabled only when the workspace is created, so decide now: it adds an hourly charge per workspace.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Enable zone redundancy in Azure Managed Grafana",
+        "url": "https://learn.microsoft.com/azure/managed-grafana/how-to-enable-zone-redundancy",
+        "quote": "You can enable zone redundancy only when you create the workspace. You can't change this setting later."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "managed-grafana",
+            "where": {
+              "facts.tier": "standard",
+              "facts.zoneRedundancy": false
+            }
+          }
+        ]
+      },
+      "group": "management"
+    }
+  }
+}

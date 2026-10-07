@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "aks-acns-retina-oss-alternative": {
+      "level": "info",
+      "title": "Retina OSS is a free option for basic network observability",
+      "body": "Advanced Container Networking Services is billed per node. If the need is essential network monitoring only, the open-source Retina platform that Microsoft also supports is a free alternative; check whether the paid features are needed for all nodes.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Diagnose and resolve AKS network issues with ACNS",
+        "url": "https://learn.microsoft.com/azure/aks/container-network-observability-guide",
+        "quote": "While Advanced Container Networking Services (ACNS) is a paid offering that provides comprehensive network observability capabilities, Microsoft also supports"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "aks-acns",
+            "where": {
+              "facts.nodes": {
+                ">=": 10
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

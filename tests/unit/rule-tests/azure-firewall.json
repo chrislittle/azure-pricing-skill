@@ -1,0 +1,132 @@
+{
+  "rules": {
+    "azure-firewall-delete-unused": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "dataGB": 100,
+                  "hours": 100,
+                  "type": "azure-firewall",
+                  "firewalls": 1,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "dataGB": 100,
+                  "type": "azure-firewall",
+                  "firewalls": 1,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "azure-firewall-share-instance": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "azure-firewall",
+                  "tier": "standard",
+                  "firewalls": 1,
+                  "dataGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "azure-firewall",
+                  "tier": "standard",
+                  "firewalls": 2,
+                  "dataGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "azure-firewall-premium-nonprod": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "azure-firewall",
+                  "tier": "standard",
+                  "firewalls": 1,
+                  "dataGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "azure-firewall",
+                  "tier": "premium",
+                  "firewalls": 1,
+                  "dataGB": 100,
+                  "hours": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

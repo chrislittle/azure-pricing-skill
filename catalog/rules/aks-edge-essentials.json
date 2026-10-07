@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "aks-edge-essentials-arc-connected-billing": {
+      "level": "info",
+      "title": "AKS Edge Essentials is billed only once the cluster is connected to Azure Arc",
+      "body": "This estimate prices the Azure subscription model: the per-device monthly charge starts after AKS Edge Essentials is installed and the cluster is connected to Azure Arc. Devices that cannot connect to Azure need the volume licensing model (Enterprise Agreement customers, annual licence through the Volume Licensing Service Center), which is not billed through Azure and is not priced here.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "AKS Edge Essentials pricing",
+        "url": "https://learn.microsoft.com/azure/aks-hybrid-edge/edge-essentials/aks-edge-pricing",
+        "quote": "After you install AKS Edge Essentials on your device and connect your cluster to Azure Arc, a per-device per-month rate is applied."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "aks-edge-essentials"
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

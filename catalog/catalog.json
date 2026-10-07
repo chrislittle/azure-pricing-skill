@@ -363,119 +363,272 @@
     "B1": {
       "vcpu": 1,
       "memGiB": 1.75,
-      "product": "Basic Plan"
+      "product": "Basic Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "B2": {
       "vcpu": 2,
       "memGiB": 3.5,
-      "product": "Basic Plan"
+      "product": "Basic Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "B3": {
       "vcpu": 4,
       "memGiB": 7,
-      "product": "Basic Plan"
+      "product": "Basic Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
-    "S1": {
+    "F1": {
+      "vcpu": 0,
+      "memGiB": 1,
+      "product": "Free Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P1v2": {
       "vcpu": 1,
-      "memGiB": 1.75,
-      "product": "Standard Plan"
-    },
-    "S2": {
-      "vcpu": 2,
       "memGiB": 3.5,
-      "product": "Standard Plan"
+      "product": "Premium v2 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
-    "S3": {
-      "vcpu": 4,
+    "P2v2": {
+      "vcpu": 2,
       "memGiB": 7,
-      "product": "Standard Plan"
+      "product": "Premium v2 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P3v2": {
+      "vcpu": 4,
+      "memGiB": 14,
+      "product": "Premium v2 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P0v3": {
       "vcpu": 1,
       "memGiB": 4,
       "product": "Premium v3 Plan",
-      "sku": "P0 v3"
-    },
-    "P1v3": {
-      "vcpu": 2,
-      "memGiB": 8,
-      "product": "Premium v3 Plan",
-      "sku": "P1 v3"
-    },
-    "P2v3": {
-      "vcpu": 4,
-      "memGiB": 16,
-      "product": "Premium v3 Plan",
-      "sku": "P2 v3"
-    },
-    "P3v3": {
-      "vcpu": 8,
-      "memGiB": 32,
-      "product": "Premium v3 Plan",
-      "sku": "P3 v3"
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P1mv3": {
       "vcpu": 2,
       "memGiB": 16,
       "product": "Premium v3 Plan",
-      "sku": "P1mv3"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P1v3": {
+      "vcpu": 2,
+      "memGiB": 8,
+      "product": "Premium v3 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P2mv3": {
       "vcpu": 4,
       "memGiB": 32,
       "product": "Premium v3 Plan",
-      "sku": "P2mv3"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P2v3": {
+      "vcpu": 4,
+      "memGiB": 16,
+      "product": "Premium v3 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P3mv3": {
       "vcpu": 8,
       "memGiB": 64,
       "product": "Premium v3 Plan",
-      "sku": "P3mv3"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P3v3": {
+      "vcpu": 8,
+      "memGiB": 32,
+      "product": "Premium v3 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P4mv3": {
       "vcpu": 16,
       "memGiB": 128,
       "product": "Premium v3 Plan",
-      "sku": "P4mv3"
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P5mv3": {
       "vcpu": 32,
       "memGiB": 256,
       "product": "Premium v3 Plan",
-      "sku": "P5mv3"
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P0v4": {
       "vcpu": 1,
-      "memGiB": null,
+      "memGiB": 4,
       "product": "Premium v4 Plan",
-      "sku": "P0v4"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P1mv4": {
+      "vcpu": 2,
+      "memGiB": 16,
+      "product": "Premium v4 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P1v4": {
       "vcpu": 2,
-      "memGiB": null,
+      "memGiB": 8,
       "product": "Premium v4 Plan",
-      "sku": "P1v4"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P2mv4": {
+      "vcpu": 4,
+      "memGiB": 32,
+      "product": "Premium v4 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P2v4": {
       "vcpu": 4,
-      "memGiB": null,
+      "memGiB": 16,
       "product": "Premium v4 Plan",
-      "sku": "P2v4"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P3mv4": {
+      "vcpu": 8,
+      "memGiB": 64,
+      "product": "Premium v4 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
     },
     "P3v4": {
       "vcpu": 8,
-      "memGiB": null,
+      "memGiB": 32,
       "product": "Premium v4 Plan",
-      "sku": "P3v4"
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P4mv4": {
+      "vcpu": 16,
+      "memGiB": 128,
+      "product": "Premium v4 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "P5mv4": {
+      "vcpu": 32,
+      "memGiB": 256,
+      "product": "Premium v4 Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "S1": {
+      "vcpu": 1,
+      "memGiB": 1.75,
+      "product": "Standard Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "S2": {
+      "vcpu": 2,
+      "memGiB": 3.5,
+      "product": "Standard Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "S3": {
+      "vcpu": 4,
+      "memGiB": 7,
+      "product": "Standard Plan",
+      "os": [
+        "linux",
+        "windows"
+      ]
+    },
+    "D1": {
+      "vcpu": 0,
+      "memGiB": 1,
+      "product": "Shared Plan",
+      "sku": "Shared",
+      "os": [
+        "windows"
+      ]
     }
   },
   "vmLifecycle": {
     "overview": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/lifecycle-overview",
     "restrictions": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/retirements-and-capacity-restrictions",
     "endOfLifeList": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/end-of-life-sizes-list",
-    "verified": "2026-10-01 against pages dated 2026-09-25",
+    "verified": "2026-10-05 against pages dated 2026-09-25",
     "policy": "Only Current and Extended size series are priced. Every series on the End of Life list, or retired, is refused.",
-    "retire2029Pattern": "^Standard_[DE]\\d+(-\\d+)?s?_v3$",
+    "retire2029Pattern": "^Standard_[DE]\\d+i?(-\\d+)?s?_v3$",
     "endOfLife": [
       {
         "series": "B-series (v1)",
@@ -491,11 +644,11 @@
       },
       {
         "series": "Dv2 and Dsv2",
-        "pattern": "^Standard_DS?\\d+(-\\d+)?_v2(_Promo)?$"
+        "pattern": "^Standard_DS?\\d+i?(-\\d+)?_v2(_Promo)?$"
       },
       {
         "series": "Dv3 and Dsv3",
-        "pattern": "^Standard_D\\d+s?_v3$"
+        "pattern": "^Standard_D\\d+(-\\d+)?s?_v3$"
       },
       {
         "series": "Av2 and Amv2",
@@ -511,7 +664,7 @@
       },
       {
         "series": "Ev3 and Esv3",
-        "pattern": "^Standard_E\\d+(-\\d+)?s?_v3$"
+        "pattern": "^Standard_E\\d+i?(-\\d+)?s?_v3$"
       },
       {
         "series": "G and GS",
@@ -523,14 +676,16 @@
       },
       {
         "series": "Lsv1 and Lsv2",
-        "pattern": "^Standard_L\\d+s(_v2)?$"
+        "pattern": "^Standard_L\\d+i?s(_v2)?$"
       },
       {
         "series": "NVv3",
+        "stage": "Announced retirement 09/30/26",
         "pattern": "^Standard_NV\\d+s_v3$"
       },
       {
         "series": "NVv4",
+        "stage": "Announced retirement 09/30/26",
         "pattern": "^Standard_NV\\d+as_v4$"
       },
       {
@@ -559,6 +714,21 @@
         "series": "H and HB (v1)",
         "stage": "Retired",
         "pattern": "^Standard_(H\\d+[mr]*|HB60(-\\d+)?rs)$"
+      },
+      {
+        "series": "DCsv2-series",
+        "stage": "Retired",
+        "pattern": "^Standard_DC\\d+s?_v2$"
+      },
+      {
+        "series": "DCas_cc_v5 and DCads_cc_v5",
+        "stage": "Retired",
+        "pattern": "^Standard_DC\\d+a(d)?s_cc_v5$"
+      },
+      {
+        "series": "ECas_cc_v5 and ECads_cc_v5",
+        "stage": "Retired",
+        "pattern": "^Standard_EC\\d+a(d)?s_cc_v5$"
       }
     ]
   },

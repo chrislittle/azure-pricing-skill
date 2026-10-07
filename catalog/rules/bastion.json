@@ -1,0 +1,88 @@
+{
+  "rules": {
+    "bastion-developer-for-devtest": {
+      "level": "info",
+      "title": "The free Bastion Developer SKU may be enough for dev/test",
+      "body": "This non-production estimate pays for a dedicated Bastion host. Microsoft recommends the free Developer SKU for individual dev/test use where you do not need concurrent connections or advanced features.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Bastion cost optimization principles",
+        "url": "https://learn.microsoft.com/azure/bastion/cost-optimization",
+        "quote": "Bastion Developer is free and perfect for dev/test workloads, eliminating costs entirely for these environments."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "bastion"
+          }
+        ]
+      },
+      "group": "network-security"
+    },
+    "bastion-hub-based-fewer-hosts": {
+      "level": "info",
+      "title": "Fewer Bastion hosts may do the job",
+      "body": "This estimate deploys several Bastion hosts and each bills hourly. A hub-and-spoke design with one Bastion in the hub can reach peered networks, which reduces the number of hosts you pay for.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Bastion cost optimization principles",
+        "url": "https://learn.microsoft.com/azure/bastion/cost-optimization",
+        "quote": "Hub-based deployment reduces the total number of Bastion resources needed."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "bastion",
+            "where": {
+              "facts.hosts": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "network-security"
+    },
+    "bastion-start-basic": {
+      "level": "info",
+      "title": "Is Standard needed, or is Basic enough?",
+      "body": "This production estimate uses Standard with no extra instances. Microsoft suggests starting with Basic unless you need Standard features such as native client, file transfer or shareable links; Basic costs less per hour.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Bastion cost optimization principles",
+        "url": "https://learn.microsoft.com/azure/bastion/cost-optimization",
+        "quote": "Start with Basic SKU for production environments unless advanced features are required."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "bastion",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "standard"
+                ]
+              },
+              "facts.additionalInstances": {
+                "<=": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "network-security"
+    }
+  }
+}

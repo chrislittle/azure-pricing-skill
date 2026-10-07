@@ -1,0 +1,109 @@
+{
+  "rules": {
+    "container-apps-dedicated-private-endpoint-management-fee": {
+      "level": "info",
+      "title": "Private endpoints and planned maintenance are separate hourly charges",
+      "body": "Microsoft states that private endpoints and planned maintenance on a Container Apps environment are subject to a Dedicated Plan Management charge. The estimate bills each feature as its own hourly line per environment (the plan management fee itself is added only when the environment has a Dedicated profile).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Billing in Azure Container Apps",
+        "url": "https://learn.microsoft.com/azure/container-apps/billing",
+        "quote": "features such as private endpoints and planned maintenance are subject to a"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "container-apps-dedicated",
+            "where": {
+              "facts.envFeature": true
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "container-apps-dedicated-serverless-gpu-no-idle-rate": {
+      "level": "info",
+      "title": "Serverless GPU is always billed at the active rate",
+      "body": "Serverless GPU replicas never get the reduced idle rate, so the estimate bills them at the active rate for every second they run. Scale them to zero when not in use to avoid charges.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Billing in Azure Container Apps",
+        "url": "https://learn.microsoft.com/azure/container-apps/billing",
+        "quote": "Idle usage charges don't apply to serverless GPU apps."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "container-apps-dedicated",
+            "where": {
+              "facts.serverlessGpu": true
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "container-apps-dedicated-savings-plan-steady": {
+      "level": "info",
+      "title": "Steady Dedicated usage can use a savings plan",
+      "body": "This Dedicated plan is priced pay-as-you-go but you expect steady usage. Microsoft advises committing to an hourly compute rate for one or three years; compare the savings plan option in this estimate.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Azure Container Apps service guide",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-container-apps",
+        "quote": "Take advantage of the Azure savings plan for compute by committing to a fixed hourly rate for one or three years."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "container-apps-dedicated",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.instances": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "container-apps-dedicated-serverless-gpu-variable": {
+      "level": "info",
+      "title": "Variable GPU demand suits serverless GPU",
+      "body": "This estimate reserves a Dedicated GPU instance, but the workload has idle periods. Microsoft recommends serverless GPUs with scale-to-zero for variable or bursty AI and machine learning demand; compare the serverless GPU option.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Azure Container Apps service guide",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-container-apps",
+        "quote": "Use serverless GPUs with scale-to-zero for AI and machine learning workloads that have variable or bursty demand."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "container-apps-dedicated",
+            "where": {
+              "facts.dedicatedGpu": true
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

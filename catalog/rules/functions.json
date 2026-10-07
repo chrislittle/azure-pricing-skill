@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "functions-consumption-linux-retirement": {
+      "level": "warn",
+      "title": "Linux Consumption hosting retires on 30 September 2028",
+      "body": "This app uses the Consumption plan. Hosting function apps on Linux in a Consumption plan retires on 30 September 2028 and the plan gets no new features. Plan the move to the Flex Consumption plan, which is Linux-only, scales faster, and bills configured instance memory.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Functions Consumption plan hosting (legacy)",
+        "url": "https://learn.microsoft.com/azure/azure-functions/consumption-plan",
+        "quote": "The option to host function apps on Linux in a Consumption plan is retiring on 30 September 2028."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "functions",
+            "where": {
+              "facts.plan": "consumption"
+            }
+          }
+        ]
+      },
+      "group": "app-platforms"
+    }
+  }
+}

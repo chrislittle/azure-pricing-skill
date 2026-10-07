@@ -1,0 +1,130 @@
+{
+  "rules": {
+    "databricks-dbcu-steady": {
+      "level": "info",
+      "title": "Compare an Azure Databricks prepurchase plan",
+      "body": "These Databricks DBUs are priced pay-as-you-go and are expected to run steadily for a year or longer. Compare a one-year or three-year Databricks commit unit (DBCU) prepurchase plan sized to the monthly DBU spend; the pool is drawn down at the DBU list price. The virtual machines under classic clusters are not covered by it.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize Azure Databricks costs with a prepurchase",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/reservations/prepay-databricks-reserved-capacity",
+        "quote": "You can save on your Azure Databricks unit (DBU) costs when you prepurchase Azure Databricks commit units (DBCU) for one or three years."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "databricks",
+            "where": {
+              "facts.commitment": {
+                "in": [
+                  "payg"
+                ]
+              },
+              "facts.annualDbuList": {
+                ">=": [
+                  12000
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "databricks-job-clusters": {
+      "level": "info",
+      "title": "Use job clusters for scheduled Databricks work",
+      "body": "This all-purpose compute runs only part of the month, which suggests scheduled or batch work. Job clusters (Jobs compute) have a lower DBU rate and stop when the job ends.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture strategies / service guide: Azure Databricks",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-databricks",
+        "quote": "Deploy job clusters for scheduled workloads instead of all-purpose clusters to eliminate idle compute costs."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "databricks",
+            "where": {
+              "facts.allPurposeMaxHours": {
+                "<=": [
+                  300
+                ]
+              },
+              "facts.hasAllPurpose": {
+                "in": [
+                  true
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "databricks-auto-termination": {
+      "level": "info",
+      "title": "Turn on auto-termination for interactive Databricks clusters",
+      "body": "This all-purpose compute is priced as running around the clock. Interactive clusters should auto-terminate after an idle period, so DBUs and the virtual machines under them stop billing.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture strategies / service guide: Azure Databricks",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-databricks",
+        "quote": "Set up automatic termination for all interactive clusters with appropriate timeout periods based on usage patterns."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "databricks",
+            "where": {
+              "facts.allPurposeMaxHours": {
+                ">=": [
+                  700
+                ]
+              },
+              "facts.hasAllPurpose": {
+                "in": [
+                  true
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "databricks-sql-autostop": {
+      "level": "info",
+      "title": "Turn on autostop for Databricks SQL warehouses",
+      "body": "This SQL warehouse is priced as running around the clock. Autostop shuts it down when idle so DBUs stop billing.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture strategies / service guide: Azure Databricks",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-databricks",
+        "quote": "turn on autostop functionality to minimize costs during inactive periods"
+      },
+      "when": {
+        "all": [
+          {
+            "type": "databricks",
+            "where": {
+              "facts.sqlMaxHours": {
+                ">=": [
+                  700
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

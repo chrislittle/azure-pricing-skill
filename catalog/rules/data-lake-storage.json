@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "data-lake-storage-early-deletion-penalty": {
+      "level": "info",
+      "title": "Cool, cold and archive tiers have minimum retention periods",
+      "body": "This estimate stores data in a cool, cold or archive tier. Microsoft states blobs deleted, overwritten or moved before the tier minimum (cool 30, cold 90, archive 180 days) incur an early deletion penalty, so avoid these tiers for short-lived data.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Access tiers for blob data",
+        "url": "https://learn.microsoft.com/azure/storage/blobs/access-tiers-overview",
+        "quote": "Blobs are subject to an early deletion penalty if they are deleted, overwritten or moved to a different tier before the minimum number of days required by the tier have transpired."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-lake-storage",
+            "where": {
+              "facts.minimumRetentionDays": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "storage"
+    }
+  }
+}

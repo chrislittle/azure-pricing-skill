@@ -1,0 +1,49 @@
+{
+  "rules": {
+    "cloud-services-retirement": {
+      "level": "warn",
+      "title": "Cloud Services (extended support) retires on 31 March 2027",
+      "body": "This estimate includes Cloud Services (extended support). Microsoft has deprecated the service and states its full retirement date, so the estimate only covers the time until a migration (Microsoft names Service Fabric managed cluster) is complete.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Overview of Azure Cloud Services (extended support)",
+        "url": "https://learn.microsoft.com/azure/cloud-services-extended-support/overview",
+        "quote": "As of March 31, 2025, cloud Services (extended support) is deprecated and will be fully retired on March 31, 2027."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cloud-services"
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "cloud-services-eol-size": {
+      "level": "warn",
+      "title": "Cloud Services role sizes are on the VM End of Life list",
+      "body": "The VM series behind every Cloud Services role size is on Microsoft's End of Life list and is subject to capacity growth restrictions (July 2026). Microsoft's page is written for virtual machines and does not say the same limits apply to role instances, so confirm capacity for the subscription before relying on this estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "VM size series retirements, capacity growth restrictions, and modernization guidance",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/retirements-and-capacity-restrictions",
+        "quote": "The following VM series are affected by capacity growth restrictions:"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cloud-services",
+            "where": {
+              "facts.endOfLifeSeries": true
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

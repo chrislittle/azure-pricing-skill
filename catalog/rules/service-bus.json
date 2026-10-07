@@ -1,0 +1,133 @@
+{
+  "rules": {
+    "service-bus-standard-production-latency": {
+      "level": "info",
+      "title": "Standard Service Bus has variable latency",
+      "body": "The customer said this is a production workload on the Standard tier of Service Bus. Microsoft says the Premium tier delivers predictable throughput and consistent latency (and messages up to 100 MB), so ask whether the workload needs that and add a Premium option if it does.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Service Bus Premium messaging tier",
+        "url": "https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging",
+        "quote": "When your applications require predictable throughput, consistent latency, or support for large messages up to 100 MB, the Premium tier delivers the performance guarantees you need for production and mission-critical scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "service-bus",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "standard"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "messaging"
+    },
+    "service-bus-batching-high-volume": {
+      "level": "info",
+      "title": "Batch messages to cut billable operations",
+      "body": "This estimate has a very large number of billable operations. Batching several messages into one operation lowers the operation count, so ask whether the senders can batch. The 100 million threshold is my estimate, not a Microsoft figure.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Service Bus",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-service-bus",
+        "quote": "Implement message batching in Service Bus client applications to reduce billable operations."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "service-bus",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "basic",
+                  "standard"
+                ]
+              },
+              "facts.operations": {
+                ">": 100000000
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "service-bus-premium-non-production": {
+      "level": "info",
+      "title": "Standard can be cheaper for non-production",
+      "body": "The customer said this is not a production workload but the estimate uses Premium. Standard costs less for non-production environments, so price it as an alternative.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Service Bus",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-service-bus",
+        "quote": "Standard tier offers cost savings for non-production environments."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "service-bus",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "premium"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "service-bus-premium-geo-replication-production": {
+      "level": "info",
+      "title": "Production Premium without geo-replication",
+      "body": "This production namespace has no geo-replication. Microsoft recommends geo-replication on Premium for disaster recovery. Each secondary region bills the same messaging units again, so price it if the customer needs regional protection.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Service Bus",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-service-bus",
+        "quote": "Configure geo-replication for Premium tier namespaces to enable disaster recovery with both metadata and message data replication across regions."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "service-bus",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "premium"
+                ]
+              },
+              "facts.geoReplicas": {
+                "<": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    }
+  }
+}

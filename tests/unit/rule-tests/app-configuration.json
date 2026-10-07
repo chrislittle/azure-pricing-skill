@@ -1,0 +1,89 @@
+{
+  "rules": {
+    "app-configuration-sku-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-configuration",
+                  "tier": "developer",
+                  "requestsPerDay": 1000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-configuration",
+                  "tier": "standard",
+                  "requestsPerDay": 1000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "app-configuration-premium-without-replica": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-configuration",
+                  "tier": "premium",
+                  "requestsPerDay": 1000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "app-configuration",
+                  "tier": "premium",
+                  "requestsPerDay": 1000,
+                  "replicas": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

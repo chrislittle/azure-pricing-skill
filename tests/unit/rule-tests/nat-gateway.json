@@ -1,0 +1,45 @@
+{
+  "rules": {
+    "nat-gateway-standardv2-zone-redundant": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "nat-gateway",
+                  "gateways": 1,
+                  "dataProcessedGB": 100
+                }
+              ]
+            }
+          ],
+          "context": {
+            "zoneResilience": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "nat-gateway",
+                  "gateways": 1,
+                  "sku": "standardv2",
+                  "dataProcessedGB": 100
+                }
+              ]
+            }
+          ],
+          "context": {
+            "zoneResilience": true
+          }
+        }
+      }
+    }
+  }
+}

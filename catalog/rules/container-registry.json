@@ -1,0 +1,92 @@
+{
+  "rules": {
+    "container-registry-basic-production": {
+      "level": "info",
+      "title": "Basic registry is meant for learning and light use",
+      "body": "This production workload uses a Basic registry. Microsoft positions Basic as the entry point for developers learning the service, with included storage and image throughput suited to low usage; Microsoft says Standard registries satisfy the needs of many production scenarios.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Container Registry SKU features and limits",
+        "url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+        "quote": "Standard registries satisfy the needs of many production scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "container-registry",
+            "where": {
+              "facts.tier": "basic"
+            }
+          }
+        ]
+      },
+      "group": "containers"
+    },
+    "container-registry-geo-replication-multi-region": {
+      "level": "info",
+      "title": "Geo-replication needs the Premium tier",
+      "body": "Users or workloads in several regions were mentioned, but this registry is not Premium. Microsoft offers geo-replication (one registry served from several regions) only in Premium.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Container Registry SKU features and limits",
+        "url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+        "quote": "Premium adds features such as geo-replication for high availability through managing a single registry across multiple regions"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "multiRegionUsers": true
+        },
+        "all": [
+          {
+            "type": "container-registry",
+            "where": {
+              "facts.tier": {
+                "!=": "premium"
+              }
+            }
+          }
+        ]
+      },
+      "group": "containers"
+    },
+    "container-registry-private-endpoint-needs-premium": {
+      "level": "warn",
+      "title": "Private endpoints need the Premium tier",
+      "body": "Private-only access was mentioned, but this registry is not Premium. Microsoft offers private link with private endpoints only in Premium, so this estimate is likely too low.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Container Registry SKU features and limits",
+        "url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+        "quote": "Premium adds features such as geo-replication for high availability through managing a single registry across multiple regions, private link with private endpoints to restrict access to the registry"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "privateOnly": true
+        },
+        "all": [
+          {
+            "type": "container-registry",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "basic",
+                  "standard"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "containers"
+    }
+  }
+}

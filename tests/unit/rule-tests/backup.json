@@ -1,0 +1,137 @@
+{
+  "rules": {
+    "backup-lrs-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "vm",
+                  "instances": 5,
+                  "sizeGB": 100,
+                  "storageGB": 1000,
+                  "redundancy": "lrs"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "vm",
+                  "instances": 5,
+                  "sizeGB": 100,
+                  "storageGB": 1000,
+                  "redundancy": "grs"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "backup-archive-early-delete": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "sql-vm",
+                  "instances": 2,
+                  "sizeGB": 800,
+                  "storageGB": 2000,
+                  "archiveGB": 500,
+                  "redundancy": "lrs"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "sql-vm",
+                  "instances": 2,
+                  "sizeGB": 800,
+                  "storageGB": 2000,
+                  "redundancy": "lrs"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "backup-reserved-capacity": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "vm",
+                  "instances": 100,
+                  "sizeGB": 300,
+                  "storageGB": 120000,
+                  "redundancy": "lrs"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "backup",
+                  "workload": "vm",
+                  "instances": 100,
+                  "sizeGB": 300,
+                  "storageGB": 50000,
+                  "redundancy": "lrs"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

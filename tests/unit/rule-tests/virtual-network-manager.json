@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "virtual-network-manager-subscription-billing": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-network-manager",
+                  "billingModel": "subscription",
+                  "virtualNetworks": 0,
+                  "subscriptions": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-network-manager",
+                  "virtualNetworks": 5
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

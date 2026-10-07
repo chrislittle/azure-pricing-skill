@@ -1,0 +1,61 @@
+{
+  "rules": {
+    "notification-hubs-free-tier-production": {
+      "level": "warn",
+      "title": "Free tier has no SLA for production",
+      "body": "This production workload uses the Free tier of Notification Hubs. Microsoft says to use the Basic or Standard tier so the namespace is eligible for the SLA. Price the Basic or Standard tier unless this is only a trial.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Notification Hubs",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-notification-hubs",
+        "quote": "Use the Basic or Standard tier so that your namespace is eligible for the SLA."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "notification-hubs",
+            "where": {
+              "facts.tier": "free"
+            }
+          }
+        ]
+      },
+      "group": "Integration"
+    },
+    "notification-hubs-zone-redundancy-production": {
+      "level": "info",
+      "title": "Zone redundancy is not enabled for production",
+      "body": "This production Notification Hubs namespace is priced without zone redundancy. Microsoft says that with zone redundancy it replicates metadata and registration data across all availability zones in the region; it costs extra per namespace each month and can only be chosen when the namespace is created. Priced as requested; ask whether to add it.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Notification Hubs",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-notification-hubs",
+        "quote": "When zone redundancy is enabled, Microsoft replicates both metadata and registration data across all availability zones in the region."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "notification-hubs",
+            "where": {
+              "facts.zoneRedundant": false,
+              "facts.tier": {
+                "!=": "free"
+              }
+            }
+          }
+        ]
+      },
+      "group": "Integration"
+    }
+  }
+}

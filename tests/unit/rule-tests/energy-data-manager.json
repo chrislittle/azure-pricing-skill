@@ -1,0 +1,124 @@
+{
+  "rules": {
+    "energy-data-manager-developer-production": {
+      "test": {
+        "fires": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "developer"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "energy-data-manager-standard-non-production": {
+      "test": {
+        "fires": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": false
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "developer"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": false
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "energy-data-manager-brazil-south-no-dr": {
+      "test": {
+        "fires": {
+          "region": "brazilsouth",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "energy-data-manager",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

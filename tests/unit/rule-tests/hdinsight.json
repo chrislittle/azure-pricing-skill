@@ -1,0 +1,134 @@
+{
+  "rules": {
+    "hdinsight-delete-idle": {
+      "test": {
+        "fires": {
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "hdinsight",
+                  "workerNodes": 4,
+                  "hours": 730
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          },
+          "region": "eastus2"
+        },
+        "silent": {
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "hdinsight",
+                  "workerNodes": 4,
+                  "hours": 100
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          },
+          "region": "eastus2"
+        }
+      }
+    },
+    "hdinsight-autoscale-variable-load": {
+      "test": {
+        "fires": {
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "hours": 730,
+                  "type": "hdinsight",
+                  "workerNodes": 4
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": false
+          },
+          "discountPct": 0,
+          "region": "eastus2"
+        },
+        "silent": {
+          "context": {
+            "steadyUsage": false
+          },
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "workerNodes": 4,
+                  "hours": 730,
+                  "clusterType": "kafka",
+                  "type": "hdinsight",
+                  "managedDisks": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "hdinsight-autoscale-schedule-iq": {
+      "test": {
+        "silent": {
+          "context": {
+            "steadyUsage": false
+          },
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "workerNodes": 4,
+                  "hours": 730,
+                  "clusterType": "hbase",
+                  "type": "hdinsight"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "context": {
+            "steadyUsage": false
+          },
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "workerNodes": 4,
+                  "hours": 730,
+                  "clusterType": "interactive-query",
+                  "type": "hdinsight"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

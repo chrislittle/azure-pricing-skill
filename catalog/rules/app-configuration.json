@@ -1,0 +1,68 @@
+{
+  "rules": {
+    "app-configuration-sku-production": {
+      "level": "warn",
+      "title": "Free and Developer tiers are not recommended for production",
+      "body": "This production workload uses the Free or Developer tier of App Configuration. Microsoft recommends the Standard or Premium SKU for most production deployments (the Free and Developer tiers have no SLA). Price Standard or Premium unless this is only for development or testing.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure App Configuration",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-app-configuration",
+        "quote": "SKU: Use the Standard or Premium SKU."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "app-configuration",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "free",
+                  "developer"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "Integration"
+    },
+    "app-configuration-premium-without-replica": {
+      "level": "info",
+      "title": "Premium App Configuration is priced without using its included replica",
+      "body": "This production Premium store has no replica configured, but the Premium price already includes one replica, and the 99.95% SLA only applies when the store has at least one replica. Microsoft recommends configuring the included replica for mission-critical scenarios, so add a replica region (it is included in the price) or confirm that Standard would do.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure App Configuration",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-app-configuration",
+        "quote": "For mission-critical scenarios: Use the Premium SKU and configure the included replica to replicate across multiple regions."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "app-configuration",
+            "where": {
+              "facts.tier": "premium",
+              "facts.replicas": {
+                "in": [
+                  0
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "Integration"
+    }
+  }
+}

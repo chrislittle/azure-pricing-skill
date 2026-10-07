@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "defender-isoc-with-sentinel": {
+      "level": "warn",
+      "title": "Defender ISOC is for customers without an active Microsoft Sentinel workspace",
+      "body": "This option prices both Defender ISOC and Microsoft Sentinel. Microsoft offers the ISOC preview to eligible customers that do not have an active Sentinel workspace, so check eligibility and avoid counting the same data twice.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Integrated security operations center (ISOC) in Microsoft Defender",
+        "url": "https://learn.microsoft.com/defender-xdr/isoc-overview",
+        "quote": "don't have an active Microsoft Sentinel workspace"
+      },
+      "when": { "scope": "option", "all": [ { "type": "defender-isoc" }, { "type": "sentinel" } ] },
+      "group": "security"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "rules": {
+    "monitor-alerts-log-1min": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "logAlertRules": 2,
+                  "logFrequencyMinutes": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "logAlertRules": 2,
+                  "logFrequencyMinutes": 5
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "monitor-alerts-metric-time-series": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "metricTimeSeries": 800
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "metricTimeSeries": 50
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "monitor-alerts-log-for-scale": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "metricTimeSeries": 800
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "metricTimeSeries": 50
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "monitor-alerts-free-alert-types": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "metricTimeSeries": 50
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-alerts",
+                  "emails": 5000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

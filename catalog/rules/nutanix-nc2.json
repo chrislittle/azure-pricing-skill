@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "nutanix-nc2-reservation-steady": {
+      "level": "info",
+      "title": "Compare a reservation for steadily running nodes",
+      "body": "These Nutanix bare-metal nodes are priced pay as you go and are expected to run for a year or longer. Microsoft publishes a saving of 36.27% with a one-year reservation and 57.7% with a three-year one; the reservation covers the Azure nodes only, not the Nutanix licence. Compare the reserved price in this estimate.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Nutanix Cloud Clusters on Azure pricing",
+        "url": "https://azure.microsoft.com/pricing/details/nutanix-on-azure/",
+        "quote": "Save 36.27% with a one-year reservation, or 57.7% discount for 3 years."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "nutanix-nc2",
+            "where": {
+              "facts.commitment": "payg"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

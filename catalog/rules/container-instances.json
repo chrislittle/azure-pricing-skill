@@ -1,0 +1,96 @@
+{
+  "rules": {
+    "container-instances-spot-interruptible": {
+      "level": "info",
+      "title": "Spot containers fit work that can be interrupted",
+      "body": "This workload can be stopped and restarted, but the containers are priced as regular-priority. Microsoft says Spot containers cost up to 70% less than regular-priority containers, with the trade-off that Azure can evict them at any time. Compare the Spot option.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Container Instances Spot containers (preview)",
+        "url": "https://learn.microsoft.com/azure/container-instances/container-instances-spot-containers-overview",
+        "quote": "up to a 70% discount compared to regular-priority ACI containers"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "interruptible": true
+        },
+        "all": [
+          {
+            "type": "container-instances",
+            "where": {
+              "facts.variant": {
+                "in": [
+                  "standard"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "container-instances-spot-production": {
+      "level": "warn",
+      "title": "Spot containers are not recommended for production",
+      "body": "This production workload runs on Spot containers. Microsoft describes Spot containers as a preview that is not recommended for production scenarios, and Azure can evict them at any time. Use standard containers for production unless the customer accepts that.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Container Instances Spot containers (preview)",
+        "url": "https://learn.microsoft.com/azure/container-instances/container-instances-spot-containers-overview",
+        "quote": "Spot containers with Azure Container Instances is in preview and is not recommended for production scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "container-instances",
+            "where": {
+              "facts.variant": "spot"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "container-instances-savings-plan-steady": {
+      "level": "info",
+      "title": "Compare an Azure savings plan for steady container use",
+      "body": "These containers are priced pay as you go and are expected to run steadily for a year or longer. Microsoft offers a compute savings plan that discounts select compute services, including Container Instances, for a fixed hourly commitment of 1 or 3 years. Compare the savings-plan price in this estimate.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Container Instances pricing",
+        "url": "https://azure.microsoft.com/pricing/details/container-instances/",
+        "quote": "Save money across select compute services globally by committing to spend a fixed hourly amount for 1 or 3 years"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "container-instances",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.variant": {
+                "in": [
+                  "standard",
+                  "confidential"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}
+

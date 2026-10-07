@@ -1,0 +1,108 @@
+{
+  "rules": {
+    "traffic-manager-longer-ttl": {
+      "level": "info",
+      "title": "A longer DNS TTL lowers Traffic Manager query charges",
+      "body": "This estimate has a high Traffic Manager query volume. Microsoft says resolvers cache Traffic Manager answers for the TTL and cached answers are not charged, so a larger TTL lowers the query bill, at the cost of slower failover when an endpoint goes down.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Traffic Manager pricing FAQ",
+        "url": "https://azure.microsoft.com/pricing/details/traffic-manager/",
+        "quote": "By using a larger TTL, you can increase the amount of caching done by recursive DNS servers and thereby reduce your DNS query charges."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "traffic-manager",
+            "where": {
+              "facts.dnsQueriesMillions": {
+                ">=": 100
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "traffic-manager-fast-checks-cost": {
+      "level": "info",
+      "title": "Fast health checks cost more and add probe load",
+      "body": "Fast (10-second) health checks detect a failed endpoint sooner than the default checks, but each fast check is a paid add-on and the endpoint receives more probe traffic. Keep them for endpoints where failover within seconds is a requirement.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Well-Architected guide for Azure Traffic Manager",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-traffic-manager",
+        "quote": "Fast pings detect failures quicker but incur higher costs."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "traffic-manager",
+            "where": {
+              "facts.fastEndpoints": {
+                ">=": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "traffic-manager-traffic-view-cost": {
+      "level": "info",
+      "title": "Traffic View is an extra cost",
+      "body": "Traffic View shows where clients connect from and their latency, and it is billed per data point processed on top of the normal Traffic Manager charges. Turn it on when the insight is worth the cost, or for a limited period.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Well-Architected guide for Azure Traffic Manager",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-traffic-manager",
+        "quote": "This information helps optimize performance and refine your design, which contributes to operational excellence and system efficiency. However, it incurs extra costs."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "traffic-manager",
+            "where": {
+              "facts.trafficViewMillions": {
+                ">=": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "traffic-manager-low-ttl-failover": {
+      "level": "info",
+      "title": "A low DNS TTL gives faster failover but raises query counts",
+      "body": "The Well-Architected guide recommends a low DNS TTL (preferably under 60 seconds) so resolvers pick up changes and fail over quickly. Lower TTLs mean less caching, so more queries reach Traffic Manager and the per-million query charge grows. Balance failover speed against the query bill.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Well-Architected guide for Azure Traffic Manager",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-traffic-manager",
+        "quote": "Set the DNS TTL interval duration to a low value, preferably less than 60 seconds."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "traffic-manager",
+            "where": {
+              "facts.endpoints": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "cloud-hsm-cannot-pause": {
+      "level": "info",
+      "title": "Cloud HSM cannot be paused",
+      "body": "This estimate bills fewer than a full month of hours, but Cloud HSM is billed hourly from provisioning and cannot be paused; only deleting the cluster ends charges. Part-month figures are only right if the cluster is really deleted and re-created.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Cloud HSM pricing",
+        "url": "https://azure.microsoft.com/pricing/details/azure-cloud-hsm/",
+        "quote": "It's billed hourly and cannot be paused or stopped. Only deletion ends charges."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cloud-hsm",
+            "where": {
+              "facts.hours": {
+                "<": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "cloud-hsm-restore-target-bills": {
+      "level": "info",
+      "title": "A standby restore target is billed in full",
+      "body": "With two or more clusters, remember that restoring a backup needs a destination Cloud HSM that is not activated, and billing starts when a resource is provisioned, not when it is initialized. A standby cluster kept ready for recovery is therefore billed for every hour.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Cloud HSM FAQ",
+        "url": "https://learn.microsoft.com/azure/cloud-hsm/faq",
+        "quote": "You can restore a backup to another Azure Cloud HSM resource in any region, if the destination Cloud HSM resource is not in an activated state.",
+        "more": [
+          {
+            "source": "Azure Cloud HSM FAQ: billing",
+            "url": "https://learn.microsoft.com/azure/cloud-hsm/faq#how-am-i-charged-and-billed-for-my-use-of-azure-cloud-hsm",
+            "quote": "Billing starts when you provision a resource, rather than when you finish initializing the HSM resource."
+          }
+        ]
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cloud-hsm",
+            "where": {
+              "facts.clusters": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    }
+  }
+}

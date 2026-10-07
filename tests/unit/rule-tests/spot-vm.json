@@ -1,0 +1,79 @@
+{
+  "rules": {
+    "spot-vm-production-no-sla": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "spot-vm",
+                  "sku": "Standard_D4as_v5"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "spot-vm",
+                  "sku": "Standard_D4as_v5"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "spot-vm-deallocated-disks": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "spot-vm",
+                  "sku": "Standard_D4as_v5"
+                },
+                {
+                  "type": "disk",
+                  "diskType": "standard-ssd",
+                  "sizeGiB": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "spot-vm",
+                  "sku": "Standard_D4as_v5"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

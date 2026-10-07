@@ -1,0 +1,57 @@
+{
+  "rules": {
+    "azure-policy-arc-opt-in": {
+      "level": "info",
+      "title": "Machine configuration is billed only for registered Arc servers",
+      "body": "This estimate charges machine configuration for Azure Arc-enabled servers. Microsoft bills only servers that are registered and have at least one guest configuration assigned, and Arc machines are not included unless you opt in, so confirm the number of servers that will really be assigned policies.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Policy pricing",
+        "url": "https://azure.microsoft.com/pricing/details/azure-policy/",
+        "quote": "Billing is based on the number of servers registered with the service and have one or more guest configurations assigned to them."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "azure-policy",
+            "where": {
+              "facts.chargedServers": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "management"
+    },
+    "azure-policy-machine-config-included": {
+      "level": "info",
+      "title": "Machine configuration is included for some Arc servers",
+      "body": "This estimate charges machine configuration for Azure Arc-enabled servers. Microsoft includes it, at no extra charge, for servers covered by Defender for Servers Plan 2, and Azure Arc billing excludes servers already managed by Azure Automation State Configuration or change tracking, servers with only Defender for Cloud benchmark or Regulatory Compliance assignments, and machines offline for the whole hour. Check each server and enter the free ones as exempt.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Arc pricing (core control plane)",
+        "url": "https://azure.microsoft.com/pricing/details/azure-arc/core-control-plane/",
+        "quote": "When using Microsoft Defender for Servers Plan 2, Azure Update Manager and Azure Policy Guest Configuration are included in Plan 2."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "azure-policy",
+            "where": {
+              "facts.chargedServers": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "management"
+    }
+  }
+}
+

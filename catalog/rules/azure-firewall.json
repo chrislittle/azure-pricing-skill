@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "azure-firewall-delete-unused": {
+      "body": "This non-production estimate runs a firewall all month. Azure Firewall bills a fixed hourly charge per deployment while it exists, so Microsoft recommends stopping deployments that do not need to run continuously; if the environment is only needed part of the time, lower the hours.",
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              }
+            },
+            "type": "azure-firewall"
+          }
+        ]
+      },
+      "group": "network-security",
+      "level": "info",
+      "title": "Stop test firewalls when you are not using them",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Firewall (Cost Optimization)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-firewall",
+        "quote": "Stop Azure Firewall deployments that don't need to continuously run."
+      }
+    },
+    "azure-firewall-share-instance": {
+      "body": "This estimate has several firewalls, each billing a fixed hourly charge. If some are in the same region, Microsoft recommends sharing one Azure Firewall across spoke networks that connect to the same hub; firewalls in different regions are still needed separately.",
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "azure-firewall",
+            "where": {
+              "facts.firewalls": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "network-security",
+      "level": "info",
+      "title": "Share one firewall across networks",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Firewall (Cost Optimization)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-firewall",
+        "quote": "Share the same instance of Azure Firewall."
+      }
+    },
+    "azure-firewall-premium-nonprod": {
+      "body": "Premium costs more per deployment hour than Standard (data processing is the same price per GB). Microsoft positions Premium for highly sensitive workloads such as payment processing, so a non-production estimate may be fine on Standard.",
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "azure-firewall",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "premium"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "network-security",
+      "level": "info",
+      "title": "Is Premium needed for non-production?",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Firewall (Cost Optimization)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-firewall",
+        "quote": "Use Azure Firewall Premium to secure highly sensitive applications, such as payment processing."
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "data-lake-storage-early-deletion-penalty": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "data-lake-storage",
+                  "dataGB": 1000,
+                  "tier": "archive"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "data-lake-storage",
+                  "dataGB": 1000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

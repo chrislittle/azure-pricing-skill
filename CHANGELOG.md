@@ -3,6 +3,43 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-10-07
+
+Tier 1 coverage for every Azure Pricing Calculator product that is still sold.
+
+### Added
+- **148 component types** with their own interview questions, units, free grants, tiers and cited
+  advice, up from 21. Run `azp services` for the list, or `azp services --find "words"`.
+- **Per-service advisory rules** in `catalog/rules/<type>.json`; 370 cited rules in total, each with
+  a verbatim quote that `check-citations` verifies live.
+- **Independent oracle per service** (`tests/oracle/services/`), written from the Retail Prices API,
+  the pricing calculator and Microsoft Learn without reading the engine: 1,571 checks.
+- **Contract tests** for every type (`services-contract.js`, `builtin-contract.js`): required and
+  unknown fields, text in number fields, readback.
+- **Excluded products** list (`catalog/excluded.json`) with Microsoft's reason; asking for one returns
+  the reason and a link (for example Azure Communication Services, which is retiring).
+- **Lifecycle exceptions**, priced with a cited note because the service sets the size: Azure Cloud
+  Services (extended support), Azure-SSIS integration runtime nodes, HDInsight ZooKeeper and ID
+  Broker nodes.
+- Savings plans for databases (SQL Database, elastic pools, PostgreSQL, MySQL, Cosmos DB for
+  PostgreSQL), US Gov meters where Microsoft publishes them, and EUR for Blob directory operations.
+
+### Changed
+- **Stricter input checks.** Unknown fields are refused for every type. Text, true/false or other
+  non-numbers in quantity fields are refused. A line that cannot be priced stops the build.
+- **Generic `meter` component.** Hourly meters require `hours` (quantity is the instance count);
+  other meters refuse `hours`.
+- **Readback** shows 0 hours ("not running") and any value other than 730.
+- **Advisories:** reserved-capacity rules stay silent when a commitment is already selected; SQL
+  license advisories skip Hyperscale and serverless where they do not apply.
+- `check-citations --type <type>` includes shared rules that apply to the type.
+
+### Fixed
+- Blob hierarchical-namespace operations use the calculator rate per redundancy.
+- Azure Files refuses shares above the 256 TiB maximum.
+- Azure OpenAI provisioned throughput accepts only the models in Microsoft's PTU sizing table.
+- Many service-specific fixes found by the oracle and review cross-checks.
+
 ## [1.0.0] - 2026-10-01
 
 First public release.

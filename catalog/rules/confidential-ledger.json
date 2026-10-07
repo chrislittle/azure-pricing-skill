@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "confidential-ledger-managed-ccf-deprecated": {
+      "level": "warn",
+      "title": "Managed CCF is being deprecated; use a standard confidential ledger for new work",
+      "body": "This estimate uses Managed CCF, which Microsoft is deprecating and will no longer update or support. For a new design, price a standard Azure confidential ledger instead, and plan a migration if a Managed CCF network already exists.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Migrating from Azure Managed CCF to Azure confidential ledger",
+        "url": "https://learn.microsoft.com/azure/confidential-ledger/managed-confidential-consortium-framework-migration",
+        "quote": "Managed CCF) is being deprecated and will no longer receive updates or support."
+      },
+      "when": { "scope": "option", "all": [ { "type": "confidential-ledger", "where": { "spec.service": "managed-ccf" } } ] },
+      "group": "lifecycle"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "power-bi-embedded-pause-idle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "power-bi-embedded",
+                  "size": "a1",
+                  "viewers": 0
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "hours": 220,
+                  "size": "a1",
+                  "type": "power-bi-embedded",
+                  "viewers": 0
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          }
+        }
+      }
+    },
+    "power-bi-embedded-viewer-licences": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "power-bi-embedded",
+                  "size": "a1",
+                  "viewers": "employees"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "power-bi-embedded",
+                  "size": "a1",
+                  "viewers": "customers"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -48,6 +48,7 @@ GitHub Copilot CLI). All output is JSON.
 | Command | Use |
 |---|---|
 | `questions` | List component types |
+| `services --find "<plain words>"` | Find the component type for a service the person mentions (for example "message queue", "redis cache", "vpn") |
 | `questions <type>` | Fields, defaults and **what to ask** for one type |
 | `vm-suggest --vcpu N --mem GiB --region R [--workload auto\|general\|memory\|compute\|burstable] [--os linux\|windows]` | Requirement -> shortlist of VM sizes with prices (AMD, Intel, Arm) |
 | `models` | AI models with verified token meters |
@@ -69,6 +70,10 @@ default. Keep each question to one line:
 - Currency, if not US dollars.
 
 ### Step 2 - Service-specific questions
+
+For every service the person mentions, find its component type with
+`services --find "<their words>"` (every Azure Pricing Calculator service that is sold through Azure
+meters has its own type), then read `questions <type>`. Use a `meter` component only when no type fits.
 
 Once you know which services are involved, run
 `questions plan --types <the component types in this estimate>`. It returns the remaining questions
@@ -178,6 +183,11 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
 4. After the build, use `explainToPerson` from the engine output: explain the replacement in your
    reply **and include its Microsoft links**.
 
+Three services set their own node sizes, so the engine prices them even when the series is End of
+Life, with a cited note: Azure Cloud Services (extended support) role sizes, Azure-SSIS integration
+runtime nodes (the smallest v3 size that fits is picked), and HDInsight ZooKeeper and ID Broker nodes.
+Explain the engine's note to the person; do not refuse these.
+
 ## Spec format
 
 ```json
@@ -217,7 +227,7 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
 - `label` on a component groups lines in the itemization (Virtual machine, Storage, Networking...).
 - Component types and fields: run `questions <type>`. Unknown fields are rejected, so check the schema.
 - `special: true` on an option marks it as a special case (dashed card).
-- For anything not covered, use `{ "type": "meter", "filter": {"serviceName": "...", "productName": "...", "skuName": "...", "meterName": "..."}, "quantity": N, "hours": 730 }` after finding the exact names with `search`. Tell the person that line was priced from a generic meter.
+- For anything not covered by a component type (check `services --find` first), use `{ "type": "meter", "filter": {"serviceName": "...", "productName": "...", "skuName": "...", "meterName": "..."}, "quantity": N }` after finding the exact names with `search`. If the meter's unit is per hour, `quantity` is the number of instances and `hours` is required (730 for a full month). For any other unit (per GB, per 10K, per month), `quantity` is in that unit and `hours` is refused. Tell the person that line was priced from a generic meter.
 
 ## Advice comes from the engine, with Microsoft sources
 

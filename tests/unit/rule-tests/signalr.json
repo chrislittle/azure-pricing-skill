@@ -1,0 +1,135 @@
+{
+  "rules": {
+    "signalr-premium-for-zone-resilience": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "standard",
+                  "units": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "premium",
+                  "units": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "signalr-geo-replication-for-multi-region": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "premium",
+                  "units": 2
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "multiRegionUsers": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "premium",
+                  "units": 2,
+                  "replicas": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "multiRegionUsers": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "signalr-premium-autoscale-for-idle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "premium",
+                  "units": 5
+                }
+              ]
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "signalr",
+                  "tier": "standard",
+                  "units": 5
+                }
+              ]
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

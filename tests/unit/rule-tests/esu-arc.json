@@ -1,0 +1,199 @@
+{
+  "rules": {
+    "esu-arc-datacenter-virtual-use-standard": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "edition": "standard",
+                  "coresPerMachine": 8,
+                  "version": "2016",
+                  "product": "windows-server"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "edition": "datacenter",
+                  "coresPerMachine": 8,
+                  "version": "2016",
+                  "product": "windows-server"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "esu-arc-deactivate-after-migration": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "hostedOn": "azure-vm",
+                  "coresPerMachine": 8,
+                  "version": "2016",
+                  "product": "windows-server"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "coresPerMachine": 8,
+                  "type": "esu-arc",
+                  "product": "windows-server",
+                  "version": "2016"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "esu-arc-windows-2012-free-in-azure": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "coresPerMachine": 8,
+                  "type": "esu-arc",
+                  "product": "windows-server",
+                  "version": "2016"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "coresPerMachine": 8,
+                  "version": "2012",
+                  "product": "windows-server"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "esu-arc-sql-2014-free-on-azure-vm": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "hostedOn": "azure-vm",
+                  "coresPerMachine": 8,
+                  "version": "2014",
+                  "product": "sql-server"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "coresPerMachine": 8,
+                  "version": "2014",
+                  "product": "sql-server"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "esu-arc-sql-passive-replica": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "esu-arc",
+                  "version": "2016",
+                  "edition": "developer",
+                  "coresPerMachine": 8,
+                  "product": "sql-server"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "coresPerMachine": 8,
+                  "type": "esu-arc",
+                  "product": "sql-server",
+                  "version": "2016"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

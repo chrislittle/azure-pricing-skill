@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "confidential-ledger-managed-ccf-deprecated": { "test": {
+      "fires": { "region": "westeurope", "options": [ { "name": "a", "components": [ { "type": "confidential-ledger", "service": "managed-ccf", "nodes": 3 } ] } ] },
+      "silent": { "region": "westeurope", "options": [ { "name": "a", "components": [ { "type": "confidential-ledger", "service": "standard" } ] } ] } } }
+  }
+}

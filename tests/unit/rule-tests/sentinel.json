@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "sentinel-payg-high-volume-commitment-tier": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "sentinel", "analyticsGBPerDay": 150 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "sentinel", "analyticsGBPerDay": 150, "commitment": "100" } ] } ] } } }
+  }
+}

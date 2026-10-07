@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "vpn-gateway-basic-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vpn-gateway",
+                  "sku": "basic"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vpn-gateway",
+                  "sku": "vpngw1az"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

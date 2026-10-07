@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "cosmos-standard-availability-zone-surcharge": {
+      "level": "info",
+      "title": "Availability zones add 25% to standard provisioned throughput",
+      "body": "This single-write account enables availability zones on standard provisioned throughput, so the RU/s are billed multiplied by 1.25 in each zone-redundant region. Autoscale includes availability zones at no extra charge, and multi-region-write accounts bill the same with or without zones. Compare autoscale if the load varies.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Cosmos DB pricing (autoscale provisioned throughput)",
+        "url": "https://azure.microsoft.com/pricing/details/cosmos-db/autoscale-provisioned/",
+        "quote": "Availability zone is included free for autoscale resources"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cosmos",
+            "where": {
+              "facts.mode": "provisioned",
+              "facts.multiRegionWrites": false,
+              "facts.zoneRedundantRegions": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "databases"
+    }
+  }
+}

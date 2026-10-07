@@ -1,0 +1,48 @@
+{
+  "rules": {
+    "static-web-apps-free-plan-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "static-web-apps",
+                  "plan": "free",
+                  "apps": 1,
+                  "bandwidthGB": 10
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "static-web-apps",
+                  "plan": "standard",
+                  "apps": 1,
+                  "bandwidthGB": 10
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

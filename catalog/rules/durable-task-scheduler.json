@@ -1,0 +1,61 @@
+{
+  "rules": {
+    "durable-task-scheduler-ha-needs-three-cus": {
+      "level": "warn",
+      "title": "Production Durable Task Scheduler needs 3 Capacity Units for high availability",
+      "body": "A single-CU Dedicated scheduler gives no redundancy. Microsoft says high availability requires 3 Capacity Units per scheduler; this estimate has fewer, so raising it to 3 CUs per scheduler increases the hourly charge.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Durable Task Scheduler billing",
+        "url": "https://learn.microsoft.com/azure/durable-task/scheduler/durable-task-scheduler-billing",
+        "quote": "For high-availability deployments, configure three CUs. Single-CU deployments don't provide redundancy."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "durable-task-scheduler",
+            "where": {
+              "facts.capacityUnits": {
+                "<": 3
+              },
+              "facts.sku": "dedicated"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "durable-task-scheduler-consumption-no-ha": {
+      "level": "warn",
+      "title": "The Consumption SKU has no high availability",
+      "body": "This production estimate uses the Consumption SKU. Microsoft lists high availability as not available for Consumption (it needs the Dedicated SKU with 3 Capacity Units per scheduler), so consider Dedicated for production workloads that must stay up.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Durable Task Scheduler billing",
+        "url": "https://learn.microsoft.com/azure/durable-task/scheduler/durable-task-scheduler-billing",
+        "quote": "High availability Supported (requires 3 CUs) Not available"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "durable-task-scheduler",
+            "where": {
+              "facts.sku": "consumption"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

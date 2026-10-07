@@ -1,0 +1,103 @@
+{
+  "rules": {
+    "stream-analytics-v1-pricing": {
+      "level": "info",
+      "title": "V1 Stream Analytics pricing is higher than V2",
+      "body": "This estimate uses the older V1 (Standard or Dedicated) streaming-unit pricing. Microsoft says the V2 pricing model reduces price by up to 80% with no change to Stream Analytics capabilities, so price Standard V2 (or Dedicated V2 for a cluster) as well.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Stream Analytics pricing",
+        "url": "https://azure.microsoft.com/pricing/details/stream-analytics/",
+        "quote": "V2 pricing model offers price reductions of up to 80%"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "stream-analytics",
+            "where": {
+              "facts.streamingUnits": {
+                ">": 0
+              },
+              "facts.tier": {
+                "in": [
+                  "standard",
+                  "dedicated"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "stream-analytics-few-jobs-vs-cluster": {
+      "level": "info",
+      "title": "A dedicated cluster is billed hourly for as long as it exists",
+      "body": "This estimate uses a dedicated cluster. Microsoft says you pay hourly for clusters on the chosen streaming-unit capacity, with no extra charge per job running in them, so the cluster costs the same whether it hosts one job or many. If the customer has only a few jobs and does not need cluster isolation or private networking, also price standard V2 jobs for comparison.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Overview of Stream Analytics clusters",
+        "url": "https://learn.microsoft.com/azure/stream-analytics/cluster-overview",
+        "quote": "You pay hourly for clusters and there are no extra charges per job running in these clusters."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "stream-analytics",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "dedicated",
+                  "dedicated-v2"
+                ]
+              },
+              "facts.streamingUnits": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "stream-analytics-auto-pause": {
+      "level": "info",
+      "title": "Jobs that need not run continuously can be stopped",
+      "body": "This estimate runs the jobs all month. Microsoft describes automatically pausing Stream Analytics jobs that do not strictly need to run continuously; billing stops while a job is stopped, so price only the hours it must run if that applies.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Auto-pause Stream Analytics jobs with PowerShell and Azure Automation",
+        "url": "https://learn.microsoft.com/azure/stream-analytics/automation-powershell",
+        "quote": "don't strictly need to run continuously"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "stream-analytics",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "standard",
+                  "standard-v2"
+                ]
+              },
+              "facts.streamingUnits": {
+                ">": 0
+              },
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "rules": {
+    "backup-lrs-production": {
+      "level": "warn",
+      "title": "Production backups kept in one datacenter only",
+      "body": "The customer said this is a production workload, but the backup vault storage is locally redundant (LRS), so every copy stays in one datacenter. Microsoft recommends geo-redundant storage (GRS) for the highest availability and says LRS is for development and test backups, so consider pricing GRS (or ZRS for zone resilience).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Backup pricing and cost estimates",
+        "url": "https://learn.microsoft.com/azure/backup/azure-backup-pricing",
+        "quote": "We recommend using GRS for the highest availability."
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "backup", "where": { "facts.redundancy": "lrs" } } ] },
+      "group": "management"
+    },
+    "backup-archive-early-delete": {
+      "level": "info",
+      "title": "Archive-tier backups have a 180-day minimum",
+      "body": "This estimate moves backup data to the Archive tier. Microsoft bills Archive data for at least 180 days, prorated, so deleting or stopping protection earlier still costs the remaining days, and restoring from Archive adds a one-time retrieval fee.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Backup pricing",
+        "url": "https://azure.microsoft.com/pricing/details/backup/",
+        "quote": "any backup data that is moved to the Archive tier is subject to an Archive early deletion period of 180 days."
+      },
+      "when": { "scope": "option", "all": [ { "type": "backup", "where": { "facts.archiveGB": { ">": 0 } } } ] },
+      "group": "management"
+    },
+    "backup-reserved-capacity": {
+      "level": "info",
+      "title": "Reserved capacity can lower backup storage cost at this volume",
+      "body": "This estimate holds at least 100 TB of vault backup data at pay-as-you-go rates. Microsoft sells Backup Storage reserved capacity in 100 TB and 1 PB blocks for one or three years, so price a reservation as an alternative.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Backup pricing",
+        "url": "https://azure.microsoft.com/pricing/details/backup/",
+        "quote": "Backup Storage Reserved Capacity helps you lower your backup data storage cost by committing to one-year or three-years of Azure Backup Storage."
+      },
+      "params": { "minStorageGB": 102400 },
+      "when": { "scope": "option", "all": [ { "type": "backup", "where": { "facts.storageGB": { ">=": 102400 }, "facts.commitment": "payg" } } ] },
+      "group": "management"
+    }
+  }
+}

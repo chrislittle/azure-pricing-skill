@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "automation-update-management-retired": {
+      "level": "warn",
+      "title": "Automation Update Management has been retired",
+      "body": "This estimate includes machines in Automation Update Management. Microsoft retired it on 31 August 2024 (it is free in the price list, but no longer available), so price Azure Update Manager (type update-manager) for patching instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Automanage Best Practices to Azure Policy migration planning",
+        "url": "https://learn.microsoft.com/azure/governance/policy/how-to/migrate-from-automanage-best-practices",
+        "quote": "On August 31, 2024, both Automation Update Management and the Log Analytics agent that it used were retired."
+      },
+      "when": { "scope": "option", "all": [ { "type": "automation", "where": { "facts.updateManagementNodes": { ">": 0 } } } ] },
+      "group": "management"
+    },
+    "automation-state-configuration-retiring": {
+      "level": "warn",
+      "title": "Automation State Configuration retires on 30 September 2027",
+      "body": "This estimate uses Automation configuration management nodes (Azure virtual machines or servers outside Azure). Microsoft will retire Azure Automation State Configuration on 30 September 2027 and asks customers to move to Azure Machine Configuration by that date, so plan the move before then.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Automation State Configuration overview",
+        "url": "https://learn.microsoft.com/azure/automation/automation-dsc-overview",
+        "quote": "Azure Automation State Configuration will be retired on September 30, 2027, please transition to Azure Machine Configuration by that date."
+      },
+      "when": { "scope": "option", "all": [ { "type": "automation", "where": { "facts.configNodes": { ">": 0 } } } ] },"group": "management"}}}
+

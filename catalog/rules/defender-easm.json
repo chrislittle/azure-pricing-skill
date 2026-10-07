@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "defender-easm-approved-inventory": {
+      "level": "info",
+      "title": "Only Approved Inventory assets are billed",
+      "body": "Defender EASM bills only assets that are in the Approved Inventory state, so size the asset count from the Billable assets dashboard (available during the free trial) rather than from the full discovered inventory.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand billable assets in Microsoft Defender External Attack Surface Management",
+        "url": "https://learn.microsoft.com/azure/external-attack-surface-management/understanding-billable-assets",
+        "quote": "Assets are only categorized as billable if they're placed in the Approved Inventory state."
+      },
+      "when": { "scope": "option", "all": [ { "type": "defender-easm", "where": { "facts.assets": { ">=": 1000 } } } ] },
+      "group": "security"
+    }
+  }
+}

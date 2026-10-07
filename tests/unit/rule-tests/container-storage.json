@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "container-storage-v2-no-fee": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "container-storage", "version": "v1", "poolTiB": 20 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "container-storage", "poolTiB": 20, "version": "v2" } ] } ] } } }
+  }
+}

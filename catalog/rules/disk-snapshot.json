@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "disk-snapshot-full-on-premium-costlier": {
+      "level": "info",
+      "title": "Incremental snapshots are stored on cheaper Standard HDD",
+      "body": "This estimate uses full snapshots of a Premium SSD or Standard SSD disk, which are stored on SSD storage at a higher per-GB rate. Microsoft states incremental snapshots use Standard HDD storage whatever the source disk type; use incremental unless a full copy is required.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Create an incremental snapshot",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/disks-incremental-snapshots",
+        "quote": "Incremental snapshots use Standard HDD storage, regardless of the source disk's storage type, whereas full snapshots can use Premium SSD storage."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "disk-snapshot",
+            "where": {
+              "facts.fullOnPremiumTier": true
+            }
+          }
+        ]
+      },
+      "group": "storage"
+    }
+  }
+}

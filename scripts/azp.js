@@ -164,7 +164,7 @@ async function main() {
         // Ordered question plan in batches of at most three, one batch per message.
         const types = String(a.types || '').split(',').filter(Boolean);
         const qs = [];
-        for (const ty of types) for (const [k, f] of Object.entries((SCHEMA[ty] || {}).fields || {})) if (f.req || (f.ask && /how many|how much|does it|is this|do you|must|need|which|what/i.test(f.ask))) qs.push({ about: `${ty}.${k}`, ask: f.ask || `What is the ${k} for the ${(SCHEMA[ty] || {}).label || ty}?`, default: f.def ?? null });
+        for (const ty of types) for (const [k, f] of Object.entries((SCHEMA[ty] || {}).fields || {})) if (f.req || (f.ask && !f.internal && (/\?/.test(f.ask) || /how many|how much|does it|is this|do you|must|need|which|what/i.test(f.ask)))) qs.push({ about: `${ty}.${k}`, ask: f.ask || `What is the ${k} for the ${(SCHEMA[ty] || {}).label || ty}?`, default: f.def ?? null });
         for (const [k, v] of Object.entries(CONTEXT)) if (!v.internal && (!v.services || v.services.some(s => types.includes(s)))) qs.push({ about: `context.${k}`, ask: v.ask, default: v.def ?? null });
         const seen = new Set(); const uniq = qs.filter(q => !seen.has(q.about) && seen.add(q.about));
         const batches = []; for (let i = 0; i < uniq.length; i += 3) batches.push(uniq.slice(i, i + 3));
@@ -176,7 +176,17 @@ async function main() {
         out = Object.fromEntries(Object.entries(CONTEXT).filter(([, v]) => !v.internal && (!types.size || !v.services || v.services.some(s => types.has(s)))).map(([k, v]) => [k, { ask: v.ask, default: v.def ?? null }]));
         break;
       }
-      out = t ? (SCHEMA[t] || { error: `Unknown type. Known: ${Object.keys(SCHEMA).join(', ')}, context` }) : Object.assign(Object.fromEntries(Object.entries(SCHEMA).map(([k, v]) => [k, v.label])), { context: 'Workload questions: run `questions context --types vm,disk,...` with the types in this estimate' });
+      out = t ? (SCHEMA[t] || { error: `Unknown type. Known: ${Object.keys(SCHEMA).join(', ')}, context. Run \`azp services --find <words>\` to search.` }) : { types: Object.fromEntries(Object.entries(SCHEMA).map(([k, v]) => [k, v.label])), context: 'Workload questions: run `questions context --types vm,disk,...` with the types in this estimate', find: 'Run `azp services --find "<plain words>"` to find the type for a service.' };
+      break;
+    }
+    case 'services': {
+      const words = String(a.find === true ? '' : a.find || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 1);
+      const all = Object.entries(SCHEMA).map(([k, v]) => ({ type: k, label: v.label, family: v.family || 'other', keywords: v.keywords || [] }));
+      const score = s => { const hay = `${s.type} ${s.label} ${s.keywords.join(' ')}`.toLowerCase(); return words.reduce((n, w) => n + (hay.includes(w) ? 1 : 0), 0); };
+      out = words.length ? all.map(s => Object.assign(s, { score: score(s) })).filter(s => s.score > 0).sort((x, y) => y.score - x.score).slice(0, 8)
+        : all.reduce((g, s) => { (g[s.family] = g[s.family] || []).push(`${s.type}: ${s.label}`); return g; }, {});
+      if (words.length && Array.isArray(out)) { const ex = require('./lib/excluded').findExcluded(words); if (ex.length) out = out.concat(ex); }
+      if (words.length && !out.length) out = { none: `No dedicated type matches "${a.find}". Use a "meter" component after \`azp search\`.` };
       break;
     }
     case 'vm-suggest': out = await cmdVmSuggest(a); break;
@@ -189,10 +199,11 @@ async function main() {
     case 'build': out = await cmdBuild(a); break;
     case 'readback': { const r = require('./lib/readback').readback(JSON.parse(fs.readFileSync(a._[1], 'utf8'))); out = { code: r.code, text: r.text, instructions: 'Show the person this text exactly as written, including the check code, and wait for their reply before running build.' }; break; }
     case 'rules': out = rulebook(); break;
-    case 'check-citations': { const rb = rulebook(); const c = await checkCitations(rb.rules); out = { ok: !c.failed.length && !rb.rejected.length && !rb.unwired.length, rules: rb.rules.length, rejected: rb.rejected, unwired: rb.unwired, failed: c.failed, checked: c.checked }; break; }
+    case 'check-citations': { const rb = rulebook(); let list = rb.rules; if (a.type) { const pf = path.join(__dirname, '..', 'catalog', 'rules', `${a.type}.json`); const ids = new Set(fs.existsSync(pf) ? Object.keys(JSON.parse(fs.readFileSync(pf, 'utf8')).rules || {}) : []); const shared = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'catalog', 'rules.json'), 'utf8')).rules || {}; const re = new RegExp('"type"\\s*:\\s*"' + a.type.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '"'); for (const [id, r] of Object.entries(shared)) if (re.test(JSON.stringify(r.when || {}))) ids.add(id); list = list.filter(r => ids.has(r.id.split('#')[0])); } const c = await checkCitations(list); out = { ok: !c.failed.length && !rb.rejected.length && !rb.unwired.length, rules: list.length, rejected: rb.rejected, unwired: rb.unwired, failed: c.failed, checked: c.checked }; break; }
     default:
       out = { usage: [
         'azp questions [type]            what to ask for each component type, with defaults',
+        'azp services [--find "words"]   every component type by family, or the best matches for plain words',
         'azp vm-suggest --vcpu N --mem GiB --region R [--workload auto|general|memory|compute|burstable] [--os linux|windows] [--arch any|x64|arm] [--local-disk]',
         'azp models                      AI models with verified meters',
         'azp search --region R --service S [--product P] [--sku K] [--meter M]   find meters for the "meter" component',

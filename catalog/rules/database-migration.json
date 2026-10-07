@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "database-migration-premium-always-on": {
+      "level": "info",
+      "title": "Stop the migration service when it is idle",
+      "body": "This estimate keeps a paid Premium migration service running for the whole month. Microsoft states a stopped service is not billed, so stop it (or delete it) between migration waves and when the migration is finished, and enter only the running hours.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "az dms (Azure CLI reference)",
+        "url": "https://learn.microsoft.com/cli/azure/dms?view=azure-cli-latest",
+        "quote": "While stopped, it can't be used to run data migrations and the owner won't be billed."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "database-migration",
+            "where": {
+              "facts.tier": "premium",
+              "facts.freePeriod": false,
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "management"
+    },
+    "database-migration-free-first-six-months": {
+      "level": "info",
+      "title": "A new 4-vCore Premium service is free for six months",
+      "body": "This estimate prices an existing or newly created 4-vCore Premium service at the normal hourly rate. Microsoft says a new Premium 4-vCore service is free for its first six months, so if you create a fresh service for this migration, set newService to true.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Database Migration Service pricing",
+        "url": "https://azure.microsoft.com/pricing/details/database-migration/",
+        "quote": "DMS Premium 4-vCore is free for 6 months (183 days) from the DMS service creation date before incurring any charges."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "database-migration",
+            "where": {
+              "facts.tier": "premium",
+              "facts.vcores": 4,
+              "facts.newService": false,
+              "facts.commitment": "payg"
+            }
+          }
+        ]
+      },
+      "group": "management"
+    },
+    "database-migration-savings-plan-lifetime": {
+      "level": "warn",
+      "title": "A migration service lasts one year at most",
+      "body": "This estimate uses a 3-year savings plan for the migration service. Microsoft says a Database Migration Service (classic) resource can be used for up to 1 year from its creation, so a 3-year commitment for it is unlikely to pay off; a savings plan is only worthwhile if the commitment is shared with other compute.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Database Migration Service pricing",
+        "url": "https://azure.microsoft.com/pricing/details/database-migration/",
+        "quote": "you can use it for up to 1 year from the date of service creation."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "database-migration",
+            "where": {
+              "facts.commitment": "savings-3y"
+            }
+          }
+        ]
+      },
+      "group": "management"
+    }
+  }
+}

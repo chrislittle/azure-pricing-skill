@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "netapp-files-reserve-steady": {
+      "level": "info",
+      "title": "A reservation lowers steady Azure NetApp Files capacity cost",
+      "body": "This is pay-as-you-go capacity of 100 TiB or more that you expect to keep running. Reserved capacity (sold in 100 TiB and 1 PiB blocks for 1 or 3 years) discounts the per-GiB rate for the capacity it covers; set commitment to ri1y or ri3y to compare.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand the Azure NetApp Files cost model",
+        "url": "https://learn.microsoft.com/azure/azure-netapp-files/azure-netapp-files-cost-model",
+        "quote": "Reserved capacity is a commitment to a defined quantity of Azure NetApp Files capacity. The reservation applies a discount to the per-GiB rate for capacity within the reservation."
+      },
+      "when": { "scope": "option", "context": { "steadyUsage": true }, "all": [ { "type": "netapp-files", "where": { "facts.commitment": "payg", "facts.serviceLevel": { "in": ["standard", "premium", "ultra"] }, "facts.hotTiB": { ">=": 100 } } } ] },
+      "group": "storage"
+    },
+    "netapp-files-reservation-not-cool": {
+      "level": "info",
+      "title": "Reservations do not cover cool-tier data",
+      "body": "The reservation in this estimate only covers the hot capacity pool. Data in the cool tier is billed separately at its own lower rate and is not covered by reserved capacity.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand the Azure NetApp Files cost model",
+        "url": "https://learn.microsoft.com/azure/azure-netapp-files/azure-netapp-files-cost-model",
+        "quote": "They don't apply to data residing in the cool access tier, which is already billed at the lower cool-tier rate."
+      },
+      "when": { "scope": "option", "all": [ { "type": "netapp-files", "where": { "facts.commitment": { "in": ["ri1y", "ri3y"] }, "facts.coolPercent": { ">": 0 } } } ] },
+      "group": "storage"
+    },
+    "netapp-files-snapshots-not-backups": {
+      "level": "info",
+      "title": "Snapshots are not backups",
+      "body": "Production data on Azure NetApp Files with no backup storage in this estimate. Snapshots give fast recovery but do not replace backups; Azure NetApp Files backup (billed per GiB-month) covers long-term retention and accidental volume deletion.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand the Azure NetApp Files cost model",
+        "url": "https://learn.microsoft.com/azure/azure-netapp-files/azure-netapp-files-cost-model",
+        "quote": "Snapshots are the primary mechanism for fast data recovery in Azure NetApp Files. They don't replace backups."
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "netapp-files", "where": { "facts.backupGiB": 0 } } ] },
+      "group": "storage"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "content-understanding-advanced-tokens": {
+      "level": "info",
+      "title": "Agentic mode can use more Foundry model tokens than this estimate shows",
+      "body": "Contextualization here is priced at a fixed rate per page, image, hour of audio or hour of video. If you use agentic mode, Microsoft notes it can consume more Foundry model tokens than a nonagentic workflow; those tokens bill on your Foundry deployment, not in this estimate, so test with representative documents.",
+        "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Content Understanding pricing explainer",
+        "url": "https://learn.microsoft.com/azure/ai-services/content-understanding/pricing-explainer",
+        "quote": "It can also consume more model tokens than a nonagentic workflow. Test with representative documents when you estimate costs."
+      },
+      "when": { "scope": "option", "all": [ { "type": "content-understanding", "where": { "facts.contextualization": "advanced" } } ] },
+      "group": "ai"
+    },
+    "content-understanding-model-tokens-separate": {
+      "level": "info",
+      "title": "Model token usage is billed on your Foundry deployment, not in Content Understanding",
+      "body": "Generative features are on in this estimate. Microsoft states the language model and embedding tokens appear on your Foundry model deployment, so add that deployment as its own component.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Content Understanding pricing explainer",
+        "url": "https://learn.microsoft.com/azure/ai-services/content-understanding/pricing-explainer",
+        "quote": "You don't see any LLM or embedding token usage billing in Content Understanding. That usage appears on your Foundry model deployment."
+      },
+      "when": { "scope": "option", "all": [ { "type": "content-understanding", "where": { "facts.contextualization": { "in": ["standard", "advanced"] } } } ] },
+      "group": "ai"
+    }
+  }
+}

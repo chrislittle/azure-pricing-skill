@@ -1,0 +1,125 @@
+{
+  "rules": {
+    "ddos-protection-ip-protection-scales-linearly": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "ip",
+                  "publicIps": 5
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "ip",
+                  "publicIps": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ddos-protection-network-protection-small": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "network",
+                  "publicIps": 15
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "network",
+                  "publicIps": 14
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ddos-protection-waf-discount": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "network",
+                  "publicIps": 20
+                },
+                {
+                  "type": "app-gateway"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ddos-protection",
+                  "tier": "network",
+                  "publicIps": 20
+                },
+                {
+                  "type": "app-gateway",
+                  "waf": false
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

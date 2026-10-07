@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "vnet-peering-prefer-regional": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vnet-peering",
+                  "sameRegionGB": 0,
+                  "peerRegion": "westeurope",
+                  "globalOutGB": 100,
+                  "globalInGB": 50
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vnet-peering",
+                  "sameRegionGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

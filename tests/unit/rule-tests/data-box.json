@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "data-box-extra-days": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "data-box", "device": "data-box-120", "devices": 1, "daysKept": 14 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "data-box", "device": "data-box-120", "devices": 1, "daysKept": 8 } ] } ] } } }
+  }
+}

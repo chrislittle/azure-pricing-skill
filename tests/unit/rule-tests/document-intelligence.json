@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "document-intelligence-commitment-tier": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "document-intelligence", "prebuiltPages": 25000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "document-intelligence", "prebuiltPages": 5000 } ] } ] } } },
+    "document-intelligence-commitment-single-service": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "document-intelligence", "plan": "commitment", "commitmentFeature": "prebuilt", "commitmentPages": 100000, "prebuiltPages": 50000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "document-intelligence", "prebuiltPages": 5000 } ] } ] } } }
+  }
+}

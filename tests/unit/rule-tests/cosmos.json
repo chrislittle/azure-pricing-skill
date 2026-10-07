@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "cosmos-standard-availability-zone-surcharge": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "provisioned",
+                  "ru": 1000,
+                  "zoneRedundant": true
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cosmos",
+                  "mode": "autoscale",
+                  "maxRU": 10000,
+                  "zoneRedundant": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

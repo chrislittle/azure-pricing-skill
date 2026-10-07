@@ -3282,13 +3282,13 @@
     "files-reserved-capacity-steady": {
       "level": "info",
       "title": "Compare Azure Files Reservations for steady large file shares",
-      "body": "This estimate has at least 10 TiB of steady Azure Files capacity on a reservation-eligible billing model. Microsoft states that Azure Files reservations can significantly reduce capacity costs; compare a one-year or three-year reservation for the same region, tier, and redundancy.",
+      "body": "This estimate has at least 10 TiB of steady Azure Files capacity on a reservation-eligible billing model (premium provisioned v1, or pay-as-you-go hot or cool) and no reservation yet. Reservations are not available for the provisioned v2 model or the transaction optimized tier. Compare a one-year or three-year reservation for the same region, tier, and redundancy.",
       "citation": {
         "framework": "Pricing",
         "code": null,
         "source": "Reduce Costs for Azure Files with Reservations",
         "url": "https://learn.microsoft.com/azure/storage/files/files-reserve-capacity",
-        "quote": "Azure Files reservations can significantly reduce your capacity costs for storing data in Azure file shares."
+        "quote": "Azure Files Reservations are available for SSD provisioned v1 file shares (premium storage) and for HDD pay-as-you-go file shares (standard storage) in the hot and cool access tiers."
       },
       "when": {
         "context": {
@@ -3301,12 +3301,8 @@
               "spec.capacityGB": {
                 ">=": 10240
               },
-              "spec.model": {
-                "in": [
-                  "payg-hot",
-                  "payg-cool"
-                ]
-              }
+              "spec.model": { "in": ["payg-hot", "payg-cool", "premium-v1"] },
+              "spec.commitment": { "notIn": ["ri1y", "ri3y"] }
             }
           }
         ]
@@ -3324,7 +3320,7 @@
               "components": [
                 {
                   "type": "files",
-                  "model": "payg-hot",
+                  "model": "premium-v1",
                   "capacityGB": 10240
                 }
               ]
@@ -3343,7 +3339,8 @@
               "components": [
                 {
                   "type": "files",
-                  "model": "provisioned-v2-hdd",
+                  "model": "premium-v1",
+                  "commitment": "ri1y",
                   "capacityGB": 10240
                 }
               ]

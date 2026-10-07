@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "update-manager-free-benefits": {
+      "level": "info",
+      "title": "Some Arc-enabled servers get Update Manager free",
+      "body": "This estimate charges Update Manager for Azure Arc-enabled servers. Microsoft does not charge servers that have Extended Security Updates, sit in a subscription with Defender for Servers Plan 2, or have Windows Server Software Assurance or pay-as-you-go enabled by Azure Arc, so check each server and enter those as covered by a benefit.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Update Manager frequently asked questions",
+        "url": "https://learn.microsoft.com/azure/update-manager/update-manager-faq",
+        "quote": "Microsoft Defender for Servers Plan 2 is enabled for the subscription that hosts the Azure Arc-enabled server."
+      },
+      "when": { "scope": "option", "all": [ { "type": "update-manager", "where": { "facts.chargedServers": { ">": 0 } } } ] },
+      "group": "management"
+    }
+  }
+}

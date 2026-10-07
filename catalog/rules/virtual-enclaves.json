@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "virtual-enclaves-full-hour-billing": {
+      "level": "info",
+      "title": "A short-lived enclave is still billed for every started hour",
+      "body": "This estimate runs each enclave for less than a full month. Enclave time is rounded up to whole hours, so very short test or demo enclaves cost a full hour each time they are created, and deleting and recreating enclaves repeatedly adds up.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Enclave frequently asked questions",
+        "url": "https://learn.microsoft.com/azure/enclave/azure-enclave-faq",
+        "quote": "Enclaves deployed during part of an hour are charged for the full hour."
+      },
+      "when": { "scope": "option", "all": [ { "type": "virtual-enclaves", "where": { "facts.hours": { "<": 720 } } } ] },
+      "group": "cost"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "defender-for-cloud-api-plan1-overage": {
+      "level": "warn",
+      "title": "Defender for APIs plan 1 only includes one million API calls",
+      "body": "This estimate enables Defender for APIs plan 1 on a subscription with more than one million API calls a month. Microsoft warns that the default plan 1 can lead to unexpected overage charges when traffic is higher than its entitlement, so check whether a larger plan is cheaper than paying per-call overage.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Protect your APIs with Defender for APIs",
+        "url": "https://learn.microsoft.com/azure/defender-for-cloud/defender-for-apis-deploy",
+        "quote": "which can lead to unexpected overages if your subscription has API traffic higher than the one million API calls entitlement"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "defender-for-cloud",
+            "where": {
+              "facts.apiPlan": "p1",
+              "facts.apiCalls": {
+                ">": 1000000
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "defender-for-cloud-malware-scan-cap": {
+      "level": "warn",
+      "title": "Malware scanning stops at a monthly cap per storage account",
+      "body": "This estimate scans more uploaded data than the default malware-scanning limit allows across the protected storage accounts. Microsoft stops scanning once the monthly limit is exceeded, so raise the cap per account (which raises the cost) or expect unscanned blobs.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Introduction to Microsoft Defender for Storage",
+        "url": "https://learn.microsoft.com/azure/defender-for-cloud/defender-for-storage-introduction",
+        "quote": "By default, the limit is set to 10,000 GB of uploaded blobs per month per storage account"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "defender-for-cloud",
+            "where": {
+              "facts.malwareOverCap": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "defender-for-cloud-dns-with-servers-plan2": {
+      "level": "info",
+      "title": "DNS alerts are already part of Defender for Servers plan 2",
+      "body": "This estimate adds Defender for DNS alongside Defender for Servers plan 2. Microsoft includes suspicious-DNS alerts in plan 2 for new subscriptions, and the standalone DNS plan only continues for subscriptions that already had it, so check whether the DNS line is needed.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Support matrix for Defender for Cloud",
+        "url": "https://learn.microsoft.com/azure/defender-for-cloud/support-matrix-defender-for-cloud",
+        "quote": "For new subscriptions, alerts about suspicious DNS activity are included as part of Defender for Servers Plan 2 (P2)."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "defender-for-cloud",
+            "where": {
+              "facts.dnsWithPlan2": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    }
+  }
+}

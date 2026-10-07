@@ -1,0 +1,157 @@
+{
+  "rules": {
+    "data-factory-data-flow-reservation": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "dataFlowVcores": 8,
+                  "dataFlowHours": 700
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "dataFlowVcores": 8,
+                  "dataFlowHours": 50
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "data-factory-ssis-always-on": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "ssisNodes": 1,
+                  "ssisSize": "d4v3"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "ssisNodes": 1,
+                  "ssisSize": "d4v3",
+                  "hours": 200
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "data-factory-data-flow-ttl": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "dataFlowVcores": 8,
+                  "dataFlowHours": 50
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "data-factory-ssis-hybrid-benefit": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "ssisNodes": 1,
+                  "ssisSize": "d4v3",
+                  "ssisLicense": "license-included"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-factory",
+                  "activityRuns": 10000,
+                  "ssisNodes": 1,
+                  "ssisSize": "d4v3",
+                  "ssisLicense": "ahb"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

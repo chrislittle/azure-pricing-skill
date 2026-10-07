@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "load-balancer-no-rules-no-hourly": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 0
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "load-balancer",
+                  "rules": 5
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "vnet-peering-prefer-regional": {
+      "level": "info",
+      "title": "Regional peering costs less than global peering",
+      "body": "This estimate has cross-region (global) peering traffic. Microsoft advises using regional peering instead of global peering when workloads can be placed in the same Azure region, because regional peering costs less.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Virtual Network cost optimization principles",
+        "url": "https://learn.microsoft.com/azure/virtual-network/virtual-network-cost-optimization",
+        "quote": "Implement regional VNet peering instead of global peering when workloads can be colocated in the same Azure region. Regional peering costs less than global peering."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "vnet-peering",
+            "where": {
+              "facts.globalGB": {
+                ">=": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

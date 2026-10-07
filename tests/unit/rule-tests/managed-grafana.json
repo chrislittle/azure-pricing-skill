@@ -1,0 +1,79 @@
+{
+  "rules": {
+    "managed-grafana-essential-deprecated": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "managed-grafana",
+                  "users": 3,
+                  "tier": "essential"
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "managed-grafana",
+                  "users": 3,
+                  "tier": "standard"
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        }
+      }
+    },
+    "managed-grafana-zone-redundancy-choice": {
+      "test": {
+        "fires": {
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "managed-grafana",
+                  "users": 3,
+                  "tier": "standard"
+                }
+              ],
+              "name": "a"
+            }
+          ],
+          "region": "eastus2"
+        },
+        "silent": {
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "zoneRedundancy": true,
+                  "type": "managed-grafana",
+                  "users": 3,
+                  "tier": "standard"
+                }
+              ],
+              "name": "a"
+            }
+          ],
+          "region": "eastus2"
+        }
+      }
+    }
+  }
+}

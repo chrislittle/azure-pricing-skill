@@ -1,0 +1,70 @@
+{
+  "rules": {
+    "network-watcher-nsg-flow-logs-retiring": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "network-watcher",
+                  "vnetFlowLogsGB": 10
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "nsgFlowLogsGB": 20,
+                  "type": "network-watcher",
+                  "vnetFlowLogsGB": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "network-watcher-flow-log-retention": {
+      "test": {
+        "silent": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "network-watcher",
+                  "vnetFlowLogsGB": 0,
+                  "connectionMonitorTests": 30
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        },
+        "fires": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "vnetFlowLogsGB": 10,
+                  "type": "network-watcher"
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        }
+      }
+    }
+  }
+}

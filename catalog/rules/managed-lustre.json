@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "managed-lustre-all-month": {
+      "level": "info",
+      "title": "Managed Lustre is billed while it exists; delete it between jobs",
+      "body": "This file system is priced for the whole month, and the context says it is not production. It is billed per GiB-hour from creation until deletion, so if it is only needed while jobs run (for example an idle or non-production file system), hold the data in lower-cost Blob Storage between runs and create the file system only when needed (set hours to the real number of hours).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What is Azure Managed Lustre?",
+        "url": "https://learn.microsoft.com/azure/azure-managed-lustre/amlfs-overview",
+        "quote": "Instead, you can create a different file system for different jobs and store data in lower-cost Azure blob containers between uses."
+      },
+      "when": { "scope": "option", "context": { "production": false }, "all": [ { "type": "managed-lustre", "where": { "facts.hours": { ">=": 730 } } } ] },
+      "group": "storage"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "rules": {
+    "purview-incremental-scans": {
+      "level": "info",
+      "title": "Use incremental scans to cut scanning cost",
+      "body": "This estimate includes classic Purview scanning vCore-hours, which are billed by scan duration and vCores used. Microsoft recommends running incremental scans after the first full scan, because they process only changed objects.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Microsoft Purview Data Map overview",
+        "url": "https://learn.microsoft.com/purview/data-map",
+        "quote": "Use incremental scans after the initial full scan."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "purview",
+            "where": {
+              "facts.scanVcoreHours": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "purview-insights-generation-default": {
+      "level": "info",
+      "title": "Data Map insights generation can be turned off",
+      "body": "This estimate includes classic Data Map insights generation. Microsoft says it is enabled by default at provisioning and can be turned off in the Management center, which removes this charge if the insights are not used.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Microsoft Purview pricing",
+        "url": "https://azure.microsoft.com/pricing/details/purview/",
+        "quote": "By default, Insights Generation is enabled at provisioning and can be turned off in the Management center"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "purview",
+            "where": {
+              "facts.insightsGenerationVcoreHours": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

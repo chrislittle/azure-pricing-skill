@@ -1,0 +1,85 @@
+{
+  "rules": {
+    "foundry-tools-commitment-cheaper": {
+      "level": "info",
+      "title": "A commitment tier would cost less than pay as you go",
+      "body": "At this monthly volume a Foundry Tools commitment tier (a fixed monthly fee that includes a volume, with an overage rate above it) comes out cheaper than pay as you go at list price. Microsoft describes commitment tiers as discounted compared with standard pricing and as giving a predictable cost. The plan is a calendar-month commitment and is non-refundable once purchased, so use it only for volume you expect to keep.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Purchase commitment tier pricing",
+        "url": "https://learn.microsoft.com/azure/ai-services/commitment-tier",
+        "quote": "Foundry Tools offers commitment tier pricing, allowing discounted rates compared to the Standard pricing model."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "foundry-tools",
+            "where": {
+              "facts.plan": "payg",
+              "facts.commitmentSaving": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "foundry-tools-commitment-single-service": {
+      "level": "warn",
+      "title": "Commitment tiers need a single-service resource",
+      "body": "This estimate uses a commitment tier. Microsoft states commitment tier pricing cannot be used with a multi-service Foundry Tools resource, so plan a dedicated resource for each service (for example one Speech and one Translator resource) rather than one shared multi-service resource.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Purchase commitment tier pricing",
+        "url": "https://learn.microsoft.com/azure/ai-services/commitment-tier",
+        "quote": "You cannot use commitment tier pricing with a Foundry Tools or a Microsoft Foundry multi-service resource."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "foundry-tools",
+            "where": {
+              "facts.plan": {
+                "in": [
+                  "commitment",
+                  "commitment-connected-container",
+                  "commitment-disconnected-container"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "foundry-tools-disconnected-annual": {
+      "level": "info",
+      "title": "Disconnected containers are bought for a whole year",
+      "body": "This estimate uses a disconnected-container commitment. Microsoft says these plans run for a calendar year and the full price is charged immediately, unlike monthly commitments for the hosted service and connected containers. Access must also be requested separately, so confirm the need for fully offline operation before choosing this plan.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Purchase commitment tier pricing",
+        "url": "https://learn.microsoft.com/azure/ai-services/commitment-tier",
+        "quote": "Commitment plans for disconnected containers have a calendar year commitment period."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "foundry-tools",
+            "where": {
+              "facts.plan": "commitment-disconnected-container"
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    }
+  }
+}

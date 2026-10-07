@@ -1,0 +1,84 @@
+{
+  "rules": {
+    "api-management-developer-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "api-management",
+                  "tier": "developer",
+                  "units": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "api-management",
+                  "tier": "standard-v2",
+                  "units": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "api-management-api-center-free-on-eligible-tier": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "api-management",
+                  "tier": "basic-v2",
+                  "units": 1,
+                  "apiCenters": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "api-management",
+                  "tier": "standard-v2",
+                  "units": 1,
+                  "apiCenters": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

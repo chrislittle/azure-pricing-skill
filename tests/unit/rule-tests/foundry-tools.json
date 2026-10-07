@@ -1,0 +1,121 @@
+{
+  "rules": {
+    "foundry-tools-commitment-cheaper": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "text-analysis",
+                  "quantity": 2000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "text-analysis",
+                  "quantity": 20000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "foundry-tools-commitment-single-service": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "text-analysis",
+                  "quantity": 2000000,
+                  "plan": "commitment"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "text-analysis",
+                  "quantity": 20000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "foundry-tools-disconnected-annual": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "summarization",
+                  "quantity": 2000000,
+                  "plan": "commitment-disconnected-container"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "foundry-tools",
+                  "tool": "language",
+                  "feature": "summarization",
+                  "quantity": 2000000,
+                  "plan": "commitment"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

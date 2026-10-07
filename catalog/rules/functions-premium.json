@@ -1,0 +1,84 @@
+{
+  "rules": {
+    "functions-premium-always-billed-instance": {
+      "level": "info",
+      "title": "A Premium plan costs money even when nothing runs",
+      "body": "Every Functions Premium plan has at least one billed instance around the clock, idle or not. For a non-production or occasional workload, the Consumption or Flex Consumption plan may cost far less because you are not charged while the app is idle.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Functions Premium plan",
+        "url": "https://learn.microsoft.com/azure/azure-functions/functions-premium-plan",
+        "quote": "Every premium plan always has at least one active (billed) instance."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "functions-premium"
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "functions-premium-reserve-steady": {
+      "level": "info",
+      "title": "Steady Premium usage can be committed",
+      "body": "This Premium plan is priced pay-as-you-go but you expect steady usage. Microsoft advises reserving capacity for Elastic Premium plans when the workload is predictable; compare the savings plan option in this estimate.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Azure Functions service guide",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-functions",
+        "quote": "Reserve capacity for Elastic Premium plans or Dedicated App Service plans if your workload is predictable."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "functions-premium",
+            "where": {
+              "facts.commitment": "payg"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "functions-premium-zone-redundancy-two-instances": {
+      "level": "warn",
+      "title": "Zone redundancy needs two always-ready instances",
+      "body": "You asked for zone resilience, but this Premium plan has a single always-ready instance. Microsoft states zone redundancy for Premium plans requires at least two always-ready instances, and both are billed.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Functions",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-functions",
+        "quote": "Zone redundancy for Premium plans requires a minimum of two always-ready instances."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "functions-premium",
+            "where": {
+              "facts.alwaysReady": {
+                "<": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

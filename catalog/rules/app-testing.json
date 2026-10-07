@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "app-testing-usage-limit": {
+      "level": "info",
+      "title": "Load testing spend can be capped with a monthly virtual user hour limit",
+      "body": "This estimate includes load testing. Microsoft lets you cap monthly virtual user hours on a load testing resource, which stops runaway test spend.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Manage usage limits on an Azure Load Testing resource",
+        "url": "https://learn.microsoft.com/azure/app-testing/load-testing/how-to-manage-usage-limits",
+        "quote": "This feature allows you to control the total consumption for a resource by setting monthly Virtual User Hours (VUH) limits."
+      },
+      "when": { "scope": "option", "all": [ { "type": "app-testing", "where": { "facts.virtualUserHours": { ">": 0 } } } ] },
+      "group": "developer-tools"
+    },
+    "app-testing-playwright-trial-first-workspace": {
+      "level": "info",
+      "title": "The Playwright free trial covers only the first workspace",
+      "body": "This estimate uses free Playwright trial minutes. Microsoft limits the trial to the first workspace created in the Azure subscription, so later workspaces pay from the first minute.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Playwright Workspaces free trial",
+        "url": "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/how-to-try-playwright-workspaces-free",
+        "quote": "These limits only apply to the first workspace you create in your Azure subscription."
+      },
+      "when": { "scope": "option", "all": [ { "type": "app-testing", "where": { "facts.playwrightTrialMinutes": { ">": 0 } } } ] },
+      "group": "developer-tools"
+    }
+  }
+}

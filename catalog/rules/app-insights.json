@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "app-insights-multistep-legacy": {
+      "level": "info",
+      "title": "Multi-step web tests are a legacy test type",
+      "body": "This estimate includes multi-step web tests. Microsoft documents Standard tests as the supported availability test type for current monitoring, with multi-step tests only in previous-version documentation, so plan to replace them with Standard tests.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Application Insights availability tests",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/app/availability",
+        "quote": "Application Insights supports Standard tests for current availability monitoring"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-insights",
+            "where": {
+              "facts.multiStepTests": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "app-insights-commitment-tier": {
+      "level": "info",
+      "title": "High telemetry volume can use a commitment tier",
+      "body": "This estimate ingests about 100 GB a day or more of telemetry at pay-as-you-go rates. Workspace commitment tiers start at 100 GB per day and cost less per GB than pay-as-you-go, so compare them for a workspace-based Application Insights resource.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Monitor Logs cost calculation and options",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/logs/cost-logs",
+        "quote": "With commitment tier pricing, you can commit to buy data ingestion for a workspace, starting at 100 GB per day, at a lower price than pay-as-you-go pricing."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-insights",
+            "where": {
+              "facts.ingestGbPerMonth": {
+                ">=": 3000
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "app-insights-sampling": {
+      "level": "info",
+      "title": "Sampling can cut high telemetry volume",
+      "body": "This estimate ingests 100 GB a month or more of telemetry. Microsoft lists sampling as the way to tune the amount of data Application Insights collects, which directly reduces the ingestion cost.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize costs in Azure Monitor",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/best-practices-cost",
+        "quote": "Use sampling to tune the amount of data collected."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "app-insights",
+            "where": {
+              "facts.ingestGbPerMonth": {
+                ">=": 100
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    }
+  }
+}

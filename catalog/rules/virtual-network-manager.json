@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "virtual-network-manager-subscription-billing": {
+      "level": "info",
+      "title": "Older Virtual Network Manager instances can switch to per-virtual-network billing",
+      "body": "This estimate bills Virtual Network Manager per subscription, the default for instances created before the virtual network-based model. Microsoft says these instances can opt in to per-virtual-network billing, which may cost less when few networks per subscription are managed. Compare both.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Virtual Network Manager pricing",
+        "url": "https://azure.microsoft.com/pricing/details/virtual-network-manager/",
+        "quote": "Users of this billing method can opt-in to use Virtual network-based billing."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-network-manager",
+            "where": {
+              "facts.billingModel": "subscription"
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

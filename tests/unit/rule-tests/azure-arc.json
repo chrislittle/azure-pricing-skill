@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "azure-arc-sql-server-developer-free": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "azure-arc", "workload": "sql-server", "cores": 8 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "azure-arc", "workload": "sql-server", "cores": 8 } ] } ] } } }
+  }
+}

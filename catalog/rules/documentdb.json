@@ -1,0 +1,75 @@
+{
+  "rules": {
+    "documentdb-no-ha-production": {
+      "level": "warn",
+      "title": "High availability is off for a production cluster",
+      "body": "This estimate runs Azure DocumentDB without high availability for production. There is no standby server, so the price is half, but Microsoft says high availability is critical for database availability in production and can be turned off for development or experiments. Turn it on for production; it doubles compute and storage.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Availability (reliability) and disaster recovery (DR) in Azure DocumentDB: Behind the scenes",
+        "url": "https://learn.microsoft.com/azure/documentdb/availability-disaster-recovery-under-hood",
+        "quote": "While HA can be disabled for development or experimental clusters to reduce costs, it is critical for maintaining database availability in production."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "documentdb",
+            "where": {
+              "facts.highAvailability": false,
+              "facts.tier": {
+                "!=": "free"
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "documentdb-reservation": {
+      "level": "info",
+      "title": "A reservation could lower the compute cost",
+      "body": "This estimate prices an always-on Azure DocumentDB cluster (M30 or larger) at pay-as-you-go rates and expects steady use for a year or more. Microsoft sells 1- and 3-year reservations on vCore compute (not storage). Compare the 1-year and 3-year options.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs with Azure DocumentDB Reservations",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/reservations/azure-documentdb",
+        "quote": "You can save money on Azure DocumentDB by committing to a reservation for your vCore compute resources for a duration of one year or three years."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "documentdb",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.tier": {
+                "in": [
+                  "m30",
+                  "m40",
+                  "m50",
+                  "m60",
+                  "m80",
+                  "m200",
+                  "m300"
+                ]
+              },
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    }
+  }
+}

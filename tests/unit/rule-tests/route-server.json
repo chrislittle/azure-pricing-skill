@@ -1,0 +1,71 @@
+{
+  "rules": {
+    "route-server-route-maps-extra-charge": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "route-server",
+                  "routeMaps": true,
+                  "servers": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "route-server",
+                  "servers": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "route-server-single-nva-peer": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "route-server",
+                  "nvaPeers": 1,
+                  "servers": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "route-server",
+                  "nvaPeers": 2,
+                  "servers": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "rules": {
+    "private-link-data-transfer-extra": {
+      "level": "info",
+      "title": "Private Link data processing is charged on top of normal data transfer",
+      "body": "This estimate sends data through private endpoints. The Private Link per-GB charge is a premium for the Private Link capability; Microsoft states that normal data transfer pricing still applies to the same data, so check bandwidth costs separately.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Private Link pricing FAQ",
+        "url": "https://azure.microsoft.com/pricing/details/private-link/",
+        "quote": "Yes, above prices are premiums for Private Link capability. Data transfer pricing will apply to data."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "private-link",
+            "where": {
+              "facts.dataProcessedGB": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "private-link-peered-traffic": {
+      "level": "info",
+      "title": "Traffic to a private endpoint over peering is not charged as peering",
+      "body": "Reaching a private endpoint across a peered network is billed only as Private Link data processing; Microsoft says peering is not charged for that traffic. Do not also count that traffic in the peering volume.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Private Link pricing FAQ",
+        "url": "https://azure.microsoft.com/pricing/details/private-link/",
+        "quote": "While accessing Private Endpoints from peered Network, you will only be charged for Private Link Premium. You will not be charged for Peering."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "private-link",
+            "where": {
+              "facts.privateEndpoints": {
+                ">=": 1
+              }
+            }
+          },
+          {
+            "type": "vnet-peering",
+            "where": {
+              "facts.sameRegionGB": {
+                ">=": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "video-indexer-retention-period": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "video-indexer", "minutes": 600 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "video-indexer", "minutes": 0, "modificationMinutes": 100 } ] } ] } } },
+    "video-indexer-audio-and-video-billed": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "video-indexer", "minutes": 600 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "video-indexer", "minutes": 600, "videoPreset": "none" } ] } ] } } }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "rules": {
+    "signalr-premium-for-zone-resilience": {
+      "level": "warn",
+      "title": "SignalR tier below Premium is not zone resilient",
+      "body": "This production workload needs to keep running if one datacenter fails, but it is priced on a tier below Premium. Microsoft says the Premium tier is the one that is resilient to availability zone failures and supports geo-replication. Price the Premium tier instead, or confirm that a datacenter failure can be tolerated.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure SignalR Service",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-signalr",
+        "quote": "The premium tier is resilient to availability zone failures in supported regions, and enables you to configure geo-replication."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "signalr",
+            "where": {
+              "facts.tier": {
+                "!=": "premium"
+              }
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    },
+    "signalr-geo-replication-for-multi-region": {
+      "level": "info",
+      "title": "Premium SignalR without a replica for users in several regions",
+      "body": "This production Premium SignalR Service has no geo-replica although the users are spread across regions. Microsoft recommends geo-replication to protect against region-wide failures, with each replica sized for the full load during a failover. Each replica is billed separately, so add replicas to the estimate or confirm that a regional outage can be tolerated.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure SignalR Service",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-signalr",
+        "quote": "Enable geo-replication to protect against region-wide failures."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "multiRegionUsers": true
+        },
+        "all": [
+          {
+            "type": "signalr",
+            "where": {
+              "facts.tier": "premium",
+              "facts.replicas": {
+                "in": [
+                  0
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    },
+    "signalr-premium-autoscale-for-idle": {
+      "level": "info",
+      "title": "Premium SignalR can autoscale when usage has quiet periods",
+      "body": "This Premium SignalR Service is idle for long stretches. Microsoft says autoscale can help optimise performance and cost, so the units could be scaled down during quiet periods instead of billed at the peak size all month. The estimate prices the fixed unit count you gave.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Automatically scale units of an Azure SignalR Service",
+        "url": "https://learn.microsoft.com/azure/azure-signalr/signalr-howto-scale-autoscale",
+        "quote": "Autoscale can help you optimize performance and cost for your application."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "signalr",
+            "where": {
+              "facts.tier": "premium"
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    }
+  }
+}

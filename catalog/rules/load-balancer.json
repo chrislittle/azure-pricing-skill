@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "load-balancer-no-rules-no-hourly": {
+      "level": "info",
+      "title": "A Standard Load Balancer with no rules has no hourly charge",
+      "body": "This estimate has a load balancer with 0 rules, so there is no hourly charge; only data processed bills. Inbound NAT rules do not count as rules.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Load Balancer pricing, FAQ",
+        "url": "https://azure.microsoft.com/pricing/details/load-balancer/",
+        "quote": "No, there is no hourly charge for the Standard Load Balancer when no rules are configured."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "load-balancer",
+            "where": {
+              "facts.rules": {
+                "<=": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute-network"
+    }
+  }
+}

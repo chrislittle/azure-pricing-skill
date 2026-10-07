@@ -1,0 +1,170 @@
+{
+  "rules": {
+    "iot-hub-free-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 5000,
+                  "tier": "free"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 5000,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "iot-hub-undersized": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 1000000,
+                  "size": "1",
+                  "tier": "standard",
+                  "units": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 1000000,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "iot-hub-basic-one-way": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 100000,
+                  "needsTwoWay": true,
+                  "tier": "basic"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 100000,
+                  "needsTwoWay": false,
+                  "tier": "basic"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "iot-hub-batch-small-messages": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 3000000,
+                  "messageSizeKb": 0.5
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-hub",
+                  "messagesPerDay": 3000000,
+                  "messageSizeKb": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

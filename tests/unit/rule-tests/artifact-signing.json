@@ -1,0 +1,76 @@
+{
+  "rules": {
+    "artifact-signing-premium-low-volume": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "artifact-signing",
+                  "tier": "premium",
+                  "signatures": 30000
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "artifact-signing",
+                  "tier": "premium",
+                  "signatures": 20000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "artifact-signing-basic-high-volume": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "artifact-signing",
+                  "signatures": 100000,
+                  "tier": "basic"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "artifact-signing",
+                  "signatures": 20000,
+                  "tier": "basic"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "rules": {
+    "log-analytics-restore-minimum": {
+      "level": "info",
+      "title": "Data restore is billed for at least 2 TB and 12 hours",
+      "body": "A restore smaller than 2 TB is still billed as 2 TB, and one kept for less than 12 hours is billed as 12 hours, so many small restores cost more than one planned restore. Restore the whole time range you need in one operation and dismiss it when finished.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Monitor Logs cost calculations and options",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/logs/cost-logs",
+        "quote": "The minimal values billed for any data restore are 2 TB and 12 hours."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "log-analytics",
+            "where": {
+              "facts.restoreGB": {
+                ">": 0,
+                "<": 2048
+              }
+            }
+          }
+        ]
+      },
+      "group": "storage-ai-cost"
+    },
+    "log-analytics-basic-aux-no-commitment": {
+      "level": "info",
+      "title": "Commitment tiers do not cover Basic or Auxiliary Logs",
+      "body": "A commitment tier here only discounts Analytics Logs ingestion. The Basic and Auxiliary Logs volume in this workspace bills at its own flat per-GB rate on top, so do not count it toward the tier size.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Monitor Logs cost calculations and options",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/logs/cost-logs",
+        "quote": "is billed at flat per-GB rates and isn't covered by commitment-tier discounts."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "log-analytics",
+            "where": {
+              "facts.commitmentTier": {
+                "exists": true
+              },
+              "facts.basicLogsGBPerDay": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "storage-ai-cost"
+    }
+  }
+}

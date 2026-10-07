@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "documentdb-no-ha-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "documentdb",
+                  "tier": "m30",
+                  "storageGb": 128,
+                  "highAvailability": false
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "documentdb",
+                  "tier": "m30",
+                  "storageGb": 128,
+                  "highAvailability": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "documentdb-reservation": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "documentdb",
+                  "tier": "m40",
+                  "storageGb": 128
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "documentdb",
+                  "tier": "m10",
+                  "storageGb": 128
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

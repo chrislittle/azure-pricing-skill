@@ -755,6 +755,11 @@
           {
             "type": "public-ip"
           }
+        ],
+        "none": [
+          {
+            "type": "ddos-protection"
+          }
         ]
       },
       "group": "compute-network"
@@ -780,6 +785,11 @@
           {
             "type": "app-gateway"
           }
+        ],
+        "none": [
+          {
+            "type": "ddos-protection"
+          }
         ]
       },
       "group": "compute-network"
@@ -804,6 +814,11 @@
         "all": [
           {
             "type": "load-balancer"
+          }
+        ],
+        "none": [
+          {
+            "type": "ddos-protection"
           }
         ]
       },
@@ -1239,7 +1254,12 @@
         },
         "all": [
           {
-            "type": "sql-database"
+            "type": "sql-database",
+            "where": {
+              "facts.compute": {
+                "!=": "serverless"
+              }
+            }
           }
         ]
       },
@@ -1296,7 +1316,13 @@
         },
         "all": [
           {
-            "type": "sql-database"
+            "type": "sql-database",
+            "where": {
+              "facts.compute": {
+                "!=": "serverless"
+              },
+              "facts.commitment": "payg"
+            }
           }
         ]
       },
@@ -1342,7 +1368,15 @@
         },
         "all": [
           {
-            "type": "postgres"
+            "type": "postgres",
+            "where": {
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
           }
         ]
       },
@@ -1365,7 +1399,15 @@
         },
         "all": [
           {
-            "type": "mysql"
+            "type": "mysql",
+            "where": {
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
+              }
+            }
           }
         ]
       },
@@ -1396,6 +1438,12 @@
                   "autoscale"
                 ],
                 "default": "autoscale"
+              },
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
               }
             }
           }
@@ -1482,7 +1530,10 @@
         },
         "all": [
           {
-            "type": "sql-database"
+            "type": "sql-database",
+            "where": {
+              "facts.zoneRedundant": false
+            }
           }
         ]
       },
@@ -1737,6 +1788,12 @@
             "where": {
               "spec.capacityGB": {
                 ">=": 102400
+              },
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
               }
             }
           }
@@ -1747,13 +1804,13 @@
     "files-reserved-capacity-steady": {
       "level": "info",
       "title": "Compare Azure Files Reservations for steady large file shares",
-      "body": "This estimate has at least 10 TiB of steady Azure Files capacity on a reservation-eligible billing model. Microsoft states that Azure Files reservations can significantly reduce capacity costs; compare a one-year or three-year reservation for the same region, tier, and redundancy.",
+      "body": "This estimate has at least 10 TiB of steady Azure Files capacity on a reservation-eligible billing model (premium provisioned v1, or pay-as-you-go hot or cool) and no reservation yet. Reservations are not available for the provisioned v2 model or the transaction optimized tier. Compare a one-year or three-year reservation for the same region, tier, and redundancy.",
       "citation": {
         "framework": "Pricing",
         "code": null,
         "source": "Reduce Costs for Azure Files with Reservations",
         "url": "https://learn.microsoft.com/azure/storage/files/files-reserve-capacity",
-        "quote": "Azure Files reservations can significantly reduce your capacity costs for storing data in Azure file shares."
+        "quote": "Azure Files Reservations are available for SSD provisioned v1 file shares (premium storage) and for HDD pay-as-you-go file shares (standard storage) in the hot and cool access tiers."
       },
       "when": {
         "context": {
@@ -1769,7 +1826,14 @@
               "spec.model": {
                 "in": [
                   "payg-hot",
-                  "payg-cool"
+                  "payg-cool",
+                  "premium-v1"
+                ]
+              },
+              "spec.commitment": {
+                "notIn": [
+                  "ri1y",
+                  "ri3y"
                 ]
               }
             }
@@ -1916,6 +1980,12 @@
               "facts.type": "premium-ssd",
               "facts.tier": {
                 "match": "^P(3[0-9]|[4-8][0-9])$"
+              },
+              "spec.commitment": {
+                "in": [
+                  "payg"
+                ],
+                "default": "payg"
               }
             }
           }

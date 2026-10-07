@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "key-vault-hsm-pool-soft-delete": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "tier": "premium", "operations": 0, "managedHsmPools": 1 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "tier": "premium", "operations": 100000 } ] } ] } } },
+    "key-vault-rotation-key-versions": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "tier": "premium", "operations": 100000, "hsmKeys": 5, "keyRotations": 5 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "tier": "premium", "operations": 100000, "hsmKeys": 5 } ] } ] } } },
+    "key-vault-cache-secrets": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "operations": 20000000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "key-vault", "operations": 9000000 } ] } ] } } }
+  }
+}

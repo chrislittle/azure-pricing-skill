@@ -1,0 +1,84 @@
+{
+  "rules": {
+    "logic-apps-ise-retired": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "logic-apps",
+                  "plan": "ise",
+                  "iseTier": "developer"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "logic-apps",
+                  "plan": "standard",
+                  "hostingPlan": "ws1"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "logic-apps-standard-zone-redundancy": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "logic-apps",
+                  "plan": "standard",
+                  "hostingPlan": "ws1",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "logic-apps",
+                  "plan": "standard",
+                  "hostingPlan": "ws1",
+                  "instances": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

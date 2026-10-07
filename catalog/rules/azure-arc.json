@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "azure-arc-sql-server-developer-free": {
+      "level": "info",
+      "title": "Non-production SQL Server can use the free Developer edition",
+      "body": "This is a non-production estimate that pays for SQL Server Standard, Enterprise or Web through Azure Arc pay-as-you-go. Microsoft says the Developer edition is free and is reported through Azure Arc with a $0 meter, so development and test machines may not need to pay for a production edition.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Manage licensing and billing of SQL Server enabled by Azure Arc",
+        "url": "https://learn.microsoft.com/sql/sql-server/azure-arc/manage-license-billing",
+        "quote": "The SQL Server Developer edition is free and can be used in any Azure subscription."
+      },
+      "when": { "scope": "option", "context": { "production": false }, "all": [ { "type": "azure-arc", "where": { "spec.workload": "sql-server" } } ] },
+      "group": "management"
+    }
+  }
+}

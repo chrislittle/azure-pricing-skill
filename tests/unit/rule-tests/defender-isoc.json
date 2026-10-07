@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "defender-isoc-with-sentinel": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "defender-isoc", "gbAnalyzed": 100 }, { "type": "sentinel", "analyticsGBPerDay": 20 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "defender-isoc", "gbAnalyzed": 100 } ] } ] } } }
+  }
+}

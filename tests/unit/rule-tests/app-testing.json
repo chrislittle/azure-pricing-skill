@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "app-testing-usage-limit": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "app-testing", "virtualUserHours": 12000 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "app-testing", "virtualUserHours": 0, "playwrightLinuxMinutes": 150 } ] } ] } } },
+    "app-testing-playwright-trial-first-workspace": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "app-testing", "virtualUserHours": 0, "playwrightLinuxMinutes": 150, "playwrightTrialMinutes": 100 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "app-testing", "virtualUserHours": 0, "playwrightLinuxMinutes": 150 } ] } ] } } }
+  }
+}

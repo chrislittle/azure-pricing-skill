@@ -1,0 +1,123 @@
+{
+  "rules": {
+    "event-grid-standard-without-mqtt": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "standard",
+                  "operations": 5000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "standard",
+                  "operations": 5000000,
+                  "mqttOperations": 10000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "event-grid-throughput-units-fixed-cost": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "standard",
+                  "operations": 5000000,
+                  "mqttOperations": 2000000,
+                  "throughputUnits": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "standard",
+                  "operations": 5000000,
+                  "mqttOperations": 2000000,
+                  "throughputUnits": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "event-grid-batching-high-volume": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "basic",
+                  "operations": 200000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-grid",
+                  "tier": "basic",
+                  "operations": 20000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

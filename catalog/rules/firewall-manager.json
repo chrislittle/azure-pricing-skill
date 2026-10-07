@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "firewall-manager-review-policy-associations": {
+      "level": "info",
+      "title": "Review policy associations and inheritance to cut policy charges",
+      "body": "This estimate pays for several firewall policy-regions. Microsoft advises reviewing Firewall Manager policies, associations and inheritance, because a policy is billed per region once it has two or more firewall associations (and a billed child policy also carries its parent), while a policy with zero or one association is free.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Firewall (Cost Optimization)",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-firewall",
+        "quote": "Review your Firewall Manager policies, associations, and inheritance carefully to optimize cost."
+      },
+      "params": {
+        "minPolicyRegions": 4
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "firewall-manager",
+            "where": {
+              "facts.billedPolicyRegions": {
+                ">=": 4
+              }
+            }
+          }
+        ]
+      },
+      "group": "network-security"
+    }
+  }
+}

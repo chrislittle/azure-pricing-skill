@@ -1,0 +1,50 @@
+{
+  "rules": {
+    "fluid-relay-basic-tier-production": {
+      "test": {
+        "fires": {
+          "region": "eastasia",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fluid-relay",
+                  "tier": "basic",
+                  "operationsIn": 1000000,
+                  "operationsOut": 1000000,
+                  "clientMinutes": 1000000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastasia",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fluid-relay",
+                  "tier": "standard",
+                  "operationsIn": 1000000,
+                  "operationsOut": 1000000,
+                  "clientMinutes": 1000000
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

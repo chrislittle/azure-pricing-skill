@@ -1,0 +1,124 @@
+{
+  "rules": {
+    "fabric-pause-idle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fabric",
+                  "capacityUnits": 64
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fabric",
+                  "capacityUnits": 64,
+                  "hours": 200
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "fabric-reservation-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fabric",
+                  "capacityUnits": 64
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fabric",
+                  "capacityUnits": 64
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "fabric-reservation-paused-hours": {
+      "test": {
+        "fires": {
+          "context": {},
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "fabric",
+                  "capacityUnits": 64,
+                  "commitment": "ri1y",
+                  "hours": 200
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "context": {},
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "commitment": "ri1y",
+                  "type": "fabric",
+                  "capacityUnits": 64
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

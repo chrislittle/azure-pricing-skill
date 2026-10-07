@@ -1,0 +1,43 @@
+{
+  "rules": {
+    "synapse-pause-dedicated-idle": {
+      "level": "info",
+      "title": "Pause the dedicated SQL pool when it is idle",
+      "body": "This estimate runs the Synapse dedicated SQL pool all month although the workload has idle stretches. Microsoft documents pausing and resuming dedicated SQL pool compute to reduce costs; compute is not billed while the pool is paused, but storage still is. Set the hours the pool really runs to see the saving.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Quickstart: Pause and resume compute in dedicated SQL pool via the Azure portal",
+        "url": "https://learn.microsoft.com/azure/synapse-analytics/sql-data-warehouse/pause-and-resume-compute-portal",
+        "quote": "To reduce costs, you can pause and resume compute resources on-demand."
+      },
+      "when": {
+        "context": { "idlePeriods": true },
+        "all": [
+          { "type": "synapse", "where": { "facts.dedicatedDwu": { ">": 0 }, "facts.dedicatedHours": { ">=": 730 }, "facts.commitment": { "in": ["payg"] } } }
+        ]
+      },
+      "group": "analytics"
+    },
+    "synapse-reserved-capacity-steady": {
+      "level": "info",
+      "title": "Compare a reservation for the dedicated SQL pool",
+      "body": "This dedicated SQL pool is priced pay-as-you-go and is expected to run steadily for a year or longer and most hours of the month (a reservation is billed every hour even when the pool is paused). Compare a one-year or three-year reservation of the same data warehouse units.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs for Azure Synapse Analytics - Dedicated SQL pool (formerly SQL DW) charges with reserved capacity",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/reservations/prepay-sql-data-warehouse-charges",
+        "quote": "You can save money with Azure Synapse Analytics - Dedicated SQL pool (formerly SQL DW) by committing to a reservation for your cDWU usage for a duration of one or three years."
+      },
+      "when": {
+        "context": { "steadyUsage": true },
+        "all": [
+          { "type": "synapse", "where": { "facts.dedicatedDwu": { ">": 0 }, "facts.dedicatedHours": { ">=": 500 }, "facts.commitment": { "in": ["payg"] } } }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}
+

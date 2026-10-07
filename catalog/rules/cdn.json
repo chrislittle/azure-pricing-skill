@@ -1,0 +1,54 @@
+{
+  "rules": {
+    "cdn-classic-retiring": {
+      "level": "warn",
+      "title": "Azure CDN Standard from Microsoft (classic) is retiring",
+      "body": "This estimate uses Azure CDN Standard from Microsoft (classic). Microsoft says it can no longer be created for new profiles or domains and retires on September 30, 2027, so plan the move to Azure Front Door Standard or Premium. Use the front-door component to compare the cost.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What is a content delivery network on Azure?",
+        "url": "https://learn.microsoft.com/azure/cdn/cdn-overview",
+        "quote": "Azure CDN Standard from Microsoft (classic) will be retired on September 30, 2027."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cdn",
+            "where": {
+              "facts.classic": true
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "cdn-longest-ttl": {
+      "level": "info",
+      "title": "Set the longest TTL the content allows to lower CDN costs",
+      "body": "Microsoft advises setting the longest time to live (TTL) possible on CDN content. A longer TTL means more requests are answered from the edge cache instead of going back to the origin, which lowers origin load and cost.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure CDN billing",
+        "url": "https://learn.microsoft.com/azure/cdn/cdn-billing",
+        "quote": "Set the longest TTL possible on your content."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cdn",
+            "where": {
+              "facts.egressGB": {
+                ">=": 1000
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

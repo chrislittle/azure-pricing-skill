@@ -1,0 +1,86 @@
+{
+  "rules": {
+    "entra-domain-services-single-replica-production": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "entra-domain-services",
+                  "replicaSets": 1,
+                  "sku": "standard"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "replicaSets": 1,
+                  "sku": "enterprise",
+                  "type": "entra-domain-services"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "entra-domain-services-standard-backup-production": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "entra-domain-services",
+                  "sku": "enterprise"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "entra-domain-services",
+                  "sku": "standard"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        }
+      }
+    }
+  }
+}

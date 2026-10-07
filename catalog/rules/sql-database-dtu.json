@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "sql-database-dtu-small-levels-cpu": {
+      "level": "info",
+      "title": "Basic, S0, S1 and S2 provide less than one vCore",
+      "body": "This estimate uses a DTU level of Basic, S0, S1 or S2. Microsoft states these levels provide less than one vCore of CPU, so for CPU-intensive workloads a level of S3 or higher is recommended.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "DTU-based purchasing model overview - Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/service-tiers-dtu",
+        "quote": "The Basic, S0, S1 and S2 service objectives provide less than one vCore (CPU). For CPU-intensive workloads, a service objective of S3 or greater is recommended."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sql-database-dtu",
+            "where": {
+              "facts.level": {
+                "in": [
+                  "basic",
+                  "s0",
+                  "s1",
+                  "s2"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "sql-database-dtu-no-reservation": {
+      "level": "info",
+      "title": "DTU databases cannot use reserved capacity",
+      "body": "This estimate uses the DTU purchasing model and you plan to keep it for a year or longer. Microsoft states that reserved instance pricing is only available in the vCore purchasing model, so compare a reserved vCore estimate for a steady workload.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "vCore purchasing model - Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/service-tiers-sql-database-vcore",
+        "quote": "Reserved instance pricing is only available for vCore purchasing model."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "sql-database-dtu",
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "sql-database-dtu-elastic-pool": {
+      "level": "info",
+      "title": "Several DTU databases may be cheaper in an elastic pool",
+      "body": "This estimate has two or more DTU databases. Microsoft says the more databases you add to a pool, the greater the savings, and savings are possible with as few as two S3 databases, so compare an elastic pool for databases with different usage peaks.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Elastic pools help you manage and scale multiple databases in Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/elastic-pool-overview",
+        "quote": "Depending on your application utilization pattern, it's possible to see savings with as few as two S3 databases."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sql-database-dtu",
+            "where": {
+              "facts.databases": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    }
+  }
+}

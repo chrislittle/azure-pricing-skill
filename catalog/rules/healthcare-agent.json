@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "healthcare-agent-free-plan-production": {
+      "level": "warn",
+      "title": "The free plan is for evaluation and development",
+      "body": "This production estimate uses the free healthcare agent plan. Microsoft describes it as an evaluation and development plan with a lower request limit, so real use belongs on the pay-as-you-go agent plan.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Healthcare agent service billing rates and management",
+        "url": "https://learn.microsoft.com/azure/health-bot/pricing-details",
+        "quote": "The free tier is available for evaluation and development purposes."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "healthcare-agent",
+            "where": {
+              "facts.plan": "free"
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    }
+  }
+}

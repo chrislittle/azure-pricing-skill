@@ -1,0 +1,120 @@
+{
+  "rules": {
+    "cassandra-mi-nodes-multiple-of-3": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E16s_v5",
+                  "nodesPerDatacenter": 4
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E16s_v5",
+                  "nodesPerDatacenter": 3
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "cassandra-mi-production-small-nodes": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E8s_v5",
+                  "nodesPerDatacenter": 3
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E16s_v5",
+                  "nodesPerDatacenter": 3
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "cassandra-mi-few-disks": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E16s_v5",
+                  "nodesPerDatacenter": 3,
+                  "disksPerNode": 2
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "cassandra-mi",
+                  "nodeSize": "Standard_E16s_v5",
+                  "nodesPerDatacenter": 3,
+                  "disksPerNode": 4
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "rules": {
+    "front-door-standard-no-managed-waf": {
+      "level": "info",
+      "title": "Front Door Standard has no managed WAF rule sets, bot protection or Private Link origins",
+      "body": "This internet-facing production estimate uses Front Door Standard. Microsoft recommends enabling WAF rule sets that detect and block malicious traffic, and says this is available on the Premium tier. Standard includes custom WAF rules only; choose premium if the site needs managed rule sets, bot protection or Private Link origins.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Well-Architected guide for Azure Front Door",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-front-door",
+        "quote": "Enable WAF rule sets that detect and block potentially malicious traffic. This feature is available on the Premium tier."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "internetFacing": true
+        },
+        "all": [
+          {
+            "type": "front-door",
+            "where": {
+              "facts.tier": "standard"
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "front-door-cache-offload": {
+      "level": "info",
+      "title": "Caching and compression cut Front Door data and origin costs",
+      "body": "A large share of this estimate is data sent from Front Door to the origin. Caching content that rarely changes, and enabling compression, reduces the calls and bytes that go back to the origin.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Well-Architected guide for Azure Front Door",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-front-door",
+        "quote": "Caching optimizes data transfer costs because it reduces the number of calls from your Azure Front Door instance to the origin."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "front-door",
+            "where": {
+              "facts.originPct": {
+                ">=": 50
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

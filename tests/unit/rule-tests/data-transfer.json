@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "data-transfer-cross-zone-free-per-learn": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "data-transfer",
+                  "interRegionGB": 100,
+                  "crossZoneGB": 500
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "data-transfer",
+                  "interRegionGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

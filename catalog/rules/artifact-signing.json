@@ -1,0 +1,54 @@
+{
+  "rules": {
+    "artifact-signing-premium-low-volume": {
+      "level": "info",
+      "title": "Basic tier is cheaper at this signing volume",
+      "body": "This estimate uses the Premium tier, but Basic keeps signing after its 5,000 included signatures at the same per-signature price as Premium, so Basic costs less at this volume. Premium only pays off at high volume (about 23,000 signatures a month per account) or when you need more than one signing certificate of the same kind. Compare a Basic option.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Change an Artifact Signing account SKU (pricing tier)",
+        "url": "https://learn.microsoft.com/azure/artifact-signing/how-to-change-sku",
+        "quote": "You can change the SKU for an Artifact Signing account at any time by upgrading to Premium or by downgrading to Basic."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "artifact-signing",
+            "where": {
+              "facts.tier": "premium",
+              "facts.basicCheaper": true
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "artifact-signing-basic-high-volume": {
+      "level": "info",
+      "title": "Premium tier is cheaper at this signing volume",
+      "body": "This estimate uses the Basic tier, but at this volume the overage of $0.005 per signature beyond its 5,000 included signatures costs more than the Premium account fee, which includes 100,000 signatures a month. Premium (with up to 10 certificates of each kind) is cheaper above about 23,000 signatures a month per account. Compare a Premium option.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Change an Artifact Signing account SKU (pricing tier)",
+        "url": "https://learn.microsoft.com/azure/artifact-signing/how-to-change-sku",
+        "quote": "You can change the SKU for an Artifact Signing account at any time by upgrading to Premium or by downgrading to Basic."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "artifact-signing",
+            "where": {
+              "facts.tier": "basic",
+              "facts.premiumCheaper": true
+            }
+          }
+        ]
+      },
+      "group": "security"
+    }
+  }
+}

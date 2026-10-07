@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "files-cool-retrieval-charge": {
+      "level": "info",
+      "title": "Cool Azure Files shares charge for data retrieval",
+      "body": "This share uses the cool access tier. Cool is the only classic access tier with a per-GB data retrieval charge, so reading or moving data back to hot adds cost on top of the low capacity price. Set retrievalGB for the data you expect to read each month, or choose hot or transaction optimized for frequently read data.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand Azure Files billing",
+        "url": "https://learn.microsoft.com/azure/storage/files/understanding-billing",
+        "quote": "Only the cool access tier has a data retrieval charge."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "files",
+            "where": {
+              "facts.model": "payg-cool"
+            }
+          }
+        ]
+      },
+      "group": "storage-ai-cost"
+    }
+  }
+}

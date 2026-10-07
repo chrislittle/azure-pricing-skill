@@ -1,0 +1,128 @@
+{
+  "rules": {
+    "database-migration-premium-always-on": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 8,
+                  "hours": 730
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 8,
+                  "hours": 200
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        }
+      }
+    },
+    "database-migration-free-first-six-months": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 4,
+                  "newService": false,
+                  "hours": 100
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 4,
+                  "newService": true,
+                  "hours": 100
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        }
+      }
+    },
+    "database-migration-savings-plan-lifetime": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 8,
+                  "commitment": "savings-3y",
+                  "hours": 730
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "database-migration",
+                  "engine": "postgresql",
+                  "tier": "premium",
+                  "vcores": 8,
+                  "commitment": "savings-1y",
+                  "hours": 730
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

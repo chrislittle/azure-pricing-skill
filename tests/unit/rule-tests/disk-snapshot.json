@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "disk-snapshot-full-on-premium-costlier": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "disk-snapshot",
+                  "snapshotGB": 100,
+                  "snapshotType": "full",
+                  "sourceDiskType": "premium-ssd",
+                  "snapshotStorage": "same-as-disk"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "disk-snapshot",
+                  "snapshotGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

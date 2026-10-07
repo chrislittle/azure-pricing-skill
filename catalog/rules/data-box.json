@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "data-box-extra-days": {
+      "level": "info",
+      "title": "Returning the device within the included days avoids extra-day fees",
+      "body": "This estimate keeps a Data Box 120 TB or 525 TB device longer than the days included in the order, so an extra day fee applies to every device for every added day. Plan the copy and the return shipment inside the included period to avoid it.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Data Box frequently asked questions",
+        "url": "https://learn.microsoft.com/azure/databox/data-box-faq",
+        "quote": "Data Box 120 and Data Box is available at a nominal charge for 10 days. Data Box 525 is available at a nominal charge for 20 days."
+      },
+      "when": { "scope": "option", "all": [ { "type": "data-box", "where": { "facts.extraDays": { ">": 0 } } } ] },
+      "group": "cost"
+    }
+  }
+}

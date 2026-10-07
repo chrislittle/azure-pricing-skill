@@ -1,0 +1,96 @@
+{
+  "rules": {
+    "key-vault-hsm-pool-soft-delete": {
+      "level": "warn",
+      "title": "A deleted Managed HSM pool keeps billing until it is purged",
+      "body": "This estimate includes a Managed HSM pool. Microsoft states that a soft-deleted Managed HSM keeps billing at its full hourly rate until it is purged, so plan to purge pools you no longer need, or budget for the retention period.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Managed HSM soft-delete overview",
+        "url": "https://learn.microsoft.com/azure/key-vault/managed-hsm/soft-delete-overview",
+        "quote": "Soft-deleted Managed HSM resources will continue to be billed at their full hourly rate until they're purged."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "key-vault",
+            "where": {
+              "facts.managedHsmPools": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "key-vault-rotation-key-versions": {
+      "level": "info",
+      "title": "Key rotation adds HSM key versions",
+      "body": "This estimate rotates HSM-protected keys. Each rotation creates a new key version, and Microsoft bills each version of an HSM-protected key as a separate key, so the HSM key count should include the versions created by rotation.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Key Vault pricing",
+        "url": "https://azure.microsoft.com/pricing/details/key-vault/",
+        "quote": "each version of an HSM protected key is counted as a separate key",
+        "more": [
+          {
+            "source": "Configure cryptographic key auto-rotation in Azure Key Vault",
+            "url": "https://learn.microsoft.com/azure/key-vault/keys/how-to-configure-key-rotation",
+            "quote": "Key rotation generates a new key version of an existing key with new key material."
+          }
+        ]
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "key-vault",
+            "where": {
+              "facts.tier": "premium",
+              "facts.keyRotations": {
+                ">": 0
+              },
+              "facts.hsmKeyCount": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "key-vault-cache-secrets": {
+      "level": "info",
+      "title": "Cache secrets to reduce Key Vault operations",
+      "body": "This estimate has a high number of Key Vault operations. Microsoft recommends caching retrieved secrets in memory and reusing them, which lowers the operations charge and the risk of throttling.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Key Vault throttling guidance",
+        "url": "https://learn.microsoft.com/azure/key-vault/general/overview-throttling",
+        "quote": "Cache the secrets you retrieve from Azure Key Vault in memory, and reuse from memory whenever possible."
+      },
+      "params": {
+        "minOperations": 10000000
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "key-vault",
+            "where": {
+              "facts.operations": {
+                ">=": 10000000
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    }
+  }
+}

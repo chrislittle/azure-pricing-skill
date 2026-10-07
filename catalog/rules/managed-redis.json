@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "managed-redis-no-ha-production": {
+      "level": "warn",
+      "title": "High availability is off for a production cache",
+      "body": "This estimate runs Azure Managed Redis without high availability for production. That is one server per cache, so the price is half, but Microsoft says turning it off risks data loss and downtime and is only meant for dev/test. Turn it on for production (it doubles the compute price).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What is Azure Managed Redis?",
+        "url": "https://learn.microsoft.com/azure/redis/overview",
+        "quote": "Disabling high availability lowers the price but results in data loss and downtime."
+      },
+      "when": { "scope": "option", "context": { "production": true }, "all": [ { "type": "managed-redis", "where": { "facts.highAvailability": false } } ] },
+      "group": "data-platform"
+    },
+    "managed-redis-reservation": {
+      "level": "info",
+      "title": "A reservation could lower the compute cost",
+      "body": "This estimate prices an always-on Azure Managed Redis cache at pay-as-you-go rates and expects steady use for a year or more. Microsoft offers 1- and 3-year reservations that discount the compute cost. Compare the 1-year and 3-year options.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Use reservations to prepay for Azure Managed Redis compute resources",
+        "url": "https://learn.microsoft.com/azure/redis/reserved-pricing",
+        "quote": "You commit to a cache in exchange for significant compute cost discounts."
+      },
+      "when": { "scope": "option", "context": { "steadyUsage": true }, "all": [ { "type": "managed-redis", "where": { "facts.commitment": "payg", "facts.reservable": true, "facts.tier": { "!=": "flash-optimized" }, "facts.hours": { ">=": 730 } } } ] },
+      "group": "data-platform"
+    }
+  }
+}

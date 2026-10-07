@@ -1,0 +1,105 @@
+{
+  "rules": {
+    "hdinsight-delete-idle": {
+      "level": "info",
+      "title": "Delete the HDInsight cluster when it is not running jobs",
+      "body": "This estimate keeps the HDInsight cluster running all month although the workload has idle stretches. HDInsight bills per node-hour from creation until deletion, whether or not jobs run, and a cluster cannot be paused or deallocated. Delete the cluster between runs (keep the data and metastore in external storage) and set the hours the cluster really exists to see the saving.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Delete an Azure HDInsight cluster",
+        "url": "https://learn.microsoft.com/azure/hdinsight/hdinsight-delete-cluster",
+        "quote": "Billing is pro-rated per minute, so you should always delete your cluster when it's no longer in use."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "hdinsight",
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "hdinsight-autoscale-variable-load": {
+      "level": "info",
+      "title": "Use autoscale for a variable HDInsight workload",
+      "body": "This estimate runs a fixed number of worker nodes all month although the load is not steady. HDInsight autoscale changes the number of worker nodes within a range you set (by load or schedule), so you pay for fewer node-hours at quiet times. Price the average node count rather than the peak.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Automatically scale Azure HDInsight clusters",
+        "url": "https://learn.microsoft.com/azure/hdinsight/hdinsight-autoscale-clusters",
+        "quote": "Load-based scaling changes the number of nodes in your cluster, within a range that you set, to ensure optimal CPU usage and minimize running cost."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": false
+        },
+        "all": [
+          {
+            "type": "hdinsight",
+            "where": {
+              "facts.workerNodes": {
+                ">=": 2
+              },
+              "facts.hours": {
+                ">=": 730
+              },
+              "facts.clusterType": {
+                "in": [
+                  "spark",
+                  "hadoop"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "hdinsight-autoscale-schedule-iq": {
+      "level": "info",
+      "title": "Use schedule-based autoscale for a variable Interactive Query workload",
+      "body": "This estimate runs a fixed number of Interactive Query worker nodes all month although the load is not steady. Interactive Query clusters support only schedule-based autoscale (load-based is not supported): set a node-count schedule that follows the working day and price the average node count.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Automatically scale Azure HDInsight clusters",
+        "url": "https://learn.microsoft.com/azure/hdinsight/hdinsight-autoscale-clusters",
+        "quote": "Interactive Query clusters can only be configured for schedule-based scaling."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": false
+        },
+        "all": [
+          {
+            "type": "hdinsight",
+            "where": {
+              "facts.workerNodes": {
+                ">=": 2
+              },
+              "facts.hours": {
+                ">=": 730
+              },
+              "facts.clusterType": {
+                "in": [
+                  "interactive-query"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

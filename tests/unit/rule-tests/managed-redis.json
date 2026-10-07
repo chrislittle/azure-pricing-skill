@@ -1,0 +1,87 @@
+{
+  "rules": {
+    "managed-redis-no-ha-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "managed-redis",
+                  "size": "b5",
+                  "highAvailability": false
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "managed-redis",
+                  "size": "b5",
+                  "highAvailability": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "managed-redis-reservation": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "managed-redis",
+                  "size": "b5"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "memory-optimized",
+                  "size": "m10",
+                  "type": "managed-redis"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

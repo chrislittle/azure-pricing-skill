@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "storage-discovery-free-plan": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "storage-discovery", "storageAccounts": 10, "objects": 1000000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "storage-discovery", "plan": "free", "storageAccounts": 10, "objects": 1000000 } ] } ] } } }
+  }
+}

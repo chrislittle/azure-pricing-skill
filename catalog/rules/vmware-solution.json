@@ -1,0 +1,104 @@
+{
+  "rules": {
+    "vmware-solution-reservation-steady": {
+      "level": "info",
+      "title": "Compare a reservation for steadily running hosts",
+      "body": "These Azure VMware Solution hosts are priced pay as you go and are expected to run for a year or longer. Microsoft says committing to a reserved instance saves money; reservations are sold for AV36P, AV48, AV52 and AV64 hosts (1 year, and 3 years for AV48 and AV64). Compare the reservation price, keeping in mind the Enterprise Agreement or Microsoft Customer Agreement requirement.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs with Azure VMware Solution reserved instances",
+        "url": "https://learn.microsoft.com/azure/azure-vmware/reserved-instance",
+        "quote": "you save money. The reservation discount automatically applies to the running Azure VMware Solution hosts that match the reservation scope and attributes."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "vmware-solution",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.hostType": {
+                "!=": "AV36"
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "vmware-solution-reservation-eligibility": {
+      "level": "info",
+      "title": "Reservations need an Enterprise Agreement or Microsoft Customer Agreement",
+      "body": "This estimate uses an Azure VMware Solution reservation. Microsoft lists eligibility conditions for buying it: the customer needs an Azure Enterprise Agreement or a Microsoft Customer Agreement. Confirm the customer has one before relying on this price.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs with Azure VMware Solution reserved instances",
+        "url": "https://learn.microsoft.com/azure/azure-vmware/reserved-instance",
+        "quote": "You need an Azure Enterprise Agreement (EA) or a Microsoft Customer Agreement (MCA) with Microsoft."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "vmware-solution",
+            "where": {
+              "facts.commitment": {
+                "in": [
+                  "reservation-1y",
+                  "reservation-3y"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "vmware-solution-av64-prerequisite": {
+      "level": "warn",
+      "title": "AV64 hosts need an existing cluster of another host type",
+      "body": "This option has AV64 hosts and no other Azure VMware Solution host type. Microsoft says an AV64 Gen 1 host can only be added to a private cloud that already has at least 3 hosts of AV36P, AV48 or AV52, so the estimate is likely missing those base hosts. Add them, or confirm the region offers AV64 Gen 2 or that the customer already has the base cluster.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure VMware Solution pricing",
+        "url": "https://azure.microsoft.com/pricing/details/azure-vmware/",
+        "quote": "An Azure VMware Solution private cloud deployed with at least 3 nodes of AV36P, AV48 or AV52 is required prior to adding AV64."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "vmware-solution",
+            "where": {
+              "facts.hostType": "AV64"
+            }
+          }
+        ],
+        "none": [
+          {
+            "type": "vmware-solution",
+            "where": {
+              "facts.hostType": {
+                "in": [
+                  "AV36",
+                  "AV36P",
+                  "AV48",
+                  "AV52"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}
+
+

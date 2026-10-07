@@ -1,0 +1,57 @@
+{
+  "rules": {
+    "power-bi-embedded-pause-idle": {
+      "level": "info",
+      "title": "Pause the capacity when it is idle",
+      "body": "This estimate runs the Power BI Embedded capacity all month, but the customer said it sits idle for periods. Microsoft says pausing an A SKU capacity prevents you from being billed, so price only the hours it needs to run.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Pause and start your Power BI Embedded A SKU capacity in the Azure portal",
+        "url": "https://learn.microsoft.com/power-bi/developer/embedded/azure-pbie-pause-start",
+        "quote": "Pausing your capacity prevents you from being billed."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "power-bi-embedded",
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "power-bi-embedded-viewer-licences": {
+      "level": "warn",
+      "title": "Employees who view need Power BI Pro or Premium Per User licences",
+      "body": "This estimate prices only the Azure capacity. Microsoft says that with an A SKU, each person who views embedded content inside your own organisation needs a Power BI Pro or Premium Per User licence. For internal apps that licence cost can be larger than the capacity itself, so add it to the budget (or consider a Fabric F64 or larger capacity).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Power BI Embedded capacity and SKUs",
+        "url": "https://learn.microsoft.com/power-bi/developer/embedded/embedded-capacity",
+        "quote": "If you have a SKU smaller than F64 or an A SKU, then a Pro license or Premium Per User (PPU) is required for each user who will view the embedded content."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "power-bi-embedded",
+            "where": {
+              "facts.viewers": "employees"
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

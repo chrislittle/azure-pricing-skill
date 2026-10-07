@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "elastic-san-base-only": {
+      "level": "info",
+      "title": "Check whether all storage needs to be base capacity",
+      "body": "This estimate has no additional capacity, so every TiB is base capacity. Base capacity adds IOPS and throughput but costs more per TiB; if the SAN's total IOPS and MB/s are more than you need, moving some TiB to additional capacity lowers the bill.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan for an Azure Elastic SAN deployment",
+        "url": "https://learn.microsoft.com/azure/storage/elastic-san/elastic-san-planning",
+        "quote": "Each TiB of base capacity also increases your SAN's IOPS and throughput (MB/s) but costs more than each TiB of additional capacity."
+      },
+      "when": { "scope": "option", "all": [ { "type": "elastic-san", "where": { "facts.additionalTiB": 0, "facts.baseTiB": { ">=": 2 } } } ] },
+      "group": "storage"
+    },
+    "elastic-san-lrs-zone-loss": {
+      "level": "warn",
+      "title": "Locally redundant Elastic SAN can be lost in a datacenter disaster",
+      "body": "You said this must keep running if one datacenter in the region fails, but this Elastic SAN is locally redundant (LRS). Zone-redundant storage (ZRS) keeps copies in separate availability zones; ZRS capacity costs more and is not offered in every region.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan for an Azure Elastic SAN deployment",
+        "url": "https://learn.microsoft.com/azure/storage/elastic-san/elastic-san-planning",
+        "quote": "However, if a disaster such as fire or flooding occurs within the data center, all replicas of an Elastic SAN using LRS could be lost or unrecoverable."
+      },
+      "when": { "scope": "option", "context": { "zoneResilience": true }, "all": [ { "type": "elastic-san", "where": { "facts.redundancy": "lrs" } } ] },
+      "group": "storage"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "rules": {
+    "route-server-route-maps-extra-charge": {
+      "level": "info",
+      "title": "Route maps are a preview feature with extra charges",
+      "body": "This estimate turns on route maps, which Microsoft says is in preview and carries extra charges, so confirm the customer needs them.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "About route maps for Azure Route Server",
+        "url": "https://learn.microsoft.com/azure/route-server/route-maps-about",
+        "quote": "Using route maps incurs extra charges."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "route-server",
+            "where": {
+              "facts.routeMaps": true
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "route-server-single-nva-peer": {
+      "level": "info",
+      "title": "Peer at least two NVA instances with Route Server",
+      "body": "This estimate has a single NVA peering with Route Server. Microsoft recommends peering at least two NVA instances with both Route Server instances so routing survives a failure; price a second one if the customer wants that.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Route Server FAQ",
+        "url": "https://learn.microsoft.com/azure/route-server/route-server-faq",
+        "quote": "We also recommend that you peer at least two NVA instances with both instances of Route Server."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "route-server",
+            "where": {
+              "facts.nvaPeers": 1
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

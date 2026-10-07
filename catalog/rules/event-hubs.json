@@ -1,0 +1,98 @@
+{
+  "rules": {
+    "event-hubs-basic-production": {
+      "level": "info",
+      "title": "Basic Event Hubs is for simple, low-volume streaming",
+      "body": "The customer said this is a production workload, but this Event Hubs namespace uses the Basic tier. Microsoft says Standard is the choice for most production workloads that need multiple consumer groups, Capture, Kafka support or geo-disaster recovery, so check whether Standard is needed.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Compare Azure Event Hubs tiers",
+        "url": "https://learn.microsoft.com/azure/event-hubs/compare-tiers",
+        "quote": "Choose Standard for most production workloads that need multiple consumer groups, Event Hubs Capture, Apache Kafka support, and geo-disaster recovery."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "event-hubs",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "basic"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "messaging"
+    },
+    "event-hubs-standard-cap-auto-inflate": {
+      "level": "info",
+      "title": "Cap auto-inflate on a large Standard namespace",
+      "body": "This Standard namespace uses many throughput units, each billed every hour. If auto-inflate is on, set its maximum to the budget the customer accepts so the bill cannot grow without limit.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Event Hubs",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-event-hubs",
+        "quote": "Configure auto-inflate with maximum throughput unit limits based on budget constraints."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "event-hubs",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "standard"
+                ]
+              },
+              "facts.units": {
+                ">": 10
+              }
+            }
+          }
+        ]
+      },
+      "group": "messaging"
+    },
+    "event-hubs-retention-capture-long-term": {
+      "level": "info",
+      "title": "Large retention could go to Capture storage",
+      "body": "More events are retained than the plan includes, and the extra is billed per GB. If the customer only needs the old data for replay or archive, Capture can write it to Blob Storage or Data Lake instead.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Architecture best practices for Azure Event Hubs",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-event-hubs",
+        "quote": "Enable Event Hubs Capture to use Azure Blob Storage or Azure Data Lake Store for long-term storage."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "event-hubs",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "premium",
+                  "dedicated"
+                ]
+              },
+              "facts.extendedRetentionOverageGb": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "messaging"
+    }
+  }
+}

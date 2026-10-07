@@ -1,0 +1,59 @@
+{
+  "rules": {
+    "data-share-in-place": {
+      "level": "info",
+      "title": "In-place sharing has no Data Share charge",
+      "body": "This estimate pays for dataset snapshots and snapshot execution. Microsoft says in-place sharing does not incur a snapshot charge, so if the data stores involved support in-place sharing, that route avoids these two charges.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Data Share pricing",
+        "url": "https://azure.microsoft.com/pricing/details/data-share/",
+        "quote": "In-place sharing does not incur a snapshot charge."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-share",
+            "where": {
+              "facts.datasetSnapshots": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-share-incremental-snapshots": {
+      "level": "info",
+      "title": "Incremental snapshots copy only new or changed files",
+      "body": "This estimate has a lot of snapshot execution time. Microsoft says an incremental snapshot copies only new or updated files, so for storage-based shares check that the snapshots are incremental rather than full copies; that shortens the execution time you pay for.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Share and receive data from Azure Blob Storage and Azure Data Lake Storage",
+        "url": "https://learn.microsoft.com/azure/data-share/how-to-share-from-storage",
+        "quote": "An incremental snapshot copies only new or updated files, based on the last modified time of the files."
+      },
+      "params": {
+        "minExecutionHours": 100
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-share",
+            "where": {
+              "facts.executionHours": {
+                ">=": 100
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

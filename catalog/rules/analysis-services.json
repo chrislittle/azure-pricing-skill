@@ -1,0 +1,93 @@
+{
+  "rules": {
+    "analysis-services-developer-production": {
+      "level": "warn",
+      "title": "Developer tier is for evaluation, development and test",
+      "body": "The customer said this is a production workload, but this Analysis Services server uses the Developer tier. Microsoft recommends the Developer tier for evaluation, development and test, and the Basic or Standard tiers for production, so price a Basic or Standard server instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What is Azure Analysis Services?",
+        "url": "https://learn.microsoft.com/azure/analysis-services/analysis-services-overview",
+        "quote": "This tier is recommended for evaluation, development, and test scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "analysis-services",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "developer"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "analysis-services-pause-idle": {
+      "level": "info",
+      "title": "Pause the server when it is idle",
+      "body": "This estimate runs the Analysis Services server all month, but the customer said it sits idle for periods. Microsoft says no charges apply while a server is paused, so price only the hours it needs to run.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Analysis Services pricing",
+        "url": "https://azure.microsoft.com/pricing/details/analysis-services/",
+        "quote": "No charges apply when you pause your instance."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "analysis-services",
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "analysis-services-s8-s9-deprecated": {
+      "level": "warn",
+      "title": "S8 and S9 are deprecated; use the v2 sizes",
+      "body": "This estimate uses the S8 or S9 tier. Microsoft says S8 and S9 are deprecated and v2 is recommended, so price S8 v2 or S9 v2 instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What is Azure Analysis Services?",
+        "url": "https://learn.microsoft.com/azure/analysis-services/analysis-services-overview",
+        "quote": "S8 and S9 are deprecated . v2 is recommended."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "analysis-services",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "s8",
+                  "s9"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

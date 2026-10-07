@@ -1,0 +1,64 @@
+{
+  "rules": {
+    "openai-provisioned-reserve-production": {
+      "level": "info",
+      "title": "Always-on hourly PTUs: use a reservation for production",
+      "body": "This deployment is billed hourly for the full month. Microsoft recommends hourly billing only for short-term use such as benchmarking, and a 1-month or 1-year reservation is cheaper for steady production capacity.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Provisioned throughput billing and cost management",
+        "url": "https://learn.microsoft.com/azure/foundry/openai/concepts/provisioned-throughput-billing",
+        "quote": "Hourly billing isn't appropriate for deployments in production (use reservations instead)."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "openai-provisioned",
+            "where": {
+              "facts.commitment": {
+                "in": [
+                  "hourly"
+                ]
+              },
+              "facts.hours": {
+                ">=": 600
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "openai-provisioned-deploy-first": {
+      "level": "info",
+      "title": "Create the deployment before buying the reservation",
+      "body": "Capacity changes often by region and model, so a reservation bought first can cover PTUs you are then unable to deploy. Deploy first, then buy the reservation to match.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Provisioned throughput billing and cost management",
+        "url": "https://learn.microsoft.com/azure/foundry/openai/concepts/provisioned-throughput-billing",
+        "quote": "always create deployments first, then purchase the Azure Reservation to cover the PTUs you've deployed."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "openai-provisioned",
+            "where": {
+              "facts.commitment": {
+                "in": [
+                  "reserved-1-month",
+                  "reserved-1-year"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    }
+  }
+}

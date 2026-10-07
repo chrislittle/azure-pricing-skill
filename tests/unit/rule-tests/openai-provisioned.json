@@ -1,0 +1,81 @@
+{
+  "rules": {
+    "openai-provisioned-reserve-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openai-provisioned",
+                  "deployment": "global",
+                  "ptus": 50,
+                  "commitment": "hourly",
+                  "model": "gpt-4.1"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openai-provisioned",
+                  "deployment": "global",
+                  "ptus": 50,
+                  "commitment": "hourly",
+                  "hours": 100,
+                  "model": "gpt-4.1"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "openai-provisioned-deploy-first": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openai-provisioned",
+                  "deployment": "global",
+                  "ptus": 50,
+                  "commitment": "reserved-1-year",
+                  "model": "gpt-4.1"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openai-provisioned",
+                  "deployment": "global",
+                  "ptus": 50,
+                  "commitment": "hourly",
+                  "model": "gpt-4.1"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "rules": {
+    "container-apps-dedicated-private-endpoint-management-fee": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {},
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1,
+                  "plannedMaintenance": true
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {},
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "container-apps-dedicated-serverless-gpu-no-idle-rate": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 0,
+                  "consumptionGpu": "t4"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "container-apps-dedicated-savings-plan-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1,
+                  "commitment": "sp1y"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "container-apps-dedicated-serverless-gpu-variable": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1,
+                  "profile": "nc24-a100"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "container-apps-dedicated",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

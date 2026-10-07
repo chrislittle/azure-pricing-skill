@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "ai-search-free-no-sla": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "free" } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "s1", "replicas": 2 } ] } ] } } },
+    "ai-search-production-replicas": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "s1", "replicas": 1 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "s1", "replicas": 2 } ] } ] } } },
+    "ai-search-zone-redundancy-replicas": { "test": {
+      "fires": { "region": "eastus2", "context": { "zoneResilience": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "s1", "replicas": 1 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "zoneResilience": true }, "options": [ { "name": "a", "components": [ { "type": "ai-search", "tier": "s1", "replicas": 2 } ] } ] } } }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "rules": {
+    "ddos-protection-ip-protection-scales-linearly": {
+      "level": "info",
+      "title": "Many IP Protection addresses may cost more than one Network Protection plan",
+      "body": "This estimate protects 15 or more public IPs one by one with IP Protection. Microsoft notes IP Protection cost grows in proportion to each protected address, while one Network Protection plan has a fixed monthly charge covering up to 100 public IP resources across the tenant, so compare the two using the prices in this estimate (the plan costs about the same as 15 protected IPs).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Compare pricing between Azure DDoS Protection tiers",
+        "url": "https://learn.microsoft.com/azure/ddos-protection/ddos-pricing-guide",
+        "quote": "IP Protection follows a linear cost scaling model where expenses increase proportionally with each protected IP address."
+      },
+      "params": {
+        "minIps": 15
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "where": {
+              "facts.tier": "ip",
+              "facts.publicIps": {
+                ">=": 15
+              }
+            },
+            "type": "ddos-protection"
+          }
+        ]
+      },
+      "group": "network-security"
+    },
+    "ddos-protection-network-protection-small": {
+      "level": "info",
+      "title": "IP Protection can be cheaper for a few public IPs",
+      "body": "This estimate buys a Network Protection plan to protect 14 or fewer public IPs. Microsoft says IP Protection is the more cost-effective option below 15 public IP resources; Network Protection adds extras such as rapid-response support, cost protection credits and a WAF discount, so keep it only if those matter.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure DDoS Protection pricing (FAQ)",
+        "url": "https://azure.microsoft.com/pricing/details/ddos-protection/",
+        "quote": "If you need to protect less than 15 public IP resources, the IP Protection tier is the more cost-effective option."
+      },
+      "params": {
+        "maxIps": 14
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "where": {
+              "facts.tier": "network",
+              "facts.publicIps": {
+                "<=": 14
+              }
+            },
+            "type": "ddos-protection"
+          }
+        ]
+      },
+      "group": "network-security"
+    },
+    "ddos-protection-waf-discount": {
+      "level": "info",
+      "title": "Application Gateway WAF is not charged extra in a protected network",
+      "body": "This estimate has Network Protection and an Application Gateway with WAF. When the gateway sits in a virtual network protected by Network Protection, the WAF is billed at the non-WAF gateway rate, so price the gateway accordingly.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure DDoS Protection pricing",
+        "url": "https://azure.microsoft.com/pricing/details/ddos-protection/",
+        "quote": "When Azure Application Gateway with WAF is deployed in a protected virtual network, there are no additional charges for WAF"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "ddos-protection",
+            "where": {
+              "facts.tier": "network"
+            }
+          },
+          {
+            "type": "app-gateway",
+            "where": {
+              "facts.waf": true
+            }
+          }
+        ]
+      },
+      "group": "network-security"
+    }
+  }
+}

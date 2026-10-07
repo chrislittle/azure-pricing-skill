@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "table-storage-account-key-pricing-differs": {
+      "level": "info",
+      "title": "Account-scoped key Tables use different pricing",
+      "body": "Tables encrypted with a key scoped to the storage account (needed for customer-managed keys) are priced on separate account-encrypted meters with per-operation-class rates, unlike default service-encrypted Tables.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Table storage pricing",
+        "url": "https://azure.microsoft.com/en-us/pricing/details/storage/tables/",
+        "quote": "Data storage and transaction pricing for account specific key encrypted Tables that relies on a key that is scoped to the storage account to be able to configure customer-managed key for encryption at rest"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "table-storage",
+            "where": {
+              "facts.encryption": "account-key"
+            }
+          }
+        ]
+      },
+      "group": "storage"
+    }
+  }
+}

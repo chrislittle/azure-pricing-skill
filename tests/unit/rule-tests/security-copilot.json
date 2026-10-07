@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "security-copilot-provision-at-hour-start": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1, "hours": 200 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1 } ] } ] } } },
+    "security-copilot-cap-overage": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1, "overageScuHours": 10 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1 } ] } ] } } },
+    "security-copilot-check-e5-e7": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "security-copilot", "provisionedScus": 1, "m365E5Licenses": 2000 } ] } ] } } }
+  }
+}

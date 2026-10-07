@@ -1,0 +1,59 @@
+{
+  "rules": {
+    "monitor-metrics-minimal-ingestion": {
+      "level": "info",
+      "title": "Large Prometheus volume: keep the minimal ingestion profile on",
+      "body": "This estimate ingests billions of metric samples a month, and each sample is billed. The minimal ingestion profile for Managed Prometheus collects only the metrics used by default dashboards, default recording rules and default alerts, so keep it enabled and add only the extra metrics you need.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Kubernetes Service monitoring data reference",
+        "url": "https://learn.microsoft.com/azure/aks/monitor-aks-reference#minimal-ingestion-profile-for-control-plane-metrics-in-managed-prometheus",
+        "quote": "Minimal ingestion profile is a setting that helps reduce ingestion volume of metrics, as only metrics used by default dashboards, default recording rules and default alerts are collected."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-metrics",
+            "where": {
+              "facts.ingestedSamplesMillions": {
+                ">=": 5000
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "monitor-metrics-scrape-interval": {
+      "level": "info",
+      "title": "Scraping faster than 30 seconds multiplies ingestion cost",
+      "body": "Metric samples are billed per sample, and scraping every few seconds multiplies the volume compared with the 30-second default. Use a shorter interval only for the metrics that need that granularity.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Best practices for scaling Azure Monitor Workspaces with Azure Monitor managed service for Prometheus",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/metrics/azure-monitor-workspace-scaling-best-practice#optimizing-performance-for-high-volumes-of-data",
+        "quote": "The default scrape frequency is 30 seconds, which can be changed per default target using the configmap. To balance the trade-off between data granularity and resource usage, adjust the scrape_interval and scrape_timeout based on the criticality of metrics."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-metrics",
+            "where": {
+              "facts.aksNodes": {
+                ">": 0
+              },
+              "facts.scrapeIntervalSeconds": {
+                "<": 30
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    }
+  }
+}

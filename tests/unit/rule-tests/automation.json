@@ -1,0 +1,74 @@
+{
+  "rules": {
+    "automation-update-management-retired": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "automation",
+                  "jobMinutes": 1000,
+                  "updateManagementNodes": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "automation",
+                  "jobMinutes": 1000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "automation-state-configuration-retiring": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "automation",
+                  "jobMinutes": 1000,
+                  "azureNodes": 8
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "automation",
+                  "jobMinutes": 1000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

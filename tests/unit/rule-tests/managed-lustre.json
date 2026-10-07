@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "managed-lustre-all-month": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "managed-lustre", "capacityTiB": 16 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "managed-lustre", "capacityTiB": 16, "hours": 100 } ] } ] } } }
+  }
+}

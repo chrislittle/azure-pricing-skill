@@ -1,0 +1,75 @@
+{
+  "rules": {
+    "purview-incremental-scans": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "model": "classic",
+                  "type": "purview",
+                  "dataMapCapacityUnits": 1
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "model": "classic",
+                  "type": "purview",
+                  "scanVcoreHours": 100,
+                  "dataMapCapacityUnits": 1
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        }
+      }
+    },
+    "purview-insights-generation-default": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "model": "classic",
+                  "type": "purview",
+                  "scanVcoreHours": 10,
+                  "dataMapCapacityUnits": 1
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "insightsGenerationVcoreHours": 10,
+                  "model": "classic",
+                  "type": "purview",
+                  "dataMapCapacityUnits": 1
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "rules": {
+    "healthcare-agent-free-plan-production": {
+      "test": {
+        "fires": {
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "healthcare-agent",
+                  "plan": "free",
+                  "classicMessages": 100
+                }
+              ],
+              "name": "a"
+            }
+          ],
+          "region": "eastus2"
+        },
+        "silent": {
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "healthcare-agent",
+                  "plan": "agent",
+                  "classicMessages": 100
+                }
+              ],
+              "name": "a"
+            }
+          ],
+          "region": "eastus2"
+        }
+      }
+    }
+  }
+}

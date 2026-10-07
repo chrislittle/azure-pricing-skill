@@ -1,0 +1,45 @@
+{
+  "rules": {
+    "nutanix-nc2-reservation-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "nutanix-nc2",
+                  "nodes": 3
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "nutanix-nc2",
+                  "nodes": 3,
+                  "commitment": "reservation-1y"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "storage-discovery-free-plan": {
+      "level": "info",
+      "title": "A free Storage Discovery plan exists",
+      "body": "This estimate uses the paid standard plan. The free plan covers capacity insights with 15 days of retention at no charge; the standard plan adds transaction, resource configuration and security configuration insights with 18 months of retention. Choose the free plan if capacity trends are all you need.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand Storage Discovery Pricing",
+        "url": "https://learn.microsoft.com/azure/storage-discovery/pricing",
+        "quote": "Azure Storage Discovery offers free and paid pricing plans."
+      },
+      "when": { "scope": "option", "all": [ { "type": "storage-discovery", "where": { "facts.plan": "standard" } } ] },
+      "group": "storage"
+    }
+  }
+}

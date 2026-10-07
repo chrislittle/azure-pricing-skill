@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "storage-actions-narrow-scope": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "storage-actions", "runsPerMonth": 30, "objectsPerRun": 50000000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "storage-actions", "runsPerMonth": 1, "objectsPerRun": 1000000 } ] } ] } } }
+  }
+}

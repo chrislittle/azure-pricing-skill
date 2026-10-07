@@ -1,0 +1,76 @@
+{
+  "rules": {
+    "data-share-in-place": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-share",
+                  "datasetSnapshots": 30,
+                  "executionHours": 15
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-share",
+                  "datasetSnapshots": 0,
+                  "executionHours": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "data-share-incremental-snapshots": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-share",
+                  "datasetSnapshots": 30,
+                  "executionHours": 200
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "data-share",
+                  "datasetSnapshots": 30,
+                  "executionHours": 15
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

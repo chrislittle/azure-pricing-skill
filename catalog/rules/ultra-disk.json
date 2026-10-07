@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "ultra-disk-vcpu-reservation-conditional": {
+      "level": "info",
+      "title": "Ultra Disk vCPU reservation applies only while no ultra disk is attached",
+      "body": "This estimate charges the per-vCPU Ultra Disk reservation. Microsoft states it applies only when Ultra Disk capability is enabled on a VM with no ultra disk attached. If an ultra disk will be attached to that VM, remove the reservation line.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure managed disk types",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/disks-types",
+        "quote": "The reservation charge is only imposed if you enabled Ultra Disk capability on the VM without an attached Ultra Disk."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "ultra-disk",
+            "where": {
+              "facts.vcpuReservation": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "storage"
+    }
+  }
+}

@@ -25,9 +25,9 @@ describe what they need, not SKU names, and the skill does the rest.
 | 💬 | [How it works](#how-it-works) | What the conversation looks like |
 | 🤖 | [Which AI model to use](#which-ai-model-to-use) | Recommended, workable and blocked models |
 | ✅ | [Why you can trust the numbers](#why-you-can-trust-the-numbers) | Engine math, readback, verified answers |
-| 📚 | [Advice backed by Microsoft guidance](#advice-backed-by-microsoft-guidance) | 97 cited rules |
+| 📚 | [Advice backed by Microsoft guidance](#advice-backed-by-microsoft-guidance) | 370 cited rules |
 | 🖥️ | [VM sizes: Current and Extended only](#vm-sizes-current-and-extended-only) | End of Life sizes are never priced |
-| 🧩 | [Coverage](#coverage) | 21 services in depth, any other service via the generic meter |
+| 🧩 | [Coverage](#coverage) | 148 component types in depth (every sold calculator product), generic meter fallback |
 | ⚠️ | [Limits](#limits) | What it is and is not |
 | 🛠️ | [CLI reference](#cli-reference) | Setup commands |
 | ⚙️ | [Advanced](#advanced-running-the-engine-directly) | Running the engine directly |
@@ -202,11 +202,11 @@ every rule cites published Microsoft guidance with a verbatim quote: the
 Microsoft Learn product documentation and Azure pricing pages. The source link prints next to each
 warning in the estimate.
 
-- **97 rules**, built from a review of **1,442** published recommendations (every design checklist
+- **370 rules**. The first 97 were built from a review of **1,442** published recommendations (every design checklist
   item and configuration recommendation in the Well-Architected service guide for each priced
   service, the Cost Optimization checklist, the Azure Advisor recommendation references and the
   relevant security benchmark controls). Recommendations that need a running system, or that do
-  not affect an estimate, are not rules.
+  not affect an estimate, are not rules. Each tier 1 service added its own rules from its Microsoft\n  pricing page and Learn documentation, in `catalog/rules/<type>.json`.
 - **No citation, no rule.** The engine refuses to load a rule without a complete citation.
 - **Checked live.** `node scripts/azp.js check-citations` fetches every cited page and confirms the
   quoted sentence is still there.
@@ -227,40 +227,85 @@ November 15, 2029), and prices the current equivalent instead.
 
 ## Coverage
 
-The engine prices Azure services in two tiers.
+Every product in the [Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/) that
+is still sold has a **tier 1 recipe**: its own interview questions, correct units, graduated tiers
+and free grants, cited Microsoft advice, and prices checked against an independent oracle. Run
+`azp services` for the current list, or `azp services --find "words"` to find a type from plain words.
 
-**Tier 1, dedicated recipes (deep coverage).** These services have their own interview questions,
-correct units, graduated tiers and free grants, cited Microsoft advice, and prices checked against an
-independent oracle:
+| Area | Tier 1 component types |
+|------|------------------------|
+| Compute | Azure Arc (charged capabilities), Azure Cloud Services (extended support), Azure Container Instances, Azure Dedicated Host, Azure Durable Task Scheduler, Azure Functions Premium plan (Elastic Premium), Azure Kubernetes Service Edge Essentials, Azure Spot Virtual Machines, Azure Stack Edge, Azure Virtual Desktop, Azure VMware Solution, Nutanix Cloud Clusters (NC2) on Azure, Virtual machine |
+| Containers | AKS cluster management, Azure Container Apps (Dedicated plan, GPU and Dynamic Sessions), Azure Container Registry, Azure Kubernetes Service (AKS) Automatic, Azure Red Hat OpenShift, Container Apps (consumption) |
+| Web, integration and messaging | App Service Environment (isolated App Service plans), App Service plan, Azure API Management, Azure App Configuration, Azure Data Manager for Energy, Azure Event Grid, Azure Event Hubs, Azure Fluid Relay, Azure Functions, Azure Logic Apps, Azure Maps, Azure Notification Hubs, Azure Service Bus, Azure SignalR Service, Azure Static Web Apps, Azure Web PubSub |
+| Databases and analytics | Azure Analysis Services, Azure Cache for Redis, Azure Cosmos DB (NoSQL), Azure Cosmos DB for PostgreSQL cluster, Azure Data Explorer, Azure Data Factory, Azure Data Share, Azure Databricks, Azure DocumentDB, Azure HDInsight, Azure Health Data Services, Azure HorizonDB, Azure Managed Instance for Apache Cassandra, Azure Managed Redis, Azure SQL Database (DTU model, single databases), Azure SQL Database (vCore), Azure SQL Database elastic pool (vCore and eDTU), Azure SQL Managed Instance, Azure Stream Analytics, Azure Synapse Analytics, Microsoft Fabric, Microsoft Graph Data Connect, MySQL Flexible Server, PostgreSQL Flexible Server, Power BI Embedded |
+| Storage | Azure Container Storage, Azure Data Box, Azure Data Lake Storage Gen2, Azure Elastic SAN, Azure File Sync, Azure Files, Azure Managed Lustre, Azure NetApp Files, Azure Queue Storage, Azure Storage Actions, Azure Storage Discovery, Azure Table Storage, Azure Ultra Disk, Blob storage, Managed disk, Managed disk snapshots, Page blobs and unmanaged disks (Azure Storage) |
+| Networking | Advanced Container Networking Services (AKS), Application Gateway for Containers, Application Gateway v2, Azure Bastion, Azure Communications Gateway, Azure Content Delivery Network (Standard from Microsoft, classic), Azure DDoS Protection, Azure DNS, Azure ExpressRoute, Azure Firewall, Azure Firewall Manager, Azure Front Door (Standard and Premium), Azure Load Balancer: Gateway and cross-region (Global) tiers, Azure NAT Gateway, Azure Network Watcher, Azure Private Link, Azure Route Server, Azure Traffic Manager, Azure Virtual Network (peering and network add-ons), Azure Virtual Network Manager, Azure Virtual WAN, Azure VPN Gateway, Data transfer (inter-region, cross-zone, routing preference), Internet egress, Public IP, Public IP Prefix, Standard Load Balancer |
+| AI | Azure AI Bot Service, Azure AI Search (Foundry IQ), Azure AI Video Indexer, Azure Content Understanding in Foundry Tools, Azure Document Intelligence, Azure OpenAI (Foundry Models), Azure OpenAI provisioned throughput (PTUs), Azure SRE Agent, Foundry Tools (Azure AI services: Language, Speech, Translator, Vision, Face, Content Safety), Healthcare agent service, Microsoft Planetary Computer Pro |
+| Security and identity | Azure Artifact Signing (formerly Trusted Signing), Azure Cloud HSM, Azure confidential ledger, Azure Key Vault, Azure Virtual Enclaves, Extended Security Updates (ESU) enabled by Azure Arc, Microsoft Defender External Attack Surface Management, Microsoft Defender for Cloud (workload protection plans), Microsoft Defender ISOC (pay-as-you-go data ingestion), Microsoft Entra Domain Services, Microsoft Entra External ID, Microsoft Purview, Microsoft Security Copilot, Microsoft Sentinel |
+| Monitoring and management | Application Insights (telemetry data and availability tests), Azure Automation, Azure Backup, Azure Chaos Studio, Azure Database Migration Service (classic), Azure Managed Grafana, Azure Monitor alert rules and notifications, Azure Monitor metrics (Prometheus, platform metrics, export), Azure Policy (charged parts only), Azure Site Recovery, Azure Update Manager, Log Analytics |
+| Developer tools and DevOps | Azure App Testing (Load Testing and Playwright), Azure DevOps, GitHub Enterprise (billed through Azure) |
+| IoT | Azure Digital Twins, Azure IoT Hub, Azure IoT Operations, Windows 10 IoT Core Services |
 
-VMs (Linux, Windows, Windows with Azure Hybrid Benefit, Red Hat, SUSE; pay-as-you-go, 1- and 3-year
-reservations, 1- and 3-year savings plans), managed disks (Standard HDD, Standard SSD, Premium SSD,
-Premium SSD v2), public IPs, internet egress, Standard Load Balancer, Application Gateway v2, AKS,
-App Service, Azure Functions (Consumption, Flex Consumption), Container Apps, Azure SQL Database,
-SQL Managed Instance, PostgreSQL and MySQL flexible server, Cosmos DB, Blob storage, Azure Files,
-Log Analytics and Azure OpenAI models.
+**Generic meter (fallback).** Anything in the Azure Retail Prices API that has no recipe can still be
+priced with the `meter` component: the agent finds the exact meter with `azp search` and the engine
+prices it live. This is weaker than tier 1 (no service-specific questions, advice or oracle tests),
+and the estimate labels these lines as priced from a generic meter.
 
-**Tier 2, generic meter (any other service).** Anything else in the Azure Retail Prices API, for
-example Key Vault, Azure Backup, Redis, Event Hubs, Azure Bastion, VPN Gateway, Azure Firewall,
-Data Factory or AI Search, can be priced: the agent finds the exact meter with `azp search` and the
-engine prices it live and adds it to the itemization. This tier is weaker than tier 1: the agent has
-to choose the right meter and quantity, there are no service-specific questions or advice, and these
-prices are not covered by the oracle tests. The estimate labels these lines as priced from a generic
-meter.
+**Not priced (by design).** These calculator products are left out, with Microsoft's reason:
 
-**Roadmap:** the goal is tier 1 coverage in line with the
-[Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/), adding dedicated
-recipes service by service.
+| Product | Reason | Microsoft source |
+|---------|--------|------------------|
+| Azure Active Directory B2C | Closed to new customers | [Source](https://learn.microsoft.com/azure/active-directory-b2c/faq) |
+| Azure Advisor | No charge of its own | [Source](https://azure.microsoft.com/pricing/details/advisor/) |
+| Azure Communication Services | Retiring, closed to new customers soon | [Source](https://learn.microsoft.com/azure/communication-services/acs-retirement-and-breaking-changes-guide) |
+| Azure Database for MariaDB | Retired | [Source](https://learn.microsoft.com/lifecycle/announcements/azure-products-retirement-september-2025) |
+| Azure Dedicated HSM | Closed to new customers | [Source](https://learn.microsoft.com/azure/dedicated-hsm/secure-dedicated-hsm) |
+| Azure DevTest Labs | No charge of its own | [Source](https://azure.microsoft.com/pricing/details/devtest-lab/) |
+| Azure IoT Central | Closed to new customers | [Source](https://learn.microsoft.com/azure/iot-central/core/iot-central-evolution) |
+| Azure IoT Edge | No charge of its own | [Source](https://azure.microsoft.com/pricing/calculator/) |
+| Azure Kubernetes Service on Azure Local | No charge of its own | [Source](https://learn.microsoft.com/azure/aks-hybrid-edge/aks-platforms-compare) |
+| Azure Lab Services | Closed to new customers | [Source](https://learn.microsoft.com/azure/lab-services/retirement-guide) |
+| Azure Lighthouse | No charge of its own | [Source](https://learn.microsoft.com/azure/lighthouse/overview) |
+| Azure Managed Applications | Not sold through Azure meters | [Source](https://azure.microsoft.com/pricing/details/managed-applications/) |
+| Azure Migrate | No charge of its own | [Source](https://learn.microsoft.com/azure/cost-management-billing/costs/overview-cost-management) |
+| Azure Open Datasets | No charge of its own | [Source](https://azure.microsoft.com/pricing/details/open-datasets/) |
+| Azure Resource Mover | No charge of its own | [Source](https://azure.microsoft.com/pricing/details/resource-mover/) |
+| Azure Spring Apps | Closed to new customers | [Source](https://learn.microsoft.com/azure/spring-apps/basic-standard/retirement-announcement) |
+| Azure SQL Edge | Retired | [Source](https://learn.microsoft.com/lifecycle/announcements/azure-products-retirement-september-2025) |
+| Azure Time Series Insights | Retired | [Source](https://learn.microsoft.com/azure/time-series-insights/overview-what-is-tsi) |
+| Batch | No charge of its own | [Source](https://learn.microsoft.com/azure/batch/batch-linux-nodes) |
+| Cloud Shell | No charge of its own | [Source](https://azure.microsoft.com/pricing/details/cloud-shell/) |
+| Data Catalog | Retired | [Source](https://learn.microsoft.com/azure/data-catalog/overview) |
+| Machine Learning Studio (classic) | Retired | [Source](https://learn.microsoft.com/lifecycle/products/machine-learning-studio-classic) |
+| Media Services | Retired | [Source](https://learn.microsoft.com/azure/media-services/latest/azure-media-services-retirement) |
+| Microsoft Cost Management | No charge of its own | [Source](https://azure.microsoft.com/pricing/calculator/) |
+| Microsoft Entra ID (formerly Azure AD) | Not sold through Azure meters | [Source](https://azure.microsoft.com/pricing/details/active-directory/) |
+| Microsoft Genomics | Retired | [Source](https://learn.microsoft.com/lifecycle/products/microsoft-genomics) |
+| Remote Rendering | Retired | [Source](https://learn.microsoft.com/windows/mixed-reality/develop/mixed-reality-cloud-services) |
+| Scheduler | Retired | [Source](https://azure.microsoft.com/pricing/details/scheduler/) |
+| StorSimple | Retired | [Source](https://learn.microsoft.com/azure/storsimple/storsimple-overview) |
+
+**Lifecycle exceptions.** The engine prices only VM sizes in the Current or Extended lifecycle stage,
+with three exceptions where the service itself sets the size. Each is priced with a cited note:
+
+- **Azure Cloud Services (extended support):** every role size it offers is on the
+  [End of Life list](https://learn.microsoft.com/azure/virtual-machines/sizes/lifecycle/end-of-life-sizes-list).
+  Retired series (A v1, H v1) are refused. See [available sizes](https://learn.microsoft.com/azure/cloud-services-extended-support/available-sizes).
+- **Azure-SSIS integration runtime (Synapse, Data Factory):** node sizes come from a
+  [fixed Microsoft list](https://learn.microsoft.com/azure/data-factory/configure-azure-ssis-integration-runtime-performance)
+  of v2 and v3 series. The engine picks the smallest v3 size that fits.
+- **HDInsight:** ZooKeeper and ID Broker nodes are sized by the service at the
+  [documented node size](https://learn.microsoft.com/azure/hdinsight/hdinsight-supported-node-configuration).
+  Head and worker nodes follow the normal lifecycle rule.
 
 Prices are available in any currency the Retail Prices API supports.
-
 ## Limits
 
 - **An estimate, not a quote.** It applies one discount percentage (optionally excluding licenses);
   real agreements can differ by service.
-- **Not modeled:** support plans, Marketplace software, Data Zone or provisioned AI deployments,
-  ExpressRoute, VPN gateways, Azure Firewall and Backup (these can be priced through the generic
-  meter component).
+- **Not modeled:** Azure support plans, Marketplace software, Microsoft 365 or Entra ID licenses,
+  and the products listed under "Not priced" above. Commitment pre-purchase plans (for example
+  Synapse or Databricks commit units) are noted in the estimate but not priced.
 - **The readback is only as good as the person reading it.** It shows every number; it cannot make
   someone check them.
 - **Local safeguards are tamper-evident, not tamper-proof.** The skill runs on your machine, so a
@@ -317,7 +362,7 @@ The spec format and the full interview are documented in [`SKILL.md`](SKILL.md).
 ## Testing
 
 ```bash
-npm test                     # oracle agreement, split invariance, rule fire/silent tests
+npm test                     # oracle agreement, contracts, split invariance, rule fire/silent tests
 npm run check-citations      # every citation fetched and its quote found
 ```
 
@@ -329,8 +374,16 @@ npm run check-citations      # every citation fetched and its quote found
   by 20 scenarios per batch, with a simulated customer who knows nothing about Azure, including a
   strict customer who checks every number. In the final batch, 159 of 160 conversations delivered
   an estimate, and 7 of 8 models produced trustworthy estimates in 19 or 20 of 20 conversations.
-- **Rules:** each of the 54 rules built from the guidance review has a test that must fire and a
-  near-identical test that must stay silent.
+- **Tier 1 services:** each service has its own independent oracle, written from the Retail Prices
+  API, the pricing calculator and Microsoft Learn without reading the engine (**1,571** checks across
+  regions, currencies including EUR, US Gov, free grants and refusal cases), plus contract tests for
+  every type (**832** module and **337** built-in checks: required fields, unknown fields refused, text
+  in number fields refused, readback). Every service passed an independent review that checked prices
+  by hand against live sources.
+- **Rules:** **318** rule tests: each rule has a test that must fire and a near-identical test that
+  must stay silent.
+- **Conversations (pending for tier 1):** the conversation results above are for the v1.0 services.
+  The model matrix for the tier 1 services has not run yet.
 
 ## Repository structure
 
@@ -348,7 +401,8 @@ azure-pricing-skill/
 │   ├── azp.js               # pricing engine CLI (zero deps)
 │   └── lib/                 # pricing recipes, advisor, readback, render, validation, lifecycle
 ├── catalog/
-│   ├── rules.json           # 97 cited advisory rules
+│   ├── rules.json           # shared cited advisory rules
+│   ├── rules/               # per-service cited rules (one file per type)
 │   ├── models.json          # tested AI models
 │   ├── catalog.json         # disk tiers, App Service plans, VM lifecycle list
 │   ├── vm-sizes.json        # VM size specs (vCPU, memory, disk limits)

@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "front-door-standard-no-managed-waf": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "front-door",
+                  "egressGB": 500,
+                  "requestsMillions": 10
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "internetFacing": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "front-door",
+                  "tier": "premium",
+                  "egressGB": 500,
+                  "requestsMillions": 10
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "internetFacing": true
+          }
+        }
+      }
+    },
+    "front-door-cache-offload": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "front-door",
+                  "egressGB": 1000,
+                  "requestsMillions": 10,
+                  "originGB": 800
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "front-door",
+                  "egressGB": 1000,
+                  "requestsMillions": 10,
+                  "originGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

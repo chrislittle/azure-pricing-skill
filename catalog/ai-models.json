@@ -1,23 +1,506 @@
 {
   "_source": "Foundry Models meters, Azure Retail Prices API, Global Standard deployment, verified 2026-09-30 in eastus2. Meter names are exact; unitOfMeasure varies (1K vs 1M) and is read from the API at price time.",
-  "_deploymentNote": "Global Standard routes inference worldwide; creating the deployment still needs an Azure OpenAI/Foundry resource and quota in some region. Data Zone and Regional deployments price differently and are not modeled here; use the generic 'meter' component for them.",
+  "_deploymentNote": "Prices default to Global Standard. Set deployment (global | datazone | regional) and processing (standard | batch | priority) to switch meter family; fineTuned bills the fine-tuned inference meters plus trainingTokens and hostingHours. Meter families are matched by normalised meter-name tokens, so a deployment/processing combination without a published meter is rejected rather than guessed.",
   "models": {
-    "gpt-5.6-luna":  {"product": "Azure OpenAI GPT5", "input": "5.6 luna ShortCo Inp Std Gl 1M Tokens",  "cached": "5.6 luna ShortCo Cd Inp Std Gl 1M Tokens",  "output": "5.6 luna ShortCo Opt Std Gl 1M Tokens", "class": "small", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
-    "gpt-5.6-terra": {"product": "Azure OpenAI GPT5", "input": "5.6 terra ShortCo Inp Std Gl 1M Tokens", "cached": "5.6 terra ShortCo Cd Inp Std Gl 1M Tokens", "output": "5.6 terra ShortCo Opt Std Gl 1M Tokens", "class": "mid", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
-    "gpt-5.6-sol":   {"product": "Azure OpenAI GPT5", "input": "5.6 sol ShortCo Inp Std Gl 1M Tokens",   "cached": "5.6 sol ShortCo Cd Inp Std Gl 1M Tokens",   "output": "5.6 sol ShortCo Opt Std Gl 1M Tokens", "class": "large", "note": "Short-context rates; long-context requests bill at higher LongCo meters."},
-    "gpt-5.5":       {"product": "Azure OpenAI GPT5", "input": "5.5 ShortCo inp Gl 1M Tokens", "cached": "5.5 ShortCo cd inp Gl 1M Tokens", "output": "5.5 ShortCo opt Gl 1M Tokens", "class": "large"},
-    "gpt-5.4":       {"product": "Azure OpenAI GPT5", "input": "5.4 inp Gl 1M Tokens", "cached": "5.4 cd inp Gl 1M Tokens", "output": "5.4 opt Gl 1M Tokens", "class": "large"},
-    "gpt-5.4-mini":  {"product": "Azure OpenAI GPT5", "input": "5.4 mini Inp Gl 1M Tokens", "cached": "5.4 mini cd Inp Gl 1M Tokens", "output": "5.4 mini Opt Gl 1M Tokens", "class": "small"},
-    "gpt-5.4-nano":  {"product": "Azure OpenAI GPT5", "input": "5.4 nano Inp Gl 1M Tokens", "cached": "5.4 nano cd Inp Gl 1M Tokens", "output": "5.4 nano Opt Gl 1M Tokens", "class": "tiny"},
-    "gpt-5.2":       {"product": "Azure OpenAI GPT5", "input": "GPT 5.2 inp Gl 1M Tokens", "cached": "GPT 5.2 cd inp Gl 1M Tokens", "output": "GPT 5.2 opt Gl 1M Tokens", "class": "large"},
-    "gpt-5.1":       {"product": "Azure OpenAI GPT5", "input": "GPT 5.1 inp Gl 1M Tokens", "cached": "GPT 5.1 cd inp Gl 1M Tokens", "output": "GPT 5.1 opt Gl 1M Tokens", "class": "large"},
-    "gpt-5":         {"product": "Azure OpenAI GPT5", "input": "GPT 5 Inpt Glbl 1M Tokens", "cached": "GPT 5 cchd Inpt Glbl 1M Tokens", "output": "GPT 5 outpt Glbl 1M Tokens", "class": "large"},
-    "gpt-5-mini":    {"product": "Azure OpenAI GPT5", "input": "GPT 5 Mini Inpt Glbl 1M Tokens", "cached": "GPT 5 Mini cchd Inpt Glbl 1M Tokens", "output": "GPT 5 Mini outpt Glbl 1M Tokens", "class": "small"},
-    "gpt-5-nano":    {"product": "Azure OpenAI GPT5", "input": "GPT 5 Nano Inpt Glbl 1M Tokens", "cached": "GPT 5 Nano cchd Inpt Glbl 1M Tokens", "output": "GPT 5 Nano outpt Glbl 1M Tokens", "class": "tiny"},
-    "gpt-4.1":       {"product": "Azure OpenAI", "input": "gpt 4.1 Inp glbl Tokens", "cached": "gpt 4.1 cached Inp glbl Tokens", "output": "gpt 4.1 Outp glbl Tokens", "class": "large", "legacy": true},
-    "gpt-4.1-mini":  {"product": "Azure OpenAI", "input": "gpt 4.1 mini Inp glbl Tokens", "cached": "gpt 4.1 mini cached Inp glbl Tokens", "output": "gpt 4.1 mini Outp glbl Tokens", "class": "small", "legacy": true},
-    "gpt-4.1-nano":  {"product": "Azure OpenAI", "input": "gpt 4.1 nano Inp glbl Tokens", "cached": "gpt 4.1 nano cached Inp glbl Tokens", "output": "gpt 4.1 nano Outp glbl Tokens", "class": "tiny", "legacy": true},
-    "gpt-4o-mini":   {"product": "Azure OpenAI", "input": "gpt-4o-mini-0718-Inp-glbl Tokens", "cached": "gpt 4o mini 0718 cached Inp glbl Tokens", "output": "gpt-4o-mini-0718-Outp-glbl Tokens", "class": "small", "legacy": true},
-    "o4-mini":       {"product": "Azure OpenAI Reasoning", "input": "o4-mini 0416 Inp glbl Tokens", "cached": "o4-mini 0416 cached Inp glbl Tokens", "output": "o4-mini 0416 Outp glbl Tokens", "class": "small", "legacy": true}
+    "gpt-5.6-luna": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.6 luna ShortCo Inp Std Gl 1M Tokens",
+      "cached": "5.6 luna ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "5.6 luna ShortCo Opt Std Gl 1M Tokens",
+      "class": "small",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "5.6 luna ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "5.6 luna LongCo Inp Std Gl 1M Tokens",
+      "longCached": "5.6 luna LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "5.6 luna LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "5.6 luna LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-5.6-terra": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.6 terra ShortCo Inp Std Gl 1M Tokens",
+      "cached": "5.6 terra ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "5.6 terra ShortCo Opt Std Gl 1M Tokens",
+      "class": "mid",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "5.6 terra ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "5.6 terra LongCo Inp Std Gl 1M Tokens",
+      "longCached": "5.6 terra LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "5.6 terra LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "5.6 terra LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-5.6-sol": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.6 sol ShortCo Inp Std Gl 1M Tokens",
+      "cached": "5.6 sol ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "5.6 sol ShortCo Opt Std Gl 1M Tokens",
+      "class": "large",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "5.6 sol ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "5.6 sol LongCo Inp Std Gl 1M Tokens",
+      "longCached": "5.6 sol LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "5.6 sol LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "5.6 sol LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-5.5": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.5 ShortCo inp Gl 1M Tokens",
+      "cached": "5.5 ShortCo cd inp Gl 1M Tokens",
+      "output": "5.5 ShortCo opt Gl 1M Tokens",
+      "class": "large",
+      "longInput": "5.5 LongCo inp Gl 1M Tokens",
+      "longCached": "5.5 LongCo cd inp Gl 1M Tokens",
+      "longOutput": "5.5 LongCo opt Gl 1M Tokens",
+      "note": "Short-context rates by default; use longContext* token fields for requests above 272K tokens (LongCo meters)."
+    },
+    "gpt-5.4": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.4 inp Gl 1M Tokens",
+      "cached": "5.4 cd inp Gl 1M Tokens",
+      "output": "5.4 opt Gl 1M Tokens",
+      "class": "large",
+      "longInput": "5.4 longco inp Gl 1M Tokens",
+      "longCached": "5.4 longco cd inp Gl 1M Tokens",
+      "longOutput": "5.4 longco opt Gl 1M Tokens",
+      "note": "Short-context rates by default; use longContext* token fields for requests above 272K tokens (longco meters)."
+    },
+    "gpt-5.4-mini": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.4 mini Inp Gl 1M Tokens",
+      "cached": "5.4 mini cd Inp Gl 1M Tokens",
+      "output": "5.4 mini Opt Gl 1M Tokens",
+      "class": "small"
+    },
+    "gpt-5.4-nano": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.4 nano Inp Gl 1M Tokens",
+      "cached": "5.4 nano cd Inp Gl 1M Tokens",
+      "output": "5.4 nano Opt Gl 1M Tokens",
+      "class": "tiny"
+    },
+    "gpt-5.2": {
+      "product": "Azure OpenAI GPT5",
+      "input": "GPT 5.2 inp Gl 1M Tokens",
+      "cached": "GPT 5.2 cd inp Gl 1M Tokens",
+      "output": "GPT 5.2 opt Gl 1M Tokens",
+      "class": "large"
+    },
+    "gpt-5.1": {
+      "product": "Azure OpenAI GPT5",
+      "input": "GPT 5.1 inp Gl 1M Tokens",
+      "cached": "GPT 5.1 cd inp Gl 1M Tokens",
+      "output": "GPT 5.1 opt Gl 1M Tokens",
+      "class": "large"
+    },
+    "gpt-5": {
+      "product": "Azure OpenAI GPT5",
+      "input": "GPT 5 Inpt Glbl 1M Tokens",
+      "cached": "GPT 5 cchd Inpt Glbl 1M Tokens",
+      "output": "GPT 5 outpt Glbl 1M Tokens",
+      "class": "large"
+    },
+    "gpt-5-mini": {
+      "product": "Azure OpenAI GPT5",
+      "input": "GPT 5 Mini Inpt Glbl 1M Tokens",
+      "cached": "GPT 5 Mini cchd Inpt Glbl 1M Tokens",
+      "output": "GPT 5 Mini outpt Glbl 1M Tokens",
+      "class": "small"
+    },
+    "gpt-5-nano": {
+      "product": "Azure OpenAI GPT5",
+      "input": "GPT 5 Nano Inpt Glbl 1M Tokens",
+      "cached": "GPT 5 Nano cchd Inpt Glbl 1M Tokens",
+      "output": "GPT 5 Nano outpt Glbl 1M Tokens",
+      "class": "tiny"
+    },
+    "gpt-4.1": {
+      "product": "Azure OpenAI",
+      "input": "gpt 4.1 Inp glbl Tokens",
+      "cached": "gpt 4.1 cached Inp glbl Tokens",
+      "output": "gpt 4.1 Outp glbl Tokens",
+      "class": "large",
+      "legacy": true,
+      "ft": {
+        "input": "gpt-4.1-ft input global Tokens",
+        "cached": "gpt-4.1-ft cached input global Tokens",
+        "output": "gpt-4.1-ft output global Tokens",
+        "training": "gpt-4.1 FT Training global Tokens",
+        "hosting": "gpt-4.1-ft hosting global Unit"
+      }
+    },
+    "gpt-4.1-mini": {
+      "product": "Azure OpenAI",
+      "input": "gpt 4.1 mini Inp glbl Tokens",
+      "cached": "gpt 4.1 mini cached Inp glbl Tokens",
+      "output": "gpt 4.1 mini Outp glbl Tokens",
+      "class": "small",
+      "legacy": true,
+      "ft": {
+        "input": "gpt-4.1-mini-ft input global Tokens",
+        "cached": "gpt-4.1-mini-ft cached input global Tokens",
+        "output": "gpt-4.1-mini-ft output global Tokens",
+        "training": "gpt-4.1-mini FT Training global Tokens",
+        "hosting": "gpt-4.1-mini-ft hosting global Unit"
+      }
+    },
+    "gpt-4.1-nano": {
+      "product": "Azure OpenAI",
+      "input": "gpt 4.1 nano Inp glbl Tokens",
+      "cached": "gpt 4.1 nano cached Inp glbl Tokens",
+      "output": "gpt 4.1 nano Outp glbl Tokens",
+      "class": "tiny",
+      "legacy": true,
+      "ft": {
+        "input": "gpt-4.1-nano-ft input global Tokens",
+        "cached": "gpt-4.1-nano-ft cached input global Tokens",
+        "output": "gpt-4.1-nano-ft output global Tokens",
+        "hosting": "gpt-4.1-nano-ft hosting global Unit"
+      }
+    },
+    "gpt-4o-mini": {
+      "product": "Azure OpenAI",
+      "input": "gpt-4o-mini-0718-Inp-glbl Tokens",
+      "cached": "gpt 4o mini 0718 cached Inp glbl Tokens",
+      "output": "gpt-4o-mini-0718-Outp-glbl Tokens",
+      "class": "small",
+      "legacy": true
+    },
+    "o4-mini": {
+      "product": "Azure OpenAI Reasoning",
+      "input": "o4-mini 0416 Inp glbl Tokens",
+      "cached": "o4-mini 0416 cached Inp glbl Tokens",
+      "output": "o4-mini 0416 Outp glbl Tokens",
+      "class": "small",
+      "legacy": true
+    },
+    "text-embedding-3-small": {
+      "product": "Azure OpenAI",
+      "input": "text-embedding-3-small-glbl Tokens",
+      "class": "embedding",
+      "note": "Embeddings bill input tokens only; pass outputTokens 0."
+    },
+    "text-embedding-3-large": {
+      "product": "Azure OpenAI",
+      "input": "text-embedding-3-large-glbl Tokens",
+      "class": "embedding",
+      "note": "Embeddings bill input tokens only; pass outputTokens 0."
+    },
+    "text-embedding-ada-002": {
+      "product": "Azure OpenAI",
+      "input": "embedding-ada-glbl Tokens",
+      "class": "embedding",
+      "note": "Embeddings bill input tokens only; pass outputTokens 0."
+    },
+    "gpt-realtime-2.1": {
+      "product": "Azure OpenAI Media",
+      "class": "multimodal",
+      "note": "Text, audio and image tokens bill at separate rates: use inputTokens/outputTokens for text, audio*/image* fields for the rest.",
+      "input": "gpt-realtime-2.1 Text inp Gl 1M Tokens",
+      "cached": "gpt-realtime-2.1 Text cd inp Gl 1M Tokens",
+      "output": "gpt-realtime-2.1 Text opt Gl 1M Tokens",
+      "audioInput": "gpt-realtime-2.1 Audio inp Gl 1M Tokens",
+      "audioOutput": "gpt-realtime-2.1 Audio opt Gl 1M Tokens",
+      "imageInput": "gpt-realtime-2.1 Image inp Gl 1M Tokens",
+      "cachedAudioInput": "gpt-realtime-2.1 Audio cd inp Gl 1M Tokens",
+      "cachedImageInput": "gpt-realtime-2.1 Image cd inp Gl 1M Tokens"
+    },
+    "gpt-realtime-2.1-mini": {
+      "product": "Azure OpenAI Media",
+      "class": "multimodal",
+      "note": "Text, audio and image tokens bill at separate rates: use inputTokens/outputTokens for text, audio*/image* fields for the rest.",
+      "input": "gpt-realtime-2.1-mini Text inp Gl 1M Tokens",
+      "cached": "gpt-realtime-2.1-mini Text cd inp Gl 1M Tokens",
+      "output": "gpt-realtime-2.1-mini Text opt Gl 1M Tokens",
+      "audioInput": "gpt-realtime-2.1-mini Audio inp Gl 1M Tokens",
+      "audioOutput": "gpt-realtime-2.1-mini Audio opt Gl 1M Tokens",
+      "imageInput": "gpt-realtime-2.1-mini Image inp Gl 1M Tokens",
+      "cachedAudioInput": "gpt-realtime-2.1-mini Audio cd inp Gl 1M Tokens",
+      "cachedImageInput": "gpt-realtime-2.1-mini Image cd inp Gl 1M Tokens"
+    },
+    "gpt-audio-1.5": {
+      "product": "Azure OpenAI Media",
+      "class": "multimodal",
+      "note": "Text, audio and image tokens bill at separate rates: use inputTokens/outputTokens for text, audio*/image* fields for the rest.",
+      "input": "gpt aud 1.5 txt inp Gl 1M Tokens",
+      "output": "gpt aud 1.5 txt opt Gl 1M Tokens",
+      "audioInput": "gpt aud 1.5 inp Gl 1M Tokens",
+      "audioOutput": "gpt aud 1.5 opt Gl 1M Tokens"
+    },
+    "gpt-image-1.5": {
+      "product": "Azure OpenAI Media",
+      "class": "multimodal",
+      "note": "Text, audio and image tokens bill at separate rates: use inputTokens/outputTokens for text, audio*/image* fields for the rest.",
+      "input": "gpt img 1.5 in txt gl 1M Tokens",
+      "cached": "gpt img 1.5 in cd txt gl 1M Tokens",
+      "output": "gpt img 1.5 out txt gl 1M Tokens",
+      "imageInput": "gpt img 1.5 in img gl 1M Tokens",
+      "imageOutput": "gpt img 1.5 out img gl 1M Tokens"
+    },
+    "gpt-image-1-mini": {
+      "product": "Azure OpenAI Media",
+      "class": "multimodal",
+      "note": "Text, audio and image tokens bill at separate rates: use inputTokens/outputTokens for text, audio*/image* fields for the rest.",
+      "input": "gpt img 1 mini inp txt glbl Tokens",
+      "cached": "gpt img 1 mini inp cchd txt glbl Tokens",
+      "imageInput": "gpt img 1 mini inp img glbl Tokens",
+      "imageOutput": "gpt img 1 mini out img glbl Tokens"
+    },
+    "gpt-6-sol": {
+      "product": "Azure OpenAI GPT6",
+      "input": "6-sol ShortCo Inp Std Gl 1M Tokens",
+      "cached": "6-sol ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "6-sol ShortCo Opt Std Gl 1M Tokens",
+      "class": "large",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "6-sol ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "6-sol LongCo Inp Std Gl 1M Tokens",
+      "longCached": "6-sol LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "6-sol LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "6-sol LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-6-luna": {
+      "product": "Azure OpenAI GPT6",
+      "input": "6-luna ShortCo Inp Std Gl 1M Tokens",
+      "cached": "6-luna ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "6-luna ShortCo Opt Std Gl 1M Tokens",
+      "class": "small",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "6-luna ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "6-luna LongCo Inp Std Gl 1M Tokens",
+      "longCached": "6-luna LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "6-luna LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "6-luna LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-6-astra": {
+      "product": "Azure OpenAI GPT6",
+      "input": "6-astra ShortCo Inp Std Gl 1M Tokens",
+      "cached": "6-astra ShortCo Cd Inp Std Gl 1M Tokens",
+      "output": "6-astra ShortCo Opt Std Gl 1M Tokens",
+      "class": "large",
+      "note": "Short-context rates by default; use longContext* token fields for the part of traffic above 272K tokens per request (LongCo meters), and cacheWriteTokens for prompt-cache writes.",
+      "cacheWrite": "6-astra ShortCo Cd Wr Std Gl 1M Tokens",
+      "longInput": "6-astra LongCo Inp Std Gl 1M Tokens",
+      "longCached": "6-astra LongCo Cd Inp Std Gl 1M Tokens",
+      "longOutput": "6-astra LongCo Opt Std Gl 1M Tokens",
+      "longCacheWrite": "6-astra LongCo Cd Wr Std Gl 1M Tokens"
+    },
+    "gpt-5.1-codex": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.1 codex inp Gl 1M Tokens",
+      "cached": "5.1 codex cd inp Gl 1M Tokens",
+      "output": "5.1 codex opt Gl 1M Tokens",
+      "class": "large",
+      "note": "Codex models are for coding agents (Responses API)."
+    },
+    "gpt-5.1-codex-mini": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.1 codex mini inp Gl 1M Tokens",
+      "cached": "5.1 codex mini cd inp Gl 1M Tokens",
+      "output": "5.1 codex mini opt Gl 1M Tokens",
+      "class": "large",
+      "note": "Codex models are for coding agents (Responses API)."
+    },
+    "gpt-5.1-codex-max": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.1 codex max inp Gl 1M Tokens",
+      "cached": "5.1 codex max cd inp Gl 1M Tokens",
+      "output": "5.1 codex max opt Gl 1M Tokens",
+      "class": "large",
+      "note": "Codex models are for coding agents (Responses API)."
+    },
+    "gpt-5.2-codex": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.2 codex inp Gl 1M Tokens",
+      "cached": "5.2 codex cd inp Gl 1M Tokens",
+      "output": "5.2 codex opt Gl 1M Tokens",
+      "class": "large",
+      "note": "Codex models are for coding agents (Responses API)."
+    },
+    "gpt-5.3-codex": {
+      "product": "Azure OpenAI GPT5",
+      "input": "5.3 codex inp Gl 1M Tokens",
+      "cached": "5.3 codex cd inp Gl 1M Tokens",
+      "output": "5.3 codex opt Gl 1M Tokens",
+      "class": "large",
+      "note": "Codex models are for coding agents (Responses API)."
+    },
+    "o3": {
+      "product": "Azure OpenAI",
+      "input": "o3 0416 Inp glbl Tokens",
+      "cached": "o3 0416 cached Inp glbl Tokens",
+      "output": "o3 0416 Outp glbl Tokens",
+      "class": "large",
+      "legacy": true
+    },
+    "o3-pro": {
+      "product": "Azure OpenAI",
+      "input": "o3-pro Inp glbl Tokens",
+      "output": "o3-pro Outp glbl Tokens",
+      "class": "large",
+      "legacy": true
+    },
+    "o3-deep-research": {
+      "product": "Azure OpenAI Reasoning",
+      "input": "o3-deep research 0626-inp-glbl 1M Tokens",
+      "cached": "o3-deep research 0626-inp-cchd-glbl 1M Tokens",
+      "output": "o3-deep research 0626-out-glbl 1M Tokens",
+      "class": "large",
+      "legacy": true
+    },
+    "gpt-4o": {
+      "product": "Azure OpenAI",
+      "input": "gpt 4o 1120 Inp glbl Tokens",
+      "cached": "gpt 4o 1120 cached Inp glbl Tokens",
+      "output": "gpt 4o 1120 Outp glbl Tokens",
+      "class": "large",
+      "legacy": true,
+      "note": "Priced with the 2024-11-20 version meters; older gpt-4o versions have their own meters."
+    },
+    "gpt-oss-120b": {
+      "product": "Azure OpenAI OSS Models",
+      "input": "gpt-oss-120B Inp glbl Tokens",
+      "output": "gpt-oss-120B Outp glbl Tokens",
+      "class": "small",
+      "note": "Open-weight model; Retail publishes Global rates only (Data Zone is a different product that is not priced here)."
+    },
+    "gpt-4o-transcribe": {
+      "product": "Azure OpenAI",
+      "input": "gpt-4o-transcribe-txt-inp-glbl Tokens",
+      "audioInput": "gpt-4o-transcribe-aud-inp-glbl Tokens",
+      "output": "gpt-4o-transcribe-txt-out-glbl Tokens",
+      "class": "small",
+      "note": "Speech-to-text: audio tokens in (audioInputTokens), text tokens out (outputTokens)."
+    },
+    "gpt-4o-mini-transcribe": {
+      "product": "Azure OpenAI",
+      "input": "gpt-4o-mini-transcribe-txt-inp-glbl Tokens",
+      "audioInput": "gpt-4o-mini-transcribe-aud-inp-glbl Tokens",
+      "output": "gpt-4o-mini-transcribe-txt-out-glbl Tokens",
+      "class": "small",
+      "note": "Speech-to-text: audio tokens in (audioInputTokens), text tokens out (outputTokens)."
+    },
+    "gpt-4o-mini-tts": {
+      "product": "Azure OpenAI",
+      "input": "gpt-4o-mini-tts-txt-inp-glbl Tokens",
+      "audioOutput": "gpt-4o-mini-tts-aud-out-glbl Tokens",
+      "class": "small",
+      "note": "Text-to-speech: text tokens in (inputTokens), audio tokens out (audioOutputTokens)."
+    },
+    "computer-use-preview": {
+      "product": "Azure OpenAI",
+      "input": "computer-use-inpt-glbl Tokens",
+      "output": "computer-use-outp-glbl Tokens",
+      "class": "large",
+      "legacy": true
+    },
+    "sora-2": {
+      "product": "Azure OpenAI Media",
+      "class": "media",
+      "media": [
+        {
+          "field": "videoSeconds",
+          "label": "Video seconds generated",
+          "unit": "seconds",
+          "meters": {
+            "gl": "Sora 2 glbl Second",
+            "dz": "Sora 2 dzone Second"
+          }
+        }
+      ],
+      "note": "Video generation bills per second of output video. Pass inputTokens 0 and outputTokens 0."
+    },
+    "sora-2-pro": {
+      "product": "Azure OpenAI Media",
+      "class": "media",
+      "media": [
+        {
+          "field": "videoSeconds",
+          "label": "Video seconds generated",
+          "unit": "seconds",
+          "meters": {
+            "gl": "Sora 2 pro glbl Second",
+            "dz": "Sora 2 pro dzone Second"
+          }
+        }
+      ],
+      "note": "Video generation bills per second of output video. Pass inputTokens 0 and outputTokens 0."
+    },
+    "sora-2-pro-high-res": {
+      "product": "Azure OpenAI Media",
+      "class": "media",
+      "media": [
+        {
+          "field": "videoSeconds",
+          "label": "Video seconds generated",
+          "unit": "seconds",
+          "meters": {
+            "gl": "Sora 2 pro high res glbl Second",
+            "dz": "Sora 2 pro high res dzone Second"
+          }
+        }
+      ],
+      "note": "Video generation bills per second of output video. Pass inputTokens 0 and outputTokens 0."
+    },
+    "dall-e-3": {
+      "product": "Azure OpenAI",
+      "class": "media",
+      "media": [
+        {
+          "field": "imageCount",
+          "label": "Images generated",
+          "unit": "images",
+          "meters": {
+            "rg": {
+              "standard/standard": "Image-Dall-E-3 Std LowRes-regnl EP Images",
+              "standard/high": "Image-Dall-E-3 Std HighRes-regnl EP Images",
+              "hd/standard": "Image-Dall-E-3 HD LowRes-regnl EP Images",
+              "hd/high": "Image-Dall-E-3 HD HighRes-regnl EP Images"
+            }
+          }
+        }
+      ],
+      "note": "DALL-E 3 meters are published for regional deployments only (set deployment regional). Set imageQuality standard or hd, and imageSize 1024x1024 (standard resolution) or 1792x1024 / 1024x1792 (high resolution). Pass inputTokens 0 and outputTokens 0."
+    },
+    "code-interpreter": {
+      "product": "Azure OpenAI",
+      "class": "media",
+      "media": [
+        {
+          "field": "codeInterpreterSessions",
+          "label": "Code interpreter sessions",
+          "unit": "sessions",
+          "meters": {
+            "gl": "Code-Interpreter-global Session",
+            "rg": "Code-Interpreter-regnl EP Session"
+          }
+        }
+      ],
+      "note": "Built-in tool: billed per code interpreter session (the model tokens are billed separately). Pass inputTokens 0 and outputTokens 0."
+    },
+    "file-search": {
+      "product": "Azure OpenAI",
+      "class": "media",
+      "media": [
+        {
+          "field": "fileSearchCalls",
+          "label": "File search tool calls",
+          "unit": "calls",
+          "meters": {
+            "gl": "file-search-tool-calls-glbl Calls",
+            "dz": "file-search-tool-calls-datazone Calls",
+            "rg": "file-search-tool-calls-rgnl Calls"
+          }
+        },
+        {
+          "field": "fileSearchStorageGBDays",
+          "label": "File search vector storage (GB-days)",
+          "unit": "GB-days",
+          "meters": {
+            "gl": "Assistants-File Search-glbl GB",
+            "rg": "Assistants-File Search-regnl GB"
+          }
+        }
+      ],
+      "note": "Built-in tool: billed per 1,000 tool calls plus vector storage per GB-day (the model tokens are billed separately). Pass inputTokens 0 and outputTokens 0."
+    }
   }
 }

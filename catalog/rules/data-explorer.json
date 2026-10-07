@@ -1,0 +1,91 @@
+{
+  "rules": {
+    "data-explorer-dev-production": {
+      "level": "warn",
+      "title": "Dev/test Data Explorer cluster has no redundancy or SLA",
+      "body": "The customer said this is a production workload, but this Data Explorer cluster is the dev/test configuration. Microsoft says a dev/test cluster has a single engine node and a single data management node with no redundancy or SLA, so price a production cluster (at least 2 engine nodes).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Choose Optimal Compute SKU for Azure Data Explorer Cluster",
+        "url": "https://learn.microsoft.com/azure/data-explorer/manage-cluster-choose-sku",
+        "quote": "There's no redundancy or SLA for this cluster configuration."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "data-explorer",
+            "where": {
+              "facts.environment": {
+                "in": [
+                  "dev"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-explorer-availability-zones": {
+      "level": "info",
+      "title": "Zone-resilient Data Explorer needs zone-redundant storage priced too",
+      "body": "The customer said the cluster must survive the loss of a datacenter zone, but this estimate prices locally redundant storage. Microsoft says Data Explorer supports availability zones and distributes compute nodes across them when zone support is enabled, so price the stored data on zone-redundant storage as well.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Data Explorer",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-data-explorer",
+        "quote": "Azure Data Explorer supports availability zones."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "data-explorer",
+            "where": {
+              "facts.environment": "production",
+              "facts.zoneRedundantStorage": false
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-explorer-reserved-capacity": {
+      "level": "info",
+      "title": "Steady Data Explorer usage can use a reservation on the Data Explorer charge",
+      "body": "The customer said usage is steady, but this estimate pays the Data Explorer markup pay-as-you-go. Microsoft says a Data Explorer reservation prepays the markup for one or three years and applies to all deployments in all regions, so price a 1-year or 3-year reservation (and a savings plan for the servers).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs with Azure Data Explorer reserved capacity",
+        "url": "https://learn.microsoft.com/azure/data-explorer/pricing-reserved-capacity",
+        "quote": "it will apply to all deployments of Azure Data Explorer in all regions"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "data-explorer",
+            "where": {
+              "facts.environment": "production",
+              "facts.markupCommitment": "payg"
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

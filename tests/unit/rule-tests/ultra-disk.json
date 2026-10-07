@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "ultra-disk-vcpu-reservation-conditional": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ultra-disk",
+                  "sizeGB": 1024,
+                  "iops": 20000,
+                  "throughputMBps": 500,
+                  "vcpuReservation": 8
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "ultra-disk",
+                  "sizeGB": 1024,
+                  "iops": 20000,
+                  "throughputMBps": 500
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

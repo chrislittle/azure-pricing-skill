@@ -1,0 +1,108 @@
+{
+  "rules": {
+    "monitor-alerts-log-1min": {
+      "level": "info",
+      "title": "One-minute log alert evaluation costs the most",
+      "body": "These log search alert rules evaluate every minute. Microsoft bills each log search alert rule by its evaluation interval, and more frequent evaluation costs more, so minimize log search alert frequency.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize costs in Azure Monitor",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/best-practices-cost",
+        "quote": "When using log search alerts, minimize log search alert frequency."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-alerts",
+            "where": {
+              "facts.oneMinuteLogRules": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "monitor-alerts-metric-time-series": {
+      "level": "info",
+      "title": "Metric alert cost grows with every monitored time series",
+      "body": "This estimate monitors hundreds of metric time series, and each metric alert rule is charged by the number of time series it monitors. Reduce the scope of the metric alert rule to cut the cost.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize costs in Azure Monitor",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/best-practices-cost",
+        "quote": "To reduce costs, you can reduce the scope of the metric alert rule."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-alerts",
+            "where": {
+              "facts.metricTimeSeries": {
+                ">=": 500
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "monitor-alerts-log-for-scale": {
+      "level": "info",
+      "title": "Log search alerts can be cheaper at scale",
+      "body": "This estimate monitors hundreds of metric time series. Microsoft notes that log search alert rules are less expensive for monitoring a large number of resources, so compare an at-scale log alert rule.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize costs in Azure Monitor",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/best-practices-cost",
+        "quote": "You can also use log search alert rules, which are less expensive to monitor a large number of resources."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-alerts",
+            "where": {
+              "facts.metricTimeSeries": {
+                ">=": 500
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    },
+    "monitor-alerts-free-alert-types": {
+      "level": "info",
+      "title": "Some alert types cost nothing",
+      "body": "Activity log, service health and resource health alerts are free, so they do not need to be counted in this estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimize costs in Azure Monitor",
+        "url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/best-practices-cost",
+        "quote": "Activity log alerts, service health alerts, and resource health alerts are free of charge."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "monitor-alerts",
+            "where": {
+              "facts.billableAlertItems": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "monitoring"
+    }
+  }
+}

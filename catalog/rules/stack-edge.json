@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "stack-edge-billing-until-return": {
+      "level": "info",
+      "title": "A trial or test Stack Edge device keeps billing until you start the return",
+      "body": "This is a non-production estimate for an Azure Stack Edge device, which is a recurring subscription rather than pay-per-use. Billing does not stop when you stop using the device; it stops when you initiate the return, so start the return as soon as the test ends and keep the one-off return and shipping fees in the budget.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "FAQ: Billing for Azure Stack Edge Pro GPU",
+        "url": "https://learn.microsoft.com/azure/databox-online/azure-stack-edge-gpu-faq-billing-model",
+        "quote": "Billing stops when you initiate return of the device."
+      },
+      "when": { "scope": "option", "context": { "production": false }, "all": [ { "type": "stack-edge" } ] },
+      "group": "cost"
+    }
+  }
+}

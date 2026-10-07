@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "health-data-services-dicom-metadata": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "health-data-services",
+                  "structuredStorageGb": 0,
+                  "blobStorageGb": 500
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "health-data-services",
+                  "structuredStorageGb": 5,
+                  "blobStorageGb": 500
+                }
+              ]
+            }
+          ],
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

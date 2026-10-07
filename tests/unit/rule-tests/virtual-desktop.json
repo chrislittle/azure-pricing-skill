@@ -1,0 +1,192 @@
+{
+  "rules": {
+    "virtual-desktop-per-user-external-only": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "hciPhysicalCores": 8
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-desktop-separate-subscription": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10,
+                  "sessionHostUsers": 20
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10,
+                  "sessionHostUsers": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-desktop-windows-server-no-per-user": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10,
+                  "sessionHostUsers": 20,
+                  "hostOs": "windows-server"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10,
+                  "sessionHostUsers": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-desktop-scaling-plan": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "sessionHostUsers": 20,
+                  "scaling": "always-on"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "sessionHostUsers": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-desktop-linux-rates": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4s_v5",
+                  "count": 1,
+                  "os": "windows"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "virtual-desktop",
+                  "desktopUsers": 10
+                },
+                {
+                  "type": "vm",
+                  "sku": "Standard_D4s_v5",
+                  "count": 1,
+                  "os": "windows-ahb"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

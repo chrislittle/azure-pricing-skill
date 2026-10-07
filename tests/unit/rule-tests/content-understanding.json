@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "content-understanding-advanced-tokens": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "content-understanding", "documentLayoutPages": 1000, "contextualization": "advanced" } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "content-understanding", "documentLayoutPages": 1000, "contextualization": "standard" } ] } ] } } },
+    "content-understanding-model-tokens-separate": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "content-understanding", "documentLayoutPages": 1000, "contextualization": "standard" } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "content-understanding", "documentLayoutPages": 1000 } ] } ] } } }
+  }
+}

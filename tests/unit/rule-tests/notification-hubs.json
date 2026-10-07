@@ -1,0 +1,88 @@
+{
+  "rules": {
+    "notification-hubs-free-tier-production": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "tier": "basic",
+                  "pushes": 500000,
+                  "type": "notification-hubs"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "tier": "free",
+                  "pushes": 500000,
+                  "type": "notification-hubs"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    },
+    "notification-hubs-zone-redundancy-production": {
+      "test": {
+        "silent": {
+          "context": {
+            "production": true
+          },
+          "discountPct": 0,
+          "region": "italynorth",
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "standard",
+                  "type": "notification-hubs",
+                  "pushes": 5000000
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "tier": "standard",
+                  "pushes": 5000000,
+                  "type": "notification-hubs"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

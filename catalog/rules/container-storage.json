@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "container-storage-v2-no-fee": {
+      "level": "info",
+      "title": "Version 2 of Azure Container Storage has no service fee",
+      "body": "This estimate charges the version 1 orchestration fee on pool capacity above 5 TiB. Version 2.x adds no service or orchestration fee; only the backing storage is billed. Check whether version 2 fits your workload.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understand Azure Container Storage billing",
+        "url": "https://learn.microsoft.com/azure/storage/container-storage/container-storage-billing",
+        "quote": "Azure Container Storage doesn’t add any service or orchestration fees. You only pay for the underlying storage you choose."
+      },
+      "when": { "scope": "option", "all": [ { "type": "container-storage", "where": { "facts.version": "v1", "facts.billableTiB": { ">": 0 } } } ] },
+      "group": "storage"
+    }
+  }
+}

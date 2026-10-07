@@ -1,0 +1,56 @@
+{
+  "rules": {
+    "network-watcher-nsg-flow-logs-retiring": {
+      "level": "warn",
+      "title": "NSG flow logs are retiring; use virtual network flow logs",
+      "body": "This estimate includes legacy network security group (NSG) flow logs. Microsoft is retiring that feature and no longer supports creating new NSG flow logs, so plan on virtual network flow logs instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Migrate from NSG flow logs to virtual network flow logs",
+        "url": "https://learn.microsoft.com/azure/network-watcher/nsg-flow-logs-migrate",
+        "quote": "Network security group (NSG) flow logs retire on September 30, 2027."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "where": {
+              "facts.nsgFlowLogsGB": {
+                ">": 0
+              }
+            },
+            "type": "network-watcher"
+          }
+        ]
+      },
+      "group": "network-security"
+    },
+    "network-watcher-flow-log-retention": {
+      "level": "info",
+      "title": "Set a retention policy for flow logs",
+      "body": "This estimate collects flow logs. Microsoft notes that flow logs sit in a storage account and, with no retention policy set, are kept forever, so choose a retention period to keep storage cost under control (storage is billed separately and is not in this estimate).",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Network Watcher pricing",
+        "url": "https://azure.microsoft.com/pricing/details/network-watcher/",
+        "quote": "If a retention policy is not set, the logs are maintained forever."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "where": {
+              "facts.flowLogsGB": {
+                ">": 0
+              }
+            },
+            "type": "network-watcher"
+          }
+        ]
+      },
+      "group": "network-security"
+    }
+  }
+}

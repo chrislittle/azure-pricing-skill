@@ -1,0 +1,134 @@
+{
+  "rules": {
+    "dedicated-host-production-two-hosts": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 2
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        }
+      }
+    },
+    "dedicated-host-reservation-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 1,
+                  "commitment": "reservation-1y"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        }
+      }
+    },
+    "dedicated-host-hybrid-benefit": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 1,
+                  "windowsVcpus": 8
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "dedicated-host",
+                  "series": "Dsv4",
+                  "hostType": "Type1",
+                  "hosts": 1,
+                  "licence": "ubuntu-standard",
+                  "licenceVcpus": 8
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

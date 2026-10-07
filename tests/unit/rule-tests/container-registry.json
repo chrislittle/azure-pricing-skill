@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "container-registry-private-endpoint-needs-premium": { "test": {
+      "fires": { "region": "eastus2", "context": { "privateOnly": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "standard", "storageGb": 5 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "privateOnly": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "premium", "storageGb": 5 } ] } ] } } },
+    "container-registry-basic-production": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "basic", "storageGb": 5 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "standard", "storageGb": 5 } ] } ] } } },
+    "container-registry-geo-replication-multi-region": { "test": {
+      "fires": { "region": "eastus2", "context": { "multiRegionUsers": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "standard", "storageGb": 5 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "multiRegionUsers": true }, "options": [ { "name": "a", "components": [ { "type": "container-registry", "tier": "premium", "storageGb": 5, "geoReplicas": 1 } ] } ] } } }
+  }
+}

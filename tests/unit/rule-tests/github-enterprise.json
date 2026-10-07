@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "github-pre-purchase-plan": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "github-enterprise", "enterpriseUsers": 50 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "github-enterprise", "copilotBusinessStandaloneUsers": 5 } ] } ] } } },
+    "github-azdo-committers-deduplicated": { "test": {
+      "fires": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "github-enterprise", "enterpriseUsers": 10, "azdoAdvancedSecurityCommitters": 5 } ] } ] },
+      "silent": { "region": "eastus", "options": [ { "name": "a", "components": [ { "type": "github-enterprise", "enterpriseUsers": 10, "advancedSecurityCommitters": 5 } ] } ] } } }
+  }
+}

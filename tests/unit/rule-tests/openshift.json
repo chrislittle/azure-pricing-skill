@@ -1,0 +1,79 @@
+{
+  "rules": {
+    "openshift-licence-reservation": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openshift",
+                  "workerNodes": 3,
+                  "vcpusPerNode": 4
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openshift",
+                  "workerNodes": 3,
+                  "vcpusPerNode": 4,
+                  "commitment": "ri1y"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "openshift-large-cluster-infrastructure-nodes": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openshift",
+                  "workerNodes": 120,
+                  "vcpusPerNode": 4
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "openshift",
+                  "workerNodes": 6,
+                  "vcpusPerNode": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

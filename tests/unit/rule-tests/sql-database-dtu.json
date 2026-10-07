@@ -1,0 +1,107 @@
+{
+  "rules": {
+    "sql-database-dtu-small-levels-cpu": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s1"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s3"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sql-database-dtu-no-reservation": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s3"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s3"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sql-database-dtu-elastic-pool": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s3",
+                  "databases": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s3"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

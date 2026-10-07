@@ -1,0 +1,150 @@
+{
+  "rules": {
+    "sql-elastic-pool-single-database": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 4,
+                  "databases": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 4,
+                  "databases": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sql-elastic-pool-reserve": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 4
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 4,
+                  "commitment": "ri1y"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sql-elastic-pool-hybrid-benefit": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 4
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "tier": "hyperscale",
+                  "poolSize": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sql-elastic-pool-edtu-vcore": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 100,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-elastic-pool",
+                  "poolSize": 100,
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

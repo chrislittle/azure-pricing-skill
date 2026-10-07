@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "netapp-files-reserve-steady": { "test": {
+      "fires": { "region": "eastus2", "context": { "steadyUsage": true }, "options": [ { "name": "a", "components": [ { "type": "netapp-files", "serviceLevel": "premium", "capacityTiB": 120 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "steadyUsage": true }, "options": [ { "name": "a", "components": [ { "type": "netapp-files", "serviceLevel": "premium", "capacityTiB": 120, "commitment": "ri1y" } ] } ] } } },
+    "netapp-files-reservation-not-cool": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "netapp-files", "serviceLevel": "standard", "capacityTiB": 200, "coolPercent": 50, "commitment": "ri1y" } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "netapp-files", "serviceLevel": "standard", "capacityTiB": 200, "commitment": "ri1y" } ] } ] } } },
+    "netapp-files-snapshots-not-backups": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "netapp-files", "capacityTiB": 4 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "netapp-files", "capacityTiB": 4, "backupGiB": 1000 } ] } ] } } }
+  }
+}

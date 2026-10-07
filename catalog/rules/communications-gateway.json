@@ -1,0 +1,56 @@
+{
+  "rules": {
+    "communications-gateway-per-user-full-cycle": {
+      "level": "info",
+      "title": "Per-user meters charge for the whole billing cycle",
+      "body": "This estimate bills subscribers above the 999 included. Microsoft says per-user meters charge for the entire billing cycle, so the bill follows the peak number of assigned numbers and is not prorated for part-month use.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Communications Gateway: plan and manage costs",
+        "url": "https://learn.microsoft.com/azure/communications-gateway/plan-and-manage-costs",
+        "quote": "Per-user meters charge for the entire billing cycle."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "communications-gateway",
+            "where": {
+              "facts.users": {
+                ">": 999
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "communications-gateway-lab-moved-users": {
+      "level": "info",
+      "title": "Users moved between deployments count in both",
+      "body": "This estimate includes a lab deployment next to production. Microsoft says users moved between deployments count towards the meters in both deployments, so moving users to the lab raises the bill.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Communications Gateway: plan and manage costs",
+        "url": "https://learn.microsoft.com/azure/communications-gateway/plan-and-manage-costs",
+        "quote": "If you have multiple Azure Communications Gateway deployments and you move users between deployments, these users count towards meters in both deployments."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "communications-gateway",
+            "where": {
+              "facts.labs": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

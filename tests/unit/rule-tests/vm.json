@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "vm-sql-license-included-ahb": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D8as_v5",
+                  "os": "windows",
+                  "sqlLicense": "standard"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D8as_v5",
+                  "os": "windows"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

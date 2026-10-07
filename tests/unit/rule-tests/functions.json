@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "functions-consumption-linux-retirement": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "consumption",
+                  "executions": 1000000,
+                  "durationMs": 200,
+                  "memoryMB": 512
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions",
+                  "plan": "flex",
+                  "executions": 1000000,
+                  "durationMs": 200
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

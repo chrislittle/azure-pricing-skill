@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "dns-ruleset-shared-across-vnets": {
+      "level": "info",
+      "title": "One DNS forwarding ruleset can serve many virtual networks",
+      "body": "This estimate has several DNS Private Resolver forwarding rulesets, each billed monthly. A ruleset can be linked to up to 500 virtual networks in the same region, so one ruleset per region is usually enough unless networks need different forwarding rules.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure DNS Private Resolver endpoints and rulesets",
+        "url": "https://learn.microsoft.com/azure/dns/private-resolver-endpoints-rulesets",
+        "quote": "A ruleset can be linked to up to 500 virtual networks in the same region."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "dns",
+            "where": {
+              "facts.resolverRulesets": {
+                ">=": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

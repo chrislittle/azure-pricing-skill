@@ -1,0 +1,138 @@
+{
+  "rules": {
+    "sre-agent-consolidate-agents": {
+      "level": "info",
+      "title": "Several SRE agents multiply the always-on charge",
+      "body": "This estimate has more than one SRE agent. Each agent has its own always-on charge for every hour it exists, while Microsoft says one agent can monitor many resources, so fewer agents cost less unless you need separate scopes.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Pricing and billing for Azure SRE Agent",
+        "url": "https://learn.microsoft.com/azure/sre-agent/pricing-billing",
+        "quote": "Consolidating workloads under one agent reduces always-on costs compared to deploying separate agents."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sre-agent",
+            "where": {
+              "facts.agents": {
+                ">": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "sre-agent-region-not-supported": {
+      "level": "warn",
+      "title": "SRE Agent cannot be created in this region",
+      "body": "This estimate prices Azure SRE Agent in a region that is not on Microsoft's list of regions where you can deploy it, so the agent could not be created there. The agent region only decides where the agent compute runs; it can still manage resources in any region. Supported regions: australiaeast, brazilsouth, canadacentral, centralindia, centralus, eastasia, eastus2, francecentral, italynorth, japaneast, japanwest, koreacentral, northcentralus, southafricanorth, southindia, southeastasia, spaincentral, swedencentral, uksouth, westcentralus, westus2, westus3.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Supported Regions for Azure SRE Agent",
+        "url": "https://learn.microsoft.com/azure/sre-agent/supported-regions",
+        "quote": "The following table lists the Azure regions where you can deploy Azure SRE Agent."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sre-agent",
+            "where": {
+              "facts.region": {
+                "notIn": [
+                  "australiaeast",
+                  "brazilsouth",
+                  "canadacentral",
+                  "centralindia",
+                  "centralus",
+                  "eastasia",
+                  "eastus2",
+                  "francecentral",
+                  "italynorth",
+                  "japaneast",
+                  "japanwest",
+                  "koreacentral",
+                  "northcentralus",
+                  "southafricanorth",
+                  "southindia",
+                  "southeastasia",
+                  "spaincentral",
+                  "swedencentral",
+                  "uksouth",
+                  "westcentralus",
+                  "westus2",
+                  "westus3"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "sre-agent-eu-data-residency": {
+      "level": "info",
+      "title": "Anthropic models are outside the EU Data Boundary",
+      "body": "This estimate prices SRE Agent on Claude Opus (Anthropic) in a European region. If EU data residency matters to the customer, Microsoft says to select Azure OpenAI, which is covered by the EU Data Boundary and uses lower AAU rates here.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Model Provider Selection in Azure SRE Agent",
+        "url": "https://learn.microsoft.com/azure/sre-agent/model-provider-selection",
+        "quote": "Anthropic is excluded from EU Data Boundary (EUDB) commitments."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sre-agent",
+            "where": {
+              "facts.model": "opus",
+              "facts.region": {
+                "in": [
+                  "francecentral",
+                  "italynorth",
+                  "spaincentral",
+                  "swedencentral",
+                  "uksouth"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    },
+    "sre-agent-monthly-aau-limit": {
+      "level": "info",
+      "title": "Set a monthly AAU limit to cap active work",
+      "body": "This estimate includes active work. Microsoft recommends setting a monthly active-flow AAU limit (500 to 1,000,000) so the active charge stays predictable; the limit does not stop the always-on charge.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Pricing and billing for Azure SRE Agent",
+        "url": "https://learn.microsoft.com/azure/sre-agent/pricing-billing",
+        "quote": "To keep active flow costs predictable, set a monthly AAU allocation limit in"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sre-agent",
+            "where": {
+              "facts.activeAaus": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "ai"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "health-data-services-dicom-metadata": {
+      "level": "warn",
+      "title": "DICOM also needs structured storage",
+      "body": "This estimate stores DICOM images but no structured storage. Microsoft bills the images as blob storage and the DICOM metadata as structured storage, so the structured-storage figure should include the metadata (usually small next to the images, but not zero).",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Health Data Services pricing",
+        "url": "https://azure.microsoft.com/pricing/details/health-data-services/",
+        "quote": "DICOM images incur BLOB storage charges based on the size of the object ingested and stored while its metadata will incur structured storage charges."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "health-data-services",
+            "where": {
+              "facts.blobStorageGb": {
+                ">": 0
+              },
+              "facts.structuredStorageGb": {
+                "<=": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    }
+  }
+}

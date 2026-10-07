@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "vm-sql-license-included-ahb": {
+      "level": "info",
+      "title": "SQL Server license is included in the hourly VM price",
+      "body": "This VM pays for SQL Server per use, so the license is part of the hourly price. If you own SQL Server licenses with Software Assurance, Azure Hybrid Benefit lets you allocate them to the VM and pay only for the compute, which usually lowers the bill for a steady workload.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "SQL Server on Azure VMs pricing guidance",
+        "url": "https://learn.microsoft.com/azure/azure-sql/virtual-machines/windows/pricing-guidance",
+        "quote": "Azure Hybrid Benefit grants you the ability to allocate your SQL Server licenses to a SQL Server on Azure VM."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "vm",
+            "where": {
+              "facts.sqlLicense": {
+                "exists": true
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute-network"
+    }
+  }
+}

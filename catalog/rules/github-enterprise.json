@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "github-pre-purchase-plan": {
+      "level": "info",
+      "title": "A GitHub Pre-Purchase plan can lower steady GitHub spend",
+      "body": "This estimate prices GitHub at pay-as-you-go list rates. Microsoft offers a Pre-Purchase plan for GitHub usage billed through Azure; the discount does not combine with other discounts.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save on GitHub costs with a Pre-Purchase plan",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/reservations/github-pre-purchase",
+        "quote": "Save on your GitHub costs when you buy a Pre-Purchase plan."
+      },
+      "when": { "scope": "option", "all": [ { "type": "github-enterprise", "where": { "facts.enterpriseUsers": { ">": 0 } } } ] },
+      "group": "developer-tools"
+    },
+    "github-azdo-committers-deduplicated": {
+      "level": "info",
+      "title": "Azure DevOps Advanced Security committers are counted once per subscription",
+      "body": "This estimate includes Azure DevOps Advanced Security committers. Microsoft counts active committers once across an Azure subscription, so the same developer in several Azure DevOps organisations linked to one subscription is billed once.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "GitHub Advanced Security for Azure DevOps billing",
+        "url": "https://learn.microsoft.com/azure/devops/repos/security/github-advanced-security-billing?view=azure-devops",
+        "quote": "Active committers are deduplicated across an Azure subscription."
+      },
+      "when": { "scope": "option", "all": [ { "type": "github-enterprise", "where": { "facts.azdoCommitters": { ">": 0 } } } ] },
+      "group": "developer-tools"
+    }
+  }
+}

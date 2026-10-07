@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "document-intelligence-commitment-tier": {
+      "level": "info",
+      "title": "A commitment tier would cost less than pay-as-you-go here",
+      "body": "At the page volume in this estimate, the monthly price of a Document Intelligence commitment tier (plus any overage) is lower than paying per page. Microsoft offers commitment tiers as discounted rates compared to the standard pricing model; the commitment is a fixed monthly fee, so use it only for steady volume.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Purchase commitment tier pricing (Foundry Tools)",
+        "url": "https://learn.microsoft.com/azure/ai-services/commitment-tier",
+        "quote": "Foundry Tools offers commitment tier pricing, allowing discounted rates compared to the Standard pricing model."
+      },
+      "when": { "scope": "option", "all": [ { "type": "document-intelligence", "where": { "facts.commitmentWorthChecking": true } } ] },
+      "group": "ai"
+    },
+    "document-intelligence-commitment-single-service": {
+      "level": "warn",
+      "title": "Commitment tiers need a dedicated Document Intelligence resource",
+      "body": "This estimate uses a commitment plan. Microsoft states commitment tier pricing cannot be used with a multi-service resource, so the commitment has to be bought against a dedicated Document Intelligence resource.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Purchase commitment tier pricing (Foundry Tools)",
+        "url": "https://learn.microsoft.com/azure/ai-services/commitment-tier",
+        "quote": "You cannot use commitment tier pricing with a Foundry Tools or a Microsoft Foundry multi-service resource."
+      },
+      "when": { "scope": "option", "all": [ { "type": "document-intelligence", "where": { "facts.plan": "commitment" } } ] },
+      "group": "ai"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "rules": {
+    "cosmos-postgresql-retirement": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cosmos-postgresql",
+                  "vcores": 4
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sql-database-dtu",
+                  "level": "s0"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "cosmos-postgresql-ha-doubles": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cosmos-postgresql",
+                  "vcores": 4,
+                  "ha": true
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cosmos-postgresql",
+                  "vcores": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

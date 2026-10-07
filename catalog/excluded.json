@@ -1,0 +1,10 @@
+{
+  "communication-services": {
+    "label": "Azure Communication Services",
+    "keywords": ["communication services", "acs", "sms", "text messages", "email sending", "whatsapp", "phone numbers", "pstn", "job router"],
+    "reason": "Azure Communication Services is retiring (standalone offering retires 2028-09-30; no new customers from 2026-10-23).",
+    "url": "https://learn.microsoft.com/azure/communication-services/acs-retirement-and-breaking-changes-guide",
+    "verified": "2026-10-05"
+  }
+}
+

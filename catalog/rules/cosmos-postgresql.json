@@ -1,0 +1,49 @@
+{
+  "rules": {
+    "cosmos-postgresql-retirement": {
+      "level": "warn",
+      "title": "Azure Cosmos DB for PostgreSQL is on a retirement path",
+      "body": "Microsoft states that Azure Cosmos DB for PostgreSQL is on a retirement path and no longer recommended for new projects. It points to the Elastic Clusters feature of Azure Database for PostgreSQL for distributed PostgreSQL workloads, so price that option as well before committing.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Cosmos DB for PostgreSQL compute and storage",
+        "url": "https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute",
+        "quote": "Azure Cosmos DB for PostgreSQL is on a retirement path and no longer recommended for new projects."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cosmos-postgresql"
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "cosmos-postgresql-ha-doubles": {
+      "level": "info",
+      "title": "High availability adds a standby for every node",
+      "body": "This cluster has high availability on. Microsoft states that HA runs one standby node for each primary node, so this estimate counts every node and its storage twice. The pricing page adds that high availability effectively creates another set of nodes and thus doubles the cluster price.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "High availability in Azure Cosmos DB for PostgreSQL",
+        "url": "https://learn.microsoft.com/azure/cosmos-db/postgresql/concepts-high-availability",
+        "quote": "When HA is enabled, Azure Cosmos DB for PostgreSQL runs one standby node for each primary node in the cluster."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "cosmos-postgresql",
+            "where": {
+              "facts.ha": true
+            }
+          }
+        ]
+      },
+      "group": "database"
+    }
+  }
+}

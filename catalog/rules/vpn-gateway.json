@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "vpn-gateway-basic-production": {
+      "level": "warn",
+      "title": "Basic SKU VPN gateway is not for production",
+      "body": "The customer said this is a production workload, but this VPN gateway uses the Basic SKU. Microsoft says the Basic SKU has feature and performance limitations and limited support and should not be used for production, so price a VpnGw1AZ or larger gateway instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "About VPN Gateway SKUs",
+        "url": "https://learn.microsoft.com/azure/vpn-gateway/about-gateway-skus",
+        "quote": "The Basic SKU has certain feature and performance limitations, limited support and shouldn't be used for production purposes."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "vpn-gateway",
+            "where": {
+              "facts.sku": "basic"
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

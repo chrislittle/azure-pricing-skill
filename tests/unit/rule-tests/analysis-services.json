@@ -1,0 +1,119 @@
+{
+  "rules": {
+    "analysis-services-developer-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "developer"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "developer"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": false
+          }
+        }
+      }
+    },
+    "analysis-services-pause-idle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "s1"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "s1",
+                  "hours": 220
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "idlePeriods": true
+          }
+        }
+      }
+    },
+    "analysis-services-s8-s9-deprecated": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "s8"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "analysis-services",
+                  "tier": "s8-v2"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "rules": {
+    "functions-premium-always-billed-instance": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "functions-premium-reserve-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 1,
+                  "commitment": "sp1y"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "functions-premium-zone-redundancy-two-instances": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "functions-premium",
+                  "size": "ep1",
+                  "alwaysReadyInstances": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "azure-devops-visual-studio-subscribers-included": {
+      "level": "info",
+      "title": "Visual Studio subscribers do not need a paid Azure DevOps license",
+      "body": "This estimate bills more than the 5 free Basic users. Anyone on the team who has an eligible Visual Studio subscription is detected at sign-in and gets Basic access (Enterprise subscribers also get Test Plans) at no extra charge, so remove them from the paid count before buying licenses.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Manage paid access for users",
+        "url": "https://learn.microsoft.com/azure/devops/organizations/billing/buy-basic-access-add-users",
+        "quote": "There's no extra charge for users with a Visual Studio subscription."
+      },
+      "when": { "scope": "option", "all": [ { "type": "azure-devops", "where": { "facts.basicUsers": { ">": 5 } } } ] },
+      "group": "cost"
+    }
+  }
+}

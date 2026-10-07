@@ -1,0 +1,72 @@
+{
+  "rules": {
+    "iot-operations-billed-nodes": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-operations",
+                  "nodes": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "windows-iot-core-services",
+                  "devices": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "iot-operations-arc-region": {
+      "test": {
+        "fires": {
+          "region": "swedencentral",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-operations",
+                  "nodes": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "westeurope",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "iot-operations",
+                  "nodes": 3
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

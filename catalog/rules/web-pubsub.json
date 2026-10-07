@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "web-pubsub-premium-for-zone-resilience": {
+      "level": "warn",
+      "title": "Web PubSub tier below Premium is not zone resilient",
+      "body": "This production workload needs to keep running if one datacenter fails, but it is priced on a tier below Premium. Microsoft says the Premium tier is the one that is resilient to availability zone failures and supports geo-replication. Price the Premium tier instead, or confirm that a datacenter failure can be tolerated.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Web PubSub Service",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-web-pubsub",
+        "quote": "The premium tier is resilient to availability zone failures in supported regions, and enables you to configure geo-replication."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "zoneResilience": true
+        },
+        "all": [
+          {
+            "type": "web-pubsub",
+            "where": {
+              "facts.tier": {
+                "!=": "premium"
+              }
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    }
+  }
+}

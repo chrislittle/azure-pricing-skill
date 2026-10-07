@@ -1,0 +1,58 @@
+{
+  "rules": {
+    "openshift-licence-reservation": {
+      "level": "info",
+      "title": "Steady OpenShift clusters can reserve the licence",
+      "body": "The cluster runs steadily but the OpenShift licence is priced pay-as-you-go. Microsoft sells the OpenShift licence as a 1- or 3-year reservation, which is cheaper per vCPU-hour than pay-as-you-go for standard clusters.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Red Hat OpenShift pricing",
+        "url": "https://azure.microsoft.com/pricing/details/openshift/",
+        "quote": "purchase a reservation on the OpenShift license"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "openshift",
+            "where": {
+              "facts.commitment": "payg",
+              "facts.architecture": "standard"
+            }
+          }
+        ]
+      },
+      "group": "containers"
+    },
+    "openshift-large-cluster-infrastructure-nodes": {
+      "level": "info",
+      "title": "Clusters over 100 workers need infrastructure nodes and bigger control plane VMs",
+      "body": "This cluster has more than 100 worker nodes. Microsoft requires separate infrastructure nodes for such clusters and recommends larger control plane VMs, so the virtual machine cost is likely higher than a basic estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Create a large Azure Red Hat OpenShift cluster",
+        "url": "https://learn.microsoft.com/azure/openshift/howto-large-clusters",
+        "quote": "For clusters with over 100 worker nodes, infrastructure nodes are required to separate cluster workloads (such as Prometheus) to minimize contention with other workloads."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "openshift",
+            "where": {
+              "facts.workerNodes": {
+                ">": 100
+              }
+            }
+          }
+        ]
+      },
+      "group": "containers"
+    }
+  }
+}

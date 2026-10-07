@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "storage-actions-narrow-scope": {
+      "level": "info",
+      "title": "Narrow the task scope with prefixes to cut object-targeting charges",
+      "body": "This task scans a large number of objects on a frequent schedule, and every object in scope is billed on every run. Selecting folder prefixes (and excluding prefixes you do not need) reduces the objects targeted per run.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan to manage costs for Azure Storage Actions",
+        "url": "https://learn.microsoft.com/azure/storage-actions/storage-actions-plan-manage-costs",
+        "quote": "This is based on the configuration of the task assignment, specifically the count of objects in the storage account under the optional prefixes selected, minus the objects under the excluded prefixes."
+      },
+      "when": { "scope": "option", "all": [ { "type": "storage-actions", "where": { "facts.runsPerMonth": { ">=": 4 }, "facts.targetedObjectsPerMonth": { ">=": 100000000 } } } ] },
+      "group": "storage"
+    }
+  }
+}

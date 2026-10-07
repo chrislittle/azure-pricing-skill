@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "synapse-pause-dedicated-idle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "synapse",
+                  "dedicatedDwu": 1000,
+                  "dedicatedStorageTB": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "idlePeriods": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "synapse",
+                  "dedicatedDwu": 1000,
+                  "dedicatedHours": 200,
+                  "dedicatedStorageTB": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "synapse-reserved-capacity-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "synapse",
+                  "dedicatedDwu": 1000,
+                  "dedicatedStorageTB": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "synapse",
+                  "dedicatedDwu": 1000,
+                  "dedicatedStorageTB": 10,
+                  "dedicatedHours": 300
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

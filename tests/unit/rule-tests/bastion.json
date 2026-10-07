@@ -1,0 +1,120 @@
+{
+  "rules": {
+    "bastion-developer-for-devtest": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "basic"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "basic"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "bastion-hub-based-fewer-hosts": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "standard",
+                  "hosts": 1
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "standard",
+                  "hosts": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "bastion-start-basic": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "basic"
+                }
+              ]
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "bastion",
+                  "tier": "standard"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

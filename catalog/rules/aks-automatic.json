@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "aks-automatic-dev-test-free-tier": {
+      "level": "info",
+      "title": "For dev/test, a standard AKS cluster on the Free tier may cost less than Automatic",
+      "body": "AKS Automatic clusters are preconfigured to use the Standard tier, which carries the hosted control plane fee. Microsoft positions the Free tier of regular AKS for development, test and other non-production workloads, so consider that for this non-production estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Cluster management pricing tiers for Azure Kubernetes Service (AKS)",
+        "url": "https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers",
+        "quote": "Development and test environments, learning, evaluation, and non-production workloads."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "aks-automatic"
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

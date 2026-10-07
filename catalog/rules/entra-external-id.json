@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "entra-external-id-sms-usage": {
+      "level": "info",
+      "title": "Text-message verification is billed per message and is a fraud target",
+      "body": "This estimate includes SMS verification, which is billed for every text sent and has no free allowance. Microsoft says to remove region codes that are not relevant to the organization and to review telecom usage against expected user behavior, which keeps unexpected SMS charges down. Priced as requested.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Understanding telephony fraud risk in Microsoft Entra",
+        "url": "https://learn.microsoft.com/entra/identity/authentication/concept-mfa-telephony-fraud",
+        "quote": "Review your telecom usage to make sure it matches the expected behavior from your users"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "where": {
+              "facts.smsTotal": {
+                ">": 0
+              }
+            },
+            "type": "entra-external-id"
+          }
+        ]
+      },
+      "group": "Identity"
+    }
+  }
+}

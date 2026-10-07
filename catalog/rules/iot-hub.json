@@ -1,0 +1,131 @@
+{
+  "rules": {
+    "iot-hub-free-production": {
+      "level": "warn",
+      "title": "Free IoT Hub is for testing, not production",
+      "body": "The customer said this is a production workload, but this IoT Hub uses the Free tier. Microsoft says the Free tier is intended for testing and evaluation and the Basic and Standard tiers are for production, so price a Basic or Standard hub instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "IoT Hub quotas and throttling",
+        "url": "https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-quotas-throttling",
+        "quote": "The Free tier is intended for testing and evaluation. The Basic and Standard tiers are intended for production use."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "iot-hub",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "free"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "iot"
+    },
+    "iot-hub-undersized": {
+      "level": "warn",
+      "title": "IoT Hub units do not cover the daily message volume",
+      "body": "The units in this IoT Hub give less daily message capacity than the volume the customer described (messages are counted in 4 KB blocks, 0.5 KB on the Free tier). Microsoft says the daily message limit is based on the combined capacity of all units, so add units or pick a larger size before relying on this price.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Choose the right IoT Hub tier and size for your solution",
+        "url": "https://learn.microsoft.com/azure/iot-hub/iot-hub-scaling",
+        "quote": "Your daily message limit and throttling limits are based on the combined capacity of all units."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "iot-hub",
+            "where": {
+              "facts.undersized": {
+                "in": [
+                  true
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "iot"
+    },
+    "iot-hub-basic-one-way": {
+      "level": "warn",
+      "title": "Basic IoT Hub cannot send commands or use twins",
+      "body": "The customer needs commands or settings sent to devices, device twins or IoT Edge, but this IoT Hub uses the Basic tier. Microsoft says the Basic tier is for solutions that only need one-way communication from devices to the cloud, so price the Standard tier instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Choose the right IoT Hub tier and size for your solution",
+        "url": "https://learn.microsoft.com/azure/iot-hub/iot-hub-scaling",
+        "quote": "The basic tier of IoT Hub enables a subset of available features and is intended for IoT solutions that only need uni-directional communication from devices to the cloud."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "iot-hub",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "basic"
+                ]
+              },
+              "facts.needsTwoWay": {
+                "in": [
+                  true
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "iot"
+    },
+    "iot-hub-batch-small-messages": {
+      "level": "info",
+      "title": "Batching small messages can cut IoT Hub units",
+      "body": "This hub needs more than one unit and the customer's messages are 1 KB or smaller, but IoT Hub counts every message in 4 KB blocks. Microsoft says batching messages can reduce quota usage, so ask whether devices can combine several readings into one message and re-price with the lower daily message count.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure IoT Hub billing information",
+        "url": "https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-pricing",
+        "quote": "Depending on your scenario, batching messages can reduce your quota usage."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "iot-hub",
+            "where": {
+              "spec.messageSizeKb": {
+                "<=": 1
+              },
+              "facts.units": {
+                ">": 1
+              },
+              "facts.tier": {
+                "in": [
+                  "basic",
+                  "standard"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "iot"
+    }
+  }
+}

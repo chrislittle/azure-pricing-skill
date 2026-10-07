@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "fluid-relay-basic-tier-production": {
+      "level": "warn",
+      "title": "Basic tier has no SLA and no cross-region resiliency",
+      "body": "This production workload uses the Basic tier of Azure Fluid Relay. Microsoft says Basic is a single-region offering with no cross-region resiliency or routing and no SLA. Price the Standard tier unless this is only a test.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Fluid Relay pricing",
+        "url": "https://azure.microsoft.com/pricing/details/fluid-relay/",
+        "quote": "The Basic service plan is a single region offering which means no cross-region resiliency or routing, and no SLA guarantees."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "fluid-relay",
+            "where": {
+              "facts.tier": "basic"
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    }
+  }
+}

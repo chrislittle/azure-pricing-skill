@@ -1,0 +1,48 @@
+{
+  "rules": {
+    "web-pubsub-premium-for-zone-resilience": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "web-pubsub",
+                  "tier": "standard",
+                  "units": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "web-pubsub",
+                  "tier": "premium",
+                  "units": 1
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": true
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

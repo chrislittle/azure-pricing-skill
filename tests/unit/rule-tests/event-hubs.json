@@ -1,0 +1,124 @@
+{
+  "rules": {
+    "event-hubs-basic-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "basic",
+                  "units": 1,
+                  "ingressEvents": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "standard",
+                  "units": 1,
+                  "ingressEvents": 1000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "event-hubs-standard-cap-auto-inflate": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "standard",
+                  "units": 12,
+                  "ingressEvents": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "standard",
+                  "units": 2,
+                  "ingressEvents": 1000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "event-hubs-retention-capture-long-term": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "premium",
+                  "units": 1,
+                  "retainedGb": 5000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "event-hubs",
+                  "tier": "premium",
+                  "units": 1,
+                  "retainedGb": 500
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

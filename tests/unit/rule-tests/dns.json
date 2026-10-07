@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "dns-ruleset-shared-across-vnets": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "dns",
+                  "publicZones": 0,
+                  "resolverOutboundEndpoints": 1,
+                  "resolverRulesets": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "dns",
+                  "publicZones": 0,
+                  "resolverOutboundEndpoints": 1,
+                  "resolverRulesets": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "static-web-apps-free-plan-production": {
+      "level": "warn",
+      "title": "Free plan is meant for personal projects, not production",
+      "body": "This production site uses the Free plan of Static Web Apps, which Microsoft describes as the plan for personal projects and which has no SLA. Price the Standard plan, which Microsoft describes as the plan for production apps, unless this is only a trial.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Hosting plans for Azure Static Web Apps",
+        "url": "https://learn.microsoft.com/azure/static-web-apps/plans",
+        "quote": "Free plan (For personal projects) Standard plan (For production apps)"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "static-web-apps",
+            "where": {
+              "facts.plan": "free"
+            }
+          }
+        ]
+      },
+      "group": "Web"
+    }
+  }
+}

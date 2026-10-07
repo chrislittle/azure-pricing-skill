@@ -1,0 +1,68 @@
+{
+  "rules": {
+    "iot-operations-billed-nodes": {
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure IoT Operations pricing",
+        "url": "https://azure.microsoft.com/pricing/details/iot-operations/",
+        "quote": "No. You're only billed for the nodes which execute Azure IoT Operations workloads.",
+        "more": [
+          {
+            "source": "Azure IoT Operations pricing",
+            "url": "https://azure.microsoft.com/pricing/details/iot-operations/",
+            "quote": "The easiest way to ensure that your Azure IoT Operations bill doesn't exceed your monthly expectations is to install it on a cluster with a fixed and known node count."
+          }
+        ]
+      },
+      "group": "iot",
+      "level": "info",
+      "title": "Only nodes that run IoT Operations are billed",
+      "body": "Count only the Kubernetes nodes that actually run Azure IoT Operations workloads in this estimate, not every node in the Arc-enabled cluster. Microsoft says billing follows the nodes that run the workloads, and a cluster with a fixed, known node count gives predictable billing.",
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "iot-operations"
+          }
+        ]
+      }
+    },
+    "iot-operations-arc-region": {
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure IoT Operations versions, support, and licensing",
+        "url": "https://learn.microsoft.com/azure/iot-operations/overview-support",
+        "quote": "This list applies only to the region you use to connect your cluster to Azure Arc."
+      },
+      "group": "iot",
+      "level": "warn",
+      "title": "Region is outside the IoT Operations Arc region list",
+      "body": "This estimate uses a region that is not on the list of Azure Arc regions Azure IoT Operations supports. Microsoft says the list applies only to the region you connect your cluster to Azure Arc with, so check where the cluster will be connected; the price is the same in every region.",
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "iot-operations",
+            "where": {
+              "facts.region": {
+                "notIn": [
+                  "eastus",
+                  "eastus2",
+                  "westus",
+                  "westus2",
+                  "westus3",
+                  "southcentralus",
+                  "westeurope",
+                  "northeurope",
+                  "germanywestcentral"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

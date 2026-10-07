@@ -1,0 +1,86 @@
+{
+  "rules": {
+    "energy-data-manager-developer-production": {
+      "level": "warn",
+      "title": "Developer tier is not meant for production",
+      "body": "This production estimate uses the Developer tier. Microsoft positions it for functional testing and early development, with reduced capacity, no availability zones, no disaster recovery and no financially backed SLA. Production workloads belong on the Standard tier, which costs considerably more per hour.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Data Manager for Energy tier concepts - Developer and Standard SKU",
+        "url": "https://learn.microsoft.com/azure/energy-data-services/concepts-tier-details",
+        "quote": "It is not recommended for performance benchmarking or production-scale workloads, as its resource limits may lead to suboptimal results in such scenarios."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "energy-data-manager",
+            "where": {
+              "facts.tier": "developer"
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "energy-data-manager-standard-non-production": {
+      "level": "info",
+      "title": "Developer tier is cheaper for test environments",
+      "body": "This estimate uses the Standard tier for a non-production environment. Microsoft offers the Developer tier for isolating test environments at a much lower hourly price (it has reduced capacity and no SLA, disaster recovery or availability zones). Consider it if the environment is only for testing.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Data Manager for Energy tier concepts - Developer and Standard SKU",
+        "url": "https://learn.microsoft.com/azure/energy-data-services/concepts-tier-details",
+        "quote": "Organizations can use the Developer tier to cost-effectively isolate and manage their test environments"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": false
+        },
+        "all": [
+          {
+            "type": "energy-data-manager",
+            "where": {
+              "facts.tier": "standard"
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "energy-data-manager-brazil-south-no-dr": {
+      "level": "warn",
+      "title": "No disaster recovery in Brazil South",
+      "body": "This production estimate runs the Standard tier in Brazil South. Microsoft states disaster recovery is not available there, so the instance cannot fail over to another region; pick another region if the workload needs disaster recovery.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Data Manager for Energy tier concepts - Developer and Standard SKU",
+        "url": "https://learn.microsoft.com/azure/energy-data-services/concepts-tier-details",
+        "quote": "Disaster recovery is currently not available in Brazil South region."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "energy-data-manager",
+            "where": {
+              "facts.tier": "standard",
+              "facts.region": "brazilsouth"
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    }
+  }
+}

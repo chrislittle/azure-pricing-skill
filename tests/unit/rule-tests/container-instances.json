@@ -1,0 +1,133 @@
+{
+  "rules": {
+    "container-instances-spot-interruptible": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5
+                }
+              ]
+            }
+          ],
+          "context": {
+            "interruptible": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5,
+                  "variant": "spot"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "interruptible": true
+          }
+        }
+      }
+    },
+    "container-instances-spot-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5,
+                  "variant": "spot"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        }
+      }
+    },
+    "container-instances-savings-plan-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "container-instances",
+                  "vcpu": 1,
+                  "memoryGb": 1.5,
+                  "commitment": "savings-1y"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        }
+      }
+    }
+  }
+}

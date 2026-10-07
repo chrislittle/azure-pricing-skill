@@ -1,0 +1,104 @@
+{
+  "rules": {
+    "virtual-wan-hub-fixed-cost": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "hubs": 2
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "wanType": "basic",
+                  "hubs": 3,
+                  "s2sScaleUnits": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-wan-size-routing-units": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "extraRoutingUnits": 1,
+                  "hubs": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "hubs": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "virtual-wan-size-scale-units": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "s2sScaleUnits": 2,
+                  "hubs": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "virtual-wan",
+                  "hubs": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "defender-easm-approved-inventory": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "defender-easm", "assets": 5000 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "defender-easm", "assets": 200 } ] } ] } } }
+  }
+}

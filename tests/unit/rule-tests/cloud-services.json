@@ -1,0 +1,70 @@
+{
+  "rules": {
+    "cloud-services-retirement": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cloud-services",
+                  "instances": 2,
+                  "size": "D2 v2"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "key-vault",
+                  "operations": 100000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "cloud-services-eol-size": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cloud-services",
+                  "instances": 2,
+                  "size": "D2 v2"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "key-vault",
+                  "operations": 100000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

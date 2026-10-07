@@ -1,0 +1,69 @@
+{
+  "rules": {
+    "api-management-developer-production": {
+      "level": "warn",
+      "title": "Developer tier API Management is not for production",
+      "body": "The customer said this is a production workload, but this API Management service uses the Developer tier. Microsoft says the Developer tier is for non-production use and has no SLA, so price Basic v2, Standard v2, Standard or Premium instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Feature-based comparison of the Azure API Management tiers",
+        "url": "https://learn.microsoft.com/azure/api-management/api-management-features",
+        "quote": "The Developer tier is for non-production use cases and evaluations. It doesn't offer SLA."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "api-management",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "developer"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "api-management-api-center-free-on-eligible-tier": {
+      "level": "info",
+      "title": "API Center would be free on a Standard or Premium class tier",
+      "body": "This option bills API Center Standard next to a Basic, Basic v2, Developer or Consumption instance. Microsoft says API Center Standard costs nothing extra when linked to an API Management instance in the Standard, Standard v2, Premium or Premium v2 tier (one API Center per instance), so check whether the customer needs one of those tiers anyway.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Link an API Center to API Management",
+        "url": "https://learn.microsoft.com/azure/api-management/tutorials/link-api-center",
+        "quote": "API Center Standard can now be used at no additional cost when you link it to an API Management instance in the Standard, Standard v2, Premium, or Premium v2 tier."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "api-management",
+            "where": {
+              "facts.apiCenters": {
+                ">": 0
+              },
+              "facts.tier": {
+                "in": [
+                  "basic",
+                  "basic-v2",
+                  "developer",
+                  "consumption"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    }
+  }
+}

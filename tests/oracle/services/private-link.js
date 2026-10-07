@@ -1,0 +1,28 @@
+'use strict';
+const { query, dedupe, round2 } = require('../api');
+const calc = require('../calculator');
+const SLUG = 'private-link';
+const HOURS = 730;
+function line(desc, monthlyList, extra = {}) { return { desc, monthlyList: round2(monthlyList), ...extra }; }
+function totalOf(lines) { return round2(lines.reduce((s, l) => s + l.monthlyList, 0)); }
+function graduated(bands, qty) { let prev = 0, cost = 0; for (const b of bands) { if (qty <= prev) break; const units = Math.min(qty, b.limit) - prev; cost += units * b.price.value; prev = b.limit; } return cost; }
+function graduatedRetail(rows, qty) { const sorted = rows.slice().sort((a, b) => a.tierMinimumUnits - b.tierMinimumUnits); let cost = 0; for (let i = 0; i < sorted.length; i++) { const start = sorted[i].tierMinimumUnits, end = i + 1 < sorted.length ? sorted[i + 1].tierMinimumUnits : Infinity; if (qty <= start) break; cost += (Math.min(qty, end) - start) * sorted[i].retailPrice; } return cost; }
+function pick(rows, pred, what) { const hits = rows.filter(pred); if (hits.length < 1) throw new Error('no Retail API row for ' + what); return hits[0]; }
+async function pl(o) { const currency = o.currency || 'USD', region = o.region || 'eastus2', hours = o.hours ?? HOURS, lines = []; if (currency === 'USD') { const d = await calc.product(SLUG), reg = calc.calcRegion(d, region); const ep = (await calc.offerPrice(SLUG, 'private-endpoint', region)).value; if (o.privateEndpoints) lines.push(line('Private endpoints: ' + o.privateEndpoints + ' * ' + hours + ' h * ' + ep, o.privateEndpoints * hours * ep, { sourceOffer: 'private-endpoint' })); if (o.inboundGB) lines.push(line('Inbound data: ' + o.inboundGB + ' GB through calculator 1PB/5PB tiers', graduated(d.graduatedOffers['inbound-data'][reg].prices, o.inboundGB), { sourceOffer: 'inbound-data' })); if (o.outboundGB) lines.push(line('Outbound data: ' + o.outboundGB + ' GB through calculator 1PB/5PB tiers', graduated(d.graduatedOffers['outbound-data'][reg].prices, o.outboundGB), { sourceOffer: 'outbound-data' })); if (o.serviceEndpointVnets) { const se = (await calc.offerPrice(SLUG, 'standard-service-endpoint', region)).value; lines.push(line('Standard service endpoint VNets: ' + o.serviceEndpointVnets + ' * ' + hours + ' h * ' + se, o.serviceEndpointVnets * hours * se, { sourceOffer: 'standard-service-endpoint' })); } } else { const rows = dedupe(await query("serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link'", currency)); if (o.privateEndpoints) lines.push(line('Private endpoints: ' + o.privateEndpoints + ' * ' + hours + ' h', o.privateEndpoints * hours * pick(rows, r => r.meterName === 'Standard Private Endpoint' && r.armRegionName === 'Global', 'Standard Private Endpoint').retailPrice)); if (o.inboundGB) lines.push(line('Inbound data: ' + o.inboundGB + ' GB through Retail API tiers', graduatedRetail(rows.filter(r => r.meterName === 'Standard Data Processed - Ingress' && r.armRegionName === 'Global'), o.inboundGB))); if (o.outboundGB) lines.push(line('Outbound data: ' + o.outboundGB + ' GB through Retail API tiers', graduatedRetail(rows.filter(r => r.meterName === 'Standard Data Processed - Egress' && r.armRegionName === 'Global'), o.outboundGB))); if (o.serviceEndpointVnets) lines.push(line('Standard service endpoint VNets: ' + o.serviceEndpointVnets + ' * ' + hours + ' h', o.serviceEndpointVnets * hours * pick(rows, r => r.meterName === 'Standard Service Endpoint Virtual Network' && r.armRegionName === 'Global', 'Standard Service Endpoint').retailPrice)); } return { monthlyList: totalOf(lines), lines }; }
+module.exports = { type: 'private-link', source: 'both', cases: [
+  { name: 'endpoint only full month', region: 'eastus2', currency: 'USD', component: { type: 'private-link', privateEndpoints: 1 },
+    // Calculator private-endpoint offer is per endpoint-hour.
+    expected: () => pl({ region: 'eastus2', privateEndpoints: 1 }) },
+  { name: 'data at first tier boundary', region: 'eastus2', currency: 'USD', component: { type: 'private-link', privateEndpoints: 1, inboundGB: 1000000, outboundGB: 1000000 },
+    // Calculator inbound/outbound graduated offers charge the first 1,000,000 GB at the first data tier.
+    expected: () => pl({ region: 'eastus2', privateEndpoints: 1, inboundGB: 1000000, outboundGB: 1000000 }) },
+  { name: 'data just above first tier', region: 'eastus2', currency: 'USD', component: { type: 'private-link', privateEndpoints: 1, inboundGB: 1000001, outboundGB: 1000001 },
+    // The 1,000,001st GB of inbound and outbound data uses the second calculator tier.
+    expected: () => pl({ region: 'eastus2', privateEndpoints: 1, inboundGB: 1000001, outboundGB: 1000001 }) },
+  { name: 'non-US service endpoint and second boundary', region: 'westeurope', currency: 'USD', component: { type: 'private-link', privateEndpoints: 2, inboundGB: 5000001, outboundGB: 5000001, serviceEndpointVnets: 1, hours: 365 },
+    // West Europe calculator prices include endpoint hours, service endpoint VNet hours, and data just above 5,000,000 GB.
+    expected: () => pl({ region: 'westeurope', privateEndpoints: 2, inboundGB: 5000001, outboundGB: 5000001, serviceEndpointVnets: 1, hours: 365 }) },
+  { name: 'EUR all Private Link dimensions', region: 'westeurope', currency: 'EUR', component: { type: 'private-link', privateEndpoints: 1, inboundGB: 1000001, outboundGB: 1000001, serviceEndpointVnets: 1, hours: 100 },
+    // Retail API EUR Global Private Link rows cover endpoint hours, ingress/egress data tiers, and standard service endpoint VNets.
+    expected: () => pl({ currency: 'EUR', region: 'westeurope', privateEndpoints: 1, inboundGB: 1000001, outboundGB: 1000001, serviceEndpointVnets: 1, hours: 100 }) },
+] };

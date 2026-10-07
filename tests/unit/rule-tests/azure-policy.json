@@ -1,0 +1,76 @@
+{
+  "rules": {
+    "azure-policy-arc-opt-in": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "azure-policy",
+                  "guestConfigServers": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "azure-policy",
+                  "guestConfigServers": 0,
+                  "kubernetesVcpus": 20
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "azure-policy-machine-config-included": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "azure-policy",
+                  "guestConfigServers": 10,
+                  "exemptServers": 2
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "azure-policy",
+                  "guestConfigServers": 10,
+                  "exemptServers": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+

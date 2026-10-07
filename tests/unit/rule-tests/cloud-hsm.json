@@ -1,0 +1,74 @@
+{
+  "rules": {
+    "cloud-hsm-cannot-pause": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "clusters": 1,
+                  "hours": 730,
+                  "type": "cloud-hsm"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "clusters": 1,
+                  "hours": 200,
+                  "type": "cloud-hsm"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "cloud-hsm-restore-target-bills": {
+      "test": {
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "clusters": 1,
+                  "type": "cloud-hsm"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "clusters": 2,
+                  "type": "cloud-hsm"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

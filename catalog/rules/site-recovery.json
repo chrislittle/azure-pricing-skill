@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "site-recovery-first-31-days-free": {
+      "level": "info",
+      "title": "A Site Recovery pilot that ends within 31 days costs nothing in Site Recovery fees",
+      "body": "This is a non-production estimate. If the pilot ends within 31 days of protecting each instance, Microsoft does not charge the Site Recovery fee for the first 31 days of each protected instance, so there is no Site Recovery charge; replica storage, network transfer and failover VMs are still billed.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "General questions about Azure Site Recovery",
+        "url": "https://learn.microsoft.com/azure/site-recovery/site-recovery-faq",
+        "quote": "Every protected instance incurs no Azure Site Recovery charges for the first 31 days."
+      },
+      "when": { "scope": "option", "context": { "production": false }, "all": [ { "type": "site-recovery" } ] },
+      "group": "management"
+    }
+  }
+}

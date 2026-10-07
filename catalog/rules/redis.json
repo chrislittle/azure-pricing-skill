@@ -1,0 +1,114 @@
+{
+  "rules": {
+    "redis-classic-retirement": {
+      "level": "warn",
+      "title": "This Azure Cache for Redis tier is being retired",
+      "body": "This estimate uses the Basic, Standard or Premium tier of Azure Cache for Redis. In the Azure public cloud, since 1 April 2026 a new customer (a tenant with no Azure Cache for Redis before that date) can no longer create these caches at all, and existing customers can keep creating them only until the tiers retire on 30 September 2028. Microsoft tells customers to move to Azure Managed Redis. For a new build, price Azure Managed Redis (type managed-redis) instead, or budget for a migration.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What's New in Azure Cache for Redis",
+        "url": "https://learn.microsoft.com/azure/azure-cache-for-redis/cache-whats-new",
+        "quote": "Creating new caches is blocked for new customers. Existing customers can continue creating caches until retirement."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "redis",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "basic",
+                  "standard",
+                  "premium"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "redis-basic-production": {
+      "level": "warn",
+      "title": "Basic tier has no uptime guarantee",
+      "body": "This estimate uses the Basic tier of Azure Cache for Redis for production. Basic is a single server with no replica and no SLA, so a server failure or maintenance takes the cache down and loses its data. Standard or higher adds a replica and an SLA.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Cache for Redis pricing",
+        "url": "https://azure.microsoft.com/pricing/details/cache/",
+        "quote": "There's no SLA on basic tier."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "redis",
+            "where": {
+              "facts.tier": "basic"
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "redis-enterprise-blocked": {
+      "level": "warn",
+      "title": "New Enterprise caches can no longer be created",
+      "body": "This estimate uses the Enterprise or Enterprise Flash tier of Azure Cache for Redis. Microsoft blocked creating new caches in these tiers on 1 April 2026 and migrates the remaining ones to Azure Managed Redis on 31 March 2027, so this configuration cannot be bought for a new workload. Price Azure Managed Redis (type managed-redis) instead, or use this estimate only for an existing cache.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What's New in Azure Cache for Redis",
+        "url": "https://learn.microsoft.com/azure/azure-cache-for-redis/cache-whats-new",
+        "quote": "Creating new caches in Enterprise or Enterprise Flash tiers is blocked."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "redis",
+            "where": {
+              "facts.tier": {
+                "in": [
+                  "enterprise",
+                  "enterprise-flash"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    },
+    "redis-enterprise-software-license": {
+      "level": "warn",
+      "title": "The Enterprise software license is not in this price",
+      "body": "This estimate prices only the Azure infrastructure of an Enterprise or Enterprise Flash cache. The Redis software license is a second charge billed through Azure Marketplace, and the price list has no price for it, so the real total is higher. Add the license from the Azure pricing calculator.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Cache for Redis pricing",
+        "url": "https://azure.microsoft.com/pricing/details/cache/",
+        "quote": "The final price you pay is the sum of these prices."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "redis",
+            "where": {
+              "facts.softwareLicenseNotPriced": true
+            }
+          }
+        ]
+      },
+      "group": "data-platform"
+    }
+  }
+}

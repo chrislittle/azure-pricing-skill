@@ -1,0 +1,111 @@
+{
+  "rules": {
+    "defender-for-cloud-api-plan1-overage": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "defender-for-cloud",
+                  "servers": 0,
+                  "apiPlan": "p1",
+                  "apiCalls": 3000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "defender-for-cloud",
+                  "servers": 0,
+                  "apiPlan": "p1",
+                  "apiCalls": 800000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "defender-for-cloud-malware-scan-cap": {
+      "test": {
+        "silent": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "servers": 0,
+                  "storageAccounts": 1,
+                  "malwareScanGb": 500,
+                  "type": "defender-for-cloud"
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        },
+        "fires": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "servers": 0,
+                  "storageAccounts": 1,
+                  "malwareScanGb": 20000,
+                  "type": "defender-for-cloud"
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        }
+      }
+    },
+    "defender-for-cloud-dns-with-servers-plan2": {
+      "test": {
+        "silent": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "servers": 2,
+                  "dnsQueries": 1000000,
+                  "serversPlan": "plan1",
+                  "type": "defender-for-cloud"
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        },
+        "fires": {
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "servers": 2,
+                  "dnsQueries": 1000000,
+                  "type": "defender-for-cloud"
+                }
+              ]
+            }
+          ],
+          "region": "eastus2"
+        }
+      }
+    }
+  }
+}

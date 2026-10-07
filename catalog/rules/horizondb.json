@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "horizondb-single-replica-production": {
+      "level": "warn",
+      "title": "One replica means no zone resilience",
+      "body": "This production estimate has a single compute replica. Microsoft states a HorizonDB cluster needs at least two replicas to be zone resilient (the storage is zone resilient already, but compute is not). A second replica is billed at the full vCore price, so add it to the estimate if the workload needs to survive a zone outage.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "What Is Azure HorizonDB?",
+        "url": "https://learn.microsoft.com/azure/horizondb/overview",
+        "quote": "In order to have zonal resilience, you need atleast two replicas on the cluster."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true,
+          "zoneResilience": {
+            "!=": false
+          }
+        },
+        "all": [
+          {
+            "type": "horizondb",
+            "where": {
+              "facts.replicas": {
+                "<=": 1
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    }
+  }
+}

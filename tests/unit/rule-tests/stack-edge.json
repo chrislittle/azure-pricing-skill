@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "stack-edge-billing-until-return": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "stack-edge", "device": "pro-1gpu" } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "stack-edge", "device": "pro-1gpu" } ] } ] } } }
+  }
+}

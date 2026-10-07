@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "aks-automatic-dev-test-free-tier": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "aks-automatic", "vcpus": 16 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "aks-automatic", "vcpus": 16 } ] } ] } } }
+  }
+}

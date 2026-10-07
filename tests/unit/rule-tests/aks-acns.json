@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "aks-acns-retina-oss-alternative": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "aks-acns",
+                  "nodes": 40
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "aks-acns",
+                  "nodes": 3
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

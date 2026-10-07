@@ -1,0 +1,140 @@
+{
+  "rules": {
+    "esu-arc-datacenter-virtual-use-standard": {
+      "level": "info",
+      "title": "Use the Standard edition for virtual-core ESU licences",
+      "body": "This estimate prices Windows Server Datacenter ESU on virtual cores. Microsoft says to select the Standard edition for virtual-core licences even when the operating system is Datacenter, which costs much less per core. Check whether Standard fits before committing to the Datacenter rate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan Extended Security Updates licenses for Windows Server enabled by Azure Arc",
+        "url": "https://learn.microsoft.com/azure/azure-arc/servers/license-extended-security-updates",
+        "quote": "always select the standard edition instead of datacenter, even if the operating system is datacenter"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "esu-arc",
+            "where": {
+              "facts.product": "windows-server",
+              "facts.edition": "datacenter",
+              "facts.licensing": "virtual",
+              "facts.hostedOn": "arc"
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "esu-arc-deactivate-after-migration": {
+      "level": "info",
+      "title": "Remove ESU licences when servers are retired or migrated",
+      "body": "ESU billing continues for every activated licence until you change it. When servers are upgraded, migrated to Azure or retired, update or delete the Arc ESU licence so the charge stops.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan Extended Security Updates licenses for Windows Server enabled by Azure Arc",
+        "url": "https://learn.microsoft.com/azure/azure-arc/servers/license-extended-security-updates",
+        "quote": "billing is tied to the activated licenses and you are responsible for modifying your provisioned licensing"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "esu-arc",
+            "where": {
+              "facts.product": "windows-server",
+              "facts.hostedOn": "arc"
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "esu-arc-windows-2012-free-in-azure": {
+      "level": "info",
+      "title": "Windows Server 2012 updates are free on Azure VMs",
+      "body": "This estimate charges for Windows Server 2012 ESU on Azure Arc. If any of these servers are virtual machines hosted in Azure, Microsoft provides the updates at no charge, so take them out of the estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Extended Security Updates enabled by Azure Arc - Azure Update Manager",
+        "url": "https://learn.microsoft.com/azure/update-manager/extended-security-updates",
+        "quote": "For Windows Server 2012 and 2012 R2, you get ESUs free of charge and by default for servers hosted in Azure."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "esu-arc",
+            "where": {
+              "facts.product": "windows-server",
+              "facts.version": "2012",
+              "facts.hostedOn": "arc"
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "esu-arc-sql-2014-free-on-azure-vm": {
+      "level": "info",
+      "title": "SQL Server 2014 updates are free on Azure VMs",
+      "body": "This estimate charges for SQL Server 2014 ESU through Azure Arc. If any of these servers are SQL Server on Azure virtual machines, the updates for version 2014 remain free, so take them out of the estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Extended security updates (ESUs) for SQL Server on Azure Virtual Machines",
+        "url": "https://learn.microsoft.com/azure/azure-sql/virtual-machines/windows/extended-security-updates-sql-vm",
+        "quote": "While ESUs for SQL Server 2014 VMs remain free of charge"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "esu-arc",
+            "where": {
+              "facts.product": "sql-server",
+              "facts.version": "2014",
+              "facts.hostedOn": "arc"
+            }
+          }
+        ]
+      },
+      "group": "security"
+    },
+    "esu-arc-sql-passive-replica": {
+      "level": "info",
+      "title": "Passive HA or DR replicas are not billed for SQL Server ESU",
+      "body": "This estimate bills every core you entered. Cores of a machine that qualifies as a free passive replica for high availability or disaster recovery are not billable, so remove those machines if they qualify.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "SQL Server Extended Security Updates enabled by Azure Arc",
+        "url": "https://learn.microsoft.com/sql/sql-server/azure-arc/extended-security-updates",
+        "quote": "If the virtual machine is eligible for the free HA passive replica benefit, the virtual cores of that machine aren't billable."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "esu-arc",
+            "where": {
+              "facts.product": "sql-server",
+              "facts.hostedOn": "arc",
+              "facts.edition": {
+                "notIn": [
+                  "developer",
+                  "express",
+                  "web"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "security"
+    }
+  }
+}

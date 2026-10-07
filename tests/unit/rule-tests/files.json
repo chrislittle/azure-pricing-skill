@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "files-cool-retrieval-charge": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "payg-cool",
+                  "capacityGB": 1000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "files",
+                  "model": "payg-hot",
+                  "capacityGB": 1000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

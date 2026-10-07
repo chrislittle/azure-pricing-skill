@@ -1,0 +1,69 @@
+{
+  "rules": {
+    "cdn-classic-retiring": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cdn",
+                  "egressGB": 500
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "front-door",
+                  "egressGB": 500,
+                  "requestsMillions": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "cdn-longest-ttl": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cdn",
+                  "egressGB": 5000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "cdn",
+                  "egressGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

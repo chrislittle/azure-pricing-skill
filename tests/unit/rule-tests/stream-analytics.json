@@ -1,0 +1,113 @@
+{
+  "rules": {
+    "stream-analytics-v1-pricing": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "standard",
+                  "streamingUnits": 3,
+                  "type": "stream-analytics"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "tier": "standard-v2",
+                  "streamingUnits": 3,
+                  "type": "stream-analytics"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "stream-analytics-few-jobs-vs-cluster": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "stream-analytics",
+                  "streamingUnits": 12,
+                  "tier": "dedicated-v2"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "stream-analytics",
+                  "streamingUnits": 1,
+                  "tier": "standard-v2"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "stream-analytics-auto-pause": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "stream-analytics",
+                  "streamingUnits": 1,
+                  "tier": "standard-v2"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "stream-analytics",
+                  "streamingUnits": 1,
+                  "tier": "standard-v2",
+                  "hours": 200
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

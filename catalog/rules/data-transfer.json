@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "data-transfer-cross-zone-free-per-learn": {
+      "level": "info",
+      "title": "Cross-zone data transfer is not charged",
+      "body": "This estimate includes traffic between availability zones. Microsoft Learn states there is no charge for data transfer between availability zones in the same region, so no cost line is added for it.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure availability zones overview",
+        "url": "https://learn.microsoft.com/azure/reliability/availability-zones-overview",
+        "quote": "Azure doesn't charge for data transfer between availability zones in the same region, whether you use private or public IP addressing."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-transfer",
+            "where": {
+              "facts.crossZoneGB": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "entra-domain-services-single-replica-production": {
+      "level": "info",
+      "title": "Production domain has a single replica set",
+      "body": "This production managed domain has one replica set, so it lives in one Azure region. Microsoft says additional replica sets in other regions give geographic disaster recovery if a region goes offline. Each extra replica set is billed at the same hourly rate; priced as requested. Ask the customer whether regional disaster recovery is needed before adding one.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Replica sets concepts and features for Microsoft Entra Domain Services",
+        "url": "https://learn.microsoft.com/entra/identity/domain-services/concepts-replica-sets",
+        "quote": "Additional replica sets in different Azure regions provide geographical disaster recovery for legacy applications if an Azure region goes offline."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "entra-domain-services",
+            "where": {
+              "facts.replicaSets": {
+                "<": 2
+              },
+              "facts.sku": {
+                "!=": "standard"
+              }
+            }
+          }
+        ]
+      },
+      "group": "Identity"
+    },
+    "entra-domain-services-standard-backup-production": {
+      "level": "info",
+      "title": "Production domain on the Standard SKU has the least frequent backups",
+      "body": "This production managed domain uses the Standard SKU, which Microsoft lists with a backup every five days; Enterprise backs up every three days and Premium daily. Microsoft says to review your recovery point objective (RPO) to pick the backup frequency. Priced as requested; ask the customer how much directory change they can afford to lose before keeping Standard.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Management concepts for Microsoft Entra Domain Services",
+        "url": "https://learn.microsoft.com/entra/identity/domain-services/administration-concepts",
+        "quote": "Review your business requirements and recovery point objective (RPO) to determine the required backup frequency for your managed domain."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "where": {
+              "facts.sku": "standard"
+            },
+            "type": "entra-domain-services"
+          }
+        ]
+      },
+      "group": "Identity"
+    }
+  }
+}

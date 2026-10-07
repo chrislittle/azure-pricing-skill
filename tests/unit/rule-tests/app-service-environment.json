@@ -1,0 +1,188 @@
+{
+  "rules": {
+    "app-service-environment-dedicated-host-two-hosts": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "size": "i1v2",
+                  "instances": 2,
+                  "deployment": "dedicated-host"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "size": "i1v2",
+                  "instances": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-service-environment-empty-charge": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 0
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-service-environment-reserved-pricing": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 2,
+                  "size": "i1v2"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 2,
+                  "commitment": "ri1y"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-service-environment-zone-redundancy-two-instances": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app-service-environment-dedicated-host-not-zone-redundant": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 2,
+                  "deployment": "dedicated-host"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "zoneResilience": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "app-service-environment",
+                  "instances": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

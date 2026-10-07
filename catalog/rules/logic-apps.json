@@ -1,0 +1,66 @@
+{
+  "rules": {
+    "logic-apps-ise-retired": {
+      "level": "warn",
+      "title": "Integration Service Environment was retired on 31 August 2024",
+      "body": "This estimate uses the Logic Apps Integration Service Environment, which Microsoft lists among the Azure Service Manager products that were retired on 31 August 2024. Only an existing environment can still be priced; for a new workload price Logic Apps Standard instead.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Service Manager retirement",
+        "url": "https://learn.microsoft.com/azure/azure-resource-manager/management/asm-retirement",
+        "quote": "Integration Service Environment Aug 2024 ISE Support Microsoft HPC Pack Aug 2024"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "logic-apps",
+            "where": {
+              "facts.plan": {
+                "in": [
+                  "ise"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    },
+    "logic-apps-standard-zone-redundancy": {
+      "level": "warn",
+      "title": "Single-instance Standard plan has no zone redundancy",
+      "body": "The customer said this is a production workload and the Logic Apps Standard plan has fewer than two instances. Microsoft recommends zone redundancy for production single-tenant Logic Apps, and that needs at least two instances of the Workflow Service Plan, so ask about availability needs and price two or more instances.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Reliability in Azure Logic Apps",
+        "url": "https://learn.microsoft.com/azure/reliability/reliability-logic-apps",
+        "quote": "You must deploy at least two instances of your Workflow Service Plan."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "logic-apps",
+            "where": {
+              "facts.plan": {
+                "in": [
+                  "standard"
+                ]
+              },
+              "facts.instances": {
+                "<": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "integration"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "rules": {
+    "private-link-data-transfer-extra": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "private-link",
+                  "privateEndpoints": 2,
+                  "inboundGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "private-link",
+                  "privateEndpoints": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "private-link-peered-traffic": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "private-link",
+                  "privateEndpoints": 2,
+                  "inboundGB": 100
+                },
+                {
+                  "type": "vnet-peering",
+                  "sameRegionGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "private-link",
+                  "privateEndpoints": 2,
+                  "inboundGB": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

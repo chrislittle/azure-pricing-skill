@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "table-storage-account-key-pricing-differs": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "table-storage",
+                  "dataGB": 100,
+                  "redundancy": "LRS",
+                  "encryption": "account-key",
+                  "writeOps": 1000000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "table-storage",
+                  "dataGB": 100,
+                  "redundancy": "LRS",
+                  "transactions": 1000000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

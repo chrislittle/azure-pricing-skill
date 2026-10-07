@@ -1,0 +1,129 @@
+{
+  "rules": {
+    "data-factory-data-flow-reservation": {
+      "level": "info",
+      "title": "Data flows that run most of the month may be cheaper reserved",
+      "body": "The data flow cluster runs for most of the month on pay-as-you-go. A 1- or 3-year reservation is billed for every hour but at a lower rate, so price it as an alternative. A reservation breaks even at roughly three quarters of the month, which is my estimate, not a Microsoft figure.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Applying FinOps to Azure Data Factory",
+        "url": "https://learn.microsoft.com/azure/data-factory/apply-finops",
+        "quote": "Reserved instances are available in Azure Data Factory for mapping data flows, which you can use to provide savings over the normal list price of data flows."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-factory",
+            "where": {
+              "facts.dataFlowCommitment": {
+                "in": [
+                  "payg"
+                ]
+              },
+              "facts.dataFlowVcores": {
+                ">": 0
+              },
+              "facts.dataFlowHours": {
+                ">=": 600
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-factory-ssis-always-on": {
+      "level": "info",
+      "title": "Stop the SSIS integration runtime when packages are not running",
+      "body": "The SSIS integration runtime is priced for the whole month. It bills while it is running, so if packages only run at set times, start and stop it on a schedule and price the real hours.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Start and stop an Azure-SSIS integration runtime on a schedule",
+        "url": "https://learn.microsoft.com/azure/data-factory/how-to-schedule-azure-ssis-integration-runtime",
+        "quote": "A cost is associated with running an Azure-SSIS IR."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-factory",
+            "where": {
+              "facts.ssisNodes": {
+                ">": 0
+              },
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-factory-data-flow-ttl": {
+      "level": "info",
+      "title": "Data flow time to live keeps the cluster (and the bill) running",
+      "body": "Pay-as-you-go data flows bill for the time the cluster is up, including any time to live (TTL) idle period. TTL helps pipelines with several sequential data flows, so include the TTL time in the hours you enter.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Optimizing performance of the Azure Integration Runtime",
+        "url": "https://learn.microsoft.com/azure/data-factory/concepts-integration-runtime-performance",
+        "quote": "If your pipelines contain multiple sequential data flows, you can enable a time to live (TTL) value."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-factory",
+            "where": {
+              "facts.dataFlowCommitment": {
+                "in": [
+                  "payg"
+                ]
+              },
+              "facts.dataFlowVcores": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "data-factory-ssis-hybrid-benefit": {
+      "level": "info",
+      "title": "Azure Hybrid Benefit can lower the SSIS price",
+      "body": "This SSIS integration runtime is priced with the SQL Server license included. If the customer owns SQL Server licenses with Software Assurance, price the Azure Hybrid Benefit option too.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Create an Azure-SSIS integration runtime in the Azure portal",
+        "url": "https://learn.microsoft.com/azure/data-factory/create-azure-ssis-integration-runtime-portal",
+        "quote": "Select Yes if you want to bring your own SQL Server license with Software Assurance to benefit from cost savings with hybrid use."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "data-factory",
+            "where": {
+              "facts.ssisNodes": {
+                ">": 0
+              },
+              "facts.ssisLicense": {
+                "in": [
+                  "license-included"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

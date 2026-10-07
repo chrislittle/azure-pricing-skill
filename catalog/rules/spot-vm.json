@@ -1,0 +1,52 @@
+{
+  "rules": {
+    "spot-vm-production-no-sla": {
+      "level": "warn",
+      "title": "Spot VMs have no SLA and can be stopped at any time",
+      "body": "This estimate uses Spot VMs for a production workload. Microsoft states that Spot VMs offer no high availability guarantees and can be evicted with 30 seconds notice, so keep Spot for work that can stop and restart, and use regular VMs for the parts that must stay up.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "About Azure Spot Virtual Machines",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/spot-vms",
+        "quote": "An Azure Spot Virtual Machine offers no high availability guarantees."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "spot-vm"
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "spot-vm-deallocated-disks": {
+      "level": "info",
+      "title": "Disks keep billing when a Spot VM is evicted and deallocated",
+      "body": "With the default Deallocate eviction policy a stopped Spot VM no longer costs compute money, but Microsoft states you are still charged for its disks. Choose the Delete policy if the VM and its disks can be recreated.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "About Azure Spot Virtual Machines",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/spot-vms",
+        "quote": "you'll be charged storage costs for the underlying disks"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "spot-vm"
+          },
+          {
+            "type": "disk"
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "rules": {
+    "fabric-pause-idle": {
+      "level": "info",
+      "title": "Pause the Fabric capacity when it is not in use",
+      "body": "This estimate runs the Fabric capacity all month although the workload has idle stretches. Microsoft documents pausing a capacity to save cost while it is not operational; OneLake storage keeps billing while paused. Set the hours the capacity really runs to see the saving, and make sure nothing is using it before it is paused.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Pause and resume your Fabric capacity",
+        "url": "https://learn.microsoft.com/fabric/enterprise/pause-resume",
+        "quote": "When your capacity isn't operational, you can pause it to enable cost savings for your organization."
+      },
+      "when": {
+        "context": {
+          "idlePeriods": true
+        },
+        "all": [
+          {
+            "type": "fabric",
+            "where": {
+              "facts.hours": {
+                ">=": 730
+              },
+              "facts.commitment": {
+                "in": [
+                  "payg"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "fabric-reservation-steady": {
+      "level": "info",
+      "title": "Compare a Fabric capacity reservation",
+      "body": "This Fabric capacity is priced pay-as-you-go and is expected to run steadily for a year or longer. Compare a one-year or three-year Fabric capacity reservation for the same capacity units.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Save costs with Microsoft Fabric Capacity reservations",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/reservations/fabric-capacity",
+        "quote": "You can save money with Fabric capacity reservation by committing to a reservation for your Fabric capacity usage for a duration of one or three years."
+      },
+      "when": {
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "fabric",
+            "where": {
+              "facts.commitment": {
+                "in": [
+                  "payg"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    },
+    "fabric-reservation-paused-hours": {
+      "level": "info",
+      "title": "A paused capacity under a reservation may not lower costs",
+      "body": "This estimate commits to a Fabric capacity reservation but expects the capacity to run fewer than all hours. A reservation is billed every hour of the term whether or not the capacity is paused, so the hours saved do not reduce the cost. Either keep the capacity busy, or price pay-as-you-go with pausing and compare.",
+      "citation": {
+        "framework": "WAF",
+        "code": null,
+        "source": "Cost considerations for Microsoft Fabric workloads",
+        "url": "https://learn.microsoft.com/azure/well-architected/microsoft-fabric/cost-optimization",
+        "quote": "For instance, pausing a capacity under a reservation may not lower costs, so planning automation around your billing model is essential."
+      },
+      "when": {
+        "all": [
+          {
+            "type": "fabric",
+            "where": {
+              "facts.commitmentUnderused": {
+                "in": [
+                  true
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "analytics"
+    }
+  }
+}

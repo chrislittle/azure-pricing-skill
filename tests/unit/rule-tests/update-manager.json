@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "update-manager-free-benefits": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "update-manager",
+                  "arcServers": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "update-manager",
+                  "arcServers": 10,
+                  "benefitServers": 10,
+                  "days": 31
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

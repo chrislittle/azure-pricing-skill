@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "azure-devops-visual-studio-subscribers-included": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "azure-devops", "basicUsers": 20 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "azure-devops", "basicUsers": 5, "hostedJobs": 2 } ] } ] } } }
+  }
+}

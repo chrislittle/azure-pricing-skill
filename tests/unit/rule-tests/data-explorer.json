@@ -1,0 +1,127 @@
+{
+  "rules": {
+    "data-explorer-dev-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "environment": "dev",
+                  "dailyIngestionGB": 10,
+                  "type": "data-explorer"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "data-explorer",
+                  "dailyIngestionGB": 10
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "production": true
+          }
+        }
+      }
+    },
+    "data-explorer-availability-zones": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "data-explorer",
+                  "dailyIngestionGB": 100
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "zoneResilience": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "data-explorer",
+                  "dailyIngestionGB": 100,
+                  "zoneRedundantStorage": true
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "zoneResilience": true
+          }
+        }
+      }
+    },
+    "data-explorer-reserved-capacity": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "data-explorer",
+                  "dailyIngestionGB": 100
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "data-explorer",
+                  "dailyIngestionGB": 100,
+                  "commitment": "ri1y"
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        }
+      }
+    }
+  }
+}

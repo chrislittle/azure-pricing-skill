@@ -1,0 +1,70 @@
+{
+  "rules": {
+    "monitor-metrics-minimal-ingestion": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-metrics",
+                  "ingestedSamplesMillions": 8000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-metrics",
+                  "ingestedSamplesMillions": 500
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "monitor-metrics-scrape-interval": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-metrics",
+                  "aksNodes": 3,
+                  "scrapeIntervalSeconds": 10
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "monitor-metrics",
+                  "aksNodes": 3,
+                  "scrapeIntervalSeconds": 30
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

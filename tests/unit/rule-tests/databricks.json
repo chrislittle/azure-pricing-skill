@@ -1,0 +1,177 @@
+{
+  "rules": {
+    "databricks-dbcu-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "jobs",
+                  "hours": 730
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {
+            "steadyUsage": true
+          },
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "jobs",
+                  "hours": 100
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "databricks-job-clusters": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "all-purpose",
+                  "hours": 100
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "hours": 100,
+                  "type": "databricks",
+                  "workload": "jobs",
+                  "dbusPerHour": 10
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {}
+        }
+      }
+    },
+    "databricks-auto-termination": {
+      "test": {
+        "fires": {
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "workloads": [
+                    {
+                      "hours": 100,
+                      "workload": "jobs",
+                      "dbusPerHour": 10
+                    },
+                    {
+                      "hours": 730,
+                      "workload": "all-purpose",
+                      "dbusPerHour": 10
+                    }
+                  ]
+                }
+              ],
+              "name": "A"
+            }
+          ],
+          "context": {}
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "all-purpose",
+                  "hours": 100
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    },
+    "databricks-sql-autostop": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "sql-serverless",
+                  "hours": 730
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "context": {},
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "databricks",
+                  "dbusPerHour": 10,
+                  "workload": "sql-serverless",
+                  "hours": 100
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "rules": {
+    "sre-agent-consolidate-agents": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "agents": 3,
+                  "type": "sre-agent"
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "agents": 1,
+                  "type": "sre-agent"
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        }
+      }
+    },
+    "sre-agent-region-not-supported": {
+      "test": {
+        "fires": {
+          "region": "westeurope",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "swedencentral",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sre-agent-eu-data-residency": {
+      "test": {
+        "fires": {
+          "region": "francecentral",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1,
+                  "quickQuestions": 10,
+                  "model": "opus"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "swedencentral",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sre-agent-monthly-aau-limit": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1,
+                  "quickQuestions": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "sre-agent",
+                  "agents": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

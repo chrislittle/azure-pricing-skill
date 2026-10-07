@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "page-blob-unmanaged-disks-retired": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "page-blob",
+                  "tier": "premium",
+                  "purpose": "unmanaged-disk",
+                  "diskSize": "P30"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "page-blob",
+                  "tier": "premium",
+                  "diskSize": "P30"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "rules": {
+    "sql-elastic-pool-single-database": {
+      "level": "info",
+      "title": "A pool of one database rarely saves money",
+      "body": "This estimate has one database in the elastic pool. Microsoft states that the savings from a pool grow with the number of databases that share it, so a single database is usually cheaper as a standalone database.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Elastic pools - Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/elastic-pool-overview",
+        "quote": "The more databases you can add to a pool, the greater your savings."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sql-elastic-pool",
+            "where": {
+              "facts.databases": {
+                "in": [
+                  1
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "sql-elastic-pool-reserve": {
+      "level": "info",
+      "title": "A steady pool can use reserved capacity",
+      "body": "This pool runs all month on pay-as-you-go and you expect steady use. Microsoft recommends reserving compute capacity for one or three years once the compute size is known; a reservation discounts pool vCores (not eDTU pools).",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework: Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-sql-database",
+        "quote": "use that information to reserve the capacity for one or three years."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "sql-elastic-pool",
+            "where": {
+              "facts.model": "vcore",
+              "facts.commitment": "payg",
+              "facts.hours": {
+                ">=": 730
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "sql-elastic-pool-hybrid-benefit": {
+      "level": "info",
+      "title": "Azure Hybrid Benefit can remove the SQL license charge",
+      "body": "This vCore pool pays the SQL Server license as part of the price. If the customer owns SQL Server licenses with Software Assurance, Azure Hybrid Benefit discounts that license charge.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Plan and manage costs for Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/cost-management",
+        "quote": "In the provisioned compute tier of the vCore-based purchasing model, you can get a discount on the allocation of SQL Server licenses to SQL Server Database Engine."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sql-elastic-pool",
+            "where": {
+              "facts.model": "vcore",
+              "facts.ahb": false,
+              "facts.tier": {
+                "in": [
+                  "general-purpose",
+                  "business-critical"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "database"
+    },
+    "sql-elastic-pool-edtu-vcore": {
+      "level": "info",
+      "title": "eDTU pools cannot use reserved capacity",
+      "body": "This estimate uses an eDTU pool (Basic, Standard or Premium). Microsoft states that reserved instance pricing is only available in the vCore purchasing model, so a pool that runs steadily may cost less as a vCore pool with a 1- or 3-year reservation.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "vCore purchasing model - Azure SQL Database",
+        "url": "https://learn.microsoft.com/azure/azure-sql/database/service-tiers-sql-database-vcore",
+        "quote": "Reserved instance pricing is only available for vCore purchasing model."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "sql-elastic-pool",
+            "where": {
+              "facts.model": "edtu"
+            }
+          }
+        ],
+        "context": {
+          "steadyUsage": true
+        }
+      },
+      "group": "database"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "page-blob-unmanaged-disks-retired": {
+      "level": "warn",
+      "title": "Unmanaged disks are retired",
+      "body": "This estimate prices page blobs as VM unmanaged disks. Microsoft retired unmanaged disks on March 31, 2026 and VMs using them cannot be started, so plan managed disks instead.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Unmanaged disks have been retired",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/unmanaged-disks-deprecation",
+        "quote": "Unmanaged disks were fully retired on March 31, 2026 (extended from previously published date of September 30, 2025)."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "page-blob",
+            "where": {
+              "facts.purpose": "unmanaged-disk"
+            }
+          }
+        ]
+      },
+      "group": "storage"
+    }
+  }
+}

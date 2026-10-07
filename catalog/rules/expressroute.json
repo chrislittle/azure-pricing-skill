@@ -1,0 +1,105 @@
+{
+  "rules": {
+    "expressroute-gateway-not-zone-redundant": {
+      "level": "warn",
+      "title": "Use a zone-redundant ExpressRoute gateway",
+      "body": "The customer said this is a production workload, but this ExpressRoute gateway is not zone-redundant. Microsoft recommends zone-redundant gateways (ErGw1AZ, ErGw2AZ, ErGw3AZ or the scalable gateway) for resiliency across availability zones.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure ExpressRoute",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-expressroute",
+        "quote": "Deploy ExpressRoute virtual network gateways that are zone-redundant for maximum resiliency and redundancy across Availability Zones."
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "expressroute",
+            "where": {
+              "facts.gatewaySku": {
+                "in": [
+                  "standard",
+                  "high-performance",
+                  "ultra-performance"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "expressroute-single-circuit-production": {
+      "level": "warn",
+      "title": "A single ExpressRoute circuit is not maximum resiliency",
+      "body": "The customer said this is a production workload, but the estimate has one circuit. Microsoft recommends multiple circuits at different peering locations for maximum resiliency; price a second circuit if the customer wants that.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure ExpressRoute",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-expressroute",
+        "quote": "For Maximum Resiliency, configure multiple circuits to different peering locations"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "expressroute",
+            "where": {
+              "facts.kind": {
+                "in": [
+                  "circuit",
+                  "direct-port"
+                ]
+              }
+            },
+            "max": 1
+          },
+          {
+            "type": "expressroute",
+            "where": {
+              "facts.circuitCount": 1
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "expressroute-delete-unused-circuits": {
+      "level": "info",
+      "title": "Circuits bill from the moment they are created",
+      "body": "ExpressRoute circuits are charged from creation, even before the provider connects them. Delete circuits you no longer use, and deprovision them with the provider first.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure ExpressRoute",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-expressroute",
+        "quote": "ExpressRoute circuits are charged from the moment they're created. To reduce unnecessary cost, deprovision the circuit with the service provider and delete the ExpressRoute circuit from your subscription."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "expressroute",
+            "where": {
+              "facts.kind": {
+                "in": [
+                  "circuit",
+                  "direct-port"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

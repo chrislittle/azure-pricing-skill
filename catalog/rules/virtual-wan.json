@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "virtual-wan-hub-fixed-cost": {
+      "level": "info",
+      "title": "Each hub has a fixed monthly cost",
+      "body": "This estimate has more than one virtual hub. Microsoft says each hub incurs fixed monthly costs regardless of traffic, so add a hub only in a region where connectivity needs justify it.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure Virtual WAN",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-virtual-wan",
+        "quote": "Each hub incurs fixed monthly costs regardless of traffic volume. Add hubs only where connectivity requirements justify the cost."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-wan",
+            "where": {
+              "facts.hubs": {
+                ">": 1
+              },
+              "facts.wanType": "standard"
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "virtual-wan-size-routing-units": {
+      "level": "info",
+      "title": "Size extra routing units to the real workload",
+      "body": "This estimate adds routing infrastructure units beyond the 2 included. Microsoft advises sizing them to actual workload needs, not the maximum theoretical capacity, so confirm the VM count per hub.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure Virtual WAN",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-virtual-wan",
+        "quote": "Size routing infrastructure units based on actual workload needs rather than maximum theoretical capacity."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-wan",
+            "where": {
+              "facts.extraRoutingUnits": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    },
+    "virtual-wan-size-scale-units": {
+      "level": "info",
+      "title": "Size gateway scale units to the real throughput",
+      "body": "This estimate buys gateway scale units. Microsoft advises sizing them to actual throughput requirements; each unit is billed every hour it exists.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Well-Architected Framework service guide for Azure Virtual WAN",
+        "url": "https://learn.microsoft.com/azure/well-architected/service-guides/azure-virtual-wan",
+        "quote": "Size gateway scale units based on actual throughput requirements."
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "virtual-wan",
+            "where": {
+              "facts.scaleUnits": {
+                ">": 0
+              }
+            }
+          }
+        ]
+      },
+      "group": "networking"
+    }
+  }
+}

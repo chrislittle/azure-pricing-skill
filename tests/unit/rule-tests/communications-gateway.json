@@ -1,0 +1,69 @@
+{
+  "rules": {
+    "communications-gateway-per-user-full-cycle": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "communications-gateway",
+                  "users": 5000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "communications-gateway",
+                  "users": 500
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "communications-gateway-lab-moved-users": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "communications-gateway",
+                  "users": 500,
+                  "labs": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "communications-gateway",
+                  "users": 500
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

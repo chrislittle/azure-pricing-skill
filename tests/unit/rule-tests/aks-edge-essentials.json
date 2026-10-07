@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "aks-edge-essentials-arc-connected-billing": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "aks-edge-essentials",
+                  "devices": 3
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vm",
+                  "sku": "Standard_D2s_v5",
+                  "count": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

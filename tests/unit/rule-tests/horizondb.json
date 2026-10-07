@@ -1,0 +1,49 @@
+{
+  "rules": {
+    "horizondb-single-replica-production": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "horizondb",
+                  "vcores": 4,
+                  "replicas": 1,
+                  "storageGb": 100
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true
+          },
+          "discountPct": 0
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "horizondb",
+                  "vcores": 4,
+                  "replicas": 1,
+                  "storageGb": 100
+                }
+              ]
+            }
+          ],
+          "context": {
+            "production": true,
+            "zoneResilience": false
+          },
+          "discountPct": 0
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,17 @@
 // rules.json never fires: no citation, no advice.
 const catalog = require('../../catalog/catalog.json');
 const RULEBOOK = require('../../catalog/rules.json');
+// Service rules live in catalog/rules/<type>.json ({ "rules": { id: rule } }), one file per service.
+{
+  const fs = require('fs'), path = require('path');
+  const dir = path.join(__dirname, '..', '..', 'catalog', 'rules');
+  if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
+    for (const [id, r] of Object.entries(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).rules || {})) {
+      if (RULEBOOK.rules[id]) throw new Error(`catalog/rules/${f}: rule id "${id}" already exists`);
+      RULEBOOK.rules[id] = r;
+    }
+  }
+}
 
 const FRAMEWORKS = new Set(['WAF', 'Advisor', 'MCSB', 'Learn', 'Pricing']);
 const SOURCE_HOSTS = /^https:\/\/(learn\.microsoft\.com|azure\.microsoft\.com)\//;
@@ -77,8 +88,8 @@ const CONDITIONS = {
     const lic = w.reduce((s, c) => s + ((c.facts.winRate || 0) - c.facts.baseRate) * c.facts.hours * c.facts.count, 0);
     return { license: fmt(lic, est.currency) };
   },
-  'sql-license-included': (est, opt) => { if ([...comps(opt, 'sql-database'), ...comps(opt, 'sql-mi')].some(c => !c.facts.ahb)) return {}; },
-  'sql-ahb-applied': (est, opt) => { if ([...comps(opt, 'sql-database'), ...comps(opt, 'sql-mi')].some(c => c.facts.ahb)) return {}; },
+  'sql-license-included': (est, opt) => { if ([...comps(opt, 'sql-database'), ...comps(opt, 'sql-mi')].some(c => !c.facts.ahb && c.facts.tier !== 'hyperscale' && c.facts.compute !== 'serverless')) return {}; },
+  'sql-ahb-applied': (est, opt) => { if ([...comps(opt, 'sql-database'), ...comps(opt, 'sql-mi')].some(c => c.facts.ahb && c.facts.tier !== 'hyperscale')) return {}; },
   // ---- VM completeness, redundancy and lifecycle
   'vm-without-disk': (est, opt) => {
     if (!comps(opt, 'vm').length || comps(opt, 'disk').length) return;
@@ -228,7 +239,7 @@ function compMatches(c, m) {
 function whenHolds(w, est, opt) {
   for (const [k, t] of Object.entries(w.context || {})) if (!test(est.context[k], t)) return false;
   const pool = opt ? opt.components : est.options.flatMap(o => o.components);
-  for (const m of w.all || []) if (pool.filter(c => compMatches(c, m)).length < (m.min || 1)) return false;
+  for (const m of w.all || []) { const n = pool.filter(c => compMatches(c, m)).length; if (n < (m.min || 1) || (m.max != null && n > m.max)) return false; }
   for (const m of w.none || []) if (pool.some(c => compMatches(c, m))) return false;
   if (w.anyOption && !est.options.some(o => (w.anyOption.all || []).every(m => o.components.some(c => compMatches(c, m))))) return false;
   if (w.noOption && est.options.some(o => (w.noOption.all || []).every(m => o.components.some(c => compMatches(c, m))))) return false;
@@ -274,3 +285,5 @@ function rulebook() {
 }
 
 module.exports = { advise, rulebook, citationErrors, whenHolds };
+
+

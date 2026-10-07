@@ -1,0 +1,23 @@
+'use strict';
+const { query, dedupe, unitSize, round2 } = require('../api');
+const FACTOR={'sentinel-2':0.50,'micro-cog':0.423,'aerial-orthomosaic':0.20,naip:0.030};
+function line(desc,monthlyList,extra={}){return{desc,monthlyList:round2(monthlyList),...extra};}
+function totalOf(lines){return round2(lines.reduce((s,l)=>s+l.monthlyList,0));}
+function pick(rows,sku){const r=rows.find(x=>x.skuName===sku); if(!r) throw new Error(`no Planetary Computer meter ${sku}`); return r;}
+async function planetary(o){ const rows=dedupe(await query(`serviceName eq 'Microsoft Planetary Computer Pro' and productName eq 'MS Planetary Computer Pro' and armRegionName eq '${o.region}'`, o.currency||'USD')); const lines=[]; const storage=pick(rows,o.disasterRecovery?'BCDR Geospatial Storage':'Geospatial Storage'); const storedGb=o.disasterRecovery?(o.bcdrStorageGb||o.storageGb):o.storageGb; lines.push(line(`${o.disasterRecovery?'BCDR ':'Geospatial '}storage: ${storedGb} GiB-month * ${storage.retailPrice}`, (storedGb/unitSize(storage.unitOfMeasure))*storage.retailPrice,{meterId:storage.meterId})); const ingestHours=(o.ingestVcpuHours||0)+(o.ingestedGb||0)*(FACTOR[o.dataType||'sentinel-2']); if(ingestHours){const m=pick(rows,'Ingest and Transform'); lines.push(line(`Ingest transform: ${ingestHours} vCPU-hours * ${m.retailPrice}`, (ingestHours/unitSize(m.unitOfMeasure))*m.retailPrice,{meterId:m.meterId}));} if(o.operations){const m=pick(rows,o.disasterRecovery?'BCDR Geospatial Data Reads':'Geospatial Data Operations'); lines.push(line(`${o.disasterRecovery?'BCDR ':'Data '}operations: ${o.operations} / ${m.unitOfMeasure} * ${m.retailPrice}`, (o.operations/unitSize(m.unitOfMeasure))*m.retailPrice,{meterId:m.meterId}));} if(o.bandwidthGb){const m=pick(rows,'Bandwidth'); lines.push(line(`Bandwidth: ${o.bandwidthGb} GiB * ${m.retailPrice}`, (o.bandwidthGb/unitSize(m.unitOfMeasure))*m.retailPrice,{meterId:m.meterId}));} return {monthlyList:totalOf(lines),lines}; }
+module.exports={ type:'planetary-computer', source:'retail-api', cases:[
+ {name:'east us sentinel ingestion storage',region:'eastus',currency:'USD',component:{type:'planetary-computer',storageGb:1000,ingestedGb:100,dataType:'sentinel-2'}, // Learn usage metrics: storage is GiB-month; Sentinel-2 ingest estimate is 0.50 vCPU-hours/GiB.
+  expected:()=>planetary({region:'eastus',storageGb:1000,ingestedGb:100,dataType:'sentinel-2'})},
+ {name:'micro cog operations and bandwidth',region:'eastus',currency:'USD',component:{type:'planetary-computer',storageGb:500,ingestedGb:10,dataType:'micro-cog',operations:1000000,bandwidthGb:100}, // Data operations bill per 10K reads; Micro COG ingest estimate is 0.423 vCPU-hours/GiB.
+  expected:()=>planetary({region:'eastus',storageGb:500,ingestedGb:10,dataType:'micro-cog',operations:1000000,bandwidthGb:100})},
+ {name:'aerial orthomosaic and explicit vcpu hours',region:'eastus',currency:'USD',component:{type:'planetary-computer',storageGb:250,ingestedGb:20,dataType:'aerial-orthomosaic',ingestVcpuHours:5}, // Explicit ingest vCPU-hours are added to the documented 0.20 vCPU-hours/GiB aerial estimate.
+  expected:()=>planetary({region:'eastus',storageGb:250,ingestedGb:20,dataType:'aerial-orthomosaic',ingestVcpuHours:5})},
+ {name:'naip with disaster recovery',region:'eastus',currency:'USD',component:{type:'planetary-computer',storageGb:250,ingestedGb:250,dataType:'naip',disasterRecovery:true}, // NAIP COG estimate is 0.030 vCPU-hours/GiB; BCDR is a rate switch to BCDR storage/read meters, not standard plus an extra copy.
+  expected:()=>planetary({region:'eastus',storageGb:250,ingestedGb:250,dataType:'naip',disasterRecovery:true})},
+ {name:'west europe no eastus2 availability',region:'westeurope',currency:'USD',component:{type:'planetary-computer',storageGb:100,operations:10000}, // Planetary Computer Pro is not sold in East US 2; West Europe validates another supported region.
+  expected:()=>planetary({region:'westeurope',storageGb:100,operations:10000})},
+ {name:'us gov virginia bcdr rate switch',region:'usgovvirginia',currency:'USD',component:{type:'planetary-computer',storageGb:100,operations:20000,disasterRecovery:true}, // US Gov Virginia validates sovereign-region rates; BCDR switches storage and operations to BCDR meters.
+  expected:()=>planetary({region:'usgovvirginia',storageGb:100,operations:20000,disasterRecovery:true})},
+ {name:'eur west europe storage operations',region:'westeurope',currency:'EUR',component:{type:'planetary-computer',storageGb:100,operations:10000,bandwidthGb:10}, // EUR case queries Retail API in a supported region.
+  expected:()=>planetary({region:'westeurope',currency:'EUR',storageGb:100,operations:10000,bandwidthGb:10})},
+]};

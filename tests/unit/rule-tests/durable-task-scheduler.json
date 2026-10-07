@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "durable-task-scheduler-ha-needs-three-cus": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "durable-task-scheduler",
+                  "capacityUnits": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "durable-task-scheduler",
+                  "capacityUnits": 3
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "durable-task-scheduler-consumption-no-ha": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "context": {
+            "production": true
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "durable-task-scheduler",
+                  "sku": "consumption",
+                  "actionsPerMonth": 100000
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "context": {
+            "production": false
+          },
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "durable-task-scheduler",
+                  "sku": "consumption",
+                  "actionsPerMonth": 100000
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

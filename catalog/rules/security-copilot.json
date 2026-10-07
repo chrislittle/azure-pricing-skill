@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "security-copilot-provision-at-hour-start": {
+      "level": "info",
+      "title": "Change provisioned SCUs at the start of the hour",
+      "body": "This estimate keeps provisioned SCUs on for only part of the month. Provisioned capacity is billed in whole clock-hours, so switching capacity on or off in the middle of an hour still bills the full hour; time the changes for the top of the hour.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Microsoft Security Copilot Security Compute Units and capacity",
+        "url": "https://learn.microsoft.com/copilot/security/security-compute-units-capacity",
+        "quote": "To maximize usage, make SCU provisioning changes at the beginning of the hour."
+      },
+      "when": { "scope": "option", "all": [ { "type": "security-copilot", "where": { "facts.provisionedScus": { ">": 0 }, "facts.hours": { "<": 730 } } } ] },
+      "group": "security"
+    },
+    "security-copilot-cap-overage": {
+      "level": "info",
+      "title": "Set a limit on overage SCUs",
+      "body": "This estimate includes overage SCUs, which are billed on demand. Microsoft lets you set overage to a maximum amount or to unlimited, so set a maximum if the monthly bill must stay predictable.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Microsoft Security Copilot Security Compute Units and capacity",
+        "url": "https://learn.microsoft.com/copilot/security/security-compute-units-capacity",
+        "quote": "Can be configured with a maximum limit or set to unlimited"
+      },
+      "when": { "scope": "option", "all": [ { "type": "security-copilot", "where": { "facts.overageScuHours": { ">": 0 } } } ] },
+      "group": "security"
+    },
+    "security-copilot-check-e5-e7": {
+      "level": "info",
+      "title": "Check Microsoft 365 E5/E7 entitlement before buying SCU capacity",
+      "body": "This estimate buys provisioned SCUs. Microsoft makes Security Copilot available to eligible Microsoft 365 E5 and E7 customers with an included monthly SCU allowance, so confirm whether the customer already has that entitlement before paying for capacity.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Security Copilot inclusion in Microsoft 365 E5 and E7",
+        "url": "https://learn.microsoft.com/copilot/security/security-copilot-inclusion",
+        "quote": "Security Copilot will be available to all eligible Microsoft 365 E5 and E7 customers."
+      },
+      "when": { "scope": "option", "all": [ { "type": "security-copilot", "where": { "facts.provisionedScus": { ">": 0 }, "facts.m365E5Licenses": 0 } } ] },
+      "group": "security"
+    }
+  }
+}

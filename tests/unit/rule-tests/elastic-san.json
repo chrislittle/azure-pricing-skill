@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "elastic-san-base-only": { "test": {
+      "fires": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "elastic-san", "baseTiB": 5 } ] } ] },
+      "silent": { "region": "eastus2", "options": [ { "name": "a", "components": [ { "type": "elastic-san", "baseTiB": 5, "additionalTiB": 20 } ] } ] } } },
+    "elastic-san-lrs-zone-loss": { "test": {
+      "fires": { "region": "eastus2", "context": { "zoneResilience": true }, "options": [ { "name": "a", "components": [ { "type": "elastic-san", "baseTiB": 1 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "zoneResilience": true }, "options": [ { "name": "a", "components": [ { "type": "elastic-san", "baseTiB": 1, "redundancy": "zrs" } ] } ] } } }
+  }
+}

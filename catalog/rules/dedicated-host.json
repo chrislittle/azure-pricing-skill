@@ -1,0 +1,84 @@
+{
+  "rules": {
+    "dedicated-host-production-two-hosts": {
+      "level": "warn",
+      "title": "Use at least two dedicated hosts for production availability",
+      "body": "This production estimate has a single dedicated host. A host is one physical server, so a failure or maintenance event takes every VM on it down. Microsoft says to spread VMs across at least two hosts for high availability; add a second host to the estimate.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Azure Dedicated Host overview",
+        "url": "https://learn.microsoft.com/azure/virtual-machines/dedicated-hosts",
+        "quote": "For high availability, you should deploy multiple VMs, spread across multiple hosts (minimum of 2)"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "production": true
+        },
+        "all": [
+          {
+            "type": "dedicated-host",
+            "where": {
+              "facts.hosts": {
+                "<": 2
+              }
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "dedicated-host-reservation-steady": {
+      "level": "info",
+      "title": "Compare a reservation for steadily running hosts",
+      "body": "These dedicated hosts are priced pay as you go and are expected to run for a year or longer. Dedicated Host is also sold with 1-year and 3-year reservations and savings plans, which cost less per hour for a host that is always allocated. Compare the reservation price (billed whether or not the host is used).",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Dedicated Host pricing",
+        "url": "https://azure.microsoft.com/pricing/details/virtual-machines/dedicated-host/",
+        "quote": "which is a one- or three-year agreement to use a specific instance of a service"
+      },
+      "when": {
+        "scope": "option",
+        "context": {
+          "steadyUsage": true
+        },
+        "all": [
+          {
+            "type": "dedicated-host",
+            "where": {
+              "facts.commitment": "payg"
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    },
+    "dedicated-host-hybrid-benefit": {
+      "level": "info",
+      "title": "Check Azure Hybrid Benefit before paying for licences on the host",
+      "body": "This estimate charges a Windows Server or other software licence through Azure for VMs on the hosts. If the customer already owns eligible Windows Server or SQL Server licences with Software Assurance, Azure Hybrid Benefit can remove that charge, and unlimited virtualization rights can license the whole host. Ask about their licences.",
+      "citation": {
+        "framework": "Pricing",
+        "code": null,
+        "source": "Azure Dedicated Host pricing",
+        "url": "https://azure.microsoft.com/pricing/details/virtual-machines/dedicated-host/",
+        "quote": "Eligible customers can also use the Azure Hybrid Benefit for savings on Azure Dedicated Host deployments"
+      },
+      "when": {
+        "scope": "option",
+        "all": [
+          {
+            "type": "dedicated-host",
+            "where": {
+              "facts.licenceCharged": true
+            }
+          }
+        ]
+      },
+      "group": "compute"
+    }
+  }
+}

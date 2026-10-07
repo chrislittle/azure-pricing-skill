@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "entra-external-id-sms-usage": {
+      "test": {
+        "fires": {
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "type": "entra-external-id",
+                  "monthlyActiveUsers": 10000,
+                  "smsMidHighCostCountries": 5000
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        },
+        "silent": {
+          "discountPct": 0,
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "monthlyActiveUsers": 10000,
+                  "type": "entra-external-id"
+                }
+              ],
+              "name": "A"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

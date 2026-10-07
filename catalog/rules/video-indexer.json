@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "video-indexer-retention-period": {
+      "level": "info",
+      "title": "Set a retention period if you do not need to keep the original media",
+      "body": "Video Indexer keeps the original media in the connected storage account. Microsoft says to set the API retentionPeriod parameter between 1 and 7 if you do not need the originals, which limits storage cost that this estimate does not include.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Video Indexer indexing configuration guide",
+        "url": "https://learn.microsoft.com/azure/azure-video-indexer/indexing-configuration-guide",
+        "quote": "If you don't need to keep the original media file in storage, set the API retentionPeriod parameter to a value between 1 and 7."
+      },
+      "when": { "scope": "option", "all": [ { "type": "video-indexer", "where": { "facts.minutes": { ">": 0 } } } ] },
+      "group": "ai"
+    },
+    "video-indexer-audio-and-video-billed": {
+      "level": "info",
+      "title": "Audio and video analysis are charged separately",
+      "body": "This estimate bills both an audio preset and a video preset for every minute. Microsoft says the indexing choice (video, audio or both) decides which SKUs are charged, so audio-only or video-only content costs less.",
+      "citation": {
+        "framework": "Learn",
+        "code": null,
+        "source": "Video Indexer FAQ",
+        "url": "https://learn.microsoft.com/azure/azure-video-indexer/faq",
+        "quote": "the user defines the indexing to be video analysis, audio analysis or both. The choice determines which SKUs get charged."
+      },
+      "when": { "scope": "option", "all": [ { "type": "video-indexer", "where": { "facts.minutes": { ">": 0 }, "facts.audioPreset": { "!=": "none" }, "facts.videoPreset": { "!=": "none" } } } ] },
+      "group": "ai"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "firewall-manager-review-policy-associations": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "regions": 2,
+                  "type": "firewall-manager",
+                  "firewallsPerPolicy": 4,
+                  "policies": 2
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "components": [
+                {
+                  "regions": 1,
+                  "type": "firewall-manager",
+                  "firewallsPerPolicy": 2,
+                  "policies": 1
+                }
+              ],
+              "name": "a"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

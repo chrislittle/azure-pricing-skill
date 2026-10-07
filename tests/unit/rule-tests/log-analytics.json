@@ -1,0 +1,72 @@
+{
+  "rules": {
+    "log-analytics-restore-minimum": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 5,
+                  "restoreGB": 100
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 5
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "log-analytics-basic-aux-no-commitment": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 150,
+                  "commitmentTier": 100,
+                  "basicLogsGBPerDay": 20
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "log-analytics",
+                  "ingestGBPerDay": 150,
+                  "commitmentTier": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

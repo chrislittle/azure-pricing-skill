@@ -1,0 +1,142 @@
+{
+  "rules": {
+    "traffic-manager-longer-ttl": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 500,
+                  "azureEndpoints": 2
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "traffic-manager-fast-checks-cost": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2,
+                  "fastAzureEndpoints": 1
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "traffic-manager-traffic-view-cost": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2,
+                  "trafficViewMillions": 5
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "traffic-manager-low-ttl-failover": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 2
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "options": [
+            {
+              "name": "a",
+              "components": [
+                {
+                  "type": "traffic-manager",
+                  "dnsQueriesMillions": 10,
+                  "azureEndpoints": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "rules": {
+    "vmware-solution-reservation-steady": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av36p"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av36p",
+                  "commitment": "reservation-1y"
+                }
+              ]
+            }
+          ],
+          "context": {
+            "steadyUsage": true
+          }
+        }
+      }
+    },
+    "vmware-solution-reservation-eligibility": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av36p",
+                  "commitment": "reservation-1y"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av36p"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "vmware-solution-av64-prerequisite": {
+      "test": {
+        "fires": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av64"
+                }
+              ]
+            }
+          ]
+        },
+        "silent": {
+          "region": "eastus2",
+          "discountPct": 0,
+          "options": [
+            {
+              "name": "A",
+              "components": [
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av64"
+                },
+                {
+                  "type": "vmware-solution",
+                  "nodes": 3,
+                  "hostType": "av36p"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

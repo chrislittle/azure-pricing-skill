@@ -1,0 +1,32 @@
+'use strict';
+const { query, dedupe, unitSize, round2 } = require('../api');
+const HOURS=730;
+function line(desc,monthlyList,extra={}){return{desc,monthlyList:round2(monthlyList),...extra};} function total(lines){return round2(lines.reduce((s,l)=>s+l.monthlyList,0));}
+function pick(rows,pred,what){const hits=rows.filter(pred).sort((a,b)=>a.retailPrice-b.retailPrice); if(!hits.length) throw new Error('missing '+what); return hits[0];}
+function rate(row){ return row.retailPrice; }
+function tlabel(t){return t==='business-critical'?'Business Critical':t==='hyperscale'?'Hyperscale':'General Purpose';}
+async function sql({region,currency='USD',tier='general-purpose',vcores,storageGB=32,ahb=false,hours=HOURS,compute='provisioned',avgVcores,minVcores,activeHoursPerMonth,hardware='standard-series',zoneRedundant=false,haReplicas=0,namedReplicas=0,commitment='payg',backupStorageGB=0,ltrStorageGB=0,backupRedundancy='GRS'}){
+ const rs=dedupe(await query(`serviceName eq 'SQL Database' and armRegionName eq '${region}'`,currency)); const lines=[]; const label=tlabel(tier); const replicas=1+(tier==='hyperscale'?(haReplicas||0)+(namedReplicas||0):0);
+ let comp;
+ if(compute==='serverless'){ comp=pick(rs,r=>r.productName.includes(`${label} - Serverless - Compute Gen5`)&&r.skuName==='1 vCore'&&r.meterName==='vCore','serverless compute'); lines.push(line(`${label} serverless compute ${avgVcores||vcores} avg vCore(s) for ${activeHoursPerMonth||hours} h`,(avgVcores||vcores)*(activeHoursPerMonth||hours)*rate(comp),{meterId:comp.meterId})); }
+ else { const hw=hardware==='premium-series'?'Premium Series':hardware==='premium-series-memory-optimized'?'Premium Series Memory Optimized':hardware==='dc-series'?'DC-Series':'Gen5'; comp=pick(rs,r=>r.productName.includes(label)&&r.productName.includes('Compute')&&r.productName.includes(hw)&&(r.skuName===`${vcores} vCore${zoneRedundant?' Zone Redundancy':''}`||r.skuName==='vCore'||r.skuName==='1 vCore')&&r.type==='Consumption'&&r.retailPrice>0,`${label} ${hw} compute`); lines.push(line(`${label} ${hw} compute ${vcores} vCore(s) x ${replicas} replica(s)`,replicas*hours*rate(comp)*(comp.skuName==='vCore'||comp.skuName==='1 vCore'?vcores:1),{meterId:comp.meterId})); }
+ if(!ahb && compute!=='serverless' && tier!=='hyperscale'){ const lr=dedupe(await query(`serviceName eq 'SQL Database' and armRegionName eq 'Global'`,currency)); const lic=pick(lr,r=>r.productName.includes(label)&&r.productName.includes('SQL License')&&r.meterName==='vCore'&&r.type==='Consumption'&&r.retailPrice>0,'SQL license'); lines.push(line(`SQL Server license ${vcores} vCore(s) x ${replicas} replica(s)`,vcores*replicas*hours*lic.retailPrice,{meterId:lic.meterId})); }
+ let sr;if(tier==='hyperscale') sr=pick(rs,r=>r.productName==='SQL Database Hyperscale - Storage'&&r.meterName==='Hyperscale Data Stored','hyperscale storage'); else sr=pick(rs,r=>r.productName.includes(label)&&r.productName.includes('Storage')&&/Data Stored/.test(r.meterName)&&r.retailPrice>0&&!/Free/.test(r.meterName)&&!r.productName.includes('Backup')&&!r.productName.includes('LTR'),'storage'); lines.push(line(`${label} data storage ${storageGB} GB`,storageGB*sr.retailPrice,{meterId:sr.meterId}));
+ if(backupStorageGB){ const billable=Math.max(0, backupStorageGB-storageGB); if(billable){ const b=pick(rs,r=>r.productName.includes(tier==='hyperscale'?'Hyperscale':'Backup')&&r.skuName.includes(backupRedundancy==='GRS'?'RA-GRS':backupRedundancy)&&/Backup.*Data Stored/.test(r.meterName),'backup'); lines.push(line(`${label} backup ${billable} GB ${backupRedundancy}`,billable*b.retailPrice,{meterId:b.meterId})); }}
+ if(ltrStorageGB){ const l=pick(rs,r=>r.productName.includes('LTR Backup Storage')&&r.skuName.includes(backupRedundancy==='GRS'?'RA-GRS':backupRedundancy),'ltr backup'); lines.push(line(`LTR backup ${ltrStorageGB} GB ${backupRedundancy}`,ltrStorageGB*l.retailPrice,{meterId:l.meterId})); }
+ return {monthlyList:total(lines),lines};
+}
+module.exports={type:'sql-database',source:'retail-api',cases:[
+ {name:'hyperscale ha named replicas backups',region:'eastus2',currency:'USD',component:{type:'sql-database',tier:'hyperscale',vcores:4,storageGB:1024,haReplicas:1,namedReplicas:1,backupStorageGB:100,ltrStorageGB:50}, // Hyperscale compute and SQL licenses multiply primary + HA + named replicas; storage/backup/LTR are separate meters.
+  expected:()=>sql({region:'eastus2',tier:'hyperscale',vcores:4,storageGB:1024,haReplicas:1,namedReplicas:1,backupStorageGB:100,ltrStorageGB:50})},
+ {name:'general purpose serverless active hours',region:'eastus2',currency:'USD',component:{type:'sql-database',tier:'general-purpose',compute:'serverless',vcores:4,avgVcores:1.5,activeHoursPerMonth:200,storageGB:64}, // Serverless bills average active vCores for active hours plus license and storage.
+  expected:()=>sql({region:'eastus2',tier:'general-purpose',compute:'serverless',vcores:4,avgVcores:1.5,activeHoursPerMonth:200,storageGB:64})},
+ {name:'business critical zone redundant ahb',region:'eastus2',currency:'USD',component:{type:'sql-database',tier:'business-critical',vcores:4,storageGB:128,zoneRedundant:true,ahb:true}, // Zone redundancy selects the zone-redundant compute SKU; AHB omits SQL license line.
+  expected:()=>sql({region:'eastus2',tier:'business-critical',vcores:4,storageGB:128,zoneRedundant:true,ahb:true})},
+ {name:'hyperscale premium hardware current storage',region:'eastus2',currency:'USD',component:{type:'sql-database',tier:'hyperscale',hardware:'premium-series',vcores:2,storageGB:100}, // Hyperscale Premium-series has no separate SQL license and uses the current Hyperscale storage meter.
+  expected:()=>sql({region:'eastus2',tier:'hyperscale',hardware:'premium-series',vcores:2,storageGB:100})},
+ {name:'west europe hyperscale lrs backup',region:'westeurope',currency:'USD',component:{type:'sql-database',tier:'hyperscale',vcores:2,storageGB:256,backupStorageGB:50,backupRedundancy:'LRS'}, // Non-US region with Hyperscale storage and LRS backup.
+  expected:()=>sql({region:'westeurope',tier:'hyperscale',vcores:2,storageGB:256,backupStorageGB:50,backupRedundancy:'LRS'})},
+ {name:'eur general purpose backup',region:'westeurope',currency:'EUR',component:{type:'sql-database',tier:'general-purpose',vcores:2,storageGB:64,backupStorageGB:50,backupRedundancy:'ZRS'}, // EUR uses native Retail API currency for compute, license, storage, and backup.
+  expected:()=>sql({region:'westeurope',currency:'EUR',tier:'general-purpose',vcores:2,storageGB:64,backupStorageGB:50,backupRedundancy:'ZRS'})},
+]};

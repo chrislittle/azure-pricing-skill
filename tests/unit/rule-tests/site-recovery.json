@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "site-recovery-first-31-days-free": { "test": {
+      "fires": { "region": "eastus2", "context": { "production": false }, "options": [ { "name": "a", "components": [ { "type": "site-recovery", "instances": 5 } ] } ] },
+      "silent": { "region": "eastus2", "context": { "production": true }, "options": [ { "name": "a", "components": [ { "type": "site-recovery", "instances": 5 } ] } ] } } }
+  }
+}
