@@ -33,6 +33,7 @@ Tier 1 coverage for every Azure Pricing Calculator product that is still sold.
 - **Advisories:** reserved-capacity rules stay silent when a commitment is already selected; SQL
   license advisories skip Hyperscale and serverless where they do not apply.
 - `check-citations --type <type>` includes shared rules that apply to the type.
+- The interview asks for the currency when the region is outside the United States.
 
 ### Fixed
 - Blob hierarchical-namespace operations use the calculator rate per redundancy.

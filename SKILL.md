@@ -67,7 +67,9 @@ default. Keep each question to one line:
 - What is it for, in plain words? (web app, database, file shares, AI chatbot...)
 - Which Azure region? (If they do not know, ask where their users are and suggest one.)
 - Do they have a discount off Azure list price, and what does it cover? (If none: 0.)
-- Currency, if not US dollars.
+- Currency, if not US dollars. Once the region is known and it is outside the United States, ask
+  whether they want prices in US dollars or their local currency (for example euros), in your next
+  message.
 
 ### Step 2 - Service-specific questions
 
