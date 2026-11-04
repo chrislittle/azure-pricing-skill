@@ -48,10 +48,17 @@ function readback(spec) {
     ...(ctx.length ? [`About the workload: ${ctx.join('; ')}`] : [])
   ];
   spec = expandSpec(spec);
-  const opts = (spec.options || []).map((o, i) => ({ name: `Option ${i + 1}: ${o.name}`, lines: (o.components || []).map(c => (LINE[c.type] || (() => c.type))(c)) }));
+  const opts = (spec.options || []).map(o => {
+    const phase = o.scenario.phase && o.scenario.phase !== o.scenario.name ? ` (${o.scenario.phase})` : '';
+    const context = Object.entries(o.context || {}).filter(([k, v]) => CTXL[k] && typeof v === 'boolean').map(([k, v]) => CTXL[k][v ? 0 : 1]);
+    return { name: `${o.scenario.name}${phase} - ${o.purchasing}`, lines: [
+      ...(context.length ? [`For this scope: ${context.join('; ')}`] : []),
+      ...(o.components || []).map(c => (LINE[c.type] || (() => c.type))(c))
+    ] };
+  });
   const missing = notIncluded(spec);
   const said = spec.customerSaid && spec.customerSaid.requirements ? String(spec.customerSaid.requirements).replace(/\s+/g, ' ').trim() : '';
-  const canon = JSON.stringify([head, opts.map(o => o.lines), missing, spec.replacedSizes || []]);
+  const canon = JSON.stringify([head, opts, missing, spec.replacedSizes || []]);
   const code = 'AZP-' + crypto.createHash('sha256').update(canon).digest('hex').slice(0, 6).toUpperCase();
   const text = [
     'Before I price this, please check these numbers against what you told me:',
@@ -67,6 +74,18 @@ function readback(spec) {
 
 // Components that usually come together. Listed so the person can spot what was left out.
 function notIncluded(spec) {
+  const scopes = new Map();
+  for (const [i, o] of (spec.options || []).entries()) {
+    const id = o.scenario ? o.scenario.id : i;
+    if (!scopes.has(id)) scopes.set(id, []);
+    scopes.get(id).push(o);
+  }
+  if (scopes.size > 1) return [...scopes.values()].flatMap(options => {
+    const first = options[0];
+    const name = first.scenario ? first.scenario.name : first.name;
+    return notIncluded(Object.assign({}, spec, { options, context: Object.assign({}, spec.context, first.context) })).map(m => `${name}: ${m}`);
+  });
+  spec = Object.assign({}, spec, { context: Object.assign({}, spec.context, spec.options && spec.options[0] && spec.options[0].context) });
   const types = new Set((spec.options || []).flatMap(o => (o.components || []).map(c => c.type)));
   const has = (...t) => t.some(x => types.has(x));
   const excluded = (spec.excluded || []).map(String);

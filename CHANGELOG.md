@@ -3,6 +3,42 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-11-04
+
+### Added
+- Self-contained tabbed estimates: navy header, Summary purchasing comparison, detail tabs per
+  requested solution or deployment phase, and an Assumptions tab for scope, discount rules,
+  next steps and Microsoft-sourced guidance.
+- Keyboard tab navigation, hash links, no-JavaScript reading, responsive tables and printing
+  of every pane. Critical warnings and incomplete-pricing notices remain outside the tabs.
+- Explicit original-estimate IDs, purchasing labels and line-to-component provenance in priced
+  results. Exact meter quantities, rate units and unit prices remain in the companion audit file.
+- Optional explicit deployment-phase labels and per-scope workload context, preventing production
+  advice or like-for-like alternative warnings from being applied to unlike phases.
+- Focused report tests for lineage, quantities, totals, currencies, exclusions, failed pricing,
+  escaping and readback reconfirmation.
+
+### Changed
+- The interview starts with one estimate, asks only missing requirements and uses customer
+  terminology. Alternatives are opt-in or motivated by a real decision; phases are not ranked
+  as competing architectures, and purchasing comparisons stay within their original estimate.
+- Five-column customer tables show service/description, quantity, unit, monthly list and your
+  price. Explicit VM counts and runtime are separated without changing pricing arithmetic.
+- Lowest-cost flags compare only purchasing variants of the same original estimate, never
+  unrelated phases. Readback check codes include scope labels as well as quantities.
+- Completeness checks and option-level advice stay within their original estimate, so a resource
+  in another phase cannot hide a missing disk or missing cluster nodes in this one.
+
+### Fixed
+- Zero-runtime VMs no longer generate full-month purchasing comparison variants.
+
+### Validation note
+- The canonical suite reports eight EUR snapshot differences, reproduced with identical values
+  on unchanged `main`. All 142 canonical check results match that baseline; pricing expectations
+  were not changed to force a pass.
+- This release contains only the report and interview redesign on top of 1.0.0. The separate,
+  unpublished Tier 1 service expansion is not included.
+
 ## [1.0.0] - 2026-10-01
 
 First public release.

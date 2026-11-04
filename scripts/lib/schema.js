@@ -231,10 +231,18 @@ function validateSpec(spec, opts = {}) {
   if (!said.discount || String(said.discount).trim().length < 2) errs.push('Missing "customerSaid.discount": quote the person\'s own words about their discount (for example "16% off list" or "no discount"). If they have not told you, STOP and ask them; do not assume.');
   if (!said.requirements || String(said.requirements).trim().length < 3) errs.push('Missing "customerSaid.requirements": quote what the person told you about size and usage (CPU/memory, capacity, volumes, hours). If they have not told you, STOP and ask them.');
   if (!Array.isArray(spec.options) || !spec.options.length) errs.push('Missing "options" array.');
-  for (const [k, v] of Object.entries(spec.context || {})) {
-    if (!CONTEXT[k]) errs.push(`context: unknown field "${k}". Known: ${Object.keys(CONTEXT).filter(x => !CONTEXT[x].internal).join(', ')}.`);
-    else if (typeof v !== 'boolean') errs.push(`context.${k} must be true or false.`);
+  const contexts = [['context', spec.context], ...(spec.options || []).map((o, i) => [`options[${i}].context`, o.context])];
+  for (const [prefix, context] of contexts) {
+    if (context == null) continue;
+    if (typeof context !== 'object' || Array.isArray(context)) { errs.push(`${prefix} must be an object.`); continue; }
+    for (const [k, v] of Object.entries(context)) {
+      if (!CONTEXT[k]) errs.push(`${prefix}: unknown field "${k}". Known: ${Object.keys(CONTEXT).filter(x => !CONTEXT[x].internal).join(', ')}.`);
+      else if (typeof v !== 'boolean') errs.push(`${prefix}.${k} must be true or false.`);
+    }
   }
+  (spec.options || []).forEach((o, i) => {
+    if (o.phase != null && (typeof o.phase !== 'string' || !o.phase.trim())) errs.push(`options[${i}].phase must be a non-empty phase label.`);
+  });
   (spec.options || []).forEach((o, i) => (o.components || []).forEach((c, j) => {
     if (c.type === 'vm' && c.sku) {
       const { lifecycle, explain } = require('./lifecycle');
