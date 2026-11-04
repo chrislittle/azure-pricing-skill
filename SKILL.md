@@ -27,7 +27,9 @@ explain the result in plain words.
    Learn), and the report prints the source link. Do not bury them, and **do not add design advice
    of your own**: if it is not in the engine output, do not present it as a recommendation.
 5. It is an **estimate, not a quote**. Say so.
-6. **Your first reply is always questions, never a price.** Do not build until the person has told
+6. **Start with missing requirements, never an unpriced total.** Ask only questions not already
+   answered. If the opening request is complete, proceed to the required readback, not a redundant
+   interview. Do not build until the person has told
    you, in their own words, the **region**, their **discount** (or that they have none) and the
    **size/usage** of what they need. Opening messages almost never contain all three; guessing them
    produces a confident, wrong estimate. The engine rejects a spec without `customerSaid` quotes.
@@ -60,8 +62,13 @@ GitHub Copilot CLI). All output is JSON.
 
 ### Step 1 - Understand the workload (first reply)
 
-Greet briefly, then ask **no more than three questions per message**, each with a suggested
-default. Keep each question to one line:
+Start with **one estimate**, using the person's words for the workload. Do not ask how many
+"models" they want, require multiple solutions, or use "Model 1 / Model 2" unless they used those
+labels themselves. Understand the requirement before suggesting an architecture.
+
+Greet briefly, then ask only for missing information, **no more than three questions per message**.
+Offer a sensible default where useful, but do not treat it as an answer until they accept it.
+Keep each question to one line:
 
 - What is it for, in plain words? (web app, database, file shares, AI chatbot...)
 - Which Azure region? (If they do not know, ask where their users are and suggest one.)
@@ -86,7 +93,7 @@ Typical translations:
 
 | They say | You do |
 |---|---|
-| "a server with 4 CPUs and 16 GB" | `vm-suggest --vcpu 4 --mem 16 ...`; present the shortlist in one sentence each |
+| "a server with 4 CPUs and 16 GB" | `vm-suggest --vcpu 4 --mem 16 ...`; select a fit using their compatibility requirements and explain it; present alternatives only for a meaningful unresolved decision |
 | "it needs to be fast" (disk) | `premium-ssd`; if large or precise IOPS, `premium-v2` |
 | "just holds data" (disk) | `standard-ssd` |
 | "rarely read, keep for years" | blob `Archive` or `Cold` |
@@ -95,12 +102,36 @@ Typical translations:
 | "we own Windows licenses with SA" | vm `os: windows-ahb` |
 | "no idea how much traffic" | use the default **and** record it under `assumptions` in their words |
 | anything public or internet-facing (website, API, downloads) | **ask how much data goes out to the internet per month** and add a `bandwidth` component |
-| workload running only part of the day | set `hours`; the engine compares commitments against pay-as-you-go |
+| workload running only part of the day | set `hours`; start with pay-as-you-go, and discuss commitments only if requested or justified by the engine's advice |
 | they name an older VM size (for example D4s_v3, DS2_v2, B2ms) | the engine only prices **Current and Extended** sizes. Price the current equivalent from `vm-suggest`, add `replacedSizes`, and tell them why in plain words with the Microsoft references the engine gives you |
 | any virtual machine | always include its OS disk (`role: "OS disk"`, 64-128 GiB standard-ssd unless they say otherwise) |
 
-If they do not know a quantity, use the schema default and **list it in `assumptions`**.
-Never silently invent a number.
+If they do not know a quantity, propose the schema default, get their agreement, and **list it in
+`assumptions`**. Never silently invent a number.
+
+### Step 3 - Set the estimate scope
+
+Default to **one solution estimate**. Add alternatives only when requested or when a meaningful,
+unresolved choice changes the design. Explain that choice in terms of their requirements before
+asking them; do not make them pick Azure part numbers. Do not automatically create AMD, Intel
+and Arm options for every server.
+
+Use the customer's labels (for example "Pilot", "Production", "Existing approach", "Managed
+service alternative"). Pilot/PoC and production are **deployment phases**, not competing
+architectures: keep their quantities and assumptions separate and never call a smaller pilot the
+"cheapest solution." Each requested solution or phase is one entry in `options`, named clearly.
+Set its `phase` field to the customer's phase label (for example `"phase": "Pilot"`), so unlike
+phases are not subjected to like-for-like alternative warnings. If context differs by phase,
+record overrides in that entry's `context` (for example `"context": { "production": false }`
+for a pilot); otherwise it inherits `spec.context`. Show those differences in the readback.
+
+**Purchasing comparisons:** reservations and savings plans are purchasing choices within the
+same solution/phase, not extra architectures. Ask once if a comparison is wanted when the
+person requests it or the engine's guidance warrants it; otherwise keep pay-as-you-go. For a VM
+comparison, set `"compare": { "commitments": true }`; do not hand-author its variants. The engine
+retains all eligible 1- and 3-year reservation and savings plan variants, grouped under the
+original estimate. Other resources keep their specified purchasing terms; the readback shows
+the full scope. Short-runtime VMs are not automatically expanded.
 
 ### Step 3b - Confirm the numbers with the readback (required)
 
@@ -117,17 +148,6 @@ storage and data transfer separate: "2 TB of files and 20 TB of downloads a mont
 storage plus 20 TB of internet egress. If they correct anything, fix the spec, run `readback`
 again and show the new text. The engine will not build until the person has replied to the
 readback for the exact spec being built; if it says lines are missing, show the text again unchanged.
-
-### Step 3 - Options
-
-Default to **two or three options**, like for like (same components in every option), for example
-AMD vs Intel, or Premium vs Standard disk. If an advisory points to a better design (for example a
-load balancer or Application Gateway instead of a public IP on a VM), add that design as an extra
-option or offer it.
-
-**Commitment comparisons:** when the person wants to compare pay-as-you-go with reservations or
-savings plans, do not write those options yourself. Set `"compare": { "commitments": true }` in the
-spec and the engine adds 1- and 3-year reservation and savings plan versions of every option.
 
 **Must-act warnings:** some problems stop the build (`stage: "advice"`), for example an older
 server with no disk, or a disk that cannot reach
@@ -156,12 +176,35 @@ node "<skill>/scripts/azp.js" build <name>.json --out <name>.html
 
 In plain words, briefly:
 
-1. The monthly total for each option, **list and your price** (if a discount applies).
+1. The monthly total for the estimate, or each requested solution/phase, **list and your price**
+   (if a discount applies). Group any purchasing comparisons under their original estimate;
+   never add the variants together or rank different phases as cheapest.
 2. Each `warn` advisory, one or two sentences each, and what you recommend.
 3. The key assumptions they should check.
-4. Where the HTML file is.
+4. Where the HTML file and companion `.estimate.json` audit file are. The self-contained HTML
+   opens on Summary, with a detail tab per requested solution/phase and an Assumptions tab for
+   discount rules, scope, next steps and sourced guidance. Warnings remain visible outside the
+   tabs. Five-column detail tables show monthly list and your price; exact meter quantities,
+   rate units and unit prices remain in the audit file. Printing includes every tab.
 
-Offer next steps: adjust quantities, add a commitment comparison, add or remove a component.
+Do not reopen settled design questions or propose extra solutions just to fill the report.
+
+### Conversation examples (wording, not a script)
+
+- **A simple request:** "I need an estimate for a small internal app." Ask about missing workload,
+  region and discount first (at most three questions), then the relevant usage questions. Do not
+  ask "How many models?" or present a menu of architectures.
+- **Already complete:** "Price one Linux server, 4 CPUs, 16 GB, 128 GB disk, all month in East US 2,
+  no discount, USD." Skip those questions. Clarify only material gaps, then show the engine's
+  readback and wait for confirmation.
+- **A real choice:** "Can we keep the app on a server or use a managed service?" Clarify requirements,
+  then compare those two named alternatives on like-for-like scope; do not invent a third.
+- **Phases:** "Show a pilot and production." Ask which quantities or availability requirements
+  change between them; retain those labels and separate totals. Do not recommend the pilot just
+  because it costs less.
+- **Purchasing:** "What about a three-year savings plan?" Explain it as a purchasing comparison
+  within the existing estimate. The current comparison engine includes all supported VM terms,
+  not just the requested term; say so before the readback, and do not silently drop any variant.
 
 ## VM sizes: Current and Extended only
 
@@ -196,9 +239,9 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
   "context": { "production": true, "internetFacing": false, "steadyUsage": true },
   "options": [
     {
-      "name": "AMD Standard_D2as_v5",
+      "name": "Internal web app",
       "label": "AMD, 2 vCPU, 8 GiB",
-      "whenToChoose": "Default. Lowest-cost x86 option.",
+      "summary": "One server for the internal web app.",
       "components": [
         { "type": "vm", "sku": "Standard_D2as_v5", "os": "linux", "count": 1, "hours": 730, "label": "Virtual machine" },
         { "type": "disk", "diskType": "standard-ssd", "sizeGiB": 128, "role": "OS disk", "label": "Storage" }
@@ -216,7 +259,13 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
   discount and requirements. It appears in the report so they can check you understood them.
 - `label` on a component groups lines in the itemization (Virtual machine, Storage, Networking...).
 - Component types and fields: run `questions <type>`. Unknown fields are rejected, so check the schema.
-- `special: true` on an option marks it as a special case (dashed card).
+- The `options` array is an internal spec field, not a requirement to offer multiple solutions.
+  One entry is normal. The engine carries explicit original-estimate IDs and purchasing labels
+  into the priced results; the renderer never parses the option name to discover relationships.
+- `phase` optionally labels a deployment phase. `context` on an option overrides matching global
+  workload context fields for option-level advisories; estimate-wide guidance still uses global
+  context. It uses the same boolean schema.
+- `special: true` on an option marks it as a special case in its detail heading.
 - For anything not covered, use `{ "type": "meter", "filter": {"serviceName": "...", "productName": "...", "skuName": "...", "meterName": "..."}, "quantity": N, "hours": 730 }` after finding the exact names with `search`. Tell the person that line was priced from a generic meter.
 
 ## Advice comes from the engine, with Microsoft sources

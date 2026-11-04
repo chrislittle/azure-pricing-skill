@@ -1,197 +1,185 @@
 'use strict';
-// Priced estimate -> HTML in the standard pricing-estimate template.
+// Priced estimate -> self-contained, progressively enhanced HTML.
 const fs = require('fs');
 const path = require('path');
-
+const { parseUnit } = require('./units');
 const TEMPLATE = fs.readFileSync(path.join(__dirname, '../../assets/template.html'), 'utf8');
 const STYLE = TEMPLATE.match(/<style>[\s\S]*?<\/style>/)[0];
-
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-// Advisory bodies are authored in advisor.js (trusted) and may contain <strong>/<a>.
-const trusted = s => String(s ?? '');
 
 function money(n, cur) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
 }
-function rate(n, cur) {
-  const sym = new Intl.NumberFormat('en-US', { style: 'currency', currency: cur }).formatToParts(0).find(p => p.type === 'currency').value;
-  let s = Number(n).toFixed(6);
-  if (Number(n) !== 0 && Number(s) === 0) s = Number(n).toPrecision(4);
-  return sym + s;
-}
 function qtyFmt(n) {
-  if (n >= 1e6 && Number.isInteger(n)) return (n / 1e6).toLocaleString('en-US', { maximumFractionDigits: 3 }) + 'M';
-  return Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  return Number(n).toLocaleString('en-US', { maximumSignificantDigits: 15 });
 }
 function longDate(d) { return new Date(d).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }); }
-
-function card(o, est, i, lowestTotal) {
-  const cur = est.currency, disc = est.discountPct > 0;
-  const cls = o.lowest ? 'card win' : o.special ? 'card muted' : 'card';
-  const badge = o.lowest ? '<div class="badge">LOWEST COST</div>' : o.special ? '<div class="badge gray">SPECIAL CASE</div>' : '';
-  const specs = (o.highlights || []).map(h => `<li${h.no ? ' class="no"' : ''}>${esc(h.text)}</li>`);
-  if (!o.lowest && lowestTotal != null && o.totalYour > lowestTotal) specs.push(`<li class="no">${money(o.totalYour - lowestTotal, cur)} more each month than the lowest-cost option</li>`);
-  if (o.lowest && est.options.length > 1) {
-    const next = est.options.filter(x => x !== o && !x.errors.length).map(x => x.totalYour).sort((a, b) => a - b)[0];
-    if (next != null) specs.push(`<li>Saves ${money((next - o.totalYour) * 12, cur)} each year against the next option</li>`);
-  }
-  return `  <div class="${cls}">
-    ${badge}
-    <div class="cap">
-      <div class="opt">Option ${i + 1}</div>
-      <div class="sku">${esc(o.name)}</div>
-      <div class="proc">${esc(o.label)}</div>
-    </div>
-    <div class="body">
-      <div class="price">${money(disc ? o.totalYour : o.totalList, cur)}<small>per month${disc ? ', your price' : ', list price'}</small></div>
-      ${disc ? `<div class="strike">List ${money(o.totalList, cur)}</div>` : ''}
-      ${specs.length ? `<ul class="spec">\n        ${specs.join('\n        ')}\n      </ul>` : ''}
-    </div>
-  </div>`;
-}
-
-function itemization(o, est, i) {
-  const cur = est.currency;
-  const tag = o.lowest ? '<span class="tag">LOWEST COST</span>' : o.special ? '<span class="tag gray">SPECIAL CASE</span>' : '';
-  const rows = [];
-  for (const g of o.groups) {
-    rows.push(`    <tr class="grp"><td colspan="7">${esc(g.name)}</td></tr>`);
-    for (const l of g.lines) {
-      const unit = l.unitLabel ? `${esc(l.unit)} (${esc(l.unitLabel)})` : esc(l.unit);
-      rows.push(`    <tr><td>${esc(l.service)}</td><td>${esc(l.desc)}</td><td class="c">${qtyFmt(l.qty)}</td><td>${unit}</td><td class="n">${rate(l.unitPrice, cur)}</td><td class="n">${money(l.list, cur)}</td><td class="n">${money(l.your, cur)}</td></tr>`);
-    }
-    if (o.groups.length > 1) rows.push(`    <tr class="sub"><td colspan="5">${esc(g.name)} subtotal</td><td class="n">${money(g.list, cur)}</td><td class="n">${money(g.your, cur)}</td></tr>`);
-  }
-  rows.push(`    <tr class="tot"><td colspan="5">Monthly total</td><td class="n">${money(o.totalList, cur)}</td><td class="n">${money(o.totalYour, cur)}</td></tr>`);
-  return `<h2>Option ${i + 1} - ${esc(o.name)}${tag}</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th style="width:15%">Service</th><th style="width:29%">Description</th><th class="c" style="width:7%">Qty</th>
-      <th style="width:11%">Unit</th><th class="n" style="width:12%">Unit price</th><th class="n" style="width:12%">List</th><th class="n">Your price</th>
-    </tr>
-  </thead>
-  <tbody>
-${rows.join('\n')}
-  </tbody>
-</table>
-${o.notes.length ? `<ul class="tight" style="font-size:12px;color:#605E5C">${o.notes.map(n => `<li>${linkify(n)}</li>`).join('')}</ul>` : ''}`;
-}
-
 function linkify(s) {
   return esc(s).replace(/(https:\/\/learn\.microsoft\.com\/[^\s)&<]+)/g, '<a href="$1">$1</a>');
 }
 
-function render(est, advisories) {
-  const cur = est.currency, disc = est.discountPct > 0;
-  const opts = est.options.filter(o => !o.errors.length);
-  if (!opts.length) throw new Error('No option could be priced: ' + est.options.map(o => o.errors.join('; ')).join(' | '));
-  const lowestTotal = Math.min(...opts.map(o => o.totalYour));
-  const primary = opts.find(o => o.lowest) || opts[0];
-  const date = longDate(est.capturedAt);
-  const periodNote = opts.some(o => o.components.some(c => c.facts && c.facts.hours && c.facts.hours !== 730)) ? 'Monthly' : 'Monthly, 730 hours';
+function displayQuantity(o, line) {
+  const comp = (o.components || [])[line.componentIndex] || (o.components || []).find(c => c.lines.includes(line));
+  if (comp) {
+    const type = comp.spec.type;
+    const count = comp.facts && comp.facts.count;
+    if (['vm', 'public-ip', 'app-service'].includes(type) && ['hours', 'instance-hours'].includes(line.unit) && count > 0) {
+      const resource = type === 'vm' ? (line.service === 'VM Licenses' ? 'VM licenses' : 'VMs') : type === 'public-ip' ? 'IP addresses' : 'instances';
+      return { qty: count, unit: `${resource} x ${qtyFmt(line.qty / count)} hrs` };
+    }
+    if (type === 'meter' && comp.spec.hours > 0 && comp.spec.quantity > 0 && parseUnit(line.meter ? line.meter.unitOfMeasure : line.unit).kind === 'hour') {
+      return { qty: comp.spec.quantity, unit: `instances x ${qtyFmt(comp.spec.hours)} hrs` };
+    }
+  }
+  // Usage meters retain their actual quantities, never inferred resource counts.
+  return { qty: line.qty, unit: line.unit };
+}
 
-  const parts = [];
-  parts.push(`<header class="doc-header">
-  <h1>Pricing Estimate - ${esc(est.title)}</h1>
-  <div class="meta">
-    ${est.customer ? `<div>Prepared for <span>${esc(est.customer)}</span></div>` : ''}
-    <div>Region <span>${esc(est.region.name)}</span></div>
-    <div>Currency <span>${esc(cur)}</span></div>
-    <div>Billing <span>${opts.some(o => o.components.some(c => (c.spec.commitment || 'payg') !== 'payg')) ? 'Pay-as-you-go and commitments' : 'Pay-as-you-go'}</span></div>
-    <div>Period <span>${periodNote}</span></div>
-    <div>Prepared <span>${date}</span></div>
-  </div>
-</header>`);
-  parts.push(`<p class="note"><strong>This document is a pricing estimate, not a quote.</strong> Figures use published Azure rates on the date above and the assumptions listed below. ${disc ? `<strong>Your price</strong> applies your ${est.discountPct} percent discount to ${est.discountExcludes.length ? 'eligible' : 'every'} line.` : 'No discount has been applied; all figures are list prices.'} Actual billing varies with usage, region availability and rate changes.</p>`);
+function table(headers, rows, caption) {
+  return `<div class="table-wrap" tabindex="0" role="region" aria-label="${esc(caption || 'Monthly cost comparison')}"><table${caption ? ' class="itemization"' : ''}>${caption ? `<caption>${esc(caption)}</caption>` : ''}<thead><tr>${headers.map((h, i) => `<th scope="col"${i >= headers.length - 2 ? ' class="n"' : ''}>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.join('\n')}</tbody></table></div>`;
+}
 
-  parts.push(`<div class="cards">\n${opts.slice(0, 4).map((o, i) => card(o, est, est.options.indexOf(o), lowestTotal)).join('\n')}\n</div>`);
+function itemization(o, est) {
+  const rows = [];
+  for (const g of o.groups) {
+    rows.push(`<tr class="grp"><th colspan="5" scope="rowgroup">${esc(g.name)}</th></tr>`);
+    for (const l of g.lines) {
+      const d = displayQuantity(o, l);
+      rows.push(`<tr><td><strong>${esc(l.service)}</strong><br>${esc(l.desc)}</td><td class="c">${qtyFmt(d.qty)}</td><td>${esc(d.unit)}</td><td class="n">${money(l.list, est.currency)}</td><td class="n">${money(l.your, est.currency)}</td></tr>`);
+    }
+    if (o.groups.length > 1) rows.push(`<tr class="sub"><td colspan="3">${esc(g.name)} subtotal</td><td class="n">${money(g.list, est.currency)}</td><td class="n">${money(g.your, est.currency)}</td></tr>`);
+  }
+  rows.push(`<tr class="tot"><td colspan="3">Monthly total</td><td class="n">${money(o.totalList, est.currency)}</td><td class="n">${money(o.totalYour, est.currency)}</td></tr>`);
+  return table(['Service / description', 'Qty', 'Unit', 'List / month', 'Your price / month'], rows, o.purchasing || o.name);
+}
 
-  if (opts.length > 1) {
-    const rows = opts.slice().sort((a, b) => a.totalYour - b.totalYour).map(o => {
-      const i = est.options.indexOf(o);
-      return `    <tr${o.lowest ? ' class="win"' : o.special ? ' class="muted"' : ''}><td><strong>Option ${i + 1}</strong><br>${esc(o.name)}</td><td class="n">${money(disc ? o.totalYour : o.totalList, cur)}</td><td>${o.lowest ? '<strong>Lowest cost.</strong> ' : ''}${esc(o.whenToChoose || o.summary)}</td></tr>`;
+function advisory(a) {
+  // Advisory bodies are trusted engine-authored markup, not customer input.
+  const src = a.source;
+  const cite = src ? `<span class="src">Source: <a href="${esc(src.url)}">${esc([src.framework, src.code, src.title].filter(Boolean).join(' - '))}</a>${(src.more || []).map(m => `; <a href="${esc(m.url)}">${esc(m.title)}</a>`).join('')}</span>` : '';
+  return `<div class="box${a.level === 'warn' ? ' warn' : ''}"><b>${esc(a.title)}${a.option ? ` - ${esc(a.option)}` : ''}</b>${String(a.body ?? '')}${cite}</div>`;
+}
+
+// No customer-controlled text is embedded in this script.
+const NAVIGATION = `<script>
+(function () {
+  var tabs = Array.from(document.querySelectorAll('.tab'));
+  var panes = Array.from(document.querySelectorAll('.pane'));
+  var nav = document.querySelector('.tabs');
+  nav.setAttribute('role', 'tablist');
+  tabs.forEach(function (tab) {
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-controls', 'p-' + tab.dataset.tab);
+    tab.addEventListener('click', function (event) {
+      event.preventDefault();
+      show(tab.dataset.tab, true);
     });
-    parts.push(`<h2>How to choose</h2>
+    tab.addEventListener('keydown', function (event) {
+      var index = tabs.indexOf(tab), next;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      if (next != null) {
+        event.preventDefault();
+        tabs[next].focus();
+        show(tabs[next].dataset.tab, true);
+      }
+    });
+  });
+  panes.forEach(function (pane) { pane.setAttribute('role', 'tabpanel'); });
+  function show(id, update) {
+    if (!tabs.some(function (tab) { return tab.dataset.tab === id; })) id = 'summary';
+    tabs.forEach(function (tab) {
+      var on = tab.dataset.tab === id;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+    });
+    panes.forEach(function (pane) { pane.classList.toggle('on', pane.id === 'p-' + id); });
+    document.getElementById('view').scrollTop = 0;
+    if (update && location.hash !== '#p-' + id) history.pushState(null, '', '#p-' + id);
+  }
+  function fromHash() { show(location.hash.slice(1).replace(/^p-/, '')); }
+  window.addEventListener('hashchange', fromHash);
+  window.addEventListener('popstate', fromHash);
+  fromHash();
+  document.documentElement.classList.add('js');
+})();
+</script>`;
 
-<table>
-  <thead><tr><th style="width:30%">Option</th><th class="n" style="width:16%">${disc ? 'Your price' : 'List price'}</th><th>When to choose it</th></tr></thead>
-  <tbody>
-${rows.join('\n')}
-  </tbody>
-</table>`);
+function render(est, advisories = []) {
+  const cur = est.currency, disc = est.discountPct > 0;
+  const priced = est.options.filter(o => !o.errors.length);
+  if (!priced.length) throw new Error('No option could be priced: ' + est.options.map(o => o.errors.join('; ')).join(' | '));
+  const scenarios = [];
+  for (const [i, o] of est.options.entries()) {
+    const id = o.scenario ? o.scenario.id : `legacy-${i}`;
+    let s = scenarios.find(s => s.id === id);
+    if (!s) { s = { id, name: o.scenario ? o.scenario.name : o.name, tab: `estimate-${scenarios.length + 1}`, options: [] }; scenarios.push(s); }
+    s.options.push(o);
+  }
+  const date = longDate(est.capturedAt);
+  const failed = est.options.filter(o => o.errors.length);
+  const notices = [];
+  if (est.verification !== 'verified') notices.push('<div class="box warn"><b>Inputs not verified</b>The region, discount and requirements could not be checked against what the customer said. Confirm them before relying on these figures.</div>');
+  if (!est.engineIntact) notices.push('<div class="box warn"><b>Pricing engine modified</b>The pricing engine does not match the released version. Figures may not be reliable. Re-run with an unmodified copy of the skill.</div>');
+  if (est.model && est.model.notice && est.model.status !== 'acceptable') notices.push(`<div class="box warn"><b>${est.model.status === 'not-recommended' ? 'Prepared with a model that is not recommended' : 'Prepared with an untested model'}</b>${esc(est.model.notice)}</div>`);
+  if (failed.length) notices.push(`<div class="box warn"><b>Not priced - incomplete estimate</b>${failed.map(o => `${esc(o.name)}: ${esc(o.errors.join('; '))}`).join('<br>')}<br>Partial costs are not shown as complete totals.</div>`);
+  notices.push(...advisories.filter(a => a.level === 'warn').map(advisory));
+
+  const purchasingOptions = [...new Set(est.options.map(o => o.purchasing || o.name))];
+  const summaryRows = scenarios.map(s => `<tr><td><a href="#p-${s.tab}">${esc(s.name)}</a></td>${purchasingOptions.map(label => {
+    const o = s.options.find(o => (o.purchasing || o.name) === label);
+    if (!o) return '<td>Not compared</td>';
+    if (o.errors.length) return '<td>Not priced</td>';
+    return `<td class="n"><strong>${money(o.totalYour, cur)}</strong>${disc ? `<br><span class="muted">List ${money(o.totalList, cur)}</span>` : ''}</td>`;
+  }).join('')}</tr>`);
+  const disclaimer = `<p class="note"><strong>This is a pricing estimate, not a quote.</strong> Monthly costs use published Azure rates retrieved on ${esc(date)} in ${esc(cur)}. ${disc ? `Your price applies a ${esc(est.discountPct)} percent discount to eligible lines.` : 'No discount has been applied; your price equals list.'} Actual billing varies with usage, availability and rate changes.</p>`;
+  const summary = `<h2>Summary</h2>${disclaimer}<p>${disc ? 'Your price per month, with list price underneath.' : 'Monthly list prices; no discount applied.'}</p>${table(['Estimate / phase', ...purchasingOptions], summaryRows)}<p class="muted">Each row is a separate estimate, not an amount to add together. Deployment phases are separate scopes, not ranked alternatives. Purchasing comparisons within a phase keep the same resources; commitments change only eligible VM compute. All costs are monthly, including amortized commitments. "Not compared" means that purchasing variant was not generated for that scope.</p>`;
+  const panes = [{ id: 'summary', label: 'Summary', body: summary }];
+  for (const s of scenarios) {
+    const bodies = s.options.map(o => {
+      if (o.errors.length) return `<h3>${esc(o.purchasing || o.name)}</h3><div class="box warn"><b>Not priced</b>${o.errors.map(esc).join('<br>')}</div>`;
+      const highlights = (o.highlights || []).map(h => `<li>${esc(h.text)}</li>`).join('');
+      const drivers = o.groups.map(g => `<tr><td>${esc(g.name)}</td><td class="n">${money(g.list, cur)}</td><td class="n">${money(g.your, cur)}</td></tr>`);
+      return `<h3>${esc(o.purchasing || o.name)}${o.special ? ' - special case' : ''}</h3>
+${o.scenario && o.scenario.phase ? `<p class="muted">Deployment phase: ${esc(o.scenario.phase)}</p>` : ''}
+<div class="price">${money(o.totalYour, cur)} <small>per month${disc ? `; list ${money(o.totalList, cur)}` : '; list price'}</small></div>
+${o.label ? `<p>${esc(o.label)}</p>` : ''}${o.summary || o.whenToChoose ? `<p>${esc(o.summary || o.whenToChoose)}</p>` : ''}${highlights ? `<ul class="tight">${highlights}</ul>` : ''}
+${itemization(o, est)}
+<h3>What drives the cost</h3>${table(['Component', 'List / month', 'Your price / month'], drivers)}
+${o.notes.length ? `<ul class="tight muted">${o.notes.map(n => `<li>${linkify(n)}</li>`).join('')}</ul>` : ''}`;
+    });
+    panes.push({ id: s.tab, label: s.name, body: `<h2>${esc(s.name)}</h2>${bodies.join('\n')}` });
   }
 
-  const warns = advisories.filter(a => a.level === 'warn');
-  const infos = advisories.filter(a => a.level !== 'warn');
-  const cite = a => a.source ? `\n  <span class="src" style="display:block;margin-top:6px;font-size:11.5px;color:#605E5C">Source: <a href="${esc(a.source.url)}">${esc([a.source.framework === 'Learn' || a.source.framework === 'Pricing' ? 'Microsoft Learn' : a.source.framework === 'WAF' ? 'Azure Well-Architected Framework' : a.source.framework === 'MCSB' ? 'Microsoft cloud security benchmark' : 'Azure Advisor', a.source.code].filter(Boolean).join(' ') + ': ' + a.source.title)}</a>${(a.source.more || []).map(m => `; <a href="${esc(m.url)}">${esc(m.title)}</a>`).join('')}</span>` : '';
-  for (const a of warns) parts.push(`<div class="box warn">\n  <b>${esc(a.title)}</b>\n  ${trusted(a.body)}${cite(a)}\n</div>`);
-
-  // What drives the cost (primary option)
-  const tot = disc ? primary.totalYour : primary.totalList;
-  const drivers = primary.groups.slice().sort((a, b) => (disc ? b.your - a.your : b.list - a.list)).map(g => {
-    const v = disc ? g.your : g.list;
-    return `    <tr><td>${esc(g.name)}</td><td class="n">${money(v, cur)}</td><td class="c">${tot ? Math.round(v / tot * 100) : 0}%</td><td>${esc(g.lines.map(l => l.desc).slice(0, 2).join('; '))}</td></tr>`;
-  });
-  parts.push(`<h2>What drives the cost${opts.length > 1 ? ` (Option ${est.options.indexOf(primary) + 1})` : ''}</h2>
-
-<table>
-  <thead><tr><th style="width:24%">Component</th><th class="n" style="width:16%">${disc ? 'Your price' : 'List price'}</th><th class="c" style="width:10%">Share</th><th>Includes</th></tr></thead>
-  <tbody>
-${drivers.join('\n')}
-  </tbody>
-</table>`);
-
-  for (const a of infos) parts.push(`<div class="box">\n  <b>${esc(a.title)}</b>\n  ${trusted(a.body)}${cite(a)}\n</div>`);
-
-  const hoursSet = [...new Set(opts.flatMap(o => o.components.filter(c => c.facts && c.facts.hours).map(c => c.facts.hours)))];
+  const hours = [...new Set(priced.flatMap(o => o.components.filter(c => c.facts && c.facts.hours != null).map(c => c.facts.hours)))];
   const said = est.customerSaid || {};
-  const saidParts = [['Region', said.region], ['Discount', said.discount], ['Requirements', said.requirements]].filter(([, v]) => v);
   const assumptions = [
-    ...(saidParts.length ? [`Based on what you told us: ${saidParts.map(([k, v]) => `${k.toLowerCase()} "${v}"`).join('; ')}.`] : []),
-    hoursSet.length ? (hoursSet.length === 1 && hoursSet[0] === 730 ? '730 hours per month, running continuously.' : `Compute hours per month as stated in each line (${hoursSet.join(', ')}). Storage bills for the full month.`) : 'Monthly quantities as stated in each line.',
-    disc ? `Your price applies a ${est.discountPct} percent discount ${est.discountExcludes.length ? `to every line except ${est.discountExcludes.join(', ')}` : 'to every line'}.` : 'List prices. No discount applied.',
-    `Rates retrieved live from the Azure Retail Prices API on ${date} in ${cur}. Unit prices are shown at full precision; each line is rounded to cents and the totals are the sum of the rounded lines.`,
-    ...est.assumptions,
+    ...[['Region', said.region], ['Discount', said.discount], ['Requirements', said.requirements]].filter(([, v]) => v).map(([k, v]) => `${k}, in your words: "${v}".`),
+    hours.length ? `Compute runtime per month: ${hours.join(', ')} hours as specified. Storage bills for the full month; commitments can bill continuously even when runtime is shorter.` : 'Monthly quantities as stated in each line.',
+    `Rates retrieved live from the Azure Retail Prices API on ${date} in ${cur}. Each line is rounded to cents; totals sum the rounded lines. Exact meter quantities, rate units and unit prices are retained in the companion .estimate.json audit file.`,
+    ...(est.assumptions || []),
+    ...((est.excluded || []).length ? [`Excluded: ${est.excluded.join(', ')}.`] : []),
     ...(est.declined || []).map(d => `You chose to keep this as priced despite our advice (${d.id}): "${d.customerSaid}".`)
   ];
-  if (est.excluded.length) assumptions.push(`<strong>Excluded:</strong> ${est.excluded.map(esc).join(', ')}.`);
-  parts.push(`<h2>Assumptions</h2>\n\n<ul class="tight">\n${assumptions.map(a => `  <li>${a.startsWith('<strong>') ? a : esc(a)}</li>`).join('\n')}\n</ul>`);
-  if (est.nextSteps.length) parts.push(`<h2>Next steps</h2>\n\n<ol class="next">\n${est.nextSteps.map(s => `  <li>${esc(s)}</li>`).join('\n')}\n</ol>`);
-
-  parts.push(`<div class="pagebreak"></div>
-
-<h2 style="margin-top:14px">Full itemization</h2>
-<p style="font-size:13px;margin:6px 0 4px">Every line below is a separate Azure meter. <strong>List</strong> is the published rate. <strong>Your price</strong> ${disc ? `applies the ${est.discountPct} percent discount` : 'equals list; no discount applied'}.</p>`);
-  opts.forEach(o => parts.push(itemization(o, est, est.options.indexOf(o))));
-  const failed = est.options.filter(o => o.errors.length);
-  if (failed.length) parts.push(`<div class="box warn"><b>Not priced</b>${failed.map(o => esc(o.name + ': ' + o.errors.join('; '))).join('<br>')}</div>`);
-
-  parts.push(`<div class="foot">
-  <p>Unit prices retrieved from the Azure Retail Prices API on ${date}. Region <code>${esc(est.region.code)}</code>, currency ${esc(cur)}. This estimate was generated by a deterministic pricing engine: meters, unit conversions, tiers, discounts and totals are computed, not written by hand.</p>
-  <p>Customer answers: <strong>${est.verification === 'verified' ? 'verified against the conversation' : 'NOT VERIFIED'}</strong> &middot; Engine <code>${esc(est.fingerprint || '')}</code> ${est.engineIntact ? '(sealed)' : '<strong>MODIFIED</strong>'}${est.model && est.model.model ? ` &middot; AI model <code>${esc(est.model.model)}</code> (${esc({ recommended: 'recommended', acceptable: 'tested, less consistent', 'not-recommended': 'NOT RECOMMENDED', untested: 'not tested' }[est.model.status] || est.model.status)})` : ''}</p>
-</div>`);
-  if (est.model && est.model.notice && est.model.status !== 'acceptable') parts.splice(1, 0, `<div class="box warn"><b>${est.model.status === 'not-recommended' ? 'Prepared with a model that is not recommended' : 'Prepared with an untested model'}</b>${esc(est.model.notice)}</div>`);
-  if (!est.engineIntact) parts.splice(1, 0, `<div class="box warn"><b>Pricing engine modified</b>The pricing engine that produced this estimate does not match the released version. Figures may not be reliable. Re-run with an unmodified copy of the skill.</div>`);
-  if (est.verification !== 'verified') parts.splice(1, 0, `<div class="box warn"><b>Inputs not verified</b>The region, discount and requirements in this estimate could not be checked against what the customer said. Confirm them before relying on these figures.</div>`);
-
+  const discounts = [...new Set(priced.flatMap(o => o.lines.map(l => `${l.service}: ${l.discountPct || 0}% off list.`)))];
+  const assumptionBody = `<h2>Assumptions &amp; guidance</h2><h3>Discount rules applied</h3><p>${disc ? `Requested discount: ${esc(est.discountPct)} percent.${est.discountExcludes.length ? ` Exclusions: ${esc(est.discountExcludes.join(', '))}.` : ''}` : 'No discount requested.'}</p><ul class="tight">${discounts.map(d => `<li>${esc(d)}</li>`).join('')}</ul>
+<h3>Scope and assumptions</h3><ul class="tight">${assumptions.map(a => `<li>${linkify(a)}</li>`).join('')}</ul>
+${est.nextSteps.length ? `<h3>Next steps</h3><ol class="next">${est.nextSteps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+${advisories.length ? `<h3>Microsoft-sourced guidance</h3>${advisories.map(advisory).join('\n')}` : ''}`;
+  panes.push({ id: 'assumptions', label: 'Assumptions', body: assumptionBody });
+  const footer = `<footer class="foot"><p>Generated by a deterministic pricing engine. Region <code>${esc(est.region.code)}</code>, currency ${esc(cur)}, rates retrieved ${esc(date)}. Meter selection, unit conversions, tiers, discounts and totals are computed, not written by hand.</p>
+<p>Customer answers: <strong>${est.verification === 'verified' ? 'verified against the conversation' : 'NOT VERIFIED'}</strong> &middot; Engine <code>${esc(est.fingerprint || '')}</code> ${est.engineIntact ? '(sealed)' : '<strong>MODIFIED</strong>'}${est.model && est.model.model ? ` &middot; AI model <code>${esc(est.model.model)}</code> (${esc(est.model.status)})` : ''}</p></footer>`;
   return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azure Pricing Estimate - ${esc(est.title)} - ${esc(est.region.name)}</title>
-${STYLE}
-</head>
-<body>
-<main>
-
-${parts.join('\n\n')}
-
-</main>
-</body>
-</html>
+${STYLE}</head><body>
+<header class="top"><h1>${esc(est.title)}</h1><div class="meta">${est.customer ? `<div>Prepared for <span>${esc(est.customer)}</span></div>` : ''}<div>Region <span>${esc(est.region.name)}</span></div><div>Currency <span>${esc(cur)}</span></div><div>Prepared <span>${esc(date)}</span></div></div>
+<nav class="tabs" aria-label="Estimate sections">${panes.map(p => `<a class="tab" id="tab-${p.id}" href="#p-${p.id}" data-tab="${p.id}">${esc(p.label)}</a>`).join('')}</nav></header>
+<main id="view"><div class="notices" aria-label="Important notices">${notices.join('\n')}</div>
+${panes.map(p => `<section class="pane" id="p-${p.id}" aria-labelledby="tab-${p.id}" tabindex="0">${p.body}</section>`).join('\n')}
+${footer}</main>${NAVIGATION}</body></html>
 `;
 }
 
