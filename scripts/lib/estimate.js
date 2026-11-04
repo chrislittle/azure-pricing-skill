@@ -60,6 +60,7 @@ function numericErrors(comp) {
 }
 
 async function priceSpec(spec) {
+  spec = require('./expand').expandSpec(spec);
   const region = normalizeRegion(spec.region);
   const currency = (spec.currency || 'USD').toUpperCase();
   const ctx = { region: region.code, currency };
@@ -67,7 +68,7 @@ async function priceSpec(spec) {
   const options = [];
   for (const [i, opt] of spec.options.entries()) {
     const octx = Object.assign({}, ctx, { ledger: {} });
-    const out = { name: opt.name || `Option ${i + 1}`, label: opt.label || '', summary: opt.summary || '', whenToChoose: opt.whenToChoose || '', special: !!opt.special, lines: [], notes: [], components: [], errors: [] };
+    const out = { name: opt.name || `Option ${i + 1}`, scenario: opt.scenario, purchasing: opt.purchasing, context: opt.context || {}, label: opt.label || '', summary: opt.summary || '', whenToChoose: opt.whenToChoose || '', special: !!opt.special, lines: [], notes: [], components: [], errors: [] };
     for (const comp of opt.components || []) {
       const gone = require('./excluded').excludedMessage(comp.type);
       if (gone) { out.errors.push(`${comp.type}: ${gone}`); continue; }
@@ -84,6 +85,7 @@ async function priceSpec(spec) {
           const d = discountFor(l, spec);
           l.discountPct = d * 100;
           l.your = round2(l.list * (1 - d));
+          l.componentIndex = out.components.length;
           if (comp.label) l.group = comp.label;
         }
         out.lines.push(...r.lines);
@@ -108,9 +110,12 @@ async function priceSpec(spec) {
     out.notes = [...new Set(out.notes)];
     options.push(out);
   }
-  const priced = options.filter(o => !o.errors.length);
-  const lowest = priced.length ? priced.reduce((a, b) => (b.totalYour < a.totalYour ? b : a)) : null;
-  if (lowest && priced.length > 1) lowest.lowest = true;
+  // Different options may be deployment phases, not comparable architectures.
+  // Only rank purchasing variants of the same original estimate.
+  for (const id of new Set(options.map(o => o.scenario.id))) {
+    const priced = options.filter(o => o.scenario.id === id && !o.errors.length);
+    if (priced.length > 1) priced.reduce((a, b) => b.totalYour < a.totalYour ? b : a).lowest = true;
+  }
   return {
     title: spec.title || 'Azure pricing estimate', customer: spec.customer || '', region, currency,
     customerSaid: spec.customerSaid || {},

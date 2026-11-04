@@ -65,7 +65,7 @@ module.exports = {
       return parts.join(', ');
     }
     if (w === 'windows-server-payg') return `Azure Arc Windows Server pay-as-you-go: ${fmtN(cnt)} server(s) x ${fmtN(cores)} cores each, ${hrs}`;
-    if (w === 'essential-machine-management') return `Azure Arc Essential Machine Management: ${fmtN(cnt)} server(s), ${c.freeEntitlement === true ? 'free through an entitlement' : hrs}`;
+    if (w === 'essential-machine-management') return `Azure Arc Essential Machine Management: ${fmtN(cnt)} server(s), per-server billing (cores input ${fmtN(cores)} is not used), ${c.freeEntitlement === true ? 'free through an entitlement' : hrs}`;
     return `Azure Arc Kubernetes GitOps configuration: ${fmtN(cnt)} cluster(s) x ${fmtN(cores)} vCPUs each, billed per vCPU per month`;
   },
   notIncluded: (types, spec) => (spec && spec.excluded ? [] : ['The servers, clusters and storage that Arc connects (Arc only bills the capabilities listed), plus System Center Operations Manager Managed Instance ($6 per endpoint a month, an Azure Monitor meter), Azure Arc on System Center VMM ($2.50 per physical core a month), Extended Security Updates, Update Manager, Azure Policy, Defender and Monitor for Arc servers, which are priced as their own components']),

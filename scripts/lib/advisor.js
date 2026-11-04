@@ -202,7 +202,10 @@ const CONDITIONS = {
     const FRONT = new Set(['public-ip', 'load-balancer', 'app-gateway']);
     const sig = o => [...new Set(o.components.map(c => c.spec.type).filter(t => !FRONT.has(t)))].sort().join(',');
     const ok = est.options.filter(o => !o.errors.length);
-    if (ok.length >= 2 && new Set(ok.map(sig)).size > 1) return {};
+    for (const scope of new Set(ok.map(o => o.scenario ? o.scenario.id : 'legacy'))) {
+      const peers = ok.filter(o => (o.scenario ? o.scenario.id : 'legacy') === scope);
+      if (peers.length >= 2 && new Set(peers.map(sig)).size > 1) return {};
+    }
   },
   'no-discount': (est) => { if (!est.discountPct) return {}; },
   'currency-native': (est) => { if (est.currency !== 'USD') return { currency: est.currency }; }
@@ -258,7 +261,10 @@ function advise(est) {
   for (const id of ids) {
     const rule = RULES[id]; if (!rule) continue;
     const cond = CONDITIONS[id] || (rule.when ? declarative(rule) : null); if (!cond) continue;
-    const runs = cond.length < 2 ? [[null, cond(est)]] : est.options.map(o => [o, cond(est, o)]);
+    const runs = cond.length < 2 ? [[null, cond(est)]] : est.options.map(o => {
+      const options = o.scenario ? est.options.filter(peer => peer.scenario && peer.scenario.id === o.scenario.id) : est.options;
+      return [o, cond(Object.assign({}, est, { options, context: Object.assign({}, est.context, o.context) }), o)];
+    });
     for (const [opt, res] of runs) {
       for (const v of [].concat(res || [])) {
         if (!v) continue;
@@ -285,5 +291,3 @@ function rulebook() {
 }
 
 module.exports = { advise, rulebook, citationErrors, whenHolds };
-
-

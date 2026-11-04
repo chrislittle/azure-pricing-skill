@@ -142,7 +142,7 @@ async function cmdBuild(a) {
   const ok = !mathErr.length && !htmlErr.length && !links.errs.length && !priceErrors.length;
   return {
     ok, file: path.resolve(out), currency: est.currency, discountPct: est.discountPct,
-    options: est.options.map(o => ({ name: o.name, monthlyList: o.totalList, monthlyYourPrice: o.totalYour, lowest: !!o.lowest, errors: o.errors })),
+    options: est.options.map(o => ({ name: o.name, scenario: o.scenario, purchasing: o.purchasing, monthlyList: o.totalList, monthlyYourPrice: o.totalYour, lowest: !!o.lowest, errors: o.errors })),
     advisories: adv.map(x => ({ id: x.id, level: x.level, title: x.title, option: x.option, source: x.source ? [x.source.framework, x.source.code].filter(Boolean).join(' ') + ': ' + x.source.url : null })),
     validation: { math: mathErr, html: htmlErr, links: links.errs, linksChecked: links.urls.length },
     relay: 'Tell the customer the totals (list and your price), every advisory with level "warn" in plain words, then where the file is.',
