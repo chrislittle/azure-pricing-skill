@@ -3,6 +3,44 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-11-04
+
+### Added
+- Self-contained tabbed estimates: navy header, Summary purchasing comparison, detail tabs per
+  requested solution or deployment phase, and an Assumptions tab for scope, discount rules,
+  next steps and Microsoft-sourced guidance.
+- Keyboard tab navigation, hash links, no-JavaScript reading, responsive tables and printing
+  of every pane. Critical warnings and incomplete-pricing notices remain outside the tabs.
+- Explicit original-estimate IDs, purchasing labels and line-to-component provenance in priced
+  results. Exact meter quantities, rate units and unit prices remain in the companion audit file.
+- Optional explicit deployment-phase labels and per-scope workload context, preventing production
+  advice or like-for-like alternative warnings from being applied to unlike phases.
+- Focused report tests for lineage, quantities, totals, currencies, exclusions, failed pricing,
+  escaping and readback reconfirmation.
+
+### Changed
+- The interview starts with one estimate, asks only missing requirements and uses customer
+  terminology. Alternatives are opt-in or motivated by a real decision; phases are not ranked
+  as competing architectures, and purchasing comparisons stay within their original estimate.
+- Five-column customer tables show service/description, quantity, unit, monthly list and your
+  price. Explicit VM counts and runtime are separated without changing pricing arithmetic.
+- Lowest-cost flags compare only purchasing variants of the same original estimate, never
+  unrelated phases. Readback check codes include scope labels as well as quantities.
+- Completeness checks and option-level advice stay within their original estimate, so a resource
+  in another phase cannot hide a missing disk or missing cluster nodes in this one.
+
+### Fixed
+- Zero-runtime VMs no longer generate full-month purchasing comparison variants.
+- Azure Arc Essential Machine Management readback explicitly labels the required core input as
+  unused for its per-server billing.
+
+### Validation note
+- The canonical pricing snapshot suite reports eight EUR differences with current API prices.
+  The unchanged pre-feature HEAD reproduces all eight with identical values. Stored oracle
+  expectations were not changed as part of this presentation and interview update.
+- The live service oracle reports one Cosmos DB restore-meter lookup failure (1,570 checks pass).
+  The unchanged pre-feature HEAD reproduces the same missing-restore failure.
+
 ## [1.1.0] - 2026-10-07
 
 Tier 1 coverage for every Azure Pricing Calculator product that is still sold.

@@ -55,7 +55,8 @@ npx github:chrislittle/azure-pricing-skill init --global
 > We get 16% off list."*
 >
 > **Agent:** *…asks a couple of questions, shows you the numbers to confirm, prices it…* →
-> hands you **one HTML estimate** with options side by side.
+> hands you **one tabbed HTML estimate**. A single solution is normal; alternatives are included
+> only when requested or needed to resolve a real design choice.
 
 ---
 
@@ -138,13 +139,26 @@ npx github:chrislittle/azure-pricing-skill status     # install locations, versi
 You never write a spec or run a command. In conversation:
 
 1. Say what you want to price, in your own words.
-2. Answer a few short questions, at most three at a time, each with a suggested default: region,
-   discount, size and usage, and whether it is production, internet-facing, and so on.
+2. Answer only missing requirements, at most three questions at a time: region, discount, size
+   and usage, and whether it is production, internet-facing, and so on. No Azure part numbers
+   required, and no "how many models?" question.
 3. **Check the readback.** Before anything is priced, the agent shows every quantity in plain words,
    next to what you told it, plus what is *not* included. Correct anything that is wrong.
-4. Get one HTML estimate: options side by side, list price and your price, what drives the cost,
-   warnings with their Microsoft sources, assumptions, and a full per-meter itemization where the
-   lines add up to the total.
+4. Get one self-contained HTML estimate with a navy header and blue accents: a **Summary**
+   comparison first, a detail tab per requested solution or deployment phase, and **Assumptions**
+   for discount rules, scope, next steps and sourced guidance. Warnings stay visible outside the
+   tabs; printing includes every tab. Keyboard navigation and direct links work too, and all
+   content remains readable without JavaScript.
+
+Start with one estimate. If you ask for a pilot and production, they remain separate deployment
+phases, not competitors ranked by price. If you ask for alternatives, use your own labels.
+Reservation and savings-plan comparisons sit **within** the same estimate, not as new
+architectures. The existing VM comparison includes all eligible 1- and 3-year terms.
+
+Detail tables have five customer-facing columns: service/description, quantity, unit, monthly
+list and monthly your price. Resource counts are separated from hours where explicit component
+facts support that display; usage meters keep their actual quantities and units. The companion
+`.estimate.json` retains exact meter quantities, rate units and unit prices for audit.
 
 A real exchange from testing (shortened):
 
@@ -189,7 +203,8 @@ answering, tells you if it is not recommended, and records it on every estimate.
 - **Verified answers.** The region, discount and requirements on the estimate must match what the
   person actually typed; the engine checks the conversation record.
 - **Itemization that adds up.** List and your price side by side; every line rounded, totals are the
-  sum of the lines; full unit-price precision shown.
+  sum of the lines. Exact meter quantities and full unit-price precision remain in the companion
+  audit file rather than cluttering the five-column customer table.
 - **Stamped.** Every estimate states whether the answers were verified, the engine fingerprint, and
   the AI model used.
 
@@ -362,14 +377,23 @@ The spec format and the full interview are documented in [`SKILL.md`](SKILL.md).
 ## Testing
 
 ```bash
-npm test                     # oracle agreement, contracts, split invariance, rule fire/silent tests
+npm test                     # reports, oracle agreement, contracts, split invariance, rule tests
+npm run test:report           # focused rendering, purchasing lineage and readback tests
 npm run check-citations      # every citation fetched and its quote found
 ```
 
 - **Pricing accuracy:** an independent oracle, written separately from the engine from the Retail
-  Prices API and Microsoft Learn, agrees with the engine on all **142** checks (20 scenario totals,
-  every VM variant and commitment term), to the cent. The cross-check found and fixed real bugs on
-  both sides.
+  Prices API and Microsoft Learn, established **142** reference checks (20 scenario totals,
+  every VM variant and commitment term), to the cent. Live prices can drift from stored snapshots;
+  investigate differences against an unchanged baseline rather than refreshing snapshots just to
+  make a run pass. The cross-check found and fixed real bugs on both sides.
+- **Reports:** focused tests cover a single estimate, multiple alternatives, separate pilot and
+  production phases, all generated VM purchasing variants, unchanged priced totals, resource
+  counts versus usage units, non-USD pricing, discount exclusions, incomplete pricing, critical
+  notices, escaped labels and readback reconfirmation. Fixtures use generic customer data.
+- **Interview guidance:** examples cover a simple request, an already-complete request, real
+  alternatives, phases and purchasing comparisons. Reviewing these instructions is not a
+  substitute for the isolated conversation trials described below.
 - **Conversations:** the skill was tested in clean, isolated GitHub Copilot CLI sessions: 8 models
   by 20 scenarios per batch, with a simulated customer who knows nothing about Azure, including a
   strict customer who checks every number. In the final batch, 159 of 160 conversations delivered
