@@ -150,13 +150,13 @@ const sections = h => [...h.matchAll(/<section class="pane" id="([^"]+)"/g)].map
   await test('failed variants have no success-shaped totals and warnings remain outside tabs', async () => {
     const e = ready(await priceSpec({ ...base, options: [...base.options, { name: 'Unavailable', components: [{ type: 'not-a-service' }] }] }));
     e.verification = 'unverified'; e.engineIntact = false;
-    e.model = { model: 'example-model', status: 'untested', notice: 'This model has not been tested.' };
+    e.model = { model: 'example-model', status: 'not-recommended', notice: 'This model is not recommended.' };
     e.excluded.push('Support');
     e.declined = [{ id: 'example', customerSaid: 'Keep this design' }];
     e.nextSteps.push('Confirm usage');
     const h = clean(render(e, [{ level: 'warn', title: 'Important warning', body: 'Check the design.', option: 'Production' }]));
     const notices = h.slice(h.indexOf('<div class="notices"'), h.indexOf('<section class="pane"'));
-    for (const text of ['Not priced - incomplete estimate', 'Inputs not verified', 'Pricing engine modified', 'Prepared with an untested model', 'Important warning']) assert.ok(notices.includes(text));
+    for (const text of ['Not priced - incomplete estimate', 'Inputs not verified', 'Pricing engine modified', 'Prepared with a model that is not recommended', 'Important warning']) assert.ok(notices.includes(text));
     const row = h.match(/<tr><td><a href="#p-estimate-2">Unavailable<\/a>[\s\S]*?<\/tr>/)[0];
     assert.ok(row.includes('Not priced') && !row.includes('$0.00'));
     assert.ok(h.includes('Excluded: Support.'));

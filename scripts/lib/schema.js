@@ -100,9 +100,9 @@ function modelStatus() {
   const list = rec.join(', ');
   if (!model) return { model: null, status: 'unknown', notice: null, recommended: rec };
   if (M.recommended[model]) return { model, status: 'recommended', notice: null, recommended: rec };
-  if (M.acceptable[model]) return { model, status: 'acceptable', notice: `This estimate is being prepared with ${model}. It works with this skill but was less consistent in testing (${M.acceptable[model]}). For the most reliable results, switch to one of: ${list} (in GitHub Copilot, use /model).`, recommended: rec };
+  if (M.acceptable[model]) return { model, status: 'acceptable', notice: null, recommended: rec };
   if (M.notRecommended[model]) return { model, status: 'not-recommended', notice: `This estimate is being prepared with ${model}, which is NOT recommended for this skill. ${M.notRecommended[model]} Please switch to one of: ${list} (in GitHub Copilot, use /model), then start again.`, recommended: rec };
-  return { model, status: 'untested', notice: `This estimate is being prepared with ${model}, which has not been tested with this skill. The prices come from the pricing engine either way, but the conversation may be less reliable. Tested and recommended: ${list} (in GitHub Copilot, use /model).`, recommended: rec };
+  return { model, status: 'untested', notice: null, recommended: rec };
 }
 
 function userMessages() {
@@ -114,17 +114,24 @@ function userMessages() {
   // event. A real message from the person always starts a turn (its parent is the system message),
   // carries Copilot's delivery fields, and arrives in time order. Hand-written lines fail these.
   const lines = txt.split(/\r?\n/).filter(Boolean);
+  // Newer Copilot builds (auto mode, compaction, resume) write internal events whose parent is not in
+  // the file, hang a person's message off any earlier event, and stamp events a few ms out of order.
+  // Only the person's messages need an intact chain; other events need just a unique id and a timestamp.
   const seen = new Map();
   let lastTs = '';
+  const SKEW_MS = 2000;
+  const flag = reason => { if (!tampered) userMessages.reason = reason; tampered = true; };
+  userMessages.reason = null;
   lines.forEach((line, i) => {
     let e;
-    try { e = JSON.parse(line); } catch (_) { if (i < lines.length - 1) tampered = true; return; }
-    if (!e.id || !e.timestamp || seen.has(e.id) || (seen.size && !seen.has(e.parentId))) tampered = true;
-    if (e.timestamp < lastTs) tampered = true; else lastTs = e.timestamp;
+    try { e = JSON.parse(line); } catch (_) { if (i < lines.length - 1) flag(`line ${i + 1} is not valid JSON`); return; }
+    if (!e.id || !e.timestamp || seen.has(e.id)) flag(`event ${i + 1} (${e.type}) has a missing or duplicate id or timestamp`);
+    if (e.type === 'user.message' && !seen.has(e.parentId)) flag(`user message at event ${i + 1} points to an unknown parent event`);
+    if (e.timestamp < lastTs) { if (!(Date.parse(lastTs) - Date.parse(e.timestamp) <= SKEW_MS)) flag(`event ${i + 1} (${e.type}) is out of time order`); } else lastTs = e.timestamp;
     if (e.type === 'user.message') {
       const d = e.data || {};
-      if (!d.interactionId) tampered = true;
-      if (!d.source && (seen.get(e.parentId) !== 'system.message' || !('delivery' in d) || !('supportedNativeDocumentMimeTypes' in d))) tampered = true;
+      if (!d.interactionId) flag(`user message at event ${i + 1} has no interactionId`);
+      if (!d.source && !('delivery' in d)) flag(`user message at event ${i + 1} lacks Copilot delivery fields`);
     }
     if (e.id) seen.set(e.id, e.type);
   });
@@ -134,7 +141,7 @@ function userMessages() {
       const j = JSON.parse(line); const d = j.data || {}; const c = d.content;
       if (typeof c !== 'string' || c.startsWith('<skill-context') || d.source) continue;
       // Copilot records what the person typed twice. If they disagree, the log was edited.
-      if (typeof d.transformedContent === 'string' && !d.transformedContent.replace(/\s+/g, ' ').includes(c.trim().replace(/\s+/g, ' '))) tampered = true;
+      if (typeof d.transformedContent === 'string' && !d.transformedContent.replace(/\s+/g, ' ').includes(c.trim().replace(/\s+/g, ' '))) flag('a user message differs from its transformedContent');
       msgs.push(typeof d.transformedContent === 'string' ? d.transformedContent.replace(/<current_datetime>[\s\S]*?<\/current_datetime>|<system_reminder>[\s\S]*?<\/system_reminder>/g, '') : c);
     } catch (_) { }
   }
@@ -190,7 +197,7 @@ function groundingErrors(spec) {
     return inCopilot ? ['Cannot read this conversation to verify the person\'s answers. Do not change environment variables or files; run the build normally.'] : [];
   }
   groundingErrors.status = 'verified';
-  if (user === '\u0000TAMPERED') { groundingErrors.status = 'tampered'; return ['The conversation log does not match what the person typed. Estimates can only be built from the person\'s real answers.']; }
+  if (user === '\u0000TAMPERED') { groundingErrors.status = 'tampered'; return [`The conversation log does not match what the person typed (${userMessages.reason || 'unknown check'}). Estimates can only be built from the person's real answers.`]; }
   const errs = [];
   const said = spec.customerSaid || {};
   for (const k of ['region', 'discount', 'requirements']) {

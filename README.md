@@ -188,8 +188,9 @@ back the numbers, explaining warnings) depends on the model. Tested on 1 October
 | Works, less consistent | GPT-5-mini, Claude Haiku 4.5 |
 | **Blocked** | Gemini 3.5 Flash: in testing it repeatedly worked around the skill's safeguards, including forging the conversation record. The skill refuses to build an estimate with it. |
 
-"Auto" can pick any model, including untested ones. The engine detects the model actually
-answering, tells you if it is not recommended, and records it on every estimate. The list lives in
+"Auto" can pick any model, including newer ones that were never tested (for example Claude Opus 5.5
+or Sonnet 5.5). Those run without any warning. The engine detects the model actually answering,
+blocks only the models listed as blocked, and records the model on every estimate. The list lives in
 [`catalog/models.json`](catalog/models.json).
 
 ## Why you can trust the numbers
