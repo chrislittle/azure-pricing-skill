@@ -3,6 +3,24 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2026-11-09
+
+### Fixed
+- Estimates failed with "The conversation log does not match what the person typed" in genuine
+  Copilot CLI sessions (auto mode, compaction, mid-turn messages). The session-log integrity check
+  assumed an older event layout. It now requires an intact parent chain only for the person's own
+  messages, tolerates a few milliseconds of timestamp skew, and no longer requires a
+  `system.message` parent or `supportedNativeDocumentMimeTypes`. Duplicate ids, unknown parents,
+  missing `delivery`/`interactionId`, large time inversions and edited message text are still rejected.
+- The error now names the check that failed.
+
+### Changed
+- Untested and "works, less consistent" models no longer show a model notice or ask the person to
+  switch. Only models listed as not recommended are warned about and blocked.
+
+### Added
+- `tests/unit/session-log.js`: accepts real Copilot log shapes and rejects forged ones.
+
 ## [1.2.0] - 2026-11-04
 
 ### Added

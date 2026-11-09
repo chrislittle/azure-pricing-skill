@@ -13,7 +13,8 @@ explain the result in plain words.
 
 0. **Model check.** If any engine output contains `modelNotice`, tell the person that notice in plain
    words right away (once), before continuing. This skill was tested on specific AI models; the
-   engine detects which one is running and the report records it. Models that failed testing cannot
+   engine detects which one is running and the report records it. Newer or untested models (for
+   example Opus or Sonnet 5.5) are fine and produce no notice. Only models that failed testing cannot
    build an estimate (`stage: "model"`): tell the person to switch models with `/model` and stop.
 1. **Never state a price, rate or total that did not come from engine output in this session.**
    Not from memory, not estimated, not "roughly". If you have not run the engine, you have no number.

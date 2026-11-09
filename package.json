@@ -1,6 +1,6 @@
 {
   "name": "azure-pricing-skill",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "AI agent skill for Azure pricing estimates: plain-language interview, live Azure Retail Prices, customer discounts, Microsoft-cited advice, one finished HTML estimate. Zero runtime dependencies.",
   "keywords": [
     "azure",
@@ -38,7 +38,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node tests/unit/report.js && node tests/unit/engine-vs-oracle.js && node tests/unit/split-invariance.js && node tests/unit/rule-tests.js",
+    "test": "node tests/unit/report.js && node tests/unit/engine-vs-oracle.js && node tests/unit/split-invariance.js && node tests/unit/rule-tests.js && node tests/unit/session-log.js",
     "test:report": "node tests/unit/report.js",
     "check-citations": "node scripts/azp.js check-citations",
     "seal": "node tests/tools/seal.js"
