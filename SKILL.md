@@ -56,8 +56,16 @@ GitHub Copilot CLI). All output is JSON.
 | `models` | AI models with verified token meters |
 | `search --region R --service "S" [--product P] [--meter M]` | Find meters for anything not covered |
 | `questions plan --types vm,disk,...` | The remaining questions in batches of at most three. **Ask one batch per message.** |
+| `answers --compact` | Verified human answer values and event locators, including supported native `ask_user` results; never questions or defaults |
+| `prepare --name YYYY-MM-DD-workload-pricing-estimate-region [--dir existing-directory] --compact` | Allocate unused spec, report and audit paths; creates only the new spec file |
+| `preflight spec.json --compact` | Validate schema and grounded evidence, with no pricing and no confirmation required |
 | `readback spec.json` | Plain-language list of every quantity with a check code. **Show it and get the person's reply before `build`.** |
 | `build spec.json --out <file>.html` | Price + expert review + render + validate. **The only way to produce numbers.** |
+
+All commands support `--compact`: one-line JSON with **every field preserved**, including errors,
+warnings and readback text. Use it rather than piping output through `head` or `grep`.
+`vm-suggest --limit 3 --compact` bounds `allMatches` (1–50); `shortlist` and its explanations remain
+complete, and `totalMatches`/`hasMore` disclose omitted matches.
 
 ## Workflow
 
@@ -85,6 +93,13 @@ default, and skip anything the person already answered. The `context.*` question
 internet-facing, "could it be stopped and restarted?", "will you run this for 1 to 3 years?" ...)
 decide which Microsoft guidance applies: record each answer as true or false in `spec.context`.
 Never guess an answer; if they are unsure, leave the field out.
+
+Preserve answers as soon as they arrive. `answers --compact` supplies actual human values and
+locators for `sources` (see below), including native forms. A value the person supplied, such as
+8 vCPUs, is a **known fact**, not an assumption. Do not copy a question, a suggested default,
+tool invocation arguments or your own paraphrase into `customerSaid`. If the engine cannot find
+a form response, its runtime layout is unsupported: ask the person in a normal message rather
+than inventing trusted evidence or reading arbitrary tool output as an answer.
 
 **Every service has a size.** For each component, make sure you have its own quantity from the
 person: data *stored* is not data *sent out*; a disk size is not memory. If they gave one number
@@ -136,11 +151,30 @@ the full scope. Short-runtime VMs are not automatically expanded.
 
 ### Step 3b - Confirm the numbers with the readback (required)
 
-Write the spec, then run:
+**Before writing or reading an estimate spec**, choose fresh paths in the person's working
+directory:
 
 ```
-node "<skill>/scripts/azp.js" readback <name>.json
+node "<skill>/scripts/azp.js" prepare --name YYYY-MM-DD-workload-pricing-estimate-region --compact
 ```
+
+Use the returned absolute `spec`, `report` and `audit` paths. `prepare` checks all three for
+collisions, chooses a numbered suffix when needed, and exclusively creates only the new spec
+file. Fill that file with this estimate; never read or reuse an older estimate as this customer's
+answers. Reports and audit files are never overwritten, even if another process creates one
+after preparation. If a collision occurs at build, allocate fresh paths and copy only your
+current confirmed spec, not a pre-existing estimate.
+
+Write the spec into the allocated file, then run:
+
+```
+node "<skill>/scripts/azp.js" preflight <allocated-spec>.json --compact
+node "<skill>/scripts/azp.js" readback <allocated-spec>.json --compact
+```
+
+Stop on any `ok: false`; fix schema or evidence errors **before** asking for confirmation.
+Preflight does not fetch prices or require confirmation. Readback performs the same preflight
+itself and returns no success-shaped text for an invalid spec.
 
 Show the person the returned `text` unchanged (you may format it, but keep every line, every number
 and the check code), and wait for their reply. It quotes what they told you, lists every quantity,
@@ -148,7 +182,27 @@ and lists what is **not included**, so they can catch a wrong number or a missin
 storage and data transfer separate: "2 TB of files and 20 TB of downloads a month" is 2 TB of
 storage plus 20 TB of internet egress. If they correct anything, fix the spec, run `readback`
 again and show the new text. The engine will not build until the person has replied to the
-readback for the exact spec being built; if it says lines are missing, show the text again unchanged.
+readback for the exact scope and wording being built; if it says lines are missing, show the text
+again unchanged. Wait for explicit approval (for example "yes", "correct", "looks good" or
+"go ahead"); an unrelated reply, silence or a correction is not approval. Never run readback
+and build back-to-back after changing the spec. Any customer-visible text or pricing-scope change,
+including assumptions, needs a newly displayed readback **and a subsequent human approval**.
+Only relinking identical evidence metadata (`eventId`/`answerField`) preserves confirmation.
+Native form approval is supported only for a single linked answer to a confirmation question
+containing the displayed check code. A native form may itself display the entire unchanged
+readback, not just its code; otherwise show the readback in chat first. If unsupported, show the
+readback again and ask normally.
+An intervening different readback or customer-facing question invalidates an earlier generic
+"yes"; redisplay the intended readback and obtain approval of that prompt. Ordinary noninteractive
+tool calls do not invalidate it. Schema-based native approval requires one positive field
+(`approve`, `approval`, `confirm`, `confirmation`, or an equivalent accepted/confirmed form)
+with a title such as **Approve this estimate** or **Confirm this readback**. A rejection field,
+ambiguous boolean, negative wording, or custom enum/choice reinterpretation of `true` is not
+approval. Omit the field description or use **Set true to approve this estimate**; do not attach
+ambiguous or opposite instructions. Prefer the native choice **Yes, correct** when unsure.
+
+Plain `excluded` items mean **not included**, never "as agreed". Do not claim the person declined
+something merely because you left it out; verified `declined` advisory decisions are separate.
 
 **Must-act warnings:** some problems stop the build (`stage: "advice"`), for example an older
 server with no disk, or a disk that cannot reach
@@ -159,13 +213,14 @@ quote against the conversation and notes the decision in the report.
 
 ### Step 4 - Build
 
-Write the spec to a file (see below), then:
+After approval, use the already allocated paths without changing scope or visible text:
 
 ```
-node "<skill>/scripts/azp.js" build <name>.json --out <name>.html
+node "<skill>/scripts/azp.js" build <allocated-spec>.json --out <allocated-report>.html --compact
 ```
 
-- If `ok` is false with `stage: spec`, fix the listed fields and rebuild.
+- If `ok` is false with `stage: spec`, fix the listed fields, preflight, show the new readback,
+  and obtain explicit approval before rebuilding.
 - If `ok` is false with `stage: advice`, see "Must-act warnings" above.
 - If a component failed to price, read the error. It usually means the SKU is not offered in the
   region; choose another from `vm-suggest` or tell the person.
@@ -181,7 +236,8 @@ In plain words, briefly:
    (if a discount applies). Group any purchasing comparisons under their original estimate;
    never add the variants together or rank different phases as cheapest.
 2. Each `warn` advisory, one or two sentences each, and what you recommend.
-3. The key assumptions they should check.
+3. The key assumptions from `facts.assumptions` and assumption-kind `facts.sources` they should
+   check. Customer-kind sources are known answers; never relabel them as guesses.
 4. Where the HTML file and companion `.estimate.json` audit file are. The self-contained HTML
    opens on Summary, with a detail tab per requested solution/phase and an Assumptions tab for
    discount rules, scope, next steps and sourced guidance. Warnings remain visible outside the
@@ -189,6 +245,8 @@ In plain words, briefly:
    rate units and unit prices remain in the audit file. Printing includes every tab.
 
 Do not reopen settled design questions or propose extra solutions just to fill the report.
+Use `facts.customerSaid`, `facts.sources`, `facts.notIncluded`, totals and advisory bodies as the
+source for the final narrative. Do not invent assumptions, agreement, advice or missing quantities.
 
 ### Conversation examples (wording, not a script)
 
@@ -233,7 +291,7 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
   "discountPct": 16,
   "discountExcludes": [],
   "customerSaid": {
-    "region": "we're in Central US",
+    "region": "we're in East US 2",
     "discount": "16% off list on everything",
     "requirements": "2 CPUs and 8 GB like the old server, 128 GB disk, runs all the time"
   },
@@ -249,7 +307,7 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
       ]
     }
   ],
-  "assumptions": ["Internet egress not measured; modeled at 100 GB per month."],
+  "assumptions": [],
   "excluded": ["backup", "support plan"],
   "nextSteps": ["Confirm whether the workload needs Premium SSD performance."]
 }
@@ -258,6 +316,19 @@ Dsv3, Ev3, Esv3, Dv2, B-series v1, F/Fsv2, Av2, Lsv2). If the person names one:
 - `discountPct` is required (0 if none). `discountExcludes: ["licenses"]` if the discount does not cover OS/SQL licenses.
 - `customerSaid` is required: short quotes of what the person actually told you about region,
   discount and requirements. It appears in the report so they can check you understood them.
+- Optional `sources` preserves field-level provenance without changing existing specs. For
+  example, after `answers` returns an actual native vCPU response:
+  `{"field":"options[0].components[0].vcpu","kind":"customer","customerSaid":"8","eventId":"<actual completion event ID>","answerField":"vcpu"}`.
+  Use the exact field and value from the engine's answer record. `answerField` is required for a
+  schema-based native form (even a single field), omitted for a normal message or a native choice. Customer sources
+  must match an actual human event; they cannot quote defaults. Supported fields are `region`,
+  `currency`, `discountPct`, `context.*`, `options[i].context.*` and scalar component fields.
+  VM `vcpu`/`memGiB` are derived from the chosen SKU, so an 8-vCPU answer cannot ground a
+  16-vCPU SKU. Record inferred SKU selection separately from the person's CPU/memory answers.
+  For an accepted default, use
+  `{"field":"options[0].components[1].sizeGiB","kind":"assumption","reason":"Proposed OS disk size"}`.
+  The readback, build facts, HTML and audit retain the distinction. Specs without `sources`
+  remain supported; adding customer sources requires readable, verified conversation evidence.
 - `label` on a component groups lines in the itemization (Virtual machine, Storage, Networking...).
 - Component types and fields: run `questions <type>`. Unknown fields are rejected, so check the schema.
 - The `options` array is an internal spec field, not a requirement to offer multiple solutions.

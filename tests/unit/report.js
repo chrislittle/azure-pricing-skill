@@ -159,7 +159,7 @@ const sections = h => [...h.matchAll(/<section class="pane" id="([^"]+)"/g)].map
     for (const text of ['Not priced - incomplete estimate', 'Inputs not verified', 'Pricing engine modified', 'Prepared with a model that is not recommended', 'Important warning']) assert.ok(notices.includes(text));
     const row = h.match(/<tr><td><a href="#p-estimate-2">Unavailable<\/a>[\s\S]*?<\/tr>/)[0];
     assert.ok(row.includes('Not priced') && !row.includes('$0.00'));
-    assert.ok(h.includes('Excluded: Support.'));
+    assert.ok(h.includes('Not included: Support.'));
     assert.ok(h.includes('Keep this design'));
     assert.ok(h.includes('Confirm usage'));
     e.options = [e.options[1]];

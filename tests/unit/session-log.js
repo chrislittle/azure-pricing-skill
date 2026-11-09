@@ -2,8 +2,10 @@
 // The tamper check must accept real Copilot session logs (auto mode, compaction, internal events)
 // and still reject hand-written or edited user messages.
 // usage: node tests/unit/session-log.js
-const fs = require('fs'), os = require('os'), path = require('path'), assert = require('node:assert/strict');
-const home = fs.mkdtempSync(path.join(os.tmpdir(), 'azp-log-'));
+const fs = require('fs'), path = require('path'), assert = require('node:assert/strict');
+const cache = path.resolve(__dirname, '..', '..', '.cache');
+fs.mkdirSync(cache, { recursive: true });
+const home = fs.mkdtempSync(path.join(cache, 'azp-log-'));
 const sid = 'test-session';
 fs.mkdirSync(path.join(home, 'session-state', sid), { recursive: true });
 process.env.COPILOT_HOME = home;

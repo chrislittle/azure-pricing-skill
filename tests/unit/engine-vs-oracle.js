@@ -71,8 +71,10 @@ async function total(region, currency, pct, comps) {
       if (want != null) check(`${sc.id} ${sku} ${term}`, vt.list, want, 0.11);
     }
   }
-  const out = path.join(__dirname, 'engine-vs-oracle.json');
+  const out = path.join(__dirname, '..', '..', '.cache', 'engine-vs-oracle.json');
+  fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, JSON.stringify({ pass, fail, rows }, null, 2));
   for (const r of rows.filter(r => !r.ok)) console.log('MISMATCH', JSON.stringify(r));
   console.log(`engine vs oracle: ${pass} pass, ${fail} fail`);
+  if (fail) process.exitCode = 1;
 })();

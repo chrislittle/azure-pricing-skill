@@ -78,6 +78,7 @@ async function priceSpec(spec) {
     customerSaid: spec.customerSaid || {},
     discountPct: Number(spec.discountPct || 0), discountExcludes: spec.discountExcludes || [],
     capturedAt: new Date().toISOString(), context: spec.context || {}, replacedSizes: spec.replacedSizes || [],
+    sources: require('./provenance').sourceFacts(spec),
     assumptions: spec.assumptions || [], nextSteps: spec.nextSteps || [], excluded: spec.excluded || [],
     options
   };

@@ -160,11 +160,13 @@ ${o.notes.length ? `<ul class="tight muted">${o.notes.map(n => `<li>${linkify(n)
     hours.length ? `Compute runtime per month: ${hours.join(', ')} hours as specified. Storage bills for the full month; commitments can bill continuously even when runtime is shorter.` : 'Monthly quantities as stated in each line.',
     `Rates retrieved live from the Azure Retail Prices API on ${date} in ${cur}. Each line is rounded to cents; totals sum the rounded lines. Exact meter quantities, rate units and unit prices are retained in the companion .estimate.json audit file.`,
     ...(est.assumptions || []),
-    ...((est.excluded || []).length ? [`Excluded: ${est.excluded.join(', ')}.`] : []),
-    ...(est.declined || []).map(d => `You chose to keep this as priced despite our advice (${d.id}): "${d.customerSaid}".`)
+    ...((est.excluded || []).length ? [`Not included: ${est.excluded.join(', ')}.`] : []),
+    ...(est.declined || []).map(d => `${est.verification === 'verified' ? 'You chose to keep this as priced despite our advice' : 'Decision recorded (not verified)'} (${d.id}): "${d.customerSaid}".`)
   ];
   const discounts = [...new Set(priced.flatMap(o => o.lines.map(l => `${l.service}: ${l.discountPct || 0}% off list.`)))];
   const assumptionBody = `<h2>Assumptions &amp; guidance</h2><h3>Discount rules applied</h3><p>${disc ? `Requested discount: ${esc(est.discountPct)} percent.${est.discountExcludes.length ? ` Exclusions: ${esc(est.discountExcludes.join(', '))}.` : ''}` : 'No discount requested.'}</p><ul class="tight">${discounts.map(d => `<li>${esc(d)}</li>`).join('')}</ul>
+${(est.sources || []).some(s => s.kind === 'customer') ? `<h3>Customer-supplied facts</h3><ul class="tight">${est.sources.filter(s => s.kind === 'customer').map(s => `<li>${esc(s.field)}: ${esc(s.value)} — "${esc(s.customerSaid)}"</li>`).join('')}</ul>` : ''}
+${(est.sources || []).some(s => s.kind === 'assumption') ? `<h3>Field-level assumptions</h3><ul class="tight">${est.sources.filter(s => s.kind === 'assumption').map(s => `<li>${esc(s.field)}: ${esc(s.value)} — ${esc(s.reason)}</li>`).join('')}</ul>` : ''}
 <h3>Scope and assumptions</h3><ul class="tight">${assumptions.map(a => `<li>${linkify(a)}</li>`).join('')}</ul>
 ${est.nextSteps.length ? `<h3>Next steps</h3><ol class="next">${est.nextSteps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
 ${advisories.length ? `<h3>Microsoft-sourced guidance</h3>${advisories.map(advisory).join('\n')}` : ''}`;

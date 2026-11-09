@@ -1,12 +1,12 @@
 'use strict';
 const assert = require('node:assert/strict');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
 const root = path.resolve(__dirname, '..', '..');
-const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'azp-installer-'));
+fs.mkdirSync(path.join(root, '.cache'), { recursive: true });
+const temp = fs.mkdtempSync(path.join(root, '.cache', 'azp-installer-'));
 const home = path.join(temp, 'home');
 const project = path.join(temp, 'project');
 const globalDir = path.join(home, '.copilot', 'skills');
@@ -36,7 +36,7 @@ function seed(dest) {
 
 function updated(dest) {
   assert.equal(JSON.parse(fs.readFileSync(path.join(dest, 'package.json'))).version, require('../../package.json').version);
-  for (const file of ['SKILL.md', path.join('scripts', 'lib', 'schema.js'), 'MANIFEST.json']) {
+  for (const file of ['SKILL.md', ...['schema', 'evidence', 'provenance', 'files'].map(name => path.join('scripts', 'lib', name + '.js')), path.join('scripts', 'azp.js'), 'MANIFEST.json']) {
     assert.deepEqual(fs.readFileSync(path.join(dest, file)), fs.readFileSync(path.join(root, file)), `${file} at ${dest}`);
   }
 }
