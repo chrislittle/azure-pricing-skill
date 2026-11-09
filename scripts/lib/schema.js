@@ -46,32 +46,59 @@ function sessionLog() {
 }
 
 const norm = s => String(s || '').toLowerCase().replace(/\u00d7/g, 'x').replace(/[\u2018\u2019\u201C\u201D]/g, '').replace(/[^a-z0-9.%]+/g, ' ').replace(/\s+/g, ' ').trim();
+const { humanEvidence, parseEvents } = require('./evidence');
+const { sourceErrors } = require('./provenance');
 
 // The person must have seen the exact readback for this spec and replied to it.
 function confirmationErrors(spec) {
   const txt = sessionLog(); if (txt == null) return [];
   const { readback } = require('./readback');
   const rb = readback(spec);
-  const events = txt.split(/\r?\n/).filter(Boolean).map(l => { try { return JSON.parse(l); } catch (_) { return null; } }).filter(Boolean);
+  const events = parseEvents(txt);
   const raw = rb.text.split('\n').slice(1, -1).map(l => l.replace(/^\s*-\s*/, '').trim());
   const lines = raw.map(norm);
   const code = norm(rb.code);
   const how = `Run \`azp readback <spec>\`, paste its "text" to the person unchanged (formatting such as bold is fine), and ask them to confirm. Build only after they reply. If they correct anything, update the spec and show the new readback.`;
+  const promptContent = e => {
+    const d = e.data || {};
+    return e.type === 'assistant.message' && !d.parentToolCallId ? d.content :
+      e.type === 'tool.execution_start' && d.toolName === 'ask_user' ? (d.arguments || {}).question || (d.arguments || {}).message : null;
+  };
+  const sameConfirmationPrompt = content => {
+    if (typeof content !== 'string') return false;
+    const c = norm(content.replace(/```(?:text|markdown)?\s*\n/g, '').replace(/```/g, '').replace(/[.!?]+\s*$/, ''));
+    if ((content.match(/\bAZP-[A-F0-9]{6,12}\b/gi) || []).some(check => norm(check) !== code)) return false;
+    if (c === norm(rb.text)) return true;
+    return new RegExp(`^(please )?(confirm|approve)( (every number|this estimate|the estimate|this readback|the readback|your decision))?( for)? (check )?${code}$`).test(c) ||
+      new RegExp(`^is (check )?${code} (correct|right)$`).test(c);
+  };
   let best = null, shown = -1;
   events.forEach((e, i) => {
-    if (e.type !== 'assistant.message') return;
-    const c = norm(e.data && e.data.content);
+    const content = promptContent(e);
+    if (typeof content !== 'string') return;
+    const c = norm(content);
     if (!c.includes(code)) return;
     const miss = raw.filter((l, j) => !c.includes(lines[j]));
-    if (!miss.length) shown = i; else if (!best || miss.length < best.length) best = miss;
+    if (!miss.length && sameConfirmationPrompt(content)) shown = i; else if (!best || miss.length < best.length) best = miss;
   });
   if (shown < 0) {
-    if (best) return [`The readback shown for check ${rb.code} does not match the engine's text. These lines are missing or changed: ${best.slice(0, 4).map(l => `"${l}"`).join('; ')}. ${how}`];
+    if (best) return [`The readback shown for check ${rb.code} does not match the engine's text. ${best.length ? `These lines are missing or changed: ${best.slice(0, 4).map(l => `"${l}"`).join('; ')}` : 'It contains extra or changed confirmation text'}. ${how}`];
     return [`The person has not seen the readback for this spec (check ${rb.code}). ${how}`];
   }
-  const reply = events.slice(shown + 1).find(e => e.type === 'user.message' && e.data && typeof e.data.content === 'string' && !e.data.source && !e.data.content.startsWith('<skill-context'));
-  if (!reply) return [`The person has not replied to the readback (check ${rb.code}) yet. Wait for their answer before building.`];
-  if (/^\s*(no\b|nope|not (quite|right|correct)|wrong|incorrect|that'?s not|actually\b)/i.test(reply.data.content)) return [`The person corrected the readback (check ${rb.code}): "${reply.data.content.slice(0, 160)}". Update the spec, then show the new readback.`];
+  const replies = humanEvidence(events, { includeUnsupported: true }).filter(e => e.index > shown);
+  if (!replies.length) return [`The person has not replied to the readback (check ${rb.code}) yet. Wait for their answer before building.`];
+  for (const reply of replies) {
+    if (reply.unsupported) return [`Cannot verify this native ask_user response layout for check ${rb.code}. Show the readback again and ask for explicit approval in a normal message; do not infer confirmation from tool output.`];
+    if (reply.native && (reply.startIndex < shown || reply.responseFields !== 1 || !sameConfirmationPrompt(reply.question))) return [`The native form reply was not a confirmation of check ${rb.code}. Show the readback and ask for explicit approval.`];
+    const approval = reply.text.trim().replace(/[.!]+$/, '').trim().replace(/\s*\(Recommended\)$/i, '').replace(/[.!]+$/, '').trim().toLowerCase().replace(/,? (please|thanks|thank you)$/, '').trim();
+    if (reply.native && !reply.positiveApproval && (reply.answerField || approval === 'true')) return [`The native form field is not an unambiguous positive approval of check ${rb.code}. Use a single approval field titled "Approve this estimate" or an explicit positive choice; rejection, ambiguous fields and bare true are not approval.`];
+    if (!/^(yes|yes,? (that'?s |it'?s |all |everything is )?(correct|right)|yes,? (please )?(go ahead|proceed|build it)|correct|confirmed|confirm|approved|approve|looks (good|correct|right)|all (correct|good)|go ahead|proceed|build it|true)(,? (please|thanks|thank you))?$/i.test(approval)) return [`The person did not explicitly approve the readback (check ${rb.code}): "${reply.text.slice(0, 160)}". If this is a correction, update the spec; otherwise ask for explicit confirmation. Show the readback again before obtaining new approval.`];
+  }
+  const intervening = events.slice(shown + 1).find(e => {
+    const content = promptContent(e);
+    return typeof content === 'string' && content.trim() && !sameConfirmationPrompt(content);
+  });
+  if (intervening) return [`A different readback or another customer-facing prompt intervened after check ${rb.code}. A generic reply cannot approve that earlier readback. ${how}`];
   return [];
 }
 
@@ -145,6 +172,7 @@ function userMessages() {
       msgs.push(typeof d.transformedContent === 'string' ? d.transformedContent.replace(/<current_datetime>[\s\S]*?<\/current_datetime>|<system_reminder>[\s\S]*?<\/system_reminder>/g, '') : c);
     } catch (_) { }
   }
+  for (const answer of humanEvidence(parseEvents(txt))) if (answer.native) msgs.push(answer.text);
   if (tampered) return '\u0000TAMPERED';
   return msgs.join('\n').toLowerCase();
 }
@@ -199,6 +227,9 @@ function groundingErrors(spec) {
   groundingErrors.status = 'verified';
   if (user === '\u0000TAMPERED') { groundingErrors.status = 'tampered'; return [`The conversation log does not match what the person typed (${userMessages.reason || 'unknown check'}). Estimates can only be built from the person's real answers.`]; }
   const errs = [];
+  const sources = sourceErrors(spec, humanEvidence(parseEvents(sessionLog())));
+  errs.push(...sources);
+  const sourced = field => !sources.length && (spec.sources || []).some(s => s.kind === 'customer' && s.field === field);
   const said = spec.customerSaid || {};
   for (const k of ['region', 'discount', 'requirements']) {
     const toks = (String(said[k] || '').toLowerCase().match(/[a-z]{4,}|\d+/g) || []).filter(t => !['that', 'with', 'have', 'from', 'this', 'what', 'they', 'your', 'about'].includes(t));
@@ -207,8 +238,8 @@ function groundingErrors(spec) {
     if (hit < 0.6) errs.push(`"customerSaid.${k}" ("${said[k]}") does not match anything the person typed in this conversation. Do not invent their answers: ask them.`);
   }
   const pct = Number(spec.discountPct || 0);
-  if (pct > 0 && !new RegExp(`\\b${String(pct).replace('.', '\\.')}\\s*(%|percent|pct)|\\b${String(pct).replace('.', '\\.')}\\b[^.\\n]{0,25}\\b(off|discount)`).test(user)) errs.push(`discountPct ${pct} was never stated by the person as a percentage discount. Ask them for their discount.`);
-  if (pct === 0 && !/\b(no|none|don't|dont|do not|without|zero|0%|not have|n't have)\b[^.\n]{0,40}\bdiscounts?\b|\bdiscounts?\b[^.\n]{0,30}\b(none|no|zero|0%)\b|\blist price\b/.test(user)) errs.push('discountPct is 0 but the person never said they have no discount. Ask them.');
+  if (pct > 0 && !sourced('discountPct') && !new RegExp(`\\b${String(pct).replace('.', '\\.')}\\s*(%|percent|pct)|\\b${String(pct).replace('.', '\\.')}\\b[^.\\n]{0,25}\\b(off|discount)`).test(user)) errs.push(`discountPct ${pct} was never stated by the person as a percentage discount. Ask them for their discount.`);
+  if (pct === 0 && !sourced('discountPct') && !/\b(no|none|don't|dont|do not|without|zero|0%|not have|n't have)\b[^.\n]{0,40}\bdiscounts?\b|\bdiscounts?\b[^.\n]{0,30}\b(none|no|zero|0%)\b|\blist price\b/.test(user)) errs.push('discountPct is 0 but the person never said they have no discount. Ask them.');
   // Region: the region itself, or a location the person named, must appear in what they typed.
   const REG = require('../../catalog/regions.json');
   const code = String(spec.region || '').toLowerCase().replace(/\s+/g, '');
@@ -226,8 +257,19 @@ function groundingErrors(spec) {
 
 function validateSpec(spec, opts = {}) {
   const errs = [];
+  if (!spec || typeof spec !== 'object' || Array.isArray(spec)) return ['The spec must be an object.'];
+  if (spec.options != null && !Array.isArray(spec.options)) return ['options must be an array.'];
+  if (Array.isArray(spec.options) && spec.options.some(o => !o || typeof o !== 'object' || !Array.isArray(o.components))) return ['Each option must be an object with a components array.'];
+  if ((spec.options || []).some(o => o.components.some(c => !c || typeof c !== 'object'))) return ['Each component must be an object.'];
+  for (const key of ['assumptions', 'excluded', 'nextSteps', 'discountExcludes']) if (spec[key] != null && (!Array.isArray(spec[key]) || spec[key].some(v => typeof v !== 'string'))) errs.push(`${key} must be an array of strings.`);
+  for (const key of ['replacedSizes', 'discountExcludes']) if (spec[key] != null && !Array.isArray(spec[key])) return [`${key} must be an array.`];
+  if (spec.declined != null && !Array.isArray(spec.declined)) return ['declined must be an array.'];
   errs.push(...groundingErrors(spec));
-  if (groundingErrors.status === 'verified' && opts.confirm !== false) errs.push(...confirmationErrors(spec));
+  if (groundingErrors.status !== 'verified') errs.push(...sourceErrors(spec, null));
+  for (const [i, d] of (spec.declined || []).entries()) {
+    if (!d || typeof d.id !== 'string' || !d.id.trim() || typeof d.customerSaid !== 'string' || !d.customerSaid.trim()) errs.push(`declined[${i}] needs an advisory id and the person's exact customerSaid decision.`);
+    else if (groundingErrors.status === 'verified' && (!quoteGrounded(d.customerSaid) || !humanEvidence(parseEvents(sessionLog())).some(e => norm(e.text).includes(norm(d.customerSaid))))) errs.push(`declined[${i}].customerSaid is not a verified human decision. Ask the person; an excluded item is not evidence of agreement.`);
+  }
   if (!spec.region) errs.push('Missing "region".');
   if (spec.discountPct == null) errs.push('Missing "discountPct" (use 0 if the customer has no discount).');
   else if (typeof spec.discountPct !== 'number' || !Number.isFinite(spec.discountPct) || spec.discountPct < 0 || spec.discountPct >= 100) errs.push('"discountPct" must be a number from 0 to 99.99 (for example 16 for 16 percent, 0 for none).');
@@ -235,8 +277,9 @@ function validateSpec(spec, opts = {}) {
   const fake = /assum|not (been )?(specified|provided|stated|given|mentioned)|unspecified|default|\bn\/a\b|\bunknown\b|\btbd\b|placeholder/i;
   for (const k of ['region', 'discount', 'requirements']) if (said[k] && fake.test(String(said[k])) && !quoteVerbatim(said[k])) errs.push(`"customerSaid.${k}" is an assumption, not the person's words ("${said[k]}"). STOP and ask them.`);
   if (!said.region || String(said.region).trim().length < 3) errs.push('Missing "customerSaid.region": quote the person\'s own words about the region. If they have not told you, STOP and ask them; do not assume a region.');
-  if (!said.discount || String(said.discount).trim().length < 2) errs.push('Missing "customerSaid.discount": quote the person\'s own words about their discount (for example "16% off list" or "no discount"). If they have not told you, STOP and ask them; do not assume.');
-  if (!said.requirements || String(said.requirements).trim().length < 3) errs.push('Missing "customerSaid.requirements": quote what the person told you about size and usage (CPU/memory, capacity, volumes, hours). If they have not told you, STOP and ask them.');
+  const hasSource = quote => Array.isArray(spec.sources) && spec.sources.some(s => s && s.kind === 'customer' && s.customerSaid === quote);
+  if (!said.discount || (String(said.discount).trim().length < 2 && !hasSource(said.discount))) errs.push('Missing "customerSaid.discount": quote the person\'s own words about their discount (for example "16% off list" or "no discount"). If they have not told you, STOP and ask them; do not assume.');
+  if (!said.requirements || (String(said.requirements).trim().length < 3 && !hasSource(said.requirements))) errs.push('Missing "customerSaid.requirements": quote what the person told you about size and usage (CPU/memory, capacity, volumes, hours). If they have not told you, STOP and ask them.');
   if (!Array.isArray(spec.options) || !spec.options.length) errs.push('Missing "options" array.');
   const contexts = [['context', spec.context], ...(spec.options || []).map((o, i) => [`options[${i}].context`, o.context])];
   for (const [prefix, context] of contexts) {
@@ -271,6 +314,7 @@ function validateSpec(spec, opts = {}) {
     }
     for (const k of Object.keys(c)) if (!['type', 'label'].includes(k) && !s.fields[k]) errs.push(`options[${i}].components[${j}] (${c.type}): unknown field "${k}".`);
   }));
+  if (!errs.length && groundingErrors.status === 'verified' && opts.confirm !== false) errs.push(...confirmationErrors(spec));
   return errs;
 }
 
@@ -288,4 +332,10 @@ const CONTEXT = {
   frontDoor: { ask: 'internal: set true when the design already includes Azure Front Door', type: 'boolean', internal: true }
 };
 
-module.exports = { SCHEMA: S, CONTEXT, validateSpec, quoteGrounded, modelStatus, verificationStatus: () => groundingErrors.status || 'unverified' };
+function conversationAnswers() {
+  const text = sessionLog(), user = userMessages();
+  if (text == null || user === '\u0000TAMPERED') return { ok: false, stage: 'evidence', errors: [text == null ? 'Cannot read this conversation.' : `Conversation integrity check failed: ${userMessages.reason}`] };
+  return { ok: true, answers: humanEvidence(parseEvents(text)).map(({ eventId, answerField, text }) => ({ eventId, ...(answerField ? { answerField } : {}), customerSaid: text })), instructions: 'Only these human values are evidence. Unsupported native layouts are omitted; if an expected answer is absent, ask in a normal message rather than inventing evidence.' };
+}
+
+module.exports = { SCHEMA: S, CONTEXT, validateSpec, quoteGrounded, modelStatus, conversationAnswers, verificationStatus: () => groundingErrors.status || 'unverified' };

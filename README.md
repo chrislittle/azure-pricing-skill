@@ -48,8 +48,8 @@ npx github:chrislittle/azure-pricing-skill init --global
 
 > The `npx` commands in this README are identical in **bash**, **zsh**, and **PowerShell**.
 
-**2. Pick a recommended model and ask.** In GitHub Copilot CLI, choose the model with `/model`
-(see [Which AI model to use](#which-ai-model-to-use)), then:
+**2. Ask your agent.** Newer and untested models work without a warning; only the explicitly
+blocked models cannot build (see [Which AI model to use](#which-ai-model-to-use)):
 
 > **You:** *"How much would a Red Hat server with 64 GB of RAM and 2 TB of storage cost in East US 2?
 > We get 16% off list."*
@@ -142,8 +142,9 @@ You never write a spec or run a command. In conversation:
 2. Answer only missing requirements, at most three questions at a time: region, discount, size
    and usage, and whether it is production, internet-facing, and so on. No Azure part numbers
    required, and no "how many models?" question.
-3. **Check the readback.** Before anything is priced, the agent shows every quantity in plain words,
-   next to what you told it, plus what is *not* included. Correct anything that is wrong.
+3. **Check the readback.** Before anything is priced, the engine preflights the spec and grounded
+   answers. The agent shows every quantity in plain words, next to what you told it, plus what is
+   *not included*, and waits for explicit approval. Corrections need a new readback and approval.
 4. Get one self-contained HTML estimate with a navy header and blue accents: a **Summary**
    comparison first, a detail tab per requested solution or deployment phase, and **Assumptions**
    for discount rules, scope, next steps and sourced guidance. Warnings stay visible outside the
@@ -199,10 +200,18 @@ blocks only the models listed as blocked, and records the model on every estimat
   [Azure Retail Prices API](https://learn.microsoft.com/rest/api/cost-management/retail-prices/azure-retail-prices)
   data: units (per hour, per 10K, per 1M), free grants, graduated tiers, reservations and savings
   plans, licenses, discounts and rounding. The model cannot write a number into the estimate.
-- **Readback before pricing.** The engine will not build until the person has seen the readback for
-  the exact spec being priced and replied to it. A change means a new readback.
+- **Readback before pricing.** In Copilot, the engine will not build until the person has seen the
+  readback for the exact scope and visible wording and explicitly approved it. Changes to
+  assumptions or displayed text require a new readback and subsequent approval; evidence-only
+  relinking does not.
 - **Verified answers.** The region, discount and requirements on the estimate must match what the
-  person actually typed; the engine checks the conversation record.
+  person actually typed; the engine checks the conversation record. Optional field-level `sources`
+  also preserve supported linked native `ask_user` answers. Questions, defaults and arbitrary tool
+  output are not human evidence; unsupported layouts fail verification rather than inventing it.
+  Customer-supplied values are reported separately from assumptions.
+- **Fresh files.** `prepare` allocates collision-free paths before the spec is written or read;
+  build refuses to overwrite an existing report or audit. Plain exclusions say "not included",
+  not "as agreed".
 - **Itemization that adds up.** List and your price side by side; every line rounded, totals are the
   sum of the lines. Exact meter quantities and full unit-price precision remain in the companion
   audit file rather than cluttering the five-column customer table.
@@ -321,19 +330,30 @@ dependencies, and every command prints JSON:
 ```bash
 node scripts/azp.js questions                        # component types
 node scripts/azp.js questions plan --types vm,disk   # the interview, three questions at a time
-node scripts/azp.js vm-suggest --vcpu 4 --mem 16 --region eastus2
-node scripts/azp.js readback spec.json               # plain-language check of every quantity
-node scripts/azp.js build spec.json --out estimate.html
+node scripts/azp.js vm-suggest --vcpu 4 --mem 16 --region eastus2 --limit 3 --compact
+node scripts/azp.js answers --compact                # verified human answer values/locators
+node scripts/azp.js prepare --name 2026-11-09-app-pricing-estimate-eastus2 --compact
+# Fill the newly allocated spec path, then use those returned paths:
+node scripts/azp.js preflight <allocated-spec>.json --compact  # no pricing or confirmation
+node scripts/azp.js readback <allocated-spec>.json --compact   # display text, wait for approval
+node scripts/azp.js build <allocated-spec>.json --out <allocated-report>.html --compact
 node scripts/azp.js rules                            # every rule with its Microsoft source
 node scripts/azp.js check-citations                  # verify every quote against the live page
 ```
+
+`--compact` minifies JSON without dropping fields, errors, advisories or readback text. VM
+`--limit` (1–50) bounds only `allMatches`, with `totalMatches`/`hasMore`; it never trims the complete
+processor shortlist or explanations. Do not pipe structured output through `head`/`grep`.
+Use build's engine-generated `facts` for the final narrative rather than inventing assumptions.
+See `SKILL.md` for field-level `sources`, accepted native evidence and confirmation rules.
 
 The spec format and the full interview are documented in [`SKILL.md`](SKILL.md).
 
 ## Testing
 
 ```bash
-npm test                     # reports, oracle agreement, split invariance, rule tests
+npm test                     # offline workflow/session/installer, reports, invariance, rules, oracle last
+npm run test:workflow         # deterministic fixtures: evidence, preflight, confirmation, files, CLI
 npm run test:report           # focused rendering, purchasing lineage and readback tests
 npm run check-citations      # every citation fetched and its quote found
 ```

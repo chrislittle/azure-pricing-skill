@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const vmSizes = require('../../catalog/vm-sizes.json');
 const REG = require('../../catalog/regions.json');
 const { expandSpec } = require('./expand');
+const { sourceLines } = require('./provenance');
 
 const n = v => Number(v).toLocaleString('en-US');
 const big = v => v >= 1e6 ? `${n(v)} (${(v / 1e6).toLocaleString('en-US', { maximumFractionDigits: 2 })} million)` : n(v);
@@ -39,6 +40,8 @@ const LINE = {
 };
 
 function readback(spec) {
+  const original = spec;
+  const facts = sourceLines(spec);
   const region = String(spec.region || '').toLowerCase().replace(/\s+/g, '');
   const CTXL = { production: ['Production workload', 'Development or test'], internetFacing: ['Reached from the internet', 'Reached only from your network'], interruptible: ['Can be stopped and restarted if Azure needs the capacity', 'Must not be interrupted'], steadyUsage: ['Long-term, steady use (1 year or more)', 'Usage may change; no long-term commitment'], idlePeriods: ['Idle for long stretches (nights or weekends)', 'Busy most of the time'], zoneResilience: ['Must survive a datacenter failure', 'Single datacenter is acceptable'], privateOnly: ['Private network access only', 'Public access allowed'], multiRegionUsers: ['Users in several countries or continents', 'Users mostly in one area'] };
   const ctx = Object.entries(spec.context || {}).filter(([k, v]) => CTXL[k] && typeof v === 'boolean').map(([k, v]) => CTXL[k][v ? 0 : 1]);
@@ -58,17 +61,30 @@ function readback(spec) {
   });
   const missing = notIncluded(spec);
   const said = spec.customerSaid && spec.customerSaid.requirements ? String(spec.customerSaid.requirements).replace(/\s+/g, ' ').trim() : '';
-  const canon = JSON.stringify([head, opts, missing, spec.replacedSizes || []]);
-  const code = 'AZP-' + crypto.createHash('sha256').update(canon).digest('hex').slice(0, 6).toUpperCase();
-  const text = [
+  const body = [
     'Before I price this, please check these numbers against what you told me:',
+    ...(spec.title ? [`Estimate: ${spec.title}`] : []),
+    ...(spec.customer ? [`Prepared for: ${spec.customer}`] : []),
     ...(said ? [`You told me: "${said}"`] : []),
+    ...['region', 'discount'].filter(k => spec.customerSaid && spec.customerSaid[k]).map(k => `Your ${k} answer: "${spec.customerSaid[k]}"`),
     ...head.map(h => `- ${h}`),
+    ...((spec.discountExcludes || []).length ? [`Discount does not cover: ${spec.discountExcludes.join(', ')}`] : []),
     ...opts.flatMap(o => [`${o.name}`, ...o.lines.map(l => `  - ${l}`)]),
+    ...(original.options || []).flatMap(o => ['label', 'summary', 'whenToChoose'].filter(k => o[k]).map(k => `${o.name || 'Estimate'} ${k}: ${o[k]}`)),
+    ...(facts.length ? ['Answer sources:', ...facts.map(f => `  - ${f}`)] : []),
+    ...((spec.assumptions || []).length ? ['Assumptions:', ...spec.assumptions.map(a => `  - ${a}`)] : []),
+    ...((spec.nextSteps || []).length ? ['Next steps:', ...spec.nextSteps.map(a => `  - ${a}`)] : []),
+    ...(spec.declined || []).map(d => `Decision (${d.id}): "${d.customerSaid}"`),
     ...((spec.replacedSizes || []).length ? ['Sizes replaced:', ...spec.replacedSizes.map(r => `  - You mentioned ${r.requested}, which Microsoft lists as End of Life; priced ${r.priced} instead`)] : []),
-    ...(missing.length ? ['Not included:', ...missing.map(m => `  - ${m}`)] : []),
-    `Is every number right, and is anything missing? (check ${code})`
+    ...(missing.length ? ['Not included:', ...missing.map(m => `  - ${m}`)] : [])
   ].join('\n');
+  // Hash all scope and visible text, but not evidence locators. Re-linking the same actual
+  // answer is metadata-only; changing wording, assumptions or an undisplayed pricing field is not.
+  const scope = JSON.parse(JSON.stringify(original));
+  if (Array.isArray(scope.sources)) scope.sources = scope.sources.map(({ eventId, answerField, ...visible }) => visible);
+  const stable = value => Array.isArray(value) ? value.map(stable) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(k => [k, stable(value[k])])) : value;
+  const code = 'AZP-' + crypto.createHash('sha256').update(JSON.stringify([body, stable(scope)])).digest('hex').slice(0, 12).toUpperCase();
+  const text = body + `\nIs every number right, and is anything missing? (check ${code})`;
   return { code, text };
 }
 
@@ -96,7 +112,7 @@ function notIncluded(spec) {
   if (has('aks') && !has('vm')) out.push('The node servers that run the Kubernetes workloads');
   if (has('load-balancer', 'app-gateway') && !has('vm', 'app-service', 'aks', 'container-apps')) out.push('The servers or apps behind the load balancer or gateway');
   if (spec.context && spec.context.internetFacing && !has('bandwidth') && has('vm', 'blob', 'app-service', 'container-apps', 'aks') && !isExcl(/egress|bandwidth|data transfer|internet/i)) out.push('Data sent out to the internet each month');
-  for (const e of excluded) out.push(`${e} (as agreed)`);
+  for (const e of excluded) out.push(`${e} (not included)`);
   return out;
 }
 

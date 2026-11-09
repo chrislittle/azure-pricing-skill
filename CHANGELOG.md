@@ -3,6 +3,49 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-11-09
+
+### Added
+- Optional field-level `sources` distinguish verified customer values from assumptions in readback,
+  build facts, HTML and audit JSON. VM CPU/memory provenance is checked against the selected SKU.
+- Native Copilot `ask_user` evidence: linked start/completion events, matching tool call and turn,
+  successful human interaction, and observed choice/form result layouts only. Questions, schema
+  defaults, unlinked or other-tool output are never answers; unsupported layouts fail explicitly.
+  `answers` exposes verified human values and locators without invocation defaults or questions.
+- `preflight` validates the spec and grounded evidence without pricing or confirmation. `readback`
+  runs the same validation and fails with structured errors before emitting any readback text.
+- `prepare` checks spec/report/audit collisions, allocates numbered fresh paths, and exclusively
+  creates only the spec. Build exclusively creates both outputs and preserves existing contents.
+- `--compact` provides complete one-line JSON for agent consumption. VM `--limit 1..50` bounds
+  only `allMatches`, with total/has-more metadata and an untrimmed shortlist and explanations.
+- Offline synthetic-session tests cover native answers, preflight, explicit confirmation,
+  evidence-only relinking, exclusions, collision preservation and a complete fixture-priced build.
+  Installer regression coverage includes every new runtime module and CLI payload.
+
+### Fixed
+- Readback codes now bind all scope and visible text, including customer quotes, assumptions,
+  discount exclusions and report descriptions; changes require a newly displayed readback and
+  subsequent explicit approval. Identical evidence locator changes do not invalidate approval.
+- Silence, unrelated replies, corrections and unrelated native forms no longer count as approval.
+  Supported single-answer native approvals must reference the displayed check code.
+- Approval is bound to the prompt actually answered: an intervening different readback or
+  customer-facing question invalidates stale generic approval, while ordinary tool calls do not.
+- Schema-based native confirmation requires an unambiguous positive approval field and label;
+  rejection/ambiguous booleans and custom reinterpretations of `true` cannot approve an estimate.
+- Native approval text is normalized before checking bare `true`, so capitalization,
+  recommended-choice labels, punctuation and polite suffixes cannot bypass positive-approval metadata.
+- Plain exclusions say "not included", never claim "as agreed"; declined advisory decisions remain
+  distinct and are preflight-checked against exact human words. Offline decisions are labeled
+  unverified rather than claiming agreement. Final narrative guidance uses engine facts, preserving
+  known CPU answers as facts.
+
+### Changed
+- Skill workflow allocates paths before writing/reading, preflights before confirmation, and uses
+  structured compact output without truncation. README removes stale recommended-model setup.
+- Offline regression tests run before network-dependent suites; the oracle comparison runs last
+  so known live-price drift cannot prevent the new unit tests. Oracle mismatches return a failing
+  exit status and write diagnostics only to `.cache`; tracked oracle snapshots are unchanged.
+
 ## [1.2.2] - 2026-11-09
 
 ### Fixed

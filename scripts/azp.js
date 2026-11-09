@@ -10,6 +10,7 @@ const { checkMath, checkHtml, checkLinks, checkCitations } = require('./lib/vali
 const { SCHEMA, CONTEXT, validateSpec, quoteGrounded, modelStatus, verificationStatus } = require('./lib/schema');
 const { expandSpec } = require('./lib/expand');
 const { lifecycle } = require('./lib/lifecycle');
+const { prepare, writeOutputs } = require('./lib/files');
 
 // Fingerprint of the engine code and catalogs, printed in every report so edits are visible.
 function engineFingerprint() {
@@ -32,7 +33,7 @@ function args(argv) {
   const o = { _: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a.startsWith('--')) { const k = a.slice(2); const v = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true; o[k] = v; }
+    if (a.startsWith('--')) { const k = a.slice(2); const v = ['compact', 'no-links', 'local-disk', 'allow-no-premium'].includes(k) ? true : argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true; o[k] = v; }
     else o._.push(a);
   }
   return o;
@@ -58,6 +59,8 @@ function highlights(o) {
 }
 
 async function cmdVmSuggest(a) {
+  const limit = a.limit == null ? 15 : Number(a.limit);
+  if (a.limit === true || !Number.isInteger(limit) || limit < 1 || limit > 50) throw new PricingError('--limit must be an integer from 1 to 50.');
   const region = normalizeRegion(a.region).code;
   const vcpu = Number(a.vcpu), mem = Number(a.mem || a.memory);
   if (!vcpu || !mem) throw new PricingError('vm-suggest needs --vcpu and --mem (GiB).');
@@ -91,7 +94,7 @@ async function cmdVmSuggest(a) {
   res.sort((x, y) => x.hourly - y.hourly);
   const pick = [];
   for (const p of ['AMD', 'Intel', 'Arm']) { const c = res.find(r => r.processor === p); if (c) pick.push(c); }
-  const out = { region, workload, requirement: { vcpu, memGiB: mem }, shortlist: pick, allMatches: res.slice(0, 15),
+  const out = { region, workload, requirement: { vcpu, memGiB: mem }, shortlist: pick, totalMatches: res.length, limit, hasMore: res.length > limit, allMatches: res.slice(0, limit),
     explain: pick.map(p => `${p.sku} (${p.processor}, ${p.vcpu} vCPU / ${p.memGiB} GiB): ${money(p.monthly730, ctx.currency)} list per month at 730 hours.` + (p.processor === 'Arm' ? ' Only if the software runs on Arm64 (most Linux open source does; many commercial apps do not).' : p.processor === 'Intel' ? ' Choose if software is certified only on Intel.' : ' Usually the lowest-cost x86 option.')) };
   if (!pick.length) out.hint = 'No exact match. Try --workload auto/general/memory, a different vCPU count, or --local-disk.';
   return out;
@@ -113,6 +116,9 @@ async function cmdSearch(a) {
 async function cmdBuild(a) {
   const specPath = a._[1];
   if (!specPath) throw new PricingError('usage: azp build <spec.json> [--out estimate.html] [--no-links]');
+  const out = a.out || specPath.replace(/\.json$/i, '') + '.html';
+  if (!/\.html$/i.test(out)) throw new PricingError('--out must end in .html.');
+  if ([out, out.replace(/\.html$/i, '') + '.estimate.json'].some(file => fs.existsSync(file))) throw new PricingError('Output already exists; run prepare to allocate new spec/report paths.');
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
   // Models that failed testing cannot produce an estimate with this skill.
   const mst = modelStatus();
@@ -134,16 +140,15 @@ async function cmdBuild(a) {
   const priceErrors = est.options.flatMap(o => o.errors.map(e => `${o.name}: ${e}`));
   if (priceErrors.length && est.options.every(o => o.errors.length)) return { ok: false, stage: 'price', errors: priceErrors };
   const html = render(est, adv);
-  const out = a.out || specPath.replace(/\.json$/i, '') + '.html';
   const mathErr = checkMath(est), htmlErr = checkHtml(html);
   const links = a['no-links'] ? { urls: [], errs: [] } : await checkLinks(html);
-  fs.writeFileSync(out, html);
-  fs.writeFileSync(out.replace(/\.html$/i, '') + '.estimate.json', JSON.stringify({ estimate: est, advisories: adv }, null, 2));
+  const audit = writeOutputs(out, html, { estimate: est, advisories: adv });
   const ok = !mathErr.length && !htmlErr.length && !links.errs.length && !priceErrors.length;
   return {
-    ok, file: path.resolve(out), currency: est.currency, discountPct: est.discountPct,
+    ok, file: path.resolve(out), audit, currency: est.currency, discountPct: est.discountPct,
+    facts: { customerSaid: est.customerSaid, sources: est.sources, assumptions: est.assumptions, notIncluded: require('./lib/readback').notIncluded(expandSpec(spec)), nextSteps: est.nextSteps },
     options: est.options.map(o => ({ name: o.name, scenario: o.scenario, purchasing: o.purchasing, monthlyList: o.totalList, monthlyYourPrice: o.totalYour, lowest: !!o.lowest, errors: o.errors })),
-    advisories: adv.map(x => ({ id: x.id, level: x.level, title: x.title, option: x.option, source: x.source ? [x.source.framework, x.source.code].filter(Boolean).join(' ') + ': ' + x.source.url : null })),
+    advisories: adv.map(x => ({ id: x.id, level: x.level, title: x.title, body: x.body.replace(/<[^>]+>/g, ''), option: x.option, source: x.source ? [x.source.framework, x.source.code].filter(Boolean).join(' ') + ': ' + x.source.url : null })),
     validation: { math: mathErr, html: htmlErr, links: links.errs, linksChecked: links.urls.length },
     relay: 'Tell the customer the totals (list and your price), every advisory with level "warn" in plain words, then where the file is.',
     ...(adv.some(x => x.id === 'vm-end-of-life') ? { explainToPerson: adv.filter(x => x.id === 'vm-end-of-life').map(x => ({ say: x.body.replace(/<[^>]+>/g, ''), links: [x.source.url, ...(x.source.more || []).map(m => m.url)] })), explainInstruction: 'Explain why the requested size was replaced, in plain words based on "say", and include these Microsoft links in your reply.' } : {})
@@ -151,10 +156,10 @@ async function cmdBuild(a) {
 }
 
 async function main() {
+  const a = args(process.argv.slice(2));
   // Refuse to run with code injected at startup (preloaded scripts can rewrite the engine in memory).
   const inj = [...process.execArgv, ...String(process.env.NODE_OPTIONS || '').split(/\s+/)].filter(a => /^(-r|--require|--import|--loader|--experimental-loader|--inspect|--eval|-e|-p|--print)/.test(a));
-  if (inj.length) { process.stdout.write(JSON.stringify({ ok: false, stage: 'integrity', errors: ['The pricing engine was started with injected code (' + inj.join(' ') + '). Run it normally: node azp.js <command>.'] }, null, 2) + '\n'); process.exitCode = 2; return; }
-  const a = args(process.argv.slice(2));
+  if (inj.length) { process.stdout.write(JSON.stringify({ ok: false, stage: 'integrity', errors: ['The pricing engine was started with injected code (' + inj.join(' ') + '). Run it normally: node azp.js <command>.'] }, null, a.compact ? undefined : 2) + '\n'); process.exitCode = 2; return; }
   const cmd = a._[0];
   let out;
   switch (cmd) {
@@ -184,10 +189,29 @@ async function main() {
     case 'models': out = Object.entries(aiModels).map(([k, v]) => ({ model: k, class: v.class, legacy: !!v.legacy })); break;
     case 'regions': out = require('../catalog/regions.json'); break;
     case 'search': out = await cmdSearch(a); break;
+    case 'prepare': out = prepare(a.name, a.dir || '.'); break;
+    case 'answers': {
+      const { conversationAnswers } = require('./lib/schema');
+      out = conversationAnswers();
+      break;
+    }
+    case 'preflight': {
+      const spec = JSON.parse(fs.readFileSync(a._[1], 'utf8'));
+      const errors = validateSpec(spec, { confirm: false });
+      out = { ok: !errors.length, stage: 'spec', errors, verification: verificationStatus(), instructions: 'No pricing was fetched and confirmation was not required. If ok, run readback and show its text before asking for confirmation.' };
+      break;
+    }
     case 'validate-spec': out = validateSpec(JSON.parse(fs.readFileSync(a._[1], 'utf8'))); break;
     case 'price': { const spec = expandSpec(JSON.parse(fs.readFileSync(a._[1], 'utf8'))); const e = await priceSpec(spec); out = { options: e.options.map(o => ({ name: o.name, list: o.totalList, your: o.totalYour, errors: o.errors, lines: o.lines.map(l => [l.desc, l.list, l.your]) })), advisories: advise(e).map(x => x.id) }; break; }
     case 'build': out = await cmdBuild(a); break;
-    case 'readback': { const r = require('./lib/readback').readback(JSON.parse(fs.readFileSync(a._[1], 'utf8'))); out = { code: r.code, text: r.text, instructions: 'Show the person this text exactly as written, including the check code, and wait for their reply before running build.' }; break; }
+    case 'readback': {
+      const spec = JSON.parse(fs.readFileSync(a._[1], 'utf8'));
+      const errors = validateSpec(spec, { confirm: false });
+      if (errors.length) { out = { ok: false, stage: 'spec', errors }; break; }
+      const r = require('./lib/readback').readback(spec);
+      out = { ok: true, code: r.code, text: r.text, facts: { sources: require('./lib/provenance').sourceFacts(spec), assumptions: spec.assumptions || [], notIncluded: require('./lib/readback').notIncluded(expandSpec(spec)) }, instructions: 'Show the person this text exactly as written, including the check code, and wait for explicit approval before running build. A scope or wording change needs a new displayed readback and subsequent approval.' };
+      break;
+    }
     case 'rules': out = rulebook(); break;
     case 'check-citations': { const rb = rulebook(); const c = await checkCitations(rb.rules); out = { ok: !c.failed.length && !rb.rejected.length && !rb.unwired.length, rules: rb.rules.length, rejected: rb.rejected, unwired: rb.unwired, failed: c.failed, checked: c.checked }; break; }
     default:
@@ -197,19 +221,23 @@ async function main() {
         'azp models                      AI models with verified meters',
         'azp search --region R --service S [--product P] [--sku K] [--meter M]   find meters for the "meter" component',
         'azp validate-spec spec.json',
+        'azp prepare --name YYYY-MM-DD-workload-pricing-estimate-region [--dir existing-directory]   allocate unused spec/report paths',
+        'azp preflight spec.json         validate scope and grounded answers without pricing or confirmation',
+        'azp answers                    verified human event locators and exact values for field-level sources (no questions or defaults)',
         'azp readback spec.json          plain-language check of every quantity; show it to the person and get their reply before build',
         'azp build spec.json --out estimate.html   price + advise + render + validate',
         'azp rules                       every advisory rule with its Microsoft source',
-        'azp check-citations             verify each rule cites a live Microsoft page containing its quote' ] };
+        'azp check-citations             verify each rule cites a live Microsoft page containing its quote',
+        'All commands accept --compact (one-line JSON, no fields omitted). vm-suggest accepts --limit 1..50 (allMatches only; shortlist, warnings and errors remain complete).' ] };
   }
   // Tell the person up front if the model running this session is not one the skill was proven on.
   const ms = modelStatus();
   if (ms.notice && out && typeof out === 'object' && !Array.isArray(out)) out = Object.assign({ modelNotice: ms.notice, relayModelNotice: 'Tell the person this notice in plain words before continuing (once per conversation).' }, out);
-  process.stdout.write(JSON.stringify(out, null, 2) + '\n');
+  process.stdout.write(JSON.stringify(out, null, a.compact ? undefined : 2) + '\n');
   if (out && out.ok === false) process.exitCode = 2;
 }
 
 main().catch(e => {
-  process.stdout.write(JSON.stringify({ ok: false, error: e.message, candidates: e.candidates || undefined }, null, 2) + '\n');
+  process.stdout.write(JSON.stringify({ ok: false, error: e.message, candidates: e.candidates || undefined }, null, process.argv.includes('--compact') ? undefined : 2) + '\n');
   process.exitCode = 1;
 });
