@@ -33,6 +33,9 @@ function version() {
 }
 function projectDest(base) { return path.join(base || process.cwd(), '.github', 'skills', NAME); }
 function globalDest() { return path.join(os.homedir(), '.copilot', 'skills', NAME); }
+function globalDests() {
+  return [globalDest(), path.join(os.homedir(), '.copilot', 'skills', 'azure-pricing-skill')];
+}
 
 function parse(argv) {
   const o = { cmd: 'help', global: false, dir: null, force: false };
@@ -133,18 +136,21 @@ async function doInit(o) {
   console.log(`\nOK  Installed azure-pricing v${version()} -> ${dest}`);
   console.log('    Your agent can now discover the skill. Just ask it something like:');
   console.log('    "How much would a Linux server with 4 CPUs and 16 GB cost in Azure?"');
-  console.log('    Recommended models: GPT-5.5, Claude Sonnet 5, Grok 4.5, GPT-5.4-mini (use /model).');
+  console.log('    Use your preferred model; only explicitly blocked models are refused.');
 }
 
 function doUpdate(o) {
   const targets = [];
   if (o.dir) targets.push(path.resolve(o.dir));
   else {
-    if (fs.existsSync(projectDest())) targets.push(projectDest());
-    if (fs.existsSync(globalDest())) targets.push(globalDest());
+    if (!o.global && fs.existsSync(projectDest())) targets.push(projectDest());
+    for (const dest of globalDests()) {
+      if (fs.existsSync(dest)) targets.push(dest);
+    }
   }
   if (targets.length === 0) {
     console.log('No existing install found (project or global). Run `init` first.');
+    process.exitCode = 1;
     return;
   }
   for (const dest of targets) {
@@ -158,7 +164,7 @@ function doUpdate(o) {
 async function doStatus() {
   console.log(`azure-pricing v${version()}`);
   let found = false;
-  for (const [label, dest] of [['project', projectDest()], ['global', globalDest()]]) {
+  for (const [label, dest] of [['project', projectDest()], ...globalDests().map(dest => ['global', dest])]) {
     if (fs.existsSync(dest)) {
       found = true;
       const meta = readMeta(dest);
@@ -191,7 +197,7 @@ function help() {
 
 Usage:
   npx github:chrislittle/azure-pricing-skill init [--global|--dir <path>] [--force]
-  npx github:chrislittle/azure-pricing-skill update
+  npx github:chrislittle/azure-pricing-skill update [--global|--dir <path>]
   npx github:chrislittle/azure-pricing-skill status
   npx github:chrislittle/azure-pricing-skill uninstall [--global|--dir <path>]
   npx github:chrislittle/azure-pricing-skill doctor
@@ -201,6 +207,9 @@ Install targets:
   (default) project  ->  ./.github/skills/azure-pricing   (cd into your repo first)
   --global           ->  ~/.copilot/skills/azure-pricing
   --dir <path>       ->  an explicit path
+
+Update/status also find an existing ~/.copilot/skills/azure-pricing-skill install.
+Update overwrites the existing paths; it does not create a second global copy.
 
 After install, just ask your agent: "How much would this cost in Azure?"`);
 }

@@ -3,6 +3,19 @@
 All notable changes to this project are documented here. This project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.2] - 2026-11-09
+
+### Fixed
+- `update` and `status` now find existing global installs named `azure-pricing-skill`, not only
+  `azure-pricing`. Updates overwrite the existing folder without creating a duplicate install.
+- `update --global` leaves the project install alone. A missing install now returns a failure
+  exit code instead of appearing to succeed.
+- Installation output no longer asks people to choose an older tested model.
+
+### Added
+- Installer regression tests verify the actual installed engine, skill instructions and manifest
+  for both global folder names and an explicit destination.
+
 ## [1.2.1] - 2026-11-09
 
 ### Fixed
