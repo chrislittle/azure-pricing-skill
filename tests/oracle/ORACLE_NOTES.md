@@ -13,6 +13,31 @@ Nothing in this folder reads the system under test.
 
 Run: `node tests\oracle\run-oracle.js` (≈3 min; verified passing).
 
+### Continuous-backup restore reconciliation, 11 November 2026
+
+Issue #2 belongs to this unpublished `tier1-calculator` expansion, not the
+main-only v1.4 runtime. The Cosmos-only live service oracle reproduced 9 passes
+and one `missing restore` failure. Its selector incorrectly asked for
+`Azure Cosmos DB Restore / Vaulted Bckp Data Restore`; the applicable live
+continuous-backup meter is `Azure Cosmos DB - PITR / Cont 30D Bckp Data Restore`,
+meter ID `570bfd9d-65af-5390-98b0-48e55f334ca8` in East US 2.
+
+The API reports USD 0.15 per `1 GB`. Microsoft Learn describes restore as a
+one-time charge based on data restored, not multiplied by backup retention,
+account regions or running hours:
+<https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction#pricing>.
+Fresh independent oracle queries and a separate engine cache agree: 50 GB costs
+USD 7.50; the original combined throughput/storage/backup/analytics case totals
+USD 308.43. Engine pricing was already selecting the PITR meter; no shipped
+pricing code or tolerance changed.
+
+The corrected live Cosmos suite passes 10/10 and the Cosmos contract passes
+33/33. `tests/unit/cosmos-restore.js` adds deterministic coverage for the
+independent selector, a conflicting vaulted-backup meter, both retention tiers,
+backup/analytics preservation, zero restores and an explicitly unpriced
+missing-meter result. It passes on Node 18.20.8 and Node 26.13.0.
+The evidence is recorded in `cosmos-restore-review.json`.
+
 ---
 
 ## 1. Global conventions
