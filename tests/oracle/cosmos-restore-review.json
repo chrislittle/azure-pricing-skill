@@ -1,0 +1,50 @@
+{
+  "issue": 2,
+  "status": "resolved-oracle-selector",
+  "branchScope": "tier1-calculator",
+  "mainV14RuntimeAffected": false,
+  "checkedAt": "2026-11-11T20:53:15.129Z",
+  "rootCause": "The unpublished expansion's independent service oracle selected Azure Cosmos DB Restore / Vaulted Bckp Data Restore instead of the continuous-backup PITR restore meter. The existing engine already used the correct meter.",
+  "before": { "cosmosLiveOraclePassed": 9, "cosmosLiveOracleFailed": 1, "error": "missing restore" },
+  "after": { "cosmosLiveOraclePassed": 10, "cosmosLiveOracleFailed": 0, "cosmosContractPassed": 33, "cosmosContractFailed": 0 },
+  "source": "https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction#pricing",
+  "api": "https://prices.azure.com/api/retail/prices",
+  "apiVersion": "2023-01-01-preview",
+  "verifiedMeter": {
+    "region": "eastus2",
+    "currency": "USD",
+    "productName": "Azure Cosmos DB - PITR",
+    "meterName": "Cont 30D Bckp Data Restore",
+    "meterId": "570bfd9d-65af-5390-98b0-48e55f334ca8",
+    "unitOfMeasure": "1 GB",
+    "unitPrice": 0.15
+  },
+  "independentComparison": {
+    "method": "Fresh independent oracle API/math compared with a separately cached engine.",
+    "restoreGB": 50,
+    "oracleRestoreCharge": 7.5,
+    "engineRestoreCharge": 7.5,
+    "combinedScenarioOracleTotal": 308.43,
+    "combinedScenarioEngineTotal": 308.43,
+    "backupAndAnalyticalChargesPreserved": true
+  },
+  "regression": {
+    "file": "../unit/cosmos-restore.js",
+    "testedNodeVersions": ["26.13.0", "18.20.8"],
+    "cases": [
+      "Independent oracle selects PITR, not a conflicting vaulted-backup meter.",
+      "One-time per-GB restore is not multiplied by regions or running hours.",
+      "Both seven-day and thirty-day continuous backup restore charges are priced.",
+      "The original combined case preserves backup and all three analytical charges.",
+      "Zero restore quantity adds no restore line.",
+      "A missing PITR restore meter yields an explicit Cosmos pricing error and no partial component charge."
+    ]
+  },
+  "runtimePricingChanged": false,
+  "tolerancesChanged": false,
+  "limitations": [
+    "This resolves the expansion-branch service-oracle issue without merging unpublished Tier 1 service expansion into main or v1.4.",
+    "Live prices are time-bound. The deterministic fixture tests do not assert that a future regional API rate must remain unchanged.",
+    "The seven-day tier currently uses the same live restore meter as thirty-day retention; both are documented as charged per restore."
+  ]
+}

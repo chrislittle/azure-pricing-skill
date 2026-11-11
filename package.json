@@ -38,7 +38,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node tests/unit/report.js && node tests/unit/engine-vs-oracle.js && node tests/unit/split-invariance.js && node tests/unit/rule-tests.js && node tests/unit/services-contract.js && node tests/unit/builtin-contract.js && node tests/unit/services-vs-oracle.js",
+    "test": "node tests/unit/report.js && node tests/unit/engine-vs-oracle.js && node tests/unit/split-invariance.js && node tests/unit/rule-tests.js && node tests/unit/cosmos-restore.js && node tests/unit/services-contract.js && node tests/unit/builtin-contract.js && node tests/unit/services-vs-oracle.js",
     "test:report": "node tests/unit/report.js",
     "check-citations": "node scripts/azp.js check-citations",
     "seal": "node tests/tools/seal.js"
