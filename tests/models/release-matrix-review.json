@@ -1,0 +1,73 @@
+{
+  "version": "1.4.0",
+  "status": "completed-with-one-model-flag",
+  "run": "2026-11-11T19-27-38-992Z-16dc17e4",
+  "evidence": "release-matrix-results.json",
+  "rawResultsSha256": "c0456a25886cc6dd8c55b36885cb3c6595a7817a82736dff5abd93fe57c50646",
+  "started": "2026-11-11T19:27:39.670Z",
+  "completed": "2026-11-11T20:26:48.986Z",
+  "independentlyVerifiedAt": "2026-11-11T20:27:57.500Z",
+  "suiteHash": "cb040f604ce9b97741e6850ef8fd003ab664aeb4905a42949915a8638c646eb8",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "skillDigest": "0ca748263b5e1805f9152ccce9df3296b787ec833bd5583070ff0e23ea84ad8a",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "models": 19,
+  "casesPerModel": 20,
+  "completedConversations": 380,
+  "passed": 379,
+  "flagged": 1,
+  "modelsPassingAllCases": 18,
+  "reportsProduced": 360,
+  "reportsPassingAllChecks": 360,
+  "reportsPassingArtifactChecks": 360,
+  "correctlyStoppedWithoutReport": 19,
+  "prematureBuildAttempts": 0,
+  "flaggedCasesWithReports": 0,
+  "flaggedCasesWithoutReports": 1,
+  "comparison": {
+    "baselineEvidence": "confirmation-matrix-review.json",
+    "baselinePassed": 374,
+    "baselineFlagged": 6,
+    "previouslyFlaggedNowPassing": 6,
+    "previouslyFlaggedStillFailing": 0,
+    "previouslyPassingNowFlagged": 1,
+    "netAdditionalPasses": 5,
+    "finding": "All six preceding full-matrix failures passed this fresh complete run. A different Haiku 4.5 RHEL case failed scope checking before approval. The full result remains 379/380; neither the separate 22/22 sample nor any historical passes replace this genuine failure."
+  },
+  "flaggedCases": [
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "rhel-license-and-disks",
+      "reason": "dedicated-recipe-scope-mismatch",
+      "durationMs": 20037,
+      "finding": "Selected a correctly sized x86 VM but specified os=linux and invented a separate generic meter for RHEL licensing instead of using the supported os=rhel VM recipe. The hand-authored license filter/quantity was not independently certified. The expected RHEL scope did not match the readback; the simulated customer withheld approval and the trial stopped. No build attempt, priced audit or report was produced.",
+      "disposition": "Retain as a genuine model-specific failure. Haiku 4.5 passed 19/20 and is not one of the fully passing recommended choices. No model-catalog block, retry, scope waiver, runner change or runtime change was introduced to inflate the score."
+    }
+  ],
+  "semanticSpotChecks": [
+    "The earlier Haiku Windows final-total failure passed and now relays the independently corrected 538.96 USD list / 495.71 USD customer totals.",
+    "None of the 19 Windows specs inferred steadyUsage=true from 730 monthly hours. Several still set false instead of leaving unknown context unset; this is not full contextual-semantics certification.",
+    "The MAI OpenAI case no longer relabeled known quantities, discount and exclusions as assumptions; it explicitly reported no assumptions. Its only build followed approval.",
+    "All six earlier flagged pairs passed, including both Grok 4.7 cases under the unchanged four-minute deadline. Stochastic model failures and service-side stalls can still recur."
+  ],
+  "verification": [
+    "All 380 unique planned model/scenario pairs completed on one unchanged sealed runtime and exact suite signature. All 19 requested model identities were independently checked in persisted assistant events.",
+    "Every copied runtime digest and manifest matched the final candidate. All generated report/audit files were inventoried against recorded successful builds; no unaccounted artifacts were present.",
+    "All 360 reports passed scope, full pricing, model identity, verified answers, runtime integrity, math, HTML and final-chat totals checks. Successful build chronology was independently replayed.",
+    "All 19 refused approvals stopped without report or priced audit. No premature build attempt or successful unapproved report was observed.",
+    "The two preceding full-run and two selected-followup raw result hashes remain unchanged. No completed failure was retried or replaced.",
+    "Independent per-case verification remains in the raw run directory as independent-verification.json. Shareable summaries omit session IDs and local report paths."
+  ],
+  "pricingEvidence": "../oracle/license-discount-review.json",
+  "nativeEvidence": "release-native-smoke.json",
+  "limitations": [
+    "This is 379/380, not an all-green 380/380 certification. Haiku 4.5 retains the specific RHEL scope failure above.",
+    "The driver uses bounded engine/spec adapters, not unrestricted shell or native-form tooling. Link checks are skipped in this matrix and tested separately in the native smoke.",
+    "Artifact checks are not independent oracle certification of every price. Supplemental independent Windows/RHEL evidence and the existing 142-reference oracle suite remain separate.",
+    "Narrative and optional advisory-context semantics are not exhaustively assessed. Passing one finite run does not guarantee future model reliability.",
+    "MAI-Code-2.x1 and both HydraFusion previews remain excluded and untested. GPT-5.6 Sol Fast remains labeled internal-only.",
+    "No commit, push, merge, tag or publication occurred."
+  ],
+  "disposition": "Final-candidate complete validation is documented, with 18 fully passing model choices and one unresolved Haiku 4.5 limitation. This is not unconditional certification of every supported model or permission to publish."
+}

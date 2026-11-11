@@ -1,0 +1,75 @@
+{
+  "version": "1.4.0",
+  "date": "2026-11-11",
+  "status": "completed-with-one-model-flag",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "skillDigest": "0ca748263b5e1805f9152ccce9df3296b787ec833bd5583070ff0e23ea84ad8a",
+  "regressions": {
+    "status": "passed",
+    "testedNodeVersions": ["26.13.0", "18.20.8"],
+    "workflowCases": 23,
+    "reportCases": 11,
+    "ruleCases": 54,
+    "oracleComparisons": { "passed": 142, "failed": 0 },
+    "otherSuites": [
+      "Model identity, scope grading and result summaries",
+      "Session-log tamper detection",
+      "Isolated installer/update payload and scope checks",
+      "Container Apps, egress and Functions split invariance"
+    ],
+    "node26Command": "npm run seal && npm test && node scripts\\azp.js check-citations --compact",
+    "node18Verification": "Every existing package.json test command executed with the actual Node 18.20.8 executable, not the development-only live SDK model runner.",
+    "node18VerifiedAt": "2026-11-11T19:37:19.427Z",
+    "minimumRuntimeLimitation": "Validated the latest Node 18 patch, not every Node 18 patch."
+  },
+  "citations": {
+    "status": "passed",
+    "catalogRules": 97,
+    "citationEntries": 102,
+    "checked": 102,
+    "rejected": [],
+    "unwired": [],
+    "failed": [],
+    "refreshedRules": [
+      "commitment-part-time",
+      "part-time-payg",
+      "ri-vs-sp-tradeoff",
+      "vm-avoid-commitment-unsteady"
+    ],
+    "quoteValidationRelaxed": false
+  },
+  "independentPricingEvidence": "../oracle/license-discount-review.json",
+  "nativeEvidence": "release-native-smoke.json",
+  "fullMatrix": {
+    "status": "completed",
+    "plannedConversations": 380,
+    "models": 19,
+    "rawEvidence": ".cache/model-tests/2026-11-11T19-27-38-992Z-16dc17e4",
+    "suiteHash": "cb040f604ce9b97741e6850ef8fd003ab664aeb4905a42949915a8638c646eb8",
+    "finalScore": "379/380",
+    "passed": 379,
+    "flagged": 1,
+    "modelsPassingAllCases": 18,
+    "reportsPassingAllChecks": 360,
+    "correctlyStoppedWithoutReport": 19,
+    "prematureBuildAttempts": 0,
+    "evidence": "release-matrix-results.json",
+    "review": "release-matrix-review.json"
+  },
+  "packaging": {
+    "status": "passed",
+    "packedFiles": 30,
+    "installedPayloadFiles": 29,
+    "runtimeDependencies": 0,
+    "checks": [
+      "Actual npm tarball extracted and installed using an explicit isolated path.",
+      "Every installed payload byte matches the extracted archive; installed version and frozen engine fingerprint agree.",
+      "Packed update, doctor and isolated status probes executed without changing user/global installations.",
+      "Package excludes tests, caches, scratch and development dependencies; npm SHA-1 and SHA-512 metadata verified."
+    ],
+    "environmentObservation": "Intermittent 10-second price-API health probes warned during both preliminary and final checks. The final install/status probes and an explicit subsequent doctor readiness check passed; the warning sequence and actual readiness text are preserved in release-package-review.json and raw evidence.",
+    "finalArchiveHash": "df5a8c38de18b16ceacbfab7f8061903eab8e1b3557c4ef7bc827d200dbcb1d5",
+    "evidence": "release-package-review.json"
+  },
+  "releaseDisposition": "Candidate preparation, frozen validation, documentation and distribution checks are complete, with one unresolved Haiku 4.5 RHEL scope limitation. Eighteen models passed all twenty cases; Haiku 4.5 is not a fully passing recommended choice. This is not an all-green or unconditional all-model certification. No commit, push, merge, tag or publication occurred."
+}

@@ -13,6 +13,19 @@ Nothing in this folder reads the system under test.
 
 Run: `node tests\oracle\run-oracle.js` (≈3 min; verified passing).
 
+The top-level `capturedAt` is the original snapshot date. A scenario's own `capturedAt`
+overrides that date when only that scenario is independently refreshed. On 11 November 2026,
+only `s17-eur-germany` was refreshed after fresh native-EUR oracle and isolated-engine queries
+agreed on every affected total. All other scenarios remain unchanged. The before/after rates,
+authorization and checks are in `eur-price-refresh.json`; `eur-price-review.json` preserves the
+earlier investigation and its historical eight mismatches. No pricing code or tolerance changed.
+
+The separate [license-discount review](license-discount-review.json) records a subsequently
+discovered coverage gap: canonical Windows references use AHB, not Windows PAYG with license
+discount exclusions. Fresh independent API/math checks agree with the corrected engine for all
+five Windows purchasing choices and RHEL. Existing snapshots and tolerances were not changed.
+Earlier model-workflow artifact passes were not independent pricing-oracle certification.
+
 ---
 
 ## 1. Global conventions

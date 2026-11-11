@@ -1,0 +1,38 @@
+{
+  "version": "1.4.0",
+  "status": "passed",
+  "verifiedAt": "2026-11-11T20:32:02.058Z",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "archive": ".cache/release-final-package-20261111/final-distribution/azure-pricing-skill-1.4.0.tgz",
+  "archiveSha1": "e5e770231c8ff8985e2c1394eb08edee4da3b5a5",
+  "archiveSha256": "df5a8c38de18b16ceacbfab7f8061903eab8e1b3557c4ef7bc827d200dbcb1d5",
+  "archiveIntegrity": "sha512-/dZYpTUT1nRTG2ru9k1YwoF2JhSuIvSghf0jnrmfRmadUwyCv4hvsfbPEAmllntNQKUpbM6dgStEvgTiPaWajA==",
+  "packedFiles": 30,
+  "installedPayloadFiles": 29,
+  "runtimeDependencies": 0,
+  "installationRuntime": "18.20.8",
+  "byteAndFingerprintVerificationRuntimes": ["26.13.0", "18.20.8"],
+  "rawEvidence": ".cache/release-final-package-20261111",
+  "checks": [
+    "Rebuilt the actual npm tarball after final README and CHANGELOG updates. The initial preliminary archive and verification remain separate.",
+    "Verified npm SHA-1 and SHA-512 metadata and recorded an independent SHA-256 digest.",
+    "All 30 extracted package files match the current candidate source byte for byte; tests, caches, scratch and development dependencies are excluded.",
+    "Installed and updated from the extracted final tarball using Node 18.20.8, an explicit isolated project path and isolated HOME/USERPROFILE. No user/global installation was changed.",
+    "All 29 installed payload files match the archive. CHANGELOG is included in the distribution, not installed as skill payload.",
+    "Installed CLI version is 1.4.0; project status detects the actual isolated project installation.",
+    "Installed engine fingerprint matches the sealed candidate. Archive/payload/fingerprint verification passed under both Node 26.13.0 and Node 18.20.8.",
+    "A final live doctor probe reported reachable prices.azure.com and OK Ready; readiness text was checked explicitly rather than treating exit zero as success."
+  ],
+  "healthProbeObservations": [
+    "The preliminary package's initial 10-second price-API health probe timed out; later direct API and doctor/status probes passed.",
+    "The final Node 18 install probe passed. Its first doctor probe warned that the API was unreachable, while the subsequent project-status probe passed. An explicit subsequent doctor check also passed and its output is retained as final-doctor-output.txt.",
+    "The existing doctor can return exit zero even while showing an API warning. Verification required the actual OK Ready text and preserves the earlier warning; it does not claim every probe passed.",
+    "No engine, installer, health-check timeout, permission rule or validation tolerance was modified to obtain a passing probe."
+  ],
+  "limitations": [
+    "This is a local distribution artifact, not a published npm package or GitHub release. Version 1.4.0 remains Unreleased.",
+    "The package contains the documented 379/380 model result and unresolved Haiku 4.5 RHEL limitation; packaging success does not waive that failure.",
+    "Node 18 compatibility checks use 18.20.8, not every Node 18 patch. Internet/API availability can vary.",
+    "No commit, push, merge, tag or publication occurred."
+  ]
+}

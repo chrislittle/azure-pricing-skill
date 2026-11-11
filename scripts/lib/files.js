@@ -14,7 +14,7 @@ function prepare(name, dir = '.') {
     if (Object.values(paths).some(p => fs.existsSync(p))) continue;
     try { fs.writeFileSync(paths.spec, '{}\n', { flag: 'wx' }); }
     catch (e) { if (e.code === 'EEXIST') continue; throw e; }
-    return { ok: true, ...paths, instructions: 'Write your spec into this newly allocated spec file. Use exactly these report and audit paths; build refuses to overwrite either output.' };
+    return { ok: true, ...paths, instructions: 'Paths are allocated; no estimate is built. Write the spec into this spec file, run preflight and readback, send readback.message alone, and wait for explicit human approval before build. Use exactly these report and audit paths; build refuses to overwrite either output.' };
   }
   throw new Error('Could not allocate unused estimate paths.');
 }

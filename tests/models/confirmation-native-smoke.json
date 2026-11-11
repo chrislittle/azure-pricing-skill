@@ -1,0 +1,52 @@
+{
+  "version": "1.4.0",
+  "date": "2026-11-11",
+  "status": "completed",
+  "verifiedAt": "2026-11-11T16:04:23.987Z",
+  "interface": "Installed Copilot CLI prompt/resume with native tools and a copied isolated project skill; no SDK engine/spec adapters",
+  "cliVersion": "1.0.100-1",
+  "runtimeFingerprint": "5a098d6dc023fddb",
+  "skillDigest": "e291888538282379d0387b09d69ccccbfe69e88b39ff70c63356c290974337cb",
+  "rawEvidence": ".cache/release-native-readiness-20261111",
+  "sessionLogSha256": "6ea2cd57a65f5a57ef543d4862b6b046ec78f7a6ba900eab7350abafca580ae2",
+  "authorization": "The user explicitly approved completing the native end-to-end check on 11 November. A new conversation used the current sealed runtime; the previously denied older-runtime continuation was not silently retried.",
+  "case": {
+    "model": "claude-sonnet-5.5",
+    "scenario": "Azure Files capacity confirmation and approval-to-report",
+    "status": "passed",
+    "customerTurns": 3,
+    "service": "files",
+    "modelId": "provisioned-v2-hdd",
+    "capacityGB": 5120,
+    "redundancy": "LRS",
+    "region": "eastus2",
+    "currency": "USD",
+    "discountPct": 0,
+    "monthlyList": 128.4,
+    "monthlyYourPrice": 128.4,
+    "buildCalls": 1,
+    "linksChecked": 4,
+    "checks": [
+      "The copied skill was loaded through the native skill tool and retained the frozen current-runtime digest.",
+      "The complete final confirmation message exactly matched the engine's ready-to-send message, with no framing.",
+      "No report or audit existed before approval; this was checked on disk before sending the yes continuation.",
+      "The only native powershell build invocation occurred after the exact displayed readback and subsequent explicit yes.",
+      "The engine independently verified conversation evidence and approval; its report recorded verified answers and an intact expected runtime fingerprint.",
+      "Report and audit scope, complete pricing, arithmetic, HTML and final relayed totals passed existing checks.",
+      "Default URL validation remained enabled and checked four links without errors."
+    ]
+  },
+  "setupAndToolRecovery": [
+    "The first native turn exposed no usable native create/edit tool because the test launcher initially named apply_patch, which this CLI runtime did not expose. A create call failed, and the model stopped without pricing or building.",
+    "The launcher was corrected to expose the CLI's actual native create/edit tools, retaining scoped node/write permissions and normal path checks. The conversation resumed explicitly without approval to build.",
+    "One edit call omitted a required old_str value; the model inspected the allocated empty spec and recovered with a valid native edit. This error is retained in the raw log.",
+    "Neither recovery changed the skill, runtime, session evidence, approval checks or pricing code. No tool-permission denial was bypassed."
+  ],
+  "limitations": [
+    "One scripted native prompt/resume conversation is not manual terminal UI or native ask_user-form certification, nor exhaustive shell-level safeguard testing.",
+    "The session used an isolated Copilot home and copied project skill, disabled built-in MCP servers and custom instructions, and exposed native read/write/shell tools with scoped approvals.",
+    "This completed current-runtime check is separate from the historical incomplete native confirmation check and the earlier two-conversation smoke on prior runtimes.",
+    "Passing native end-to-end validation does not replace the complete bounded model matrix or certify perfect report narrative semantics.",
+    "No commit, push, merge, tag or publication occurred."
+  ]
+}

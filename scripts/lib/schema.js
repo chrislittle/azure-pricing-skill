@@ -31,7 +31,7 @@ const S = {
   blob: { label: 'Blob storage', fields: { tier: { def: 'Hot', enum: ['Hot', 'Cool', 'Cold', 'Archive'], ask: 'How often is the data read? Daily -> Hot; monthly -> Cool; a few times a year -> Cold; almost never -> Archive.' }, redundancy: { def: 'LRS', enum: ['LRS', 'ZRS', 'GRS', 'RA-GRS'] }, capacityGB: { req: true, ask: 'How much data is stored in total (GB or TB)? This is separate from how much is downloaded each month.' }, writeOps: { def: 0 }, readOps: { def: 0 }, otherOps: { def: 0 }, retrievalGB: { def: 0 } } },
   files: { label: 'Azure Files', fields: { model: { def: 'provisioned-v2-hdd', enum: ['provisioned-v2-hdd', 'provisioned-v2-ssd', 'payg-hot', 'payg-cool', 'payg-transaction-optimized'], ask: 'Office documents / user shares -> provisioned-v2-hdd; latency-sensitive apps -> provisioned-v2-ssd.' }, capacityGB: { req: true, ask: 'How much data is in the file shares in total (GB or TB)?' }, redundancy: { def: 'LRS', enum: ['LRS', 'ZRS'] }, iops: {}, throughputMBps: {}, writeOps: {}, readOps: {}, listOps: {} } },
   'log-analytics': { label: 'Log Analytics', fields: { ingestGBPerDay: { req: true, ask: 'Roughly how many GB of logs per day?' }, retentionDays: { def: 31 } } },
-  openai: { label: 'Azure OpenAI (Foundry Models, Global Standard)', fields: { model: { req: true, ask: 'Use `azp models` to list; recommend a current small model unless quality needs a larger one.' }, inputTokens: { req: true }, cachedInputTokens: { def: 0 }, outputTokens: { req: true } } },
+  openai: { label: 'Azure OpenAI (Foundry Models, Global Standard)', fields: { model: { req: true, ask: 'Use `azp models` to list; recommend a current small model unless quality needs a larger one.' }, inputTokens: { req: true, ask: 'Actual input tokens per month, not millions: 2.5 million means 2500000.' }, cachedInputTokens: { def: 0, ask: 'Actual cached input tokens per month, not millions; use 0 if none.' }, outputTokens: { req: true, ask: 'Actual output tokens per month, not millions: 1 million means 1000000.' } } },
   meter: { label: 'Any other meter (escape hatch)', fields: { filter: { req: true, ask: 'Exact {serviceName, productName, skuName, meterName}; find with `azp search`.' }, quantity: { req: true }, hours: {}, desc: {}, group: {} } }
 };
 
@@ -58,7 +58,7 @@ function confirmationErrors(spec) {
   const raw = rb.text.split('\n').slice(1, -1).map(l => l.replace(/^\s*-\s*/, '').trim());
   const lines = raw.map(norm);
   const code = norm(rb.code);
-  const how = `Run \`azp readback <spec>\`, paste its "text" to the person unchanged (formatting such as bold is fine), and ask them to confirm. Build only after they reply. If they correct anything, update the spec and show the new readback.`;
+  const how = `Send the returned readback.message (or recovery.message) alone, copied verbatim, with no introduction, footer or extra question. Wait for a new explicit approval, then build directly. If they correct anything, update the spec and run readback again.`;
   const promptContent = e => {
     const d = e.data || {};
     return e.type === 'assistant.message' && !d.parentToolCallId ? d.content :
@@ -66,23 +66,24 @@ function confirmationErrors(spec) {
   };
   const sameConfirmationPrompt = content => {
     if (typeof content !== 'string') return false;
-    const c = norm(content.replace(/```(?:text|markdown)?\s*\n/g, '').replace(/```/g, '').replace(/[.!?]+\s*$/, ''));
+    const c = norm(content.replace(/`{3,}(?:text|markdown)?\s*\n/g, '').replace(/`{3,}/g, '').replace(/[.!?]+\s*$/, ''));
     if ((content.match(/\bAZP-[A-F0-9]{6,12}\b/gi) || []).some(check => norm(check) !== code)) return false;
     if (c === norm(rb.text)) return true;
     return new RegExp(`^(please )?(confirm|approve)( (every number|this estimate|the estimate|this readback|the readback|your decision))?( for)? (check )?${code}$`).test(c) ||
       new RegExp(`^is (check )?${code} (correct|right)$`).test(c);
   };
-  let best = null, shown = -1;
+  let best = null, shown = -1, mismatch = -1;
   events.forEach((e, i) => {
     const content = promptContent(e);
     if (typeof content !== 'string') return;
     const c = norm(content);
     if (!c.includes(code)) return;
     const miss = raw.filter((l, j) => !c.includes(lines[j]));
-    if (!miss.length && sameConfirmationPrompt(content)) shown = i; else if (!best || miss.length < best.length) best = miss;
+    if (!miss.length && sameConfirmationPrompt(content)) shown = i;
+    else if (!sameConfirmationPrompt(content)) { best = miss; mismatch = i; }
   });
-  if (shown < 0) {
-    if (best) return [`The readback shown for check ${rb.code} does not match the engine's text. ${best.length ? `These lines are missing or changed: ${best.slice(0, 4).map(l => `"${l}"`).join('; ')}` : 'It contains extra or changed confirmation text'}. ${how}`];
+  if (shown < 0 || mismatch > shown) {
+    if (best) return [`${shown >= 0 ? 'A changed confirmation prompt intervened. ' : ''}The latest readback shown for check ${rb.code} does not match the engine's text. ${best.length ? `These lines are missing or changed: ${best.slice(0, 4).map(l => `"${l}"`).join('; ')}` : 'It contains extra or changed confirmation text'}. ${how}`];
     return [`The person has not seen the readback for this spec (check ${rb.code}). ${how}`];
   }
   const replies = humanEvidence(events, { includeUnsupported: true }).filter(e => e.index > shown);
@@ -94,9 +95,16 @@ function confirmationErrors(spec) {
     if (reply.native && !reply.positiveApproval && (reply.answerField || approval === 'true')) return [`The native form field is not an unambiguous positive approval of check ${rb.code}. Use a single approval field titled "Approve this estimate" or an explicit positive choice; rejection, ambiguous fields and bare true are not approval.`];
     if (!/^(yes|yes,? (that'?s |it'?s |all |everything is )?(correct|right)|yes,? (please )?(go ahead|proceed|build it)|correct|confirmed|confirm|approved|approve|looks (good|correct|right)|all (correct|good)|go ahead|proceed|build it|true)(,? (please|thanks|thank you))?$/i.test(approval)) return [`The person did not explicitly approve the readback (check ${rb.code}): "${reply.text.slice(0, 160)}". If this is a correction, update the spec; otherwise ask for explicit confirmation. Show the readback again before obtaining new approval.`];
   }
-  const intervening = events.slice(shown + 1).find(e => {
+  const lastReply = replies.at(-1).index;
+  const intervening = events.slice(shown + 1).find((e, offset) => {
     const content = promptContent(e);
-    return typeof content === 'string' && content.trim() && !sameConfirmationPrompt(content);
+    if (typeof content !== 'string' || !content.trim() || sameConfirmationPrompt(content)) return false;
+    // Tool progress after the answer cannot redirect that already-received approval.
+    const calls = e.data?.toolRequests;
+    const progress = shown + 1 + offset > lastReply && e.type === 'assistant.message' &&
+      Array.isArray(calls) && calls.length && calls.every(c => typeof c.name === 'string' && !/(^|[.:])ask_user$/i.test(c.name)) &&
+      !/\?|\bAZP-[A-F0-9]{6,12}\b/i.test(content);
+    return !progress;
   });
   if (intervening) return [`A different readback or another customer-facing prompt intervened after check ${rb.code}. A generic reply cannot approve that earlier readback. ${how}`];
   return [];
@@ -114,22 +122,22 @@ function modelStatus() {
       try {
         const e = JSON.parse(l); const d = e.data || {};
         const m = e.type === 'assistant.message' ? d.model : e.type === 'session.model_change' ? d.newModel : d.selectedModel;
-        if (m && m !== 'auto') { all.add(m); if (e.type === 'assistant.message' && !d.parentToolCallId) model = model || m; }
+        if (typeof m === 'string' && m && m !== 'auto') all.add(m);
       } catch (_) { }
     }
   }
   const M = require('../../catalog/models.json');
-  // Any not-recommended model anywhere in the session counts: a later message cannot clear it.
-  const bad = [...all].find(m => M.notRecommended[m]);
-  if (bad) model = bad;
-  else if (all.size) model = [...all].find(m => !M.recommended[m]) || [...all][0];
+  // Keep the least-tested model visible; switching later cannot erase a blocked model.
+  const rank = m => M.notRecommended[m] ? 3 : M.recommended[m] ? 0 : M.acceptable[m] ? 1 : 2;
+  for (const m of all) if (model === null || rank(m) > rank(model)) model = m;
   const rec = Object.keys(M.recommended);
   const list = rec.join(', ');
-  if (!model) return { model: null, status: 'unknown', notice: null, recommended: rec };
-  if (M.recommended[model]) return { model, status: 'recommended', notice: null, recommended: rec };
-  if (M.acceptable[model]) return { model, status: 'acceptable', notice: null, recommended: rec };
-  if (M.notRecommended[model]) return { model, status: 'not-recommended', notice: `This estimate is being prepared with ${model}, which is NOT recommended for this skill. ${M.notRecommended[model]} Please switch to one of: ${list} (in GitHub Copilot, use /model), then start again.`, recommended: rec };
-  return { model, status: 'untested', notice: null, recommended: rec };
+  const identity = { model, models: [...all], recommended: rec };
+  if (!model) return { ...identity, status: 'unknown', notice: null };
+  if (M.recommended[model]) return { ...identity, status: 'recommended', notice: null };
+  if (M.acceptable[model]) return { ...identity, status: 'acceptable', notice: null };
+  if (M.notRecommended[model]) return { ...identity, status: 'not-recommended', notice: `This estimate is being prepared with ${model}, which is NOT recommended for this skill. ${M.notRecommended[model]} Please switch to one of: ${list} (in GitHub Copilot, use /model), then start again.` };
+  return { ...identity, status: 'untested', notice: null };
 }
 
 function userMessages() {
@@ -281,6 +289,8 @@ function validateSpec(spec, opts = {}) {
   if (!said.discount || (String(said.discount).trim().length < 2 && !hasSource(said.discount))) errs.push('Missing "customerSaid.discount": quote the person\'s own words about their discount (for example "16% off list" or "no discount"). If they have not told you, STOP and ask them; do not assume.');
   if (!said.requirements || (String(said.requirements).trim().length < 3 && !hasSource(said.requirements))) errs.push('Missing "customerSaid.requirements": quote what the person told you about size and usage (CPU/memory, capacity, volumes, hours). If they have not told you, STOP and ask them.');
   if (!Array.isArray(spec.options) || !spec.options.length) errs.push('Missing "options" array.');
+  if (spec.compare != null && (typeof spec.compare !== 'object' || Array.isArray(spec.compare) ||
+      ('commitments' in spec.compare && typeof spec.compare.commitments !== 'boolean'))) errs.push('compare must be an object with a boolean commitments field, for example {"commitments":true}.');
   const contexts = [['context', spec.context], ...(spec.options || []).map((o, i) => [`options[${i}].context`, o.context])];
   for (const [prefix, context] of contexts) {
     if (context == null) continue;
@@ -292,6 +302,7 @@ function validateSpec(spec, opts = {}) {
   }
   (spec.options || []).forEach((o, i) => {
     if (o.phase != null && (typeof o.phase !== 'string' || !o.phase.trim())) errs.push(`options[${i}].phase must be a non-empty phase label.`);
+    for (const key of ['purchasing', 'commitment', 'compare']) if (Object.hasOwn(o, key)) errs.push(`options[${i}].${key} is not a supported option field. For a VM purchasing comparison, keep one original option and set top-level "compare":{"commitments":true}; the engine generates all five variants. For a single purchasing term, set commitment on each VM component, not on the option.`);
   });
   (spec.options || []).forEach((o, i) => (o.components || []).forEach((c, j) => {
     if (c.type === 'vm' && c.sku) {
@@ -313,7 +324,22 @@ function validateSpec(spec, opts = {}) {
       if (f.enum && c[k] != null && !f.enum.includes(c[k])) errs.push(`options[${i}].components[${j}] (${c.type}): "${k}" must be one of ${f.enum.join(', ')}.`);
     }
     for (const k of Object.keys(c)) if (!['type', 'label'].includes(k) && !s.fields[k]) errs.push(`options[${i}].components[${j}] (${c.type}): unknown field "${k}".`);
+    if (c.type === 'openai') for (const field of ['inputTokens', 'cachedInputTokens', 'outputTokens']) {
+      if (c[field] != null && (!Number.isSafeInteger(c[field]) || c[field] < 0)) errs.push(`options[${i}].components[${j}].${field} must be a non-negative integer of actual tokens per month, not millions.`);
+    }
   }));
+  const tokenComponents = (spec.options || []).flatMap(o => o.components).filter(c => c.type === 'openai');
+  // Only diagnose an unambiguous single-model scale error, not arbitrary natural-language quantities.
+  if (tokenComponents.length === 1) {
+    const stated = [...String(said.requirements || '').matchAll(/\b(\d+(?:,\d{3})*(?:\.\d+)?)\s+(million|billion)\s+(cached input|input|output)\s+tokens\b/gi)];
+    for (const [label, field] of [['input', 'inputTokens'], ['cached input', 'cachedInputTokens'], ['output', 'outputTokens']]) {
+      const amounts = stated.filter(m => m[3].toLowerCase() === label);
+      if (amounts.length !== 1) continue;
+      const [, amount, scale] = amounts[0], raw = Number(amount.replace(/,/g, ''));
+      const actual = raw * (scale.toLowerCase() === 'million' ? 1e6 : 1e9);
+      if (raw !== 0 && tokenComponents[0][field] === raw) errs.push(`openai.${field} is ${raw}, but the requirements say ${amount} ${scale} ${label} tokens (${actual} actual tokens). Store the actual token count; the engine handles the meter's price unit.`);
+    }
+  }
   if (!errs.length && groundingErrors.status === 'verified' && opts.confirm !== false) errs.push(...confirmationErrors(spec));
   return errs;
 }

@@ -1,0 +1,77 @@
+{
+  "version": "1.4.0",
+  "status": "completed",
+  "run": "2026-11-11T14-35-22-491Z-8dcff6ec",
+  "selection": "confirmation-cases.json",
+  "evidence": "confirmation-targeted-results.json",
+  "pairedComparison": "confirmation-followup-results.json",
+  "baselineEvidence": "reliability-matrix-review.json",
+  "baselineRawResultsSha256": "0b158919f1f02f1f679cebe63364ec3f3ad80f10207fd1fa6d501750a37eea28",
+  "rawResultsSha256": "d949b09a30ca5e1e65d5bc71916d7074d79133836f09da04b5bd3f732bad0b8c",
+  "started": "2026-11-11T14:35:22.987Z",
+  "completed": "2026-11-11T14:38:01.800Z",
+  "suiteHash": "2bd170f2c0364aceea6a8f25dbbf31eaf507662452aba51d4cda857f879b2ab7",
+  "runtimeFingerprint": "5a098d6dc023fddb",
+  "skillDigest": "e291888538282379d0387b09d69ccccbfe69e88b39ff70c63356c290974337cb",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "models": 4,
+  "completedConversations": 16,
+  "passed": 16,
+  "flagged": 0,
+  "previouslyFailedPairsPassed": 4,
+  "additionalControlsPassed": 12,
+  "reportsProduced": 13,
+  "reportsPassingAllChecks": 13,
+  "correctlyStoppedWithoutReport": 3,
+  "prematureBuildAttempts": 0,
+  "confirmationRejections": 0,
+  "cases": [
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "finding": "Displayed the exact engine confirmation without inserting the discount sentence into the requirements quote. Built only after approval. An unsupported adapter command was rejected earlier and recovered; this did not waive a workflow failure."
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "finding": "Displayed a standalone exact confirmation and built directly after yes, without framing, confirmation rejection or recovery loop."
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "mysql-no-standby",
+      "status": "passed",
+      "finding": "Displayed a standalone exact confirmation and built directly after yes. The report retained one database with compute and storage, without high availability."
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "finding": "Prepared valid paths before writing the spec, displayed exact confirmation and waited for approval before its only build. Used 200000000 input tokens, zero cached tokens and 40000000 output tokens. Did not invent a customer name or label the known no-discount answer as an assumption."
+    }
+  ],
+  "changes": [
+    "A concise execution order and confirmation decision table replace overlapping instructions. Preparation failures must be fixed before using any guessed paths; repeat readback and build probes are not approval.",
+    "Readback returns confirmation.status and validation reasons. Only verified exact-display/subsequent-approval evidence produces approved; required and unverified never authorize a build. An approved repeat lookup directs the assistant to build without redisplaying.",
+    "Preparation and confirmation errors provide consistent next actions. Build still independently rechecks all original approval and evidence safeguards.",
+    "The spec example no longer contains a fictitious customer name. Optional customer metadata must come from the person, and known answers are not assumptions."
+  ],
+  "verification": [
+    "All 16 unique selected pairs completed; the four original failures passed alongside 12 controls. Controls include three customer corrections, three refused approvals, three approval-pressure cases and three matching scenarios on GPT-6.1 Sol.",
+    "Independently checked every persisted assistant model identity and every copied runtime digest. All used the recorded sealed runtime.",
+    "Independently replayed exact confirmation displays and subsequent approvals, reconciled persisted build calls with transcripts, and rechecked all 13 artifacts with existing scope, arithmetic, HTML, complete-pricing, answer-verification, integrity and final-total grading.",
+    "All 13 build calls followed explicit approval; no rejected or successful premature build attempt was recorded. All three refusals left no report or audit artifact.",
+    "Reconstructed the prior full-run suite signature using its frozen skill and manifest, confirming that the runner, scenarios, grading and limits did not change. The prior results hash is unchanged.",
+    "Focused offline checks cover repeated readback after approval, framed text, redisplay without fresh approval, changed scope, later correction, refusal and unreadable conversation evidence."
+  ],
+  "limitations": [
+    "This is one targeted sample on a newer runtime, not a new complete model matrix. Do not combine these passes with the previous 376/380 full run into a synthetic 380/380 score or claim permanent elimination of model variability.",
+    "The live conversations followed the direct confirmation path; none needed recovery or an approved repeat-readback lookup. Those paths remain covered by offline regression checks, not demonstrated by this live sample.",
+    "Automatic grading is not a full semantic review. Haiku's Windows spec still listed the customer-required included Windows license under assumptions; the workflow pass does not certify perfect fact-versus-assumption labeling.",
+    "Bounded adapters are not unrestricted-shell or native-form certification. No fresh native end-to-end continuation was attempted; the previously denied continuation remains incomplete.",
+    "Eight previously explained Germany/EUR snapshot mismatches remain unresolved as a release disposition. Historical snapshots were not refreshed and an all-green npm test result is not claimed.",
+    "No commit, push, PR, merge, tag, publication or release approval occurred. Excluded preview models and the separate Tier 1 branch were not touched."
+  ]
+}

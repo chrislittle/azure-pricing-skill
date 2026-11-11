@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-10",
+  "targets": 22,
+  "exposedToRunner": 17,
+  "checks": [
+    { "runtime": "1.0.108", "authentication": "GitHub token in isolated SDK home", "available": 17 },
+    { "runtime": "1.0.100-1", "authentication": "Same token, using the installed interactive CLI executable", "available": 17 },
+    { "runtime": "1.0.100-1", "authentication": "Normal logged-in CLI account without an explicit token or isolated home", "available": 17 }
+  ],
+  "notExposed": ["Gemini 4 Argon", "Gemini 3.8 Flash", "MAI-Code-2.x1", "HydraFusion", "HydraFusion Max"],
+  "conclusion": "Initial discovery did not enumerate these five entries. Later direct requests confirmed Gemini access; the initial list is historical discovery evidence, not an access verdict. No model was substituted.",
+  "geminiFollowup": {
+    "interactiveRecordedIds": ["gemini-4-argon", "gemini-3.8-flash"],
+    "directGreetingRecordedIds": ["gemini-4-argon", "gemini-3.8-flash"],
+    "observation": "An unprimed isolated SDK runtime accepted Gemini directly. Calling listModels first returned a catalog without Gemini and subsequent session creation rejected it. Creating a direct session first exposed a different catalog. This is an observed discovery-order discrepancy, not proof of its backend cause.",
+    "runnerChange": "Explicit --try-unlisted attempts retain discovery policy checks but start a fresh isolated runtime for inference. Actual model identity remains mandatory in every persisted trial log.",
+    "completedPricingEvidence": "gemini-results.json",
+    "completedPricingReview": "gemini-review.json",
+    "pricingConversations": 40,
+    "passed": 40,
+    "flagged": 0,
+    "remainingUntestedTargetsExcludedFromRequiredGeminiRun": ["MAI-Code-2.x1", "HydraFusion", "HydraFusion Max"]
+  },
+  "maiCode2x1": "Its exact runtime ID remains unresolved; matching a similar-looking ID is not evidence that it is the requested model."
+}

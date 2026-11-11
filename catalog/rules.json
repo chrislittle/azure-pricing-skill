@@ -116,9 +116,9 @@
       "citation": {
         "framework": "Learn",
         "code": null,
-        "source": "What are Azure savings plans for compute?",
+        "source": "What are savings plans?",
         "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-overview",
-        "quote": "Unused commitment for an hour expires and does not roll over."
+        "quote": "Unused commitment for an hour expires and doesn't roll over."
       }
     },
     "part-time-payg": {
@@ -128,9 +128,9 @@
       "citation": {
         "framework": "Learn",
         "code": null,
-        "source": "What are Azure savings plans for compute?",
+        "source": "What are savings plans?",
         "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-overview",
-        "quote": "Unused commitment for an hour expires and does not roll over."
+        "quote": "Unused commitment for an hour expires and doesn't roll over."
       }
     },
     "disks-bill-when-stopped": {
@@ -152,9 +152,9 @@
       "citation": {
         "framework": "Learn",
         "code": null,
-        "source": "What are savings plans for compute?",
-        "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-compute-overview",
-        "quote": "Savings plans are based on a dollar‑per‑hour spend commitment and automatically apply across eligible services and regions, making them ideal for changing or dynamic workloads."
+        "source": "What are savings plans?",
+        "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-overview",
+        "quote": "Savings plans are based on a dollar-per-hour spend commitment and automatically apply across eligible services and regions, making them ideal for changing or dynamic workloads."
       }
     },
     "ri-covers-compute-only": {
@@ -548,9 +548,9 @@
       "citation": {
         "framework": "Learn",
         "code": null,
-        "source": "What are Azure savings plans for compute?",
+        "source": "What are savings plans?",
         "url": "https://learn.microsoft.com/azure/cost-management-billing/savings-plan/savings-plan-overview",
-        "quote": "Unused commitment for an hour expires and does not roll over."
+        "quote": "Unused commitment for an hour expires and doesn't roll over."
       },
       "when": {
         "scope": "option",

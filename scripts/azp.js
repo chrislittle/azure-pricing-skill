@@ -124,7 +124,14 @@ async function cmdBuild(a) {
   const mst = modelStatus();
   if (mst.status === 'not-recommended') return { ok: false, stage: 'model', errors: [mst.notice.replace('This estimate is being prepared with', 'This conversation is using') + ' No estimate can be built with this model.'], relay: 'Tell the person exactly this, and stop. Do not try to work around it.' };
   const serr = validateSpec(spec);
-  if (serr.length) return { ok: false, stage: 'spec', errors: serr };
+  if (serr.length) {
+    const recovery = !validateSpec(spec, { confirm: false }).length ? {
+      action: 'show-readback-and-wait',
+      ...require('./lib/readback').readback(spec),
+      instructions: 'No report was created. If the person refused, stop. Otherwise send recovery.message as your entire reply, unchanged, then wait for a new explicit approval. Do not retry build using an earlier yes, even if the check code is unchanged.'
+    } : null;
+    return { ok: false, stage: 'spec', errors: serr, ...(recovery ? { recovery } : {}) };
+  }
   const est = await priceSpec(expandSpec(spec));
   est.verification = verificationStatus();
   est.model = modelStatus();
@@ -148,9 +155,11 @@ async function cmdBuild(a) {
     ok, file: path.resolve(out), audit, currency: est.currency, discountPct: est.discountPct,
     facts: { customerSaid: est.customerSaid, sources: est.sources, assumptions: est.assumptions, notIncluded: require('./lib/readback').notIncluded(expandSpec(spec)), nextSteps: est.nextSteps },
     options: est.options.map(o => ({ name: o.name, scenario: o.scenario, purchasing: o.purchasing, monthlyList: o.totalList, monthlyYourPrice: o.totalYour, lowest: !!o.lowest, errors: o.errors })),
+    summary: est.options.map(o => o.errors.length ? `${o.name}: pricing incomplete: ${o.errors.join('; ')}` :
+      `${o.name} (${o.purchasing}) - List: ${money(o.totalList, est.currency)}/month; your price: ${money(o.totalYour, est.currency)}/month.`).join('\n'),
     advisories: adv.map(x => ({ id: x.id, level: x.level, title: x.title, body: x.body.replace(/<[^>]+>/g, ''), option: x.option, source: x.source ? [x.source.framework, x.source.code].filter(Boolean).join(' ') + ': ' + x.source.url : null })),
     validation: { math: mathErr, html: htmlErr, links: links.errs, linksChecked: links.urls.length },
-    relay: 'Tell the customer the totals (list and your price), every advisory with level "warn" in plain words, then where the file is.',
+    relay: 'Start your final reply by copying summary unchanged: it contains BOTH monthly list and customer totals for every purchasing choice. Then relay every advisory with level "warn" in plain words and its source, key assumptions, and the report and audit paths. Only facts.assumptions and assumption-kind facts.sources are assumptions; known quantities, discounts and exclusions are facts, not guesses. Do not omit the list price just because a discount applies.',
     ...(adv.some(x => x.id === 'vm-end-of-life') ? { explainToPerson: adv.filter(x => x.id === 'vm-end-of-life').map(x => ({ say: x.body.replace(/<[^>]+>/g, ''), links: [x.source.url, ...(x.source.more || []).map(m => m.url)] })), explainInstruction: 'Explain why the requested size was replaced, in plain words based on "say", and include these Microsoft links in your reply.' } : {})
   };
 }
@@ -168,12 +177,14 @@ async function main() {
       if (t === 'plan') {
         // Ordered question plan in batches of at most three, one batch per message.
         const types = String(a.types || '').split(',').filter(Boolean);
+        const unknown = types.filter(ty => !SCHEMA[ty]);
+        if (unknown.length) throw new PricingError(`Unknown component type(s): ${unknown.join(', ')}. Use exact types from \`azp questions\`: ${Object.keys(SCHEMA).join(', ')}.`);
         const qs = [];
         for (const ty of types) for (const [k, f] of Object.entries((SCHEMA[ty] || {}).fields || {})) if (f.req || (f.ask && /how many|how much|does it|is this|do you|must|need|which|what/i.test(f.ask))) qs.push({ about: `${ty}.${k}`, ask: f.ask || `What is the ${k} for the ${(SCHEMA[ty] || {}).label || ty}?`, default: f.def ?? null });
         for (const [k, v] of Object.entries(CONTEXT)) if (!v.internal && (!v.services || v.services.some(s => types.includes(s)))) qs.push({ about: `context.${k}`, ask: v.ask, default: v.def ?? null });
         const seen = new Set(); const uniq = qs.filter(q => !seen.has(q.about) && seen.add(q.about));
         const batches = []; for (let i = 0; i < uniq.length; i += 3) batches.push(uniq.slice(i, i + 3));
-        out = { rule: 'Ask ONE batch per message, at most three questions, in plain words, offering the default. Skip any question the person already answered. Never ask for SKU names; translate their answers.', batches };
+        out = { rule: 'This response includes the complete component schemas and question plan for the selected types; do not repeat questions/type/context lookups. If the person already supplied the required quantities, region and discount, write the spec next. Otherwise ask ONE missing batch per message, at most three questions. Leave unknown optional context unset. Use defaults as assumptions only with permission. Never ask for SKU names; translate their answers.', components: Object.fromEntries(types.map(ty => [ty, SCHEMA[ty]])), batches };
         break;
       }
       if (t === 'context') {
@@ -209,7 +220,11 @@ async function main() {
       const errors = validateSpec(spec, { confirm: false });
       if (errors.length) { out = { ok: false, stage: 'spec', errors }; break; }
       const r = require('./lib/readback').readback(spec);
-      out = { ok: true, code: r.code, text: r.text, facts: { sources: require('./lib/provenance').sourceFacts(spec), assumptions: spec.assumptions || [], notIncluded: require('./lib/readback').notIncluded(expandSpec(spec)) }, instructions: 'Show the person this text exactly as written, including the check code, and wait for explicit approval before running build. A scope or wording change needs a new displayed readback and subsequent approval.' };
+      const confirmationErrors = validateSpec(spec);
+      const status = verificationStatus() === 'verified' ? (confirmationErrors.length ? 'required' : 'approved') : 'unverified';
+      out = { ok: true, action: status === 'approved' ? 'build' : 'show-readback-and-wait', ...r, confirmation: { status, errors: confirmationErrors }, facts: { sources: require('./lib/provenance').sourceFacts(spec), assumptions: spec.assumptions || [], notIncluded: require('./lib/readback').notIncluded(expandSpec(spec)) }, instructions: status === 'approved' ?
+        'The conversation already contains this exact readback and a subsequent explicit approval. Build the unchanged spec now using the allocated report path. Do not redisplay message or ask again. Build rechecks approval and all other safeguards.' :
+        'Your next action is an assistant reply, NOT another tool call: send message as your entire reply, copied unchanged, then end your turn. No introduction, footer or extra question. Do NOT call build, preflight or readback until the person replies. Tool output and a check code are NOT displayed confirmation or human approval. After a new explicit approval, build directly.' };
       break;
     }
     case 'rules': out = rulebook(); break;

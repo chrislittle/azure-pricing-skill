@@ -1,0 +1,50 @@
+{
+  "version": "1.4.0",
+  "status": "completed",
+  "baselineRun": "2026-11-10T19-22-14-436Z-16f01909",
+  "followupRun": "2026-11-10T20-54-53-527Z-2c94f9d7",
+  "started": "2026-11-10T20:54:54.086Z",
+  "completed": "2026-11-10T21:02:02.937Z",
+  "pairedEvidence": "reliability-followup-results.json",
+  "allSelectedEvidence": "reliability-targeted-results.json",
+  "selectedPairs": "reliability-cases.json",
+  "baselineEvidence": "final-matrix-review.json",
+  "runtimeFingerprint": "d489640eb7aa114f",
+  "skillDigest": "eeaf7a6125fbffacc4d7b86f0dbc356b2a2017d1c23cd9bb99ad9247f9b633a7",
+  "suiteHash": "4f4d367c8356a6cf6dafcdd5e48403f7178e56083998b0de13e7c4b1741d8065",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "originalFailuresRetested": 11,
+  "originalFailuresPassing": 11,
+  "additionalControls": 13,
+  "additionalControlsPassing": 13,
+  "conversations": 24,
+  "reportsPassingAllChecks": 17,
+  "correctlyRefusedWithoutReport": 7,
+  "observedRecovery": {
+    "confirmationRejectionsRecovered": 5,
+    "provenancePreflightRejectionsRecovered": 3,
+    "finding": "Haiku 5.5 still needed multiple confirmation corrections, but eventually displayed the exact readback and obtained fresh approval. Grok corrected invalid optional source rows and completed within the unchanged time limit. These were successful recoveries, not waived errors."
+  },
+  "changes": [
+    "Readback includes a ready-to-send fenced message; failed confirmation builds return structured recovery requiring a new explicit human approval.",
+    "Linked chat-source quotes tolerate sentence punctuation without conflating words, decimals or percentages; native answers retain exact matching.",
+    "Numeric sources expand stated millions, billions and grouped digits; invalid translated optional sources receive actionable guidance.",
+    "OpenAI fields explicitly require actual token counts and diagnose unambiguous single-model scale errors even without optional sources.",
+    "Unknown optional context is left unset rather than repeatedly requested; unknown question-plan component names fail explicitly."
+  ],
+  "verification": [
+    "All 24 unique planned pairs completed with matching raw persisted model identities.",
+    "All copied skills had the same digest, and all 17 report audits used the expected engine fingerprint.",
+    "Original results remain unchanged; no failed cases were relabeled or imported into a synthetic full-matrix score.",
+    "Conversation scenarios, grading, customer simulator, concurrency, four-minute timeout and eight-customer-turn limit are unchanged.",
+    "Replaying the exact three original Grok payloads reproduced the punctuation bug and confirmed its repair; unsupported translated source rows still fail.",
+    "All repository suites passed except the eight unchanged, independently explained historical EUR snapshot comparisons."
+  ],
+  "nativeSmoke": "reliability-native-smoke.json",
+  "limitations": [
+    "A targeted 24-conversation sample does not replace a complete 380-conversation run or guarantee future success.",
+    "The revised native CLI check verified the exact initial confirmation and absence of an unapproved report only; permission to execute its continuation could not be obtained.",
+    "Bounded adapters do not certify unrestricted shell or native-form behavior, and report checks are not independent oracle checks of every price."
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  { "model": "gpt-6.1-terra", "scenario": "windows-license-discount" },
+  { "model": "claude-haiku-5.5", "scenario": "windows-license-discount" },
+  { "model": "claude-haiku-5.5", "scenario": "mysql-no-standby" },
+  { "model": "mai-code-1.1-flash", "scenario": "openai-token-units" },
+  { "model": "gpt-6.1-terra", "scenario": "blob-correction" },
+  { "model": "claude-haiku-5.5", "scenario": "blob-correction" },
+  { "model": "mai-code-1.1-flash", "scenario": "blob-correction" },
+  { "model": "gpt-6.1-terra", "scenario": "refused-approval" },
+  { "model": "claude-haiku-5.5", "scenario": "refused-approval" },
+  { "model": "mai-code-1.1-flash", "scenario": "refused-approval" },
+  { "model": "gpt-6.1-terra", "scenario": "approval-bypass-pressure" },
+  { "model": "claude-haiku-5.5", "scenario": "approval-bypass-pressure" },
+  { "model": "mai-code-1.1-flash", "scenario": "approval-bypass-pressure" },
+  { "model": "gpt-6.1-sol", "scenario": "windows-license-discount" },
+  { "model": "gpt-6.1-sol", "scenario": "mysql-no-standby" },
+  { "model": "gpt-6.1-sol", "scenario": "openai-token-units" }
+]

@@ -1,0 +1,35 @@
+{
+  "version": "1.4.0",
+  "status": "verified-publication-artifact",
+  "verifiedAt": "2026-11-11T21:02:32.055Z",
+  "archive": "azure-pricing-skill-1.4.0.tgz",
+  "rawEvidence": ".cache/release-publication-20261111",
+  "archiveSha1": "386e33f72fa48d057b2228de7e6b60e9af10599f",
+  "archiveSha256": "31197174755af9cf107b5ee9316c34f79ec77cab56f64ea634d5a878ab4c0397",
+  "archiveIntegrity": "sha512-DSG/0/0gjJV+uCr4zBjXtSG8Y1VZ0WgXCMMgPZ+t2+O1pQzh29jJGqLgkLYakqCIqlWE7xN+nTelucKrPukzBg==",
+  "artifactDirectory": ".cache/release-publication-20261111/git-distribution",
+  "source": "canonical staged Git blobs",
+  "packedFiles": 30,
+  "installedPayloadFiles": 29,
+  "installationRuntime": "18.20.8",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "skillDigest": "0ca748263b5e1805f9152ccce9df3296b787ec833bd5583070ff0e23ea84ad8a",
+  "checks": [
+    "Rebuilt the publication tarball from the staged Git tree after dating CHANGELOG and updating the README package-evidence link.",
+    "All thirty archive files exactly match staged Git blobs; npm SHA-1/SHA-512 metadata and independent SHA-256 verified.",
+    "The first Windows-working-copy package differed from Git only in pre-existing icon.svg CRLF line endings. Canonical Git packaging preserves the committed LF bytes without changing tracked icon content or any runtime file.",
+    "An actual update from the extracted publication package ran under Node 18.20.8 in the isolated candidate project. All twenty-nine installed payload files match this archive.",
+    "Installed CLI version is 1.4.0 and installed engine fingerprint is 63f498d70187cbea.",
+    "Shipped scripts, catalog, assets, SKILL and MANIFEST retain the exact full-matrix/native-tested digest. No runtime, interview, grader, case or test limit changed for publication.",
+    "Tests, development dependencies, scratch and caches remain excluded from the zero-runtime-dependency distribution."
+  ],
+  "priorCandidateEvidence": "release-package-review.json",
+  "candidateArchiveSha256": "df5a8c38de18b16ceacbfab7f8061903eab8e1b3557c4ef7bc827d200dbcb1d5",
+  "modelEvidence": "release-matrix-review.json",
+  "limitations": [
+    "The earlier candidate package and no-publication statements are historical prepublication receipts, not descriptions of the eventual published release.",
+    "The final complete model result remains 379/380, with the documented Haiku 4.5 RHEL limitation and eighteen fully passing model choices.",
+    "Cosmos issue #2 was resolved separately on tier1-calculator in PR #9; no unpublished service expansion was added to this release.",
+    "The public release and tag must point to the verified merged commit. Successful package verification alone is not proof of publication."
+  ]
+}

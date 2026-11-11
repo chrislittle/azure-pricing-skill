@@ -18,7 +18,8 @@ function discountFor(line, spec) {
   const pct = Number(spec.discountPct || 0);
   if (!pct) return 0;
   const excl = (spec.discountExcludes || []).map(s => s.toLowerCase());
-  if (excl.includes('licenses') && (LICENSE_SERVICES.has(line.service) || /license/i.test(line.desc))) return 0;
+  const license = line.isLicense ?? (LICENSE_SERVICES.has(line.service) || /license/i.test(line.desc));
+  if (excl.includes('licenses') && license) return 0;
   return pct / 100;
 }
 

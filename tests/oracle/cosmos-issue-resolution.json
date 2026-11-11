@@ -1,0 +1,35 @@
+{
+  "issue": 2,
+  "status": "closed-after-verified-companion-fix",
+  "issueUrl": "https://github.com/chrislittle/azure-pricing-skill/issues/2",
+  "pullRequest": "https://github.com/chrislittle/azure-pricing-skill/pull/9",
+  "targetBranch": "tier1-calculator",
+  "fixCommit": "dae9330129990992868441788900c4fd5be3619c",
+  "mergeCommit": "e7e4c0769f49410ada0dae4e011b6014571593ab",
+  "mergedAt": "2026-11-11T20:57:00Z",
+  "issueClosedAt": "2026-11-11T20:57:03Z",
+  "rootCause": "The unpublished expansion's independent service oracle selected a vaulted-backup restore meter instead of the continuous-backup PITR meter. The existing expansion engine already used the correct meter.",
+  "verifiedPricing": {
+    "region": "eastus2",
+    "currency": "USD",
+    "productName": "Azure Cosmos DB - PITR",
+    "meterName": "Cont 30D Bckp Data Restore",
+    "meterId": "570bfd9d-65af-5390-98b0-48e55f334ca8",
+    "unit": "1 GB",
+    "unitPrice": 0.15,
+    "restoreGB": 50,
+    "independentOracleRestoreCharge": 7.5,
+    "engineRestoreCharge": 7.5,
+    "combinedScenarioTotal": 308.43,
+    "checkedAt": "2026-11-11T20:53:15.129Z"
+  },
+  "source": "https://learn.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction#pricing",
+  "validation": {
+    "beforeCosmosOracle": "9 passed, 1 failed: missing restore",
+    "afterCosmosOracle": "10 passed, 0 failed",
+    "cosmosContract": "33 passed, 0 failed",
+    "focusedRegressionNodeVersions": ["26.13.0", "18.20.8"],
+    "coverage": "Correct independent PITR meter/units; unrelated vaulted-meter decoy; both retention tiers; preserved backup/analytics; zero restores; explicit missing-meter failure without partial Cosmos charge."
+  },
+  "releaseScope": "The issue explicitly belongs to unpublished Tier 1 expansion. Its fix was merged there separately; no unfinished expansion or pricing runtime change was imported into v1.4. The v1.4 sealed runtime and complete-matrix evidence remain unchanged."
+}

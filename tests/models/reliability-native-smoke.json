@@ -1,0 +1,24 @@
+{
+  "version": "1.4.0",
+  "date": "2026-11-10",
+  "status": "incomplete",
+  "interface": "Installed Copilot CLI with native tools and a copied isolated skill",
+  "runtimeFingerprint": "d489640eb7aa114f",
+  "skillDigest": "eeaf7a6125fbffacc4d7b86f0dbc356b2a2017d1c23cd9bb99ad9247f9b633a7",
+  "case": {
+    "model": "claude-sonnet-5.5",
+    "scenario": "Azure Files capacity confirmation",
+    "initialReadback": "passed",
+    "checks": [
+      "Actual persisted assistant model identity matched claude-sonnet-5.5.",
+      "The final assistant message exactly matched the engine's ready-to-send confirmation message.",
+      "No report or audit was created before approval."
+    ],
+    "approvalAndReport": "not executed"
+  },
+  "blocker": "The tool could not obtain permission to execute the native CLI continuation. The denied operation was not retried or bypassed.",
+  "limitations": [
+    "This is an initial confirmation check only, not a passed approval-to-report smoke conversation.",
+    "The earlier completed two-conversation native smoke evidence remains separate and uses the prior runtime fingerprint."
+  ]
+}

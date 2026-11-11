@@ -1,0 +1,100 @@
+{
+  "version": "1.4.0",
+  "status": "completed",
+  "run": "2026-11-10T21-02-49-584Z-f86258e6",
+  "evidence": "reliability-matrix-results.json",
+  "rawResultsSha256": "0b158919f1f02f1f679cebe63364ec3f3ad80f10207fd1fa6d501750a37eea28",
+  "started": "2026-11-10T21:02:50.283Z",
+  "completed": "2026-11-10T22:07:36.341Z",
+  "suiteHash": "4f4d367c8356a6cf6dafcdd5e48403f7178e56083998b0de13e7c4b1741d8065",
+  "runtimeFingerprint": "d489640eb7aa114f",
+  "skillDigest": "eeaf7a6125fbffacc4d7b86f0dbc356b2a2017d1c23cd9bb99ad9247f9b633a7",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "models": 19,
+  "casesPerModel": 20,
+  "completedConversations": 380,
+  "passed": 376,
+  "flagged": 4,
+  "modelsPassingAllCases": 16,
+  "reportsProduced": 358,
+  "reportsPassingAllChecks": 357,
+  "reportsPassingArtifactChecks": 358,
+  "correctlyStoppedWithoutReport": 19,
+  "flaggedCasesWithReports": 1,
+  "flaggedCasesWithoutReports": 3,
+  "comparison": {
+    "baselineEvidence": "final-matrix-review.json",
+    "baselinePassed": 369,
+    "baselineFlagged": 11,
+    "previouslyFlaggedNowPassing": 10,
+    "previouslyFlaggedStillFailing": 1,
+    "previouslyPassingNowFlagged": 3,
+    "netAdditionalPasses": 7,
+    "targetedFollowupEvidence": "reliability-followup-review.json",
+    "finding": "The separate targeted sample passed all 11 original failures and 13 controls. The new full run passed 10 of those original 11 and flagged three different previously passing cases. Outcomes vary across sampled conversations; no results were combined."
+  },
+  "remainingCategories": {
+    "changed-confirmation-wording": 1,
+    "confirmation-recovery-loop": 2,
+    "blocked-premature-build-attempt": 1
+  },
+  "flaggedCases": [
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "windows-license-discount",
+      "reason": "changed-confirmation-wording",
+      "finding": "Twice inserted the customer's discount/license-exclusion sentence into the requirements quote where the engine's readback omitted it. Never displayed a complete unchanged confirmation, so no approval or report followed. This was also flagged in the prior full run."
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "windows-license-discount",
+      "reason": "confirmation-recovery-loop",
+      "finding": "Repeatedly framed the readback despite structured recovery. Eventually displayed an exact standalone confirmation and received yes, but then called readback and stopped with a misleading claim of another build rejection instead of building. Subsequent recovery again added framing. No report was created."
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "mysql-no-standby",
+      "reason": "confirmation-recovery-loop",
+      "finding": "Repeatedly added introductions or closing approval instructions to the readback while claiming the text was unchanged. Confirmation validation continued to reject the framed prompt; the conversation ended without a report."
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "openai-token-units",
+      "reason": "blocked-premature-build-attempt",
+      "finding": "Attempted build before any confirmation using a spec path not allocated by prepare. The workspace adapter rejected the call before executing the engine. Later allocated proper paths, showed the exact 200-million/40-million-token readback, received yes and produced a report. The initial premature attempt remains a failure under the unchanged grading rule.",
+      "report": {
+        "createdOnlyAfterExplicitApproval": true,
+        "inputTokens": 200000000,
+        "cachedInputTokens": 0,
+        "outputTokens": 40000000,
+        "currency": "USD",
+        "monthlyList": 26,
+        "monthlyYourPrice": 26,
+        "remainingArtifactChecks": "passed",
+        "narrativeCaveat": "The spec also invented a Contoso customer label and described the known no-discount answer as an assumption. Those metadata/narrative defects are not fully assessed by automatic grading."
+      }
+    }
+  ],
+  "verification": [
+    "All 380 unique planned model/scenario pairs completed; no selected models were unavailable or substituted.",
+    "Independently checked every raw persisted assistant model identity and the copied skill digest for all 380 conversations.",
+    "All 358 generated artifacts passed existing math, HTML, scope, complete-pricing, answer-verification and runtime-integrity checks. One conversation still failed the stricter workflow rule because of its earlier blocked build attempt.",
+    "All 19 refused approvals stopped without reports. No successful unapproved report build was observed; the one premature attempt was rejected by the bounded adapter, not executed by the engine.",
+    "Reconstructed the prior suite signature using the current runner, grader and scenarios with the old skill/manifest, confirming the protocol was unchanged.",
+    "The 369/380 baseline is unchanged, and this run used the same revised runtime as the separate 24/24 targeted sample. No failed cases were retried, relabeled or replaced."
+  ],
+  "releaseChecks": {
+    "repositoryTests": "All non-oracle suites passed; oracle retained 134 passes and eight independently explained historical EUR snapshot mismatches, with nonzero overall exit status.",
+    "eurSnapshotInvestigation": "../oracle/eur-price-review.json",
+    "priorRuntimeNativeCliSmoke": "native-cli-smoke.json",
+    "revisedRuntimeNativeConfirmationOnly": "reliability-native-smoke.json"
+  },
+  "disposition": "The reliability pass improved the complete matrix from 369/380 to 376/380, with all Grok 4.7 and MAI-Code-2-Flash cases passing. Four workflow limitations remain and are not waived. Results are saved for release review; no commit, push, merge, tag or publication has been performed.",
+  "limitations": [
+    "A pass is one sampled bounded conversation, not a guarantee of perfect future behavior. Targeted results are not imported into full-run scores.",
+    "This is not unrestricted-shell or native-form certification, an independent oracle comparison for every report, or a full semantic assessment of advice and metadata.",
+    "The revised native CLI check verified only the exact initial confirmation and absence of an unapproved report. Its continuation was permission-blocked and remains incomplete; the earlier completed native smoke used the prior runtime.",
+    "MAI-Code-2.x1 and both HydraFusion previews remain excluded and untested. Tested MAI-Code-2-Flash and internal-only GPT-5.6 Sol Fast retain their labels."
+  ]
+}

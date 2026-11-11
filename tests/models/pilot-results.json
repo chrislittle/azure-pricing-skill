@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-10",
+  "version": "1.4.0",
+  "scope": "Two bounded SDK-adapter scenarios per model; not historical 20-scenario or adversarial certification.",
+  "sdkVersion": "1.0.30",
+  "runtimeFingerprint": "9a758657d1287182",
+  "skillSha256": "1FCCCBA301B235DD90A2583DC2049F49DA32CF89F4FD98510C8AB5D61204B73F",
+  "run": "2026-11-10T13-19-03-714Z-0a112d6a",
+  "started": "2026-11-10T13:19:04.000Z",
+  "completed": "2026-11-10T13:21:35.566Z",
+  "results": [
+    { "model": "gpt-6.1-sol", "scenario": "blob-correction", "status": "passed", "monthlyList": 37.68, "monthlyYourPrice": 31.65 },
+    { "model": "gpt-6.1-sol", "scenario": "functions-missing-inputs", "status": "passed", "monthlyList": 2.4, "monthlyYourPrice": 2.4 },
+    { "model": "claude-sonnet-5.5", "scenario": "blob-correction", "status": "passed", "monthlyList": 37.68, "monthlyYourPrice": 31.65 },
+    { "model": "claude-sonnet-5.5", "scenario": "functions-missing-inputs", "status": "passed", "monthlyList": 2.4, "monthlyYourPrice": 2.4 }
+  ],
+  "earlierAttempts": [
+    {
+      "run": "2026-11-10T13-14-51-842Z-bf60c1e6",
+      "outcome": "Four setup failures: the initial permission callback used the wrong SDK result variant; no adapter calls ran. Not model-quality evidence."
+    },
+    {
+      "run": "2026-11-10T13-16-24-312Z-041695d2",
+      "outcome": "Four incomplete conversations. The scripted compound approval was rejected by the unchanged engine; Sonnet also shortened readback labels and exclusions. Corrected the harness reply to yes and strengthened the skill's verbatim-readback guidance before the final pilot."
+    }
+  ],
+  "discovery": {
+    "targets": 22,
+    "available": 17,
+    "unavailableNames": ["Gemini 4 Argon", "Gemini 3.8 Flash", "MAI-Code-2.x1", "HydraFusion", "HydraFusion Max"]
+  },
+  "limitations": [
+    "No unrestricted shell, native ask_user or adversarial conversations.",
+    "No independent pricing-oracle comparison in the conversation grader; it verifies engine-produced artifacts and arithmetic.",
+    "No full semantic assessment of narrative quality or advisory explanations.",
+    "Link checking skipped; prices are observed pilot values, not permanent price expectations.",
+    "Historical recommended, acceptable and blocked ratings are unchanged; the remaining current targets have no new conversation results."
+  ]
+}

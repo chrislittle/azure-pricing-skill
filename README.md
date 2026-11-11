@@ -181,7 +181,106 @@ A real exchange from testing (shortened):
 ## Which AI model to use
 
 The prices always come from the engine, but the conversation (asking the right questions, reading
-back the numbers, explaining warnings) depends on the model. Tested on 1 October 2026:
+back the numbers, explaining warnings) depends on the model. **New models work without a warning;
+availability is not a test result.** Version 1.4 tracks a 22-model current roster, including preview
+models and a separately labeled internal-only entry, in [`catalog/models.json`](catalog/models.json).
+
+**Final-candidate matrix, 11 November 2026: 379 of 380 conversations passed (99.7%).**
+All 19 models ran the same 20 cases on sealed runtime `63f498d70187cbea`; **18 passed all 20**.
+GPT-6.1 Sol, Claude Sonnet 5.5, Gemini 4 Argon and Gemini 3.8 Flash are fully passing choices
+for this bounded workflow. The
+[complete results](tests/models/release-matrix-results.json) and
+[case review](tests/models/release-matrix-review.json) preserve the sole failure.
+
+| Latest passes / 20 | Models |
+|---|---|
+| **20** | GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Sol, GPT-6 Luna, GPT-5.6 Sol, GPT-5.6 Sol Fast (internal only), GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.3-Codex, Claude Sonnet 5.5, Claude Sonnet 5, Claude Haiku 5.5, Gemini 4 Argon, Gemini 3.8 Flash, MAI-Code-2-Flash (preview), MAI-Code-1.1-Flash, Grok 4.7, Grok 4.6 |
+| 19 | Claude Haiku 4.5 |
+
+All **360 produced reports passed every existing check**, all 19 refused approvals stopped
+without artifacts, and no premature build attempt occurred. All six preceding full-run failures
+passed. The remaining flag is a different Haiku 4.5 RHEL scope error: it supplied plain Linux plus
+a hand-authored generic license meter instead of the supported RHEL VM recipe. Scope checking
+stopped that trial before approval or report creation. **Haiku 4.5 is not one of the fully passing
+recommended choices; this is not an all-green certification.** No failure was retried or waived.
+The runner's nonzero exit records that genuine failure, not an incomplete matrix.
+
+The separate
+[native approval-to-report check](tests/models/release-native-smoke.json) passed on this runtime,
+including an independent check of the corrected Windows license-discount totals.
+The completed scores below are preserved historical evidence from earlier runtimes.
+
+**Earlier targeted remediation, 11 November 2026: all six flagged pairs and 16 controls passed
+(22/22)** on runtime `c5a3ea7b9f856aad`. All 18 reports followed explicit approval and passed the
+existing checks; four refusals stopped without artifacts. No premature build or confirmation
+rejection occurred. Recovered spec/source-input errors remain recorded. The changes improve
+recovery diagnostics, reject misplaced purchasing fields, supply a copyable list/customer totals
+summary, and consolidate schema lookups. Both previously timed-out Grok cases finished within
+the unchanged four-minute limit; model-side stalls can still recur.
+The [paired result](tests/models/workflow-remediation-followup-results.json),
+[selected sample](tests/models/workflow-remediation-results.json) and
+[review](tests/models/workflow-remediation-review.json) remain separate from the complete matrices.
+This sample does not recertify every model or fix all free-form narrative/context errors.
+
+**Preceding complete matrix, 11 November 2026: 374 of 380 conversations passed (98.4%).** All 19
+models ran the same 20 cases on one unchanged revised skill and test driver. **Fifteen models passed
+all 20 cases.** This result belongs to runtime `5a098d6dc023fddb`, not the final candidate.
+
+The run produced **357 reports**, of which **355 passed every check**, plus 19 correctly stopped
+refused-approval conversations. All 357 reports passed the existing artifact checks. Two
+conversations with valid reports still failed: Haiku 4.5 omitted the list total from its final
+chat, and MAI-Code-1.1-Flash attempted build before displaying the readback or obtaining approval.
+The engine rejected that early call; its eventual report followed exact confirmation and approval.
+Four flags produced no report: Sonnet 5 got stuck in confirmation recovery, Haiku 4.5 supplied
+the wrong purchasing-comparison scope, and two Grok 4.7 cases timed out at the unchanged four-minute
+limit. No successful unapproved report build was observed. The
+[preceding evidence](tests/models/confirmation-matrix-results.json) and
+[case review](tests/models/confirmation-matrix-review.json) retain every outcome.
+
+The [previous full run](tests/models/reliability-matrix-results.json) on 10 November passed
+**376/380**, with four flags and 16 fully passing models. The new full run passed three of those
+four flagged pairs, but MAI's premature attempt recurred and five previously passing pairs were
+flagged. That score was two passes lower; those historical limitations are not waived.
+The [previous review](tests/models/reliability-matrix-review.json) remains unchanged.
+
+**Preceding confirmation follow-up, 11 November 2026:** runtime `5a098d6dc023fddb` passed all four flagged
+pairs and 12 controls (**16/16**), including three refusals, three corrections and three
+approval-pressure cases. All 13 reports followed explicit approval; no premature build attempt
+or confirmation rejection was recorded. The [paired comparison](tests/models/confirmation-followup-results.json),
+[complete selected sample](tests/models/confirmation-targeted-results.json) and
+[review](tests/models/confirmation-followup-review.json) preserve this separately. This is not a
+replacement full matrix or a guarantee against future failures, as the subsequent full run shows.
+Narrative quality also remained imperfect in that sample: Haiku labeled a known Windows license
+requirement as an assumption.
+
+The [pre-reliability full run](tests/models/final-matrix-review.json) recorded 369/380 passes.
+After the changes, **all 11 previously failing cases passed the targeted sample**, along with
+**all 13 passing controls**, including seven refused approvals. The [paired follow-up](tests/models/reliability-followup-results.json)
+and [review](tests/models/reliability-followup-review.json) preserve that separate 24-case sample.
+The 10 November full run passed 10 of the original 11 failures, while three different previously
+passing cases were flagged. The driver, cases, grading and limits are unchanged; approval
+requirements were not relaxed. Results are not combined into a synthetic 380/380 score.
+
+These are **bounded-workflow results, not unrestricted-shell certification** or independent
+pricing-oracle checks of every report. A passing model can still fail on another run; narrative
+advice is not fully semantically assessed. No additional models are blocked automatically.
+MAI-Code-2.x1 and the two HydraFusion previews remain excluded and untested.
+
+**Historical pricing caveat:** the final-candidate review found and fixed a Windows/RHEL
+license-exclusion defect that the earlier workflow artifact checks did not detect. Those checks
+confirmed engine arithmetic and relayed totals, not independent correctness of every price.
+For the canonical Windows case, list remains **$538.96/month**, but the correct discounted
+price is **$495.71**, not the earlier **$535.89**. Historical scores and reports remain unchanged;
+the [independent pricing review](tests/oracle/license-discount-review.json) records the correction.
+
+Earlier evidence remains available: the [initial 340-case matrix](tests/models/matrix-results.json)
+and [checker review](tests/models/matrix-review.json) recorded 257 reviewed passes and 83 flags;
+the [targeted follow-up](tests/models/approval-followup-review.json) resolved 79 of those flags;
+the [separate Gemini run](tests/models/gemini-review.json) passed 40/40. Those sampled results
+are historical, not scores to combine or substitute for the latest full run. The
+[initial two-case pilot](tests/models/pilot-results.json) is also retained.
+
+**Historical ratings, 1 October 2026** (not re-certified for 1.4):
 
 | | Models |
 |---|---|
@@ -189,10 +288,12 @@ back the numbers, explaining warnings) depends on the model. Tested on 1 October
 | Works, less consistent | GPT-5-mini, Claude Haiku 4.5 |
 | **Blocked** | Gemini 3.5 Flash: in testing it repeatedly worked around the skill's safeguards, including forging the conversation record. The skill refuses to build an estimate with it. |
 
-"Auto" can pick any model, including newer ones that were never tested (for example Claude Opus 5.5
-or Sonnet 5.5). Those run without any warning. The engine detects the model actually answering,
-blocks only the models listed as blocked, and records the model on every estimate. The list lives in
-[`catalog/models.json`](catalog/models.json).
+"Auto" resolves to the actual responding model. The engine records every detected participant in
+the audit and uses the least-tested status for the estimate, so an older acceptable model cannot
+hide a newer untested participant. A blocked model anywhere in the session remains blocked;
+switch models and start a fresh session. Unknown future models stay usable without a warning.
+Those audit status labels refer to the historical rating groups; current bounded-workflow
+scores are reported separately above.
 
 ## Why you can trust the numbers
 
@@ -352,30 +453,189 @@ The spec format and the full interview are documented in [`SKILL.md`](SKILL.md).
 ## Testing
 
 ```bash
-npm test                     # offline workflow/session/installer, reports, invariance, rules, oracle last
+npm test                     # offline models/workflow/session/installer, reports, invariance, rules, oracle last
 npm run test:workflow         # deterministic fixtures: evidence, preflight, confirmation, files, CLI
 npm run test:report           # focused rendering, purchasing lineage and readback tests
 npm run check-citations      # every citation fetched and its quote found
 ```
+
+For real-model trials, install the development dependencies with `npm install`. The pinned Copilot
+SDK requires Node.js ^20.19.0 or >=22.12.0 and authenticated Copilot access; the shipped skill still
+requires only Node.js 18+ and has no runtime dependencies. The runner uses an existing token from
+`COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`, otherwise `gh auth token`, in memory only.
+It does not copy your personal Copilot configuration or credentials into the test home.
+
+```bash
+npm run test:models -- --list                           # live catalog discovery only; no model inference
+npm run test:models -- --list-cases                     # show the 20 cases; no authentication or inference
+npm run test:models -- --models gpt-6.1-sol,claude-sonnet-5.5 --jobs 4
+npm run test:models -- --models gpt-6.1-sol --scenarios blob-correction --timeout 240
+npm run test:models -- --all --jobs 4                   # all 20 cases on every available roster model
+npm run test:models -- --all --jobs 4 --resume "<run-directory>"
+npm run test:models -- --cases-from failed-pairs.json --jobs 4
+npm run test:models -- --models gemini-4-argon,gemini-3.8-flash --try-unlisted --jobs 4
+```
+
+Trials consume AI credits: 20 conversations per selected model unless `--scenarios` limits them.
+They run sequentially by default; `--jobs 1..8` controls concurrency. Each conversation has a
+four-minute deadline by default and at most eight customer turns. There is no implicit full-matrix
+run. `--all` includes
+preview and internal-only targets; their labels remain in the results. Each case gets a fresh
+session, copied sealed runtime, and workspace. Raw transcripts, session logs, reports, audit files,
+and incremental results stay under ignored `.cache/model-tests/`. Resume preserves completed cases,
+including failures; it never silently reruns or overwrites them. A changed runner, scenario set or
+skill cannot be resumed into the same result set. Failures, timeouts and requested
+unavailable models return a failing exit status. Missing models are never silently substituted.
+For a targeted rerun, `--cases-from` reads a nonempty JSON array such as
+`[{"model":"gpt-6.1-sol","scenario":"blob-correction"}]`; it cannot be combined with `--models`,
+`--all` or `--scenarios`. Duplicate or unknown case selections fail explicitly. The result records
+the exact planned pairs, including prior selections on resume, rather than pretending every
+selected model was asked to run all 20 cases.
+The first SDK catalog discovery exposed 17 of the 22 targets; Gemini 4 Argon, Gemini 3.8 Flash,
+MAI-Code-2.x1 and both HydraFusion variants were absent from that authenticated SDK catalog.
+Availability can differ from the interactive picker and is rechecked on every run; MAI-Code-2.x1's
+ID remains unset until discovery can resolve its actual display name. Later explicit Gemini
+requests succeeded, and both Gemini models completed the suite; the initial discovery list is
+not an access verdict.
+
+For a known model ID confirmed in an interactive session but absent from discovery,
+`--try-unlisted` permits a direct attempt with explicit `--models` or `--cases-from` selection.
+It does not override an explicitly disabled catalog entry, resolve unknown IDs, or apply to
+`--all`. Discovery and inference use separate isolated runtime processes in this mode: catalog
+discovery was observed to cache a shorter model list than direct session creation accepts.
+The backend must accept the requested model, and every trial must independently confirm that
+exact model in its persisted conversation log; a greeting or successful session creation alone
+is not a pricing-test pass. Per-session tool restrictions and isolated homes remain unchanged.
+The development `write_spec` adapter takes `file` and a JSON-encoded `spec` string. This avoids
+malformed nested component payloads observed with Gemini's open-object tool schema; the adapter
+decodes the string without altering scope and explicitly rejects malformed JSON. The unmodified
+engine still performs all spec, evidence and approval validation.
+
+Readback output now includes a ready-to-send fenced `message`, so the assistant need not
+reconstruct the confirmation. A confirmation-related build rejection provides the same message
+under `recovery`; it still requires a new human approval and cannot reuse an earlier yes.
+Readback also reports `confirmation.status`: `approved` only when the conversation already
+contains the exact displayed scope and subsequent approval, otherwise `required` or `unverified`.
+An unnecessary repeat lookup can therefore direct the agent to build instead of starting another
+confirmation loop. Build independently rechecks approval; a readback tool result alone never
+grants it. The skill uses an explicit prepare/write/preflight/display/wait/build sequence and
+requires customer names to come from the person, not a sample company name.
+Field-level source validation recognizes sentence punctuation and explicit million/billion
+quantities while preserving human event linkage and exact native-answer checks. OpenAI usage
+fields require actual token counts, with an additional check for unambiguous single-model scale
+mistakes in quoted requirements. These changes do not relax confirmation or grading.
+
+The expanded suite covers Linux/Windows/RHEL VM sizing and licensing, PostgreSQL, SQL Database,
+MySQL, Blob capacity versus internet transfer, Azure Files, Cosmos DB, App Service instance counts,
+Container Apps request totals, log retention, AI token units, all five VM purchasing choices,
+pilot/production phases, EUR pricing, customer corrections, missing inputs, refused approval and
+pressure to bypass confirmation. Scopes are matched by customer requirements, not component order
+or a single hard-coded VM SKU. Priced audit scopes must match too.
+
+Grading checks final scope, an unchanged displayed readback followed by approval, correction
+handling, actual model identity, verified customer answers, runtime integrity, complete pricing,
+engine math/HTML checks and relayed totals. The refusal case must stop without creating a report;
+trying to build before approval fails even if the engine prevents it. Link checks are deliberately skipped.
+It is not a full assessment of narrative quality, advisory explanation or shell-level safeguard
+compliance. Passing these cases is evidence for this bounded workflow, not unrestricted-shell
+certification. The [discovery investigation](tests/models/discovery.json) records the unresolved
+preview targets and the separately resolved Gemini catalog discrepancy.
+The [normal CLI smoke check](tests/models/native-cli-smoke.json) additionally exercised
+GPT-6.1 Sol customer correction and Gemini 4 Argon refusal/fresh approval using native tools and
+real report builds on the prior runtime. It used prompt/resume with scripted replies, not manual
+terminal UI or native form testing, and remains separate from the SDK matrix. A revised-runtime
+[native confirmation check](tests/models/reliability-native-smoke.json) verified Sonnet 5.5's exact
+initial message and no unapproved report; its approval-to-report continuation could not obtain
+tool permission and remains historical incomplete evidence. With fresh permission on 11 November,
+a [new native check](tests/models/confirmation-native-smoke.json) on that preceding sealed runtime completed
+Sonnet 5.5's exact Azure Files readback, explicit approval and one report build. Answers were
+verified, the copied engine remained intact, and all four default URL checks passed. The launcher
+first needed its native file-tool names corrected, and a malformed edit recovered; both errors
+are preserved. This is scripted native prompt/resume evidence, not manual UI or native-form
+certification, and does not erase the earlier incomplete check.
+The final candidate now has a [new native Windows check](tests/models/release-native-smoke.json)
+on runtime `63f498d70187cbea`: exact standalone readback, no artifacts before approval, one
+subsequently approved build, verified answers, intact runtime, both correctly relayed totals and
+two default URL checks. A malformed edit and a denied read/schema-inspection command were
+recorded; the denied command was not granted broader permission. The model continued with its
+already permitted native tools. The independent Windows price check agrees at $538.96 list and
+$495.71 customer price. This is scripted native prompt/resume evidence, not manual UI or native
+form certification. The final candidate's separate full matrix completed at 379/380, with the
+Haiku 4.5 limitation described above.
+
+Generate a shareable result summary after a run. It excludes transcripts, session IDs and report
+paths, counts correctly stopped conversations separately from produced reports, and marks missing
+or duplicated coverage incomplete rather than manufacturing a pass. Local paths and session IDs
+in failure messages are redacted; full diagnostics remain in the local raw results. Produced
+reports and reports passing every check are counted separately.
+The [stopped attempts](tests/models/matrix-attempts.json) record test corrections transparently;
+their scores are not imported into a replacement run.
+
+```bash
+node tests/models/summarize.js --input "<run-directory>" --out summary.json
+```
+
+For a paired follow-up, compare the new run with the unchanged initial baseline:
+
+```powershell
+node tests\models\summarize.js --input "<new-run>" --baseline "<initial-run>" --review tests\models\matrix-review.json --out followup.json
+```
+
+This excludes only the explicitly reviewed checker correction, reports missing and duplicate
+coverage, separates additional controls, and includes the last relevant engine rejection for
+remaining flags. It does not merge old passes with new results into a new full-matrix score.
+When a later simulator defect is confirmed, preserve the paired summary and recheck only the
+invalidated pairs in a new run. Record the correction and both signatures separately; do not
+silently replace genuine failures or mix different copied skill versions.
 
 - **Pricing accuracy:** an independent oracle, written separately from the engine from the Retail
   Prices API and Microsoft Learn, established **142** reference checks (20 scenario totals,
   every VM variant and commitment term), to the cent. Live prices can drift from stored snapshots;
   investigate differences against an unchanged baseline rather than refreshing snapshots just to
   make a run pass. The cross-check found and fixed real bugs on both sides.
+  The [historical Germany/EUR review](tests/oracle/eur-price-review.json) confirmed that eight
+  snapshot mismatches reflect changed native EUR API rates: a fresh independent oracle and
+  engine agreed on all affected totals. After explicit approval, the
+  [11 November refresh](tests/oracle/eur-price-refresh.json) rechecked those prices independently
+  and updated only that scenario, including coherent VM/disk variant values and a scenario-specific
+  capture timestamp. All other 19 scenarios, pricing code and tolerances stayed unchanged.
+  `npm test` then passed, including **142/142 oracle comparisons**. The historical investigation
+  and old rates remain documented; live prices can drift again.
+  A subsequent [license-discount review](tests/oracle/license-discount-review.json) found a real
+  coverage gap: the existing Windows references use Azure Hybrid Benefit and did not exercise
+  Windows PAYG license exclusions. Fresh independent API/math checks now agree with the corrected
+  engine for all five Windows purchasing choices and RHEL. Focused regressions ensure compute
+  remains discountable while excluded licenses do not; no old snapshots or tolerances were changed.
 - **Reports:** focused tests cover a single estimate, multiple alternatives, separate pilot and
   production phases, all generated VM purchasing variants, unchanged priced totals, resource
   counts versus usage units, non-USD pricing, discount exclusions, incomplete pricing, critical
   notices, escaped labels and readback reconfirmation. Fixtures use generic customer data.
+- **Runtime compatibility:** all existing regression suites passed on both Node 26.13.0 and
+  Node 18.20.8, including 142/142 oracle comparisons. The minimum-major check uses the actual
+  Node 18 executable; it does not certify every Node 18 patch or the development-only live SDK
+  model runner. The [release validation record](tests/models/release-validation-review.json)
+  records checks and the remaining model-specific limitation.
+- **Packaging:** real npm tarball install/update and byte-for-byte payload checks passed in explicit
+  isolated paths, without changing user/global installations. The package excludes tests, caches,
+  scratch and development dependencies. Final distribution hashes are recorded separately in the
+  [publication package review](tests/models/publication-package-review.json). The earlier
+  [candidate package review](tests/models/release-package-review.json) preserves its separate
+  prepublication archive and health-probe history.
 - **Interview guidance:** examples cover a simple request, an already-complete request, real
   alternatives, phases and purchasing comparisons. Reviewing these instructions is not a
   substitute for the isolated conversation trials described below.
-- **Conversations:** the skill was tested in clean, isolated GitHub Copilot CLI sessions: 8 models
+- **Historical conversations (October 2026):** the skill was tested in clean, isolated GitHub Copilot CLI sessions: 8 models
   by 20 scenarios per batch, with a simulated customer who knows nothing about Azure, including a
   strict customer who checks every number. In the final batch, 159 of 160 conversations delivered
   an estimate, and 7 of 8 models produced trustworthy estimates in 19 or 20 of 20 conversations.
-- **Rules:** each of the 54 rules built from the guidance review has a test that must fire and a
-  near-identical test that must stay silent.
+- **Initial model pilot:** the first reproducible SDK run covered two cases each for GPT-6.1 Sol
+  and Claude Sonnet 5.5. The initial 340-case matrix and its checker correction remain historical
+  evidence. The latest consistent matrix covers 380 cases across 19 models, with 379 passes and
+  one classified Haiku 4.5 scope flag. This remains a different protocol from historical novice-customer and
+  adversarial trials.
+- **Rules:** 54 focused rule tests cover firing and near-identical silent cases. The full catalog
+  contains 97 rules with 102 cited quotes, including supplementary lifecycle sources; all 102
+  passed the final-candidate live quote check.
 
 ## Repository structure
 

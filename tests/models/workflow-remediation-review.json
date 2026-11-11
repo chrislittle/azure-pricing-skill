@@ -1,0 +1,114 @@
+{
+  "version": "1.4.0",
+  "status": "completed-targeted-remediation",
+  "run": "2026-11-11T17-39-11-410Z-c1112e42",
+  "evidence": "workflow-remediation-results.json",
+  "pairedEvidence": "workflow-remediation-followup-results.json",
+  "selection": "workflow-remediation-cases.json",
+  "rawResultsSha256": "5e816c14b6708c925a37fc57fb39ff9509d4e6b2bf21050e25f83ff6238e3ef9",
+  "started": "2026-11-11T17:39:12.038Z",
+  "completed": "2026-11-11T17:45:11.623Z",
+  "suiteHash": "664ea80a1dc285655a4df3008c0dfcc0f69f00703afa4a2fc6aca0a5a7770ba6",
+  "runtimeFingerprint": "c5a3ea7b9f856aad",
+  "skillDigest": "9195fb741dcb3d222ade18ab4f2b34ccc8c7e3ace7eee9fe68b52ad5545677e3",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "models": 5,
+  "completedConversations": 22,
+  "passed": 22,
+  "flagged": 0,
+  "previouslyFailedPairsPassed": 6,
+  "additionalControlsPassed": 16,
+  "reportsProduced": 18,
+  "reportsPassingAllChecks": 18,
+  "correctlyStoppedWithoutReport": 4,
+  "prematureBuildAttempts": 0,
+  "confirmationRejections": 0,
+  "comparison": {
+    "baselineEvidence": "confirmation-matrix-review.json",
+    "baselineRawResultsSha256": "3403da38f9adee6b3522272e0825f3ed53a9b15128db9d67cf158d8f9fcf8393",
+    "baselinePassed": 374,
+    "baselineFlagged": 6,
+    "baselineRuntimeFingerprint": "5a098d6dc023fddb",
+    "finding": "All six flagged pairs passed this separate selected run, as did sixteen regression controls. The original complete 374/380 result and its raw hash are unchanged. This is not a replacement complete matrix or a synthetic 380/380 score."
+  },
+  "changes": [
+    "Confirmation diagnostics now identify the latest framed or changed readback instead of blaming a stale nonapproval after a newer malformed redisplay. The exact-display and subsequent-approval rules are unchanged.",
+    "Readback emits an explicit next action, show-readback-and-wait or build, and explains that a required display must end the assistant turn without another tool call.",
+    "Preflight rejects ignored option-level purchasing, commitment and compare fields and malformed compare.commitments values with actionable guidance. One original option plus top-level compare.commitments=true remains the five-variant comparison mechanism.",
+    "Build emits an engine-formatted summary containing both monthly list and customer totals for every priced option; incomplete pricing is labeled instead of presenting a success-shaped total.",
+    "A single question-plan response now supplies the component schemas as well as question batches, reducing repeated schema/context lookups. Guidance directs complete requests to spec preparation rather than optional-context investigation."
+  ],
+  "failedPairFollowup": [
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "durationMs": 27035,
+      "finding": "Respected the initial nonapproval and later supplied the exact standalone confirmation for fresh approval. One approved report; no rejected or premature build. The improved malformed-redisplay diagnosis is additionally covered by an offline pressure-recovery regression, not exercised by this successful live path."
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "durationMs": 32045,
+      "finding": "Final chat copied both engine totals: 538.96 USD list and 535.89 USD customer price. Exact confirmation and approval preceded the report.",
+      "remainingSemanticCaveat": "The spec still inferred steadyUsage=true despite the opening request's no-long-term-commitment wording. Passing the total/scope workflow does not certify every contextual inference or advisory explanation."
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "vm-purchasing-comparison",
+      "status": "passed",
+      "durationMs": 31565,
+      "finding": "Authored one original option with top-level compare.commitments=true. The engine generated all five purchasing choices and the final reply relayed their list and customer totals. Rejection of incorrectly placed purchasing fields is covered offline; this live case supplied the correct structure directly."
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "durationMs": 88372,
+      "finding": "Displayed confirmation before its only build, waited for yes and produced a verified report for 200 million input and 40 million output tokens. No premature attempt; both relayed totals were 26.00 USD.",
+      "remainingSemanticCaveat": "The final reply still labeled known zero-cached-token, no-discount and exclusion facts as key assumptions. This is not a full narrative-semantics pass."
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "storage-versus-transfer",
+      "status": "passed",
+      "durationMs": 105372,
+      "finding": "Completed under the unchanged four-minute deadline with one schema-plan lookup. Preserved distinct 2048 GB capacity and 20480 GB egress. A preflight source-quote rejection recovered by removing optional translated source rows while retaining the actual requirements; one approved report followed."
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "durationMs": 95806,
+      "finding": "Completed under the unchanged four-minute deadline with one schema-plan lookup. Retained 5120 GB provisioned v2 HDD LRS and baseline performance, then built one approved 128.40 USD report."
+    }
+  ],
+  "timeoutInvestigation": {
+    "finding": "The prior Grok failures were model-side stalls, not slow Retail Prices API or engine execution. Tool calls completed in roughly 0.3 seconds or less; the final model turn then stalled for more than 200 seconds before the four-minute trial deadline.",
+    "mitigation": "Consolidated component schemas into one plan response and tightened the complete-request path; both failed pairs completed in this run with fewer schema lookups.",
+    "limitation": "A successful rerun does not prove that stochastic or service-side model stalls can never recur. No runner retries, relaxed limits, model substitution or timeout waiver was introduced."
+  },
+  "recoveredInputErrors": [
+    "Sonnet and MAI controls recovered unsupported question-plan type lookups; raw diagnostics remain retained.",
+    "Haiku controls recovered invalid Blob type/field spellings before valid confirmation. Preflight/readback failures were not waived.",
+    "Grok storage and correction cases recovered optional source-quote/value mismatches without modifying evidence or relabeling customer requirements as guesses."
+  ],
+  "verification": [
+    "All 22 unique selected model/scenario pairs completed on the frozen runtime and suite signature; no failed case was retried or replaced.",
+    "Independently checked every copied runtime digest, actual persisted model identity, approved build chronology, final totals and report/audit inventory.",
+    "All 18 reports passed existing scope, math, HTML, complete-pricing, answer-verification, runtime-integrity and final-total checks. All four refusals produced no report or priced audit.",
+    "No premature build attempt, successful unapproved build or confirmation rejection was observed. Recovered spec/source errors remain visible in raw independent-verification.json.",
+    "The runner, adapters, scenarios, grader, four-minute deadline and eight-customer-turn limit are unchanged.",
+    "npm test passed all existing suites, including 23 workflow cases, 10 report cases, 54 rule cases and 142/142 oracle comparisons."
+  ],
+  "priorNativeSmoke": "confirmation-native-smoke.json",
+  "disposition": "The six original failed pairs are resolved in this targeted sample and their coupled engine/guidance defects are addressed. No new complete matrix or native smoke was run on this newer runtime. Changes and evidence remain local and uncommitted; no push, merge, tag or publication occurred.",
+  "limitations": [
+    "The latest complete matrix remains 374/380 on the preceding runtime. This 22-case sample is not a 19-model recertification.",
+    "Model output can vary across runs; targeted success does not establish perfect future reliability or eliminate model-side service stalls.",
+    "Advisory/context and metadata semantics are not fully assessed. The remaining Haiku and MAI narrative caveats above are not silently waived.",
+    "The completed native prompt/resume evidence belongs to the preceding runtime; the newer runtime has offline CLI and bounded live coverage, not new manual UI/native-form certification."
+  ]
+}

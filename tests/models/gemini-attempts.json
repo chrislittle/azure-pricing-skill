@@ -1,0 +1,44 @@
+{
+  "version": "1.4.0",
+  "attempts": [
+    {
+      "run": "2026-11-10T18-29-18-181Z-325492b3",
+      "status": "blocked-before-conversation",
+      "hostConfiguration": "isolated-host",
+      "requestedCases": 40,
+      "initializationFailures": 40,
+      "completedPricingConversations": 0
+    },
+    {
+      "run": "2026-11-10T18-31-44-573Z-0bdd1821",
+      "status": "stopped-for-tool-payload-compatibility",
+      "hostConfiguration": "isolated-host",
+      "requestedCases": 40,
+      "completedConversations": 6,
+      "recordedPassed": 0,
+      "recordedFailed": 6,
+      "finding": "Every completed case encountered non-object nested component payloads in the open-ended write_spec object schema. A separate exact-payload round-trip probe reproduced malformed nesting on both Gemini models; the same payload transported as a JSON string was preserved exactly.",
+      "resolution": "The development adapter now accepts the complete spec as a JSON-encoded string and explicitly rejects invalid JSON or a non-object decoded value. The pricing engine, skill, approval checks and runtime fingerprint are unchanged.",
+      "limitations": [
+        "Four in-flight cases were interrupted and are not counted as completed.",
+        "The malformed values are already present in recorded tool arguments; this does not establish whether model generation or provider schema handling caused them.",
+        "The replacement starts a new suite signature. No failed scores are relabeled or imported."
+      ]
+    },
+    {
+      "run": "2026-11-10T18-30-29-316Z-bc6904ce",
+      "status": "blocked-before-conversation",
+      "hostConfiguration": "user-host-isolated-sessions",
+      "requestedCases": 40,
+      "initializationFailures": 40,
+      "completedPricingConversations": 0
+    }
+  ],
+  "finding": "The two initialization-blocked attempts called listModels before session creation. The backend then rejected both Gemini IDs as unavailable. Separate fresh-runtime probes accepted the exact IDs and recorded them on replies. Merely switching host configuration did not resolve the discovery-order discrepancy.",
+  "resolution": "Retain catalog policy checks in a discovery process, then use a fresh isolated inference process for explicit unlisted requests. The temporary user-host option was removed; the replacement matrix retains isolated host and session configuration.",
+  "limitations": [
+    "Initialization failures are not pricing or safeguard failures by either model.",
+    "Original raw results remain unchanged locally; no failed scores are imported into the replacement matrix.",
+    "The discovery-order behavior was reproduced, but its underlying backend cause is not established."
+  ]
+}
