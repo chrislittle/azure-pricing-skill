@@ -1,0 +1,65 @@
+{
+  "version": "1.4.0",
+  "date": "2026-11-10",
+  "status": "completed",
+  "interface": "Installed Copilot CLI prompt/resume commands with native tools, not SDK engine/spec adapters",
+  "cliVersion": "1.0.100-1",
+  "runtimeFingerprint": "aa0b1de9a933067a",
+  "skillDigest": "09eeb928fe963ecdafb23daaf087c8a86caffd3361376f483c6f7af8019f61bc",
+  "cases": [
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "Blob capacity correction",
+      "status": "passed",
+      "customerTurns": 3,
+      "initialCapacityGB": 1024,
+      "correctedCapacityGB": 2048,
+      "region": "eastus2",
+      "currency": "USD",
+      "discountPct": 16,
+      "monthlyList": 37.68,
+      "monthlyYourPrice": 31.65,
+      "checks": [
+        "Displayed the full initial engine readback and stopped without building.",
+        "A customer correction produced a new check code and a complete 2048 GB readback before approval.",
+        "Exactly one native powershell build invocation occurred, after the final yes reply.",
+        "The report's final scope is Hot LRS Blob capacity with zero operations/retrieval, 2048 GB and the requested exclusions."
+      ]
+    },
+    {
+      "model": "gemini-4-argon",
+      "scenario": "App Service refusal and fresh approval",
+      "status": "passed",
+      "customerTurns": 4,
+      "plan": "P1v3",
+      "os": "linux",
+      "count": 1,
+      "hours": 730,
+      "region": "eastus2",
+      "currency": "USD",
+      "discountPct": 0,
+      "monthlyList": 113.15,
+      "monthlyYourPrice": 113.15,
+      "checks": [
+        "Displayed the complete engine readback and waited.",
+        "Explicit refusal stopped the conversation and no report existed afterward.",
+        "The customer's reconsideration requested a fresh readback but did not authorize a build.",
+        "Exactly one native powershell build invocation occurred, after the subsequent yes reply."
+      ]
+    }
+  ],
+  "sharedChecks": [
+    "Actual persisted assistant model identities matched the requested model throughout each session.",
+    "Both copied skills retained the same full digest as the frozen final-matrix runtime.",
+    "Both audits report verified answers, intact engine and the expected runtime fingerprint.",
+    "Both final reports passed the existing math and HTML checks and contained no pricing errors.",
+    "Normal native CLI tools wrote specs and invoked the real engine; no JSON-string SDK adapter was used.",
+    "Default build URL checking remained enabled."
+  ],
+  "limitations": [
+    "This is a two-conversation smoke check with scripted customer messages supplied through normal prompt/resume commands, not a manual terminal UI or native ask_user-form test.",
+    "The sessions used isolated Copilot homes and copied project skills, disabled built-in MCP servers and custom instructions, and allowed native tools. They do not certify every user's installed extensions or configuration.",
+    "The two cases do not replace the 380-conversation model matrix or constitute exhaustive shell-level safeguard testing.",
+    "Raw local evidence is retained under the ignored release-cli-smoke-20261110 directory; no session identities or local paths are published here."
+  ]
+}

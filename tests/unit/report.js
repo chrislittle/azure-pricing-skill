@@ -143,9 +143,34 @@ const sections = h => [...h.matchAll(/<section class="pane" id="([^"]+)"/g)].map
     const e = ready(await priceSpec({ ...base, options: [{ name: 'Licensed server', components: [{ ...VM, os: 'linux' }, { ...VM, os: 'rhel' }] }] }));
     assert.deepEqual(e.options[0].errors, []);
     assert.ok(e.options[0].lines.some(l => l.service === 'VM Licenses' && l.discountPct === 0));
+    assert.ok(e.options[0].lines.filter(l => l.service === 'Virtual Machines').every(l => l.discountPct === 16), 'RHEL compute remains discountable even when its description mentions a separate license');
     const h = clean(render(e));
     assert.ok(h.includes('VM Licenses: 0% off list.'));
     assert.ok(h.includes('Virtual Machines: 16% off list.'));
+  });
+  await test('Windows license exclusions discount compute, not bundled Windows charges', async () => {
+    const e = ready(await priceSpec({ ...base, compare: { commitments: true } }));
+    assert.equal(e.options.length, 5);
+    for (const o of e.options) {
+      assert.deepEqual(o.errors, []);
+      const compute = o.lines.find(l => l.isLicense === false);
+      const license = o.lines.find(l => l.isLicense === true);
+      assert.ok(compute && license, 'every Windows purchasing term separates compute and licensing');
+      assert.equal(compute.discountPct, 16);
+      assert.equal(compute.your, Math.round(compute.list * 0.84 * 100) / 100);
+      assert.equal(license.discountPct, 0);
+      assert.equal(license.your, license.list);
+    }
+    const payg = e.options[0], facts = payg.components[0].facts;
+    assert.equal(payg.lines[0].list, Math.round(facts.baseRate * VM.count * VM.hours * 100) / 100);
+    assert.equal(payg.lines[1].list, Math.round((facts.winRate - facts.baseRate) * VM.count * VM.hours * 100) / 100);
+    const allDiscounted = await priceSpec({ ...base, discountExcludes: [] });
+    assert.ok(allDiscounted.options[0].lines.every(l => l.discountPct === 16));
+    const zeroHours = await priceSpec({ ...base, options: [{ components: [{ ...VM, hours: 0 }] }] });
+    assert.equal(zeroHours.options[0].totalList, 0);
+    assert.equal(zeroHours.options[0].totalYour, 0);
+    assert.deepEqual(checkMath(e), []);
+    clean(render(e));
   });
   await test('failed variants have no success-shaped totals and warnings remain outside tabs', async () => {
     const e = ready(await priceSpec({ ...base, options: [...base.options, { name: 'Unavailable', components: [{ type: 'not-a-service' }] }] }));

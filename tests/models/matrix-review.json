@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-10",
+  "run": "2026-11-10T13-52-32-765Z-4d42010f",
+  "automaticSummary": "matrix-results.json",
+  "originalAutomaticCounts": { "passed": 256, "flagged": 84 },
+  "afterConfirmedCheckerCorrection": { "passed": 257, "flagged": 83 },
+  "artifactRecheck": {
+    "savedReports": 245,
+    "changedOutcomes": 1,
+    "scope": "Saved artifact grading only; original conversation and approval-failure decisions were preserved. No replacement inference runs."
+  },
+  "corrections": [
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "pilot-and-production-phases",
+      "recordedError": "Build totals differ from the priced audit.",
+      "finding": "False failure: Pilot and Production shared the same display name. The checker matched both build rows to the first audit entry. The actual report correctly priced Pilot at $0.00 and Production at $2.40.",
+      "fix": "Match each build row to a distinct audit entry by name, scenario identity, phase and purchasing label.",
+      "verification": "The original saved spec, audit, HTML, engine build output and final answer pass the corrected artifact grader. No new conversation or overwritten result.",
+      "modelPassedAfterCorrection": 14,
+      "modelRemainingFlags": 6
+    }
+  ],
+  "confirmationObservations": {
+    "flaggedConversationsWithAdditionalConfirmationTextRejection": 55,
+    "flaggedConversationsWithInterveningAssistantMessageRejectionButNoAdditionalTextRejection": 13,
+    "interpretation": "These are observations of recorded engine errors, not independent root-cause verdicts. The strict engine can reject framing around an otherwise complete readback or an intervening assistant message. The runner's eventual missing-readback or timeout label does not prove that the model omitted the readback or produced an incorrect price."
+  },
+  "limitations": [
+    "Original automatic scores and raw results remain unchanged; the single correction is reported separately.",
+    "Scores measure this bounded workflow with its strict confirmation contract, four-minute deadline and eight-customer-turn limit. They are not general model-quality or unrestricted-shell ratings.",
+    "The remaining 83 flags are not 83 demonstrated pricing errors and do not automatically block those models.",
+    "Changing the artifact grader changes the suite signature; future conversation runs must start a new result set."
+  ]
+}

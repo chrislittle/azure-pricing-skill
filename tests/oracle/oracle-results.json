@@ -3873,6 +3873,7 @@
       "region": "Germany West Central",
       "currency": "EUR",
       "discountPct": 0.2,
+      "capturedAt": "2026-11-11T15:56:56.923Z",
       "canonical": {
         "lines": [
           {
@@ -3882,10 +3883,10 @@
             "productName": "Virtual Machines Dasv5 Series",
             "skuName": "Standard_D4as_v5",
             "unitOfMeasure": "1 Hour",
-            "unitPrice": 0.183034,
+            "unitPrice": 0.186723,
             "qty": 1460,
             "qtyUnitsNote": "730 hours x 2 instance(s)",
-            "monthlyList": 267.23
+            "monthlyList": 272.62
           },
           {
             "desc": "Managed disk E15 LRS (256 GiB requirement) x2",
@@ -3894,14 +3895,14 @@
             "productName": "Standard SSD Managed Disks",
             "skuName": "E15 LRS",
             "unitOfMeasure": "1/Month",
-            "unitPrice": 16.895459,
+            "unitPrice": 17.235962,
             "qty": 2,
             "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
-            "monthlyList": 33.79
+            "monthlyList": 34.47
           }
         ],
-        "monthlyList": 301.02,
-        "monthlyDiscounted": 240.81
+        "monthlyList": 307.09,
+        "monthlyDiscounted": 245.68
       },
       "variants": {
         "vm": {
@@ -3910,10 +3911,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 133.61,
-            "perInstanceMonthlyDiscounted": 106.89,
-            "totalMonthlyList": 267.23,
-            "totalMonthlyDiscounted": 213.78,
+            "perInstanceMonthlyList": 136.31,
+            "perInstanceMonthlyDiscounted": 109.05,
+            "totalMonthlyList": 272.62,
+            "totalMonthlyDiscounted": 218.1,
             "lines": [
               {
                 "desc": "VM Standard_D4as_v5 Linux x2 @ 730 h/mo",
@@ -3922,10 +3923,10 @@
                 "productName": "Virtual Machines Dasv5 Series",
                 "skuName": "Standard_D4as_v5",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.183034,
+                "unitPrice": 0.186723,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 267.23
+                "monthlyList": 272.62
               }
             ]
           },
@@ -3934,10 +3935,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 147.75,
-            "perInstanceMonthlyDiscounted": 118.2,
-            "totalMonthlyList": 295.5,
-            "totalMonthlyDiscounted": 236.4,
+            "perInstanceMonthlyList": 150.72,
+            "perInstanceMonthlyDiscounted": 120.58,
+            "totalMonthlyList": 301.45,
+            "totalMonthlyDiscounted": 241.16,
             "lines": [
               {
                 "desc": "VM Standard_D4s_v5 Linux x2 @ 730 h/mo",
@@ -3946,10 +3947,10 @@
                 "productName": "Virtual Machines Dsv5 Series",
                 "skuName": "Standard_D4s_v5",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.202394,
+                "unitPrice": 0.206472,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 295.5
+                "monthlyList": 301.45
               }
             ]
           },
@@ -3958,10 +3959,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 141.32,
-            "perInstanceMonthlyDiscounted": 113.06,
-            "totalMonthlyList": 282.65,
-            "totalMonthlyDiscounted": 226.12,
+            "perInstanceMonthlyList": 144.17,
+            "perInstanceMonthlyDiscounted": 115.34,
+            "totalMonthlyList": 288.34,
+            "totalMonthlyDiscounted": 230.67,
             "lines": [
               {
                 "desc": "VM Standard_D4as_v6 Linux x2 @ 730 h/mo",
@@ -3970,10 +3971,10 @@
                 "productName": "Virtual Machines Dasv6 Series",
                 "skuName": "D4as v6",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.193594,
+                "unitPrice": 0.197495,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 282.65
+                "monthlyList": 288.34
               }
             ]
           },
@@ -3982,10 +3983,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 155.46,
-            "perInstanceMonthlyDiscounted": 124.37,
-            "totalMonthlyList": 310.91,
-            "totalMonthlyDiscounted": 248.73,
+            "perInstanceMonthlyList": 158.59,
+            "perInstanceMonthlyDiscounted": 126.87,
+            "totalMonthlyList": 317.18,
+            "totalMonthlyDiscounted": 253.74,
             "lines": [
               {
                 "desc": "VM Standard_D4s_v6 Linux x2 @ 730 h/mo",
@@ -3994,10 +3995,10 @@
                 "productName": "Virtual Machines Dsv6 Series",
                 "skuName": "D4s v6",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.212953,
+                "unitPrice": 0.217245,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 310.91
+                "monthlyList": 317.18
               }
             ]
           },
@@ -4006,10 +4007,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 160.59,
-            "perInstanceMonthlyDiscounted": 128.47,
-            "totalMonthlyList": 321.19,
-            "totalMonthlyDiscounted": 256.95,
+            "perInstanceMonthlyList": 163.83,
+            "perInstanceMonthlyDiscounted": 131.06,
+            "totalMonthlyList": 327.66,
+            "totalMonthlyDiscounted": 262.13,
             "lines": [
               {
                 "desc": "VM Standard_D4ads_v5 Linux x2 @ 730 h/mo",
@@ -4018,10 +4019,10 @@
                 "productName": "Virtual Machines Dadsv5 Series",
                 "skuName": "Standard_D4ads_v5",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.219993,
+                "unitPrice": 0.224427,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 321.19
+                "monthlyList": 327.66
               }
             ]
           },
@@ -4030,10 +4031,10 @@
             "hours": 730,
             "count": 2,
             "includesRhelLicense": false,
-            "perInstanceMonthlyList": 174.73,
-            "perInstanceMonthlyDiscounted": 139.78,
-            "totalMonthlyList": 349.45,
-            "totalMonthlyDiscounted": 279.56,
+            "perInstanceMonthlyList": 178.25,
+            "perInstanceMonthlyDiscounted": 142.6,
+            "totalMonthlyList": 356.5,
+            "totalMonthlyDiscounted": 285.2,
             "lines": [
               {
                 "desc": "VM Standard_D4ds_v5 Linux x2 @ 730 h/mo",
@@ -4042,20 +4043,20 @@
                 "productName": "Virtual Machines Ddsv5 Series",
                 "skuName": "Standard_D4ds_v5",
                 "unitOfMeasure": "1 Hour",
-                "unitPrice": 0.239352,
+                "unitPrice": 0.244176,
                 "qty": 1460,
                 "qtyUnitsNote": "730 hours x 2 instance(s)",
-                "monthlyList": 349.45
+                "monthlyList": 356.5
               }
             ]
           }
         },
         "disk": {
           "E15": {
-            "perDiskMonthlyList": 16.9,
+            "perDiskMonthlyList": 17.24,
             "count": 2,
-            "monthlyList": 33.79,
-            "monthlyDiscounted": 27.03,
+            "monthlyList": 34.47,
+            "monthlyDiscounted": 27.58,
             "lines": [
               {
                 "desc": "Managed disk E15 LRS x2",
@@ -4064,10 +4065,10 @@
                 "productName": "Standard SSD Managed Disks",
                 "skuName": "E15 LRS",
                 "unitOfMeasure": "1/Month",
-                "unitPrice": 16.895459,
+                "unitPrice": 17.235962,
                 "qty": 2,
                 "qtyUnitsNote": "2 disk(s); unitOfMeasure '1/Month' = flat monthly price per disk",
-                "monthlyList": 33.79
+                "monthlyList": 34.47
               }
             ]
           }

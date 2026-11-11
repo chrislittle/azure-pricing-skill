@@ -1,0 +1,69 @@
+{
+  "reviewedAt": "2026-11-10T19:24:17.722Z",
+  "status": "confirmed-snapshot-drift",
+  "scenario": "s17-eur-germany",
+  "region": "germanywestcentral",
+  "currency": "EUR",
+  "snapshotCapturedAt": "2026-10-01T11:18:21.286Z",
+  "api": "https://prices.azure.com/api/retail/prices",
+  "apiVersion": "2023-01-01-preview",
+  "method": "A fresh isolated engine cache and the independent oracle queried native EUR prices separately. Canonical and all six VM-variant totals matched each other exactly; stored October snapshot totals were lower.",
+  "canonical": {
+    "hoursPerMonth": 730,
+    "vmCount": 2,
+    "vmSku": "Standard_D4as_v5",
+    "diskCount": 2,
+    "diskTier": "E15 LRS",
+    "diskSizeGiB": 256,
+    "discountPct": 20,
+    "snapshotList": 301.02,
+    "liveOracleList": 307.09,
+    "liveEngineList": 307.09,
+    "snapshotDiscounted": 240.81,
+    "liveOracleDiscounted": 245.68,
+    "liveEngineDiscounted": 245.68,
+    "meters": [
+      {
+        "meterId": "6e39dbef-cc24-5924-adb2-b9d388bac084",
+        "description": "D4as v5 Linux",
+        "unit": "1 Hour",
+        "snapshotUnitPrice": 0.183034,
+        "liveUnitPrice": 0.186723,
+        "quantity": 1460,
+        "snapshotLineTotal": 267.23,
+        "liveLineTotal": 272.62
+      },
+      {
+        "meterId": "03858686-d4b3-4dc6-8adc-89be5e4d691b",
+        "description": "E15 LRS Disk",
+        "unit": "1/Month",
+        "snapshotUnitPrice": 16.895459,
+        "liveUnitPrice": 17.235962,
+        "quantity": 2,
+        "snapshotLineTotal": 33.79,
+        "liveLineTotal": 34.47
+      }
+    ]
+  },
+  "vmVariants": [
+    { "sku": "Standard_D4as_v5", "snapshot": 267.23, "liveOracle": 272.62, "liveEngine": 272.62 },
+    { "sku": "Standard_D4s_v5", "snapshot": 295.50, "liveOracle": 301.45, "liveEngine": 301.45 },
+    { "sku": "Standard_D4as_v6", "snapshot": 282.65, "liveOracle": 288.34, "liveEngine": 288.34 },
+    { "sku": "Standard_D4s_v6", "snapshot": 310.91, "liveOracle": 317.18, "liveEngine": 317.18 },
+    { "sku": "Standard_D4ads_v5", "snapshot": 321.19, "liveOracle": 327.66, "liveEngine": 327.66 },
+    { "sku": "Standard_D4ds_v5", "snapshot": 349.45, "liveOracle": 356.50, "liveEngine": 356.50 }
+  ],
+  "disposition": "Documented release caveat. Preserve the historical snapshot and failing exit status; do not change runtime pricing or silently refresh expected totals to make tests pass.",
+  "repositoryTestResult": {
+    "oraclePassed": 134,
+    "oracleSnapshotMismatches": 8,
+    "otherSuites": "passed",
+    "overallExitCode": 1
+  },
+  "limitations": [
+    "These observations establish changed native EUR API rates and matching current arithmetic, not the underlying cause of the rate change.",
+    "The API effectiveStartDate identifies a meter's effective period and does not establish when the currency-denominated rate last changed.",
+    "No engine code, oracle snapshot, tolerance or failure-handling behavior was changed.",
+    "Live-price evidence is time-bound and does not guarantee future API prices."
+  ]
+}

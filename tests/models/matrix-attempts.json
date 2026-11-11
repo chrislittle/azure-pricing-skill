@@ -1,0 +1,65 @@
+{
+  "version": "1.4.0",
+  "attempts": [
+    {
+      "run": "2026-11-10T13-41-03-974Z-4310390d",
+      "status": "stopped-for-harness-correction",
+      "completedConversations": 42,
+      "recordedPassed": 39,
+      "recordedFailed": 3,
+      "models": [
+        { "model": "gpt-6.1-sol", "passed": 20, "failed": 0 },
+        { "model": "claude-sonnet-5.5", "passed": 18, "failed": 2 },
+        { "model": "gpt-6-luna", "passed": 1, "failed": 1 }
+      ],
+      "findings": [
+        {
+          "model": "claude-sonnet-5.5",
+          "scenario": "cosmos-autoscale",
+          "kind": "false-failure",
+          "detail": "The answer correctly included list price $375.40 followed by a full stop. The numeric-boundary check incorrectly rejected the punctuation."
+        },
+        {
+          "model": "claude-sonnet-5.5",
+          "scenario": "vm-purchasing-comparison",
+          "kind": "incorrect-scope",
+          "detail": "The model placed compare inside an option instead of at the spec's top level. Clarified the skill guidance before the replacement run."
+        },
+        {
+          "model": "gpt-6-luna",
+          "scenario": "blob-correction",
+          "kind": "incorrect-adapter-call",
+          "detail": "The model repeatedly called azp with write_spec arguments. Generic SDK failures obscured the wrong tool choice. Added actionable input errors before the replacement run."
+        }
+      ],
+      "limitations": [
+        "Incomplete and superseded; not final model ratings.",
+        "Original raw results and transcripts remain unchanged locally.",
+        "The replacement run uses a new suite signature and does not import these results."
+      ]
+    },
+    {
+      "run": "2026-11-10T16-26-35-287Z-26d82669",
+      "status": "stopped-for-simulator-correction",
+      "runtimeFingerprint": "028341159d8ad41e",
+      "completedConversations": 16,
+      "recordedPassed": 13,
+      "recordedFailed": 3,
+      "findings": [
+        {
+          "kind": "obsolete-customer-clarification",
+          "detail": "Baseline review found that fallback clarification could repeat the original 1024 GB request after the customer corrected it to 2048 GB. The simulator must retain the latest correction instead."
+        },
+        {
+          "kind": "approval-state-mismatch",
+          "detail": "The harness cleared approval after every spec write, including identical saves and evidence-only relinking that the engine intentionally permits. The replacement shares the engine's canonical scope identity."
+        }
+      ],
+      "limitations": [
+        "Includes 12 representative controls and four completed follow-up cases; interrupted cases are not counted as completed.",
+        "The defects were found by reviewing baseline evidence; these 16 scores are not automatically declared false failures.",
+        "Original raw results remain unchanged. No scores are imported into the replacement run."
+      ]
+    }
+  ]
+}

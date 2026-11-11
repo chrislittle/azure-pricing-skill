@@ -1,0 +1,291 @@
+{
+  "status": "completed",
+  "expectedConversations": 11,
+  "completedConversations": 11,
+  "passed": 11,
+  "failed": 0,
+  "missing": 0,
+  "baselineSuiteHash": "31e18351be7c1e770477324bc0f95c43cbc82aa2b889a171951cdc02269908d9",
+  "followupSuiteHash": "4f4d367c8356a6cf6dafcdd5e48403f7178e56083998b0de13e7c4b1741d8065",
+  "completed": "2026-11-10T21:02:02.937Z",
+  "runtimeFingerprints": [
+    "d489640eb7aa114f"
+  ],
+  "skillDigests": [
+    "eeaf7a6125fbffacc4d7b86f0dbc356b2a2017d1c23cd9bb99ad9247f9b633a7"
+  ],
+  "models": [
+    {
+      "model": "claude-sonnet-5.5",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "mai-code-2-flash",
+      "retested": 2,
+      "passed": 2,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "retested": 2,
+      "passed": 2,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "claude-sonnet-5",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "grok-4.7",
+      "retested": 3,
+      "passed": 3,
+      "flagged": 0,
+      "missing": 0
+    }
+  ],
+  "remainingCategories": {},
+  "additionalControls": [
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed"
+    },
+    {
+      "model": "claude-sonnet-5.5",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "openai-token-units",
+      "status": "passed"
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "gemini-4-argon",
+      "scenario": "azure-files-capacity",
+      "status": "passed"
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "refused-approval",
+      "status": "passed"
+    },
+    {
+      "model": "gemini-3.8-flash",
+      "scenario": "windows-license-discount",
+      "status": "passed"
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "linux-vm-sizing",
+      "status": "passed"
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "refused-approval",
+      "status": "passed"
+    }
+  ],
+  "problems": [],
+  "cases": [
+    {
+      "model": "claude-sonnet-5.5",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 23604
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 59793
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 29961
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Readback has incorrect scope: No matching scope for {\"components\":[{\"type\":\"openai\",\"model\":\"gpt-5-nano\",\"inputTokens\":200000000,\"cachedInputTokens\":0,\"outputTokens\":40000000}]}."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 26536
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 35854
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 29268
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27142
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 30896
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Timeout after 240000ms waiting for response completion"
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 112100
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "rhel-license-and-disks",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Timeout after 240000ms waiting for response completion"
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 200933
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "vm-purchasing-comparison",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 198337
+    }
+  ],
+  "limitations": [
+    "Targeted rerun of previously flagged pairs, not a new complete model matrix. Do not combine old passes with these results into a new full-suite score.",
+    "Original results are unchanged. Only the explicitly reviewed checker correction is excluded from the target cohort.",
+    "Diagnostic categories summarize observed failures, not general model safety or pricing-quality verdicts. Timeouts may include retries after validation errors.",
+    "Bounded adapters and the same four-minute/eight-customer-turn limits; no unrestricted-shell or native-form certification."
+  ],
+  "baselineRun": "2026-11-10T19-22-14-436Z-16f01909",
+  "followupRun": "2026-11-10T20-54-53-527Z-2c94f9d7",
+  "baselineSha256": "30583c7e5b10e3f0a693d3bd4b4d512476053cbd568c9617881691bb213681de"
+}

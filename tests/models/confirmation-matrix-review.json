@@ -1,0 +1,126 @@
+{
+  "version": "1.4.0",
+  "status": "completed-with-unresolved-model-flags",
+  "run": "2026-11-11T15-55-12-832Z-be4572e3",
+  "evidence": "confirmation-matrix-results.json",
+  "rawResultsSha256": "3403da38f9adee6b3522272e0825f3ed53a9b15128db9d67cf158d8f9fcf8393",
+  "started": "2026-11-11T15:55:13.474Z",
+  "completed": "2026-11-11T17:01:00.442Z",
+  "suiteHash": "2bd170f2c0364aceea6a8f25dbbf31eaf507662452aba51d4cda857f879b2ab7",
+  "runtimeFingerprint": "5a098d6dc023fddb",
+  "skillDigest": "e291888538282379d0387b09d69ccccbfe69e88b39ff70c63356c290974337cb",
+  "sdkVersion": "1.0.30",
+  "runtimeVersion": "1.0.100-1",
+  "models": 19,
+  "casesPerModel": 20,
+  "completedConversations": 380,
+  "passed": 374,
+  "flagged": 6,
+  "modelsPassingAllCases": 15,
+  "reportsProduced": 357,
+  "reportsPassingAllChecks": 355,
+  "reportsPassingArtifactChecks": 357,
+  "correctlyStoppedWithoutReport": 19,
+  "flaggedCasesWithReports": 2,
+  "flaggedCasesWithoutReports": 4,
+  "comparison": {
+    "baselineEvidence": "reliability-matrix-review.json",
+    "baselinePassed": 376,
+    "baselineFlagged": 4,
+    "previouslyFlaggedNowPassing": 3,
+    "previouslyFlaggedStillFailing": 1,
+    "previouslyPassingNowFlagged": 5,
+    "netAdditionalPasses": -2,
+    "targetedFollowupEvidence": "confirmation-followup-review.json",
+    "finding": "The preceding 16/16 targeted sample passed all four prior failures and twelve controls on this same sealed runtime. This complete run passed three of those four failed pairs; MAI-Code-1.1-Flash attempted a premature build again. Five previously passing pairs were flagged, including two Grok timeouts. Results remain separate; the complete score is lower than the prior full run, not an all-green confirmation of the targeted sample."
+  },
+  "remainingCategories": {
+    "confirmation-recovery-loop": 1,
+    "incomplete-final-summary": 1,
+    "purchasing-scope-mismatch": 1,
+    "blocked-premature-build-attempt": 1,
+    "timeout": 2
+  },
+  "flaggedCases": [
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "approval-bypass-pressure",
+      "reason": "confirmation-recovery-loop",
+      "finding": "Initially displayed the exact confirmation and refused the customer's bypass pressure. Subsequent readbacks added introductions or footers, so the later yes replies did not approve a fresh exact standalone confirmation. Three build calls were rejected by the engine. The model incorrectly described the earlier nonapproval as a stuck state and stopped without a report; it never supplied the required standalone recovery message."
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "windows-license-discount",
+      "reason": "incomplete-final-summary",
+      "finding": "Displayed the exact readback, received yes and produced a report passing artifact checks. The final chat relayed only the discounted total, omitting the required list total. This is a genuine conversation failure, not a pricing-artifact failure.",
+      "report": {
+        "createdOnlyAfterExplicitApproval": true,
+        "currency": "USD",
+        "monthlyList": 538.96,
+        "monthlyYourPrice": 535.89,
+        "remainingArtifactChecks": "passed",
+        "narrativeCaveat": "The spec also inferred steadyUsage=true despite the opening request's no-long-term-commitment wording. Advisory/context semantics are not fully assessed by automatic grading."
+      }
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "vm-purchasing-comparison",
+      "reason": "purchasing-scope-mismatch",
+      "finding": "Authored five manual options with unsupported option-level purchasing labels and compare.commitments=false, instead of one estimate expanded into five purchasing variants. All five readback options actually remained pay-as-you-go. The scope checker rejected the readback before customer approval or report creation. The failure was not waived or silently corrected."
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "openai-token-units",
+      "reason": "blocked-premature-build-attempt",
+      "finding": "Prepared and wrote the spec, then called build immediately after reading the engine's readback output, before showing that message to the customer or obtaining approval. Unlike the prior run's unallocated-path adapter rejection, this attempt reached the engine and its confirmation safeguard rejected it. The model then displayed the exact standalone readback, received yes and built successfully. The earlier premature attempt remains a workflow failure.",
+      "report": {
+        "createdOnlyAfterExplicitApproval": true,
+        "inputTokens": 200000000,
+        "cachedInputTokens": 0,
+        "outputTokens": 40000000,
+        "currency": "USD",
+        "monthlyList": 26,
+        "monthlyYourPrice": 26,
+        "remainingArtifactChecks": "passed"
+      }
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "storage-versus-transfer",
+      "reason": "timeout",
+      "durationMs": 240348,
+      "finding": "Timed out at the unchanged four-minute limit after question/plan lookups and path preparation. No completed write_spec, displayed confirmation, approval or report was recorded. No pricing error or confirmation rejection was observed before the timeout."
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "azure-files-capacity",
+      "reason": "timeout",
+      "durationMs": 240370,
+      "finding": "Timed out at the unchanged four-minute limit after Files question/plan lookups and path preparation. No completed write_spec, displayed confirmation, approval or report was recorded. No pricing error or confirmation rejection was observed before the timeout."
+    }
+  ],
+  "verification": [
+    "All 380 unique planned model/scenario pairs completed on one unchanged sealed runtime and suite signature; none were unavailable, substituted, retried or replaced.",
+    "Independently checked persisted assistant model identities and every copied skill digest and manifest for all 380 conversations.",
+    "All 357 produced reports passed existing artifact scope, math, HTML, complete-pricing, answer-verification and runtime-integrity checks. Final-chat total completeness was checked separately rather than mislabeled as artifact integrity.",
+    "Replayed approval chronology for successful builds. No successful unapproved report build was observed. MAI's premature engine call and Sonnet's invalid recovery calls were rejected.",
+    "All 19 refused approvals stopped without report or priced audit artifacts.",
+    "The earlier complete 376/380 raw results and separate 16/16 targeted results retain their original SHA-256 hashes.",
+    "Full per-case independent verification is retained in the raw run directory as independent-verification.json. Shareable summaries omit session IDs and local report paths."
+  ],
+  "releaseChecks": {
+    "repositoryTests": "npm test passed, including 142/142 independent-oracle comparisons after the authorized targeted EUR refresh.",
+    "eurSnapshotRefresh": "../oracle/eur-price-refresh.json",
+    "currentRuntimeNativeCliSmoke": "confirmation-native-smoke.json",
+    "packageDryRun": "30 expected files; caches, scratch, tests and development dependencies excluded.",
+    "runtimeDuringMatrix": "No shipped runtime, skill, runner, grader, scenarios or limits changed during the complete run."
+  },
+  "disposition": "All three requested readiness activities are complete, but six model-conversation flags remain unresolved. EUR snapshot discrepancies and current-runtime native approval-to-report validation are resolved. This evidence does not establish an all-green release; no commit, push, merge, tag or publication has been performed.",
+  "limitations": [
+    "A pass is one sampled bounded conversation, not guaranteed future reliability. The 16/16 targeted result is not imported into this complete score.",
+    "This is not unrestricted-shell or native-form certification, an independent oracle comparison for every matrix report, or a full semantic assessment of advice and metadata.",
+    "Matrix link checking is skipped; the separate current-runtime native smoke retained normal URL checks and passed all four.",
+    "Two Grok deadlines are real failures under the unchanged limits, not evidence of wrong engine prices or grounds for automatic model blocking.",
+    "MAI-Code-2.x1 and both HydraFusion previews remain excluded and untested. Tested MAI-Code-2-Flash and internal-only GPT-5.6 Sol Fast retain their labels."
+  ]
+}

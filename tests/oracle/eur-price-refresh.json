@@ -1,0 +1,79 @@
+{
+  "reviewedAt": "2026-11-11T15:56:56.923Z",
+  "status": "refreshed-after-independent-verification",
+  "scenario": "s17-eur-germany",
+  "region": "germanywestcentral",
+  "currency": "EUR",
+  "historicalReview": "eur-price-review.json",
+  "originalSnapshotCapturedAt": "2026-10-01T11:18:21.286Z",
+  "originalSnapshotSha256": "cf4e6377d6259c394a4bb630a21db0dd9b361ebce7d362d40208c6cbdf192b63",
+  "refreshedSnapshotSha256": "9be5e5066c1d9c80c4d91a720b5117ecf949da1ff0c87ebb7f94b7ab842f6791",
+  "api": "https://prices.azure.com/api/retail/prices",
+  "apiVersion": "2023-01-01-preview",
+  "authorization": "The user explicitly approved resolving the EUR snapshot discrepancies as part of the three release-readiness checks on 11 November.",
+  "method": "Fresh native-EUR queries through the independent oracle were compared with an isolated current-engine price cache before editing any expectation. Canonical and all six VM-variant list and discounted totals agreed exactly. Only the German EUR scenario was refreshed, including coherent unit prices, per-instance values and its disk variant.",
+  "rawEvidence": ".cache/release-readiness-eur-20261111",
+  "canonical": {
+    "hoursPerMonth": 730,
+    "vmCount": 2,
+    "vmSku": "Standard_D4as_v5",
+    "diskCount": 2,
+    "diskTier": "E15 LRS",
+    "diskSizeGiB": 256,
+    "discountPct": 20,
+    "beforeList": 301.02,
+    "oracleList": 307.09,
+    "engineList": 307.09,
+    "beforeDiscounted": 240.81,
+    "oracleDiscounted": 245.68,
+    "engineDiscounted": 245.68,
+    "meters": [
+      {
+        "meterId": "6e39dbef-cc24-5924-adb2-b9d388bac084",
+        "unit": "1 Hour",
+        "quantity": 1460,
+        "beforeUnitPrice": 0.183034,
+        "refreshedUnitPrice": 0.186723,
+        "beforeLineTotal": 267.23,
+        "refreshedLineTotal": 272.62
+      },
+      {
+        "meterId": "03858686-d4b3-4dc6-8adc-89be5e4d691b",
+        "unit": "1/Month",
+        "quantity": 2,
+        "beforeUnitPrice": 16.895459,
+        "refreshedUnitPrice": 17.235962,
+        "beforeLineTotal": 33.79,
+        "refreshedLineTotal": 34.47
+      }
+    ]
+  },
+  "vmVariants": [
+    { "sku": "Standard_D4as_v5", "before": 267.23, "oracle": 272.62, "engine": 272.62 },
+    { "sku": "Standard_D4s_v5", "before": 295.5, "oracle": 301.45, "engine": 301.45 },
+    { "sku": "Standard_D4as_v6", "before": 282.65, "oracle": 288.34, "engine": 288.34 },
+    { "sku": "Standard_D4s_v6", "before": 310.91, "oracle": 317.18, "engine": 317.18 },
+    { "sku": "Standard_D4ads_v5", "before": 321.19, "oracle": 327.66, "engine": 327.66 },
+    { "sku": "Standard_D4ds_v5", "before": 349.45, "oracle": 356.5, "engine": 356.5 }
+  ],
+  "supplementalCheck": "The Azure MCP pricing tool corroborated the canonical meter in native EUR at its displayed four-decimal precision (0.1867). The full-precision direct API results above, not that rounded display, supply the refreshed expectations.",
+  "repositoryTestResult": {
+    "command": "npm test",
+    "oraclePassed": 142,
+    "oracleFailed": 0,
+    "otherSuites": "passed",
+    "overallExitCode": 0,
+    "cache": "Isolated live engine cache for this review; independent oracle used separate API queries."
+  },
+  "verification": [
+    "All other 19 oracle scenarios and the original top-level capture timestamp are unchanged.",
+    "The refreshed EUR entry exactly matches the fresh independent oracle output, with its own scenario-specific capturedAt timestamp.",
+    "Unit quantities, meter identities, currency, rounding, comparison tolerances and pricing code were not changed.",
+    "The historical review and its original failing status remain preserved as evidence of the prior run."
+  ],
+  "limitations": [
+    "Live prices are time-bound and can drift again; this refresh is not a permanent guarantee of matching future prices.",
+    "The API effectiveStartDate does not establish when the currency-denominated rate last changed.",
+    "No commit, push or publication is authorized by this snapshot refresh."
+  ]
+}

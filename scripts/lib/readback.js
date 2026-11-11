@@ -80,12 +80,17 @@ function readback(spec) {
   ].join('\n');
   // Hash all scope and visible text, but not evidence locators. Re-linking the same actual
   // answer is metadata-only; changing wording, assumptions or an undisplayed pricing field is not.
-  const scope = JSON.parse(JSON.stringify(original));
+  const code = 'AZP-' + crypto.createHash('sha256').update(JSON.stringify([body, confirmationScope(original)])).digest('hex').slice(0, 12).toUpperCase();
+  const text = body + `\nIs every number right, and is anything missing? (check ${code})`;
+  const fence = '`'.repeat(Math.max(3, ...[...text.matchAll(/`+/g)].map(m => m[0].length + 1)));
+  return { code, text, message: `${fence}text\n${text}\n${fence}` };
+}
+
+function confirmationScope(spec) {
+  const scope = JSON.parse(JSON.stringify(spec));
   if (Array.isArray(scope.sources)) scope.sources = scope.sources.map(({ eventId, answerField, ...visible }) => visible);
   const stable = value => Array.isArray(value) ? value.map(stable) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(k => [k, stable(value[k])])) : value;
-  const code = 'AZP-' + crypto.createHash('sha256').update(JSON.stringify([body, stable(scope)])).digest('hex').slice(0, 12).toUpperCase();
-  const text = body + `\nIs every number right, and is anything missing? (check ${code})`;
-  return { code, text };
+  return stable(scope);
 }
 
 // Components that usually come together. Listed so the person can spot what was left out.
@@ -116,4 +121,4 @@ function notIncluded(spec) {
   return out;
 }
 
-module.exports = { readback, notIncluded };
+module.exports = { readback, notIncluded, confirmationScope };

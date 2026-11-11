@@ -1,0 +1,53 @@
+{
+  "version": "1.4.0",
+  "date": "2026-11-11",
+  "status": "completed",
+  "verifiedAt": "2026-11-11T19:31:35.141Z",
+  "interface": "Installed Copilot CLI prompt/resume with native tools and a copied isolated project skill; no SDK engine/spec adapters",
+  "cliVersion": "1.0.100-1",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "skillDigest": "0ca748263b5e1805f9152ccce9df3296b787ec833bd5583070ff0e23ea84ad8a",
+  "rawEvidence": ".cache/release-final-native-20261111",
+  "sessionLogSha256": "cf31ad260d5bfef241c363d69dd8236d05420324cf48c0788f7eef5bc4dc8460",
+  "case": {
+    "model": "claude-sonnet-5.5",
+    "scenario": "windows-license-discount",
+    "status": "passed",
+    "customerTurns": 2,
+    "region": "eastus2",
+    "currency": "USD",
+    "vmCount": 2,
+    "sku": "Standard_D4as_v5",
+    "os": "windows",
+    "hours": 730,
+    "diskCount": 2,
+    "diskSizeGiB": 128,
+    "discountPct": 16,
+    "discountExcludes": ["licenses"],
+    "monthlyList": 538.96,
+    "monthlyYourPrice": 495.71,
+    "buildCalls": 1,
+    "linksChecked": 2,
+    "checks": [
+      "The native skill tool loaded the copied skill; every shipped runtime byte retained the frozen digest.",
+      "Independently checked that the final readback exactly matched the engine message and that no build attempt, HTML or priced audit existed before sending yes.",
+      "The only native build occurred after the exact standalone readback and subsequent explicit approval. The engine independently verified customer answers and recorded an intact runtime.",
+      "Scope, complete pricing, arithmetic, HTML, model identity and final-chat totals passed the existing conversation grader.",
+      "Both totals match the separate fresh independent oracle calculation, including the corrected Windows compute/license discount allocation.",
+      "The model did not infer a year of steady usage from 730 monthly hours and correctly separated known facts from assumptions.",
+      "Default URL validation remained enabled and checked two links without errors."
+    ]
+  },
+  "setupAndToolRecovery": [
+    "An edit call used an empty old_str and failed required-input validation. The error remains in the raw log.",
+    "A read/schema-inspection PowerShell command did not fit the scoped shell permission and was denied noninteractively. That denied command was not a build or a write. It was not re-enabled or retried with wider permission.",
+    "The model continued with its already permitted native tools, reached exact readback, waited for yes and built normally. No blanket permission flags, path-check disabling, evidence editing or approval bypass was used."
+  ],
+  "limitations": [
+    "This is one scripted native prompt/resume conversation, not manual terminal UI, native ask_user-form or exhaustive unrestricted-shell certification.",
+    "The isolated conversation disabled built-in MCP servers and custom instructions and exposed a bounded set of native tools with scoped approvals.",
+    "This new final-runtime evidence is separate from historical native runs and the full bounded SDK model matrix.",
+    "A passing case is not a guarantee of perfect future model behavior. Recovered input and permission errors are disclosed rather than described as error-free.",
+    "No commit, push, merge, tag or publication occurred."
+  ]
+}

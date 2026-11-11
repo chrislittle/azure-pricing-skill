@@ -70,24 +70,31 @@ async function priceVm(c, ctx) {
   let computeRate = r.base.retailPrice, meter = r.base;
   if (os === 'windows') {
     if (!r.win) throw new PricingError(`No Windows price for ${sku} in ${ctx.region}.`);
+    if (r.win.retailPrice < r.base.retailPrice) throw new PricingError(`The Windows rate for ${sku} is below its base compute rate; cannot derive a reliable license charge.`);
     computeRate = r.win.retailPrice; meter = r.win;
   }
   const osLabel = { linux: 'Linux', rhel: 'Linux (RHEL license billed separately)', 'rhel-byos': 'Linux (RHEL, own subscription)', sles: 'Linux (SUSE license billed separately)', windows: 'Windows Server, license included', 'windows-ahb': 'Windows Server, Azure Hybrid Benefit' }[os] || os;
   facts.paygRate = computeRate; facts.baseRate = r.base.retailPrice; facts.winRate = r.win ? r.win.retailPrice : null;
 
   if (commit === 'payg') {
-    lines.push(line('Compute', 'Virtual Machines', `${label}, ${osLabel}`, hours * count, 'hours', computeRate, computeRate * hours * count, meterInfo(meter), { per: count > 1 ? `${count} VMs x ${hours} hours` : null }));
+    const rate = os === 'windows' ? r.base.retailPrice : computeRate;
+    lines.push(line('Compute', 'Virtual Machines', `${label}, ${os === 'windows' ? 'Windows Server compute' : osLabel}`, hours * count, 'hours', rate, rate * hours * count, meterInfo(os === 'windows' ? r.base : meter), { per: count > 1 ? `${count} VMs x ${hours} hours` : null, isLicense: false }));
+    if (os === 'windows') {
+      const lic = r.win.retailPrice - r.base.retailPrice;
+      lines.push(line('Compute', 'Virtual Machines', 'Windows Server license', hours * count, 'hours', lic, lic * hours * count, meterInfo(r.win), { isLicense: true }));
+      notes.push('Windows pay-as-you-go is split into base compute and the Windows-minus-base license charge, so license discount exclusions do not exclude compute.');
+    }
   } else if (/^ri(1|3)y$/.test(commit)) {
     const term = commit === 'ri1y' ? '1 Year' : '3 Years';
     const rr = r.reservations.find(x => x.reservationTerm === term);
     if (!rr) throw new PricingError(`No ${term} reservation price for ${sku} in ${ctx.region}.`);
     const months = termMonths(term);
     const monthly = rr.retailPrice / months;
-    lines.push(line('Compute', 'Virtual Machines', `${label}, ${term} reservation (compute only)`, count, 'VM / month', monthly, monthly * count, meterInfo(rr), { termTotal: rr.retailPrice }));
+    lines.push(line('Compute', 'Virtual Machines', `${label}, ${term} reservation (compute only)`, count, 'VM / month', monthly, monthly * count, meterInfo(rr), { termTotal: rr.retailPrice, isLicense: false }));
     notes.push(`${term} reservation: ${rr.retailPrice} is the whole-term price per VM, divided by ${months} months. Billed whether or not the VM runs.`);
     if (os === 'windows') {
       const lic = r.win.retailPrice - r.base.retailPrice;
-      lines.push(line('Compute', 'Virtual Machines', `Windows Server license (not covered by reservation)`, HOURS * count, 'hours', lic, lic * HOURS * count, meterInfo(r.win)));
+      lines.push(line('Compute', 'Virtual Machines', `Windows Server license (not covered by reservation)`, HOURS * count, 'hours', lic, lic * HOURS * count, meterInfo(r.win), { isLicense: true }));
     }
     if (hours < HOURS) facts.commitmentUnderused = true;
   } else if (/^sp(1|3)y$/.test(commit)) {
@@ -95,10 +102,10 @@ async function priceVm(c, ctx) {
     const sp = (r.base.savingsPlan || []).find(x => x.term === term);
     if (!sp) throw new PricingError(`No ${term} savings plan rate for ${sku} in ${ctx.region}.`);
     // Commitment is billed every hour of the term regardless of runtime.
-    lines.push(line('Compute', 'Virtual Machines', `${label}, ${term} compute savings plan rate`, HOURS * count, 'hours', sp.unitPrice, sp.unitPrice * HOURS * count, meterInfo(r.base)));
+    lines.push(line('Compute', 'Virtual Machines', `${label}, ${term} compute savings plan rate`, HOURS * count, 'hours', sp.unitPrice, sp.unitPrice * HOURS * count, meterInfo(r.base), { isLicense: false }));
     if (os === 'windows') {
       const lic = r.win.retailPrice - r.base.retailPrice;
-      lines.push(line('Compute', 'Virtual Machines', `Windows Server license (not covered by savings plan)`, HOURS * count, 'hours', lic, lic * HOURS * count, meterInfo(r.win)));
+      lines.push(line('Compute', 'Virtual Machines', `Windows Server license (not covered by savings plan)`, HOURS * count, 'hours', lic, lic * HOURS * count, meterInfo(r.win), { isLicense: true }));
     }
     if (hours < HOURS) facts.commitmentUnderused = true;
   } else throw new PricingError(`Unknown commitment "${commit}". Use payg, ri1y, ri3y, sp1y or sp3y.`);

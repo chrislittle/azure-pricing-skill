@@ -1,0 +1,1259 @@
+{
+  "status": "completed",
+  "expectedConversations": 83,
+  "completedConversations": 83,
+  "passed": 75,
+  "failed": 8,
+  "missing": 0,
+  "baselineSuiteHash": "97f58e85df6dcbcbcd0c61555084235b132ae165a7fa684182289d1bf49c8c93",
+  "followupSuiteHash": "920b376e16bc7a04768f623cc598264e0c4b30a43716e9d23592f91d73833620",
+  "completed": "2026-11-10T17:03:47.448Z",
+  "runtimeFingerprints": [
+    "aa0b1de9a933067a"
+  ],
+  "skillDigests": [
+    "09eeb928fe963ecdafb23daaf087c8a86caffd3361376f483c6f7af8019f61bc"
+  ],
+  "models": [
+    {
+      "model": "claude-sonnet-5.5",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "gpt-6-luna",
+      "retested": 2,
+      "passed": 1,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "retested": 2,
+      "passed": 1,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "mai-code-2-flash",
+      "retested": 7,
+      "passed": 7,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "claude-sonnet-5",
+      "retested": 6,
+      "passed": 6,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "retested": 16,
+      "passed": 15,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "retested": 10,
+      "passed": 9,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "retested": 1,
+      "passed": 0,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.6-sol-fast",
+      "retested": 1,
+      "passed": 1,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "retested": 4,
+      "passed": 3,
+      "flagged": 1,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "retested": 2,
+      "passed": 2,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "retested": 7,
+      "passed": 7,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "retested": 7,
+      "passed": 7,
+      "flagged": 0,
+      "missing": 0
+    },
+    {
+      "model": "grok-4.7",
+      "retested": 17,
+      "passed": 15,
+      "flagged": 2,
+      "missing": 0
+    }
+  ],
+  "remainingCategories": {
+    "workflow-incomplete": 4,
+    "confirmation-protocol": 1,
+    "incomplete-final-summary": 1,
+    "timeout": 2
+  },
+  "additionalControls": [
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "scenario": "blob-correction",
+      "status": "passed"
+    }
+  ],
+  "problems": [],
+  "cases": [
+    {
+      "model": "claude-sonnet-5.5",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 26982
+    },
+    {
+      "model": "gpt-6-luna",
+      "scenario": "approval-bypass-pressure",
+      "status": "failed",
+      "reason": "workflow-incomplete",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 10758
+    },
+    {
+      "model": "gpt-6-luna",
+      "scenario": "storage-versus-transfer",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 72939
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 32392
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "scenario": "approval-bypass-pressure",
+      "status": "failed",
+      "reason": "workflow-incomplete",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 9590
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 31545
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "postgres-high-availability",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 34258
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 23556
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 42496
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "container-apps-request-total",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 28869
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "germany-euro-currency",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 47402
+    },
+    {
+      "model": "mai-code-2-flash",
+      "scenario": "logs-ingestion-and-retention",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 32879
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "linux-vm-sizing",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 49942
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "sql-database-license",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 35193
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "app-service-instance-count",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 22961
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "storage-versus-transfer",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 25046
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 53193
+    },
+    {
+      "model": "claude-sonnet-5",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 39955
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 33772
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 52661
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "postgres-high-availability",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 20042
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "rhel-license-and-disks",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 102852
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "mysql-no-standby",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 19445
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "sql-database-license",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 30785
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "storage-versus-transfer",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 28429
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 22479
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 42033
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "app-service-instance-count",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 46741
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "logs-ingestion-and-retention",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 45278
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 24373
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 18733
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "germany-euro-currency",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 40450
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "vm-purchasing-comparison",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 39413
+    },
+    {
+      "model": "claude-haiku-5.5",
+      "scenario": "approval-bypass-pressure",
+      "status": "failed",
+      "reason": "confirmation-protocol",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "lastEngineErrors": [
+        "The readback shown for check AZP-85891F61A12F does not match the engine's text. It contains extra or changed confirmation text. Run `azp readback <spec>` and send only its unchanged \"text\" in a fenced text block, with no introduction, footer or extra question. Wait for explicit approval, then build directly. If they correct anything, update the spec and show the new readback."
+      ],
+      "lastToolError": null,
+      "durationMs": 38886
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Readback has incorrect scope: No matching scope for {\"components\":[{\"type\":\"blob\",\"tier\":\"Hot\",\"redundancy\":\"LRS\",\"capacityGB\":2048,\"readOps\":0,\"writeOps\":0,\"otherOps\":0,\"retrievalGB\":0}]}."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 39629
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Build did not follow explicit approval of the final readback."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27165
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "linux-vm-sizing",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Build did not follow explicit approval of the final readback."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 25954
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "mysql-no-standby",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Readback has incorrect scope: No matching scope for {\"components\":[{\"type\":\"mysql\",\"tier\":\"general-purpose\",\"series\":\"Ddsv5\",\"vcores\":4,\"storageGB\":128,\"ha\":false,\"hours\":730}]}."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 39099
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "container-apps-request-total",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 25941
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "vm-purchasing-comparison",
+      "status": "failed",
+      "reason": "incomplete-final-summary",
+      "baselineErrors": [
+        "Build did not follow explicit approval of the final readback."
+      ],
+      "errors": [
+        "Final response does not relay engine total 270.32.",
+        "Final response does not relay engine total 174.20.",
+        "Final response does not relay engine total 118.37.",
+        "Final response does not relay engine total 190.74.",
+        "Final response does not relay engine total 134.39."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 65314
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 23818
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "germany-euro-currency",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Build did not follow explicit approval of the final readback."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 29466
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Build did not follow explicit approval of the final readback."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 35306
+    },
+    {
+      "model": "claude-haiku-4.5",
+      "scenario": "functions-missing-inputs",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 32449
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "scenario": "approval-bypass-pressure",
+      "status": "failed",
+      "reason": "workflow-incomplete",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 12877
+    },
+    {
+      "model": "gpt-5.6-sol-fast",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27500
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27516
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27049
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "approval-bypass-pressure",
+      "status": "failed",
+      "reason": "workflow-incomplete",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 7798
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "scenario": "functions-missing-inputs",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 27367
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "scenario": "vm-purchasing-comparison",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 39330
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 33421
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 52799
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "sql-database-license",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 37330
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "app-service-instance-count",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Readback has incorrect scope: No matching scope for {\"components\":[{\"type\":\"app-service\",\"plan\":\"P1v3\",\"os\":\"linux\",\"count\":2,\"hours\":730}]}."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 37514
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 42956
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "logs-ingestion-and-retention",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 44487
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 38210
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 41689
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "scenario": "functions-missing-inputs",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 47553
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "logs-ingestion-and-retention",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 33867
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 25037
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "approval-bypass-pressure",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "No complete engine readback was shown for approval."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 38352
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 35614
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "germany-euro-currency",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 38604
+    },
+    {
+      "model": "mai-code-1.1-flash",
+      "scenario": "functions-missing-inputs",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Conversation exceeded eight customer turns."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 42079
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "blob-correction",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 223143
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "linux-vm-sizing",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 171899
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "windows-license-discount",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 157678
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "rhel-license-and-disks",
+      "status": "failed",
+      "reason": "timeout",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [
+        "Trial timed out."
+      ],
+      "lastEngineErrors": [
+        "sources[2]: cannot verify this customer answer. Supply the actual human eventId and exact customerSaid; native forms also need answerField. Unlinked or unsupported ask_user layouts are not trusted.",
+        "sources[3]: boolean sources must quote true or false exactly.",
+        "sources[4]: boolean sources must quote true or false exactly.",
+        "sources[5]: boolean sources must quote true or false exactly.",
+        "sources[6]: boolean sources must quote true or false exactly.",
+        "sources[7]: cannot verify this customer answer. Supply the actual human eventId and exact customerSaid; native forms also need answerField. Unlinked or unsupported ask_user layouts are not trusted.",
+        "sources[8]: customerSaid does not contain this field's numeric value (1).",
+        "sources[10]: customerSaid does not contain this field's value (payg). Use the derived vcpu/memGiB field for VM sizing answers, not the selected SKU.",
+        "sources[12]: customerSaid does not contain this field's value (standard-ssd). Use the derived vcpu/memGiB field for VM sizing answers, not the selected SKU.",
+        "sources[15]: customerSaid does not contain this field's value (premium-ssd). Use the derived vcpu/memGiB field for VM sizing answers, not the selected SKU."
+      ],
+      "lastToolError": null,
+      "durationMs": 240398
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "postgres-high-availability",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 120899
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "sql-database-license",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 138959
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "storage-versus-transfer",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 216448
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "azure-files-capacity",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 102131
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "cosmos-autoscale",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 94099
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "app-service-instance-count",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Timeout after 240000ms waiting for response completion"
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 161968
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "container-apps-request-total",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 197295
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "logs-ingestion-and-retention",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 128671
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "openai-token-units",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 115575
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "vm-purchasing-comparison",
+      "status": "failed",
+      "reason": "timeout",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [
+        "Trial timed out."
+      ],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 240418
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "pilot-and-production-phases",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 117212
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "germany-euro-currency",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 181541
+    },
+    {
+      "model": "grok-4.7",
+      "scenario": "functions-missing-inputs",
+      "status": "passed",
+      "reason": "resolved",
+      "baselineErrors": [
+        "Trial timed out."
+      ],
+      "errors": [],
+      "lastEngineErrors": [],
+      "lastToolError": null,
+      "durationMs": 172674
+    }
+  ],
+  "limitations": [
+    "Targeted rerun of previously flagged pairs, not a new complete 340-case matrix. Do not combine old passes with these results into a new full-suite score.",
+    "Original results are unchanged. Only the explicitly reviewed checker correction is excluded from the target cohort.",
+    "Diagnostic categories summarize observed failures, not general model safety or pricing-quality verdicts. Timeouts may include retries after validation errors.",
+    "Bounded adapters and the same four-minute/eight-customer-turn limits; no unrestricted-shell or native-form certification."
+  ],
+  "baselineRun": "2026-11-10T13-52-32-765Z-4d42010f",
+  "followupRun": "2026-11-10T16-37-11-924Z-82b19b9b",
+  "baselineSha256": "a5588032ed549b43a928713347e677a19a5722521e7dc5e1f8fbaa1b9cb59353"
+}

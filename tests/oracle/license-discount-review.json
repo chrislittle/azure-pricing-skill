@@ -1,0 +1,48 @@
+{
+  "version": "1.4.0",
+  "checkedAt": "2026-11-11T19:28:04.657Z",
+  "runtimeFingerprint": "63f498d70187cbea",
+  "status": "passed",
+  "method": "Fresh independent oracle/API calculations compared with a separately cached engine; no oracle snapshot edits, relaxed tolerances or shared engine pricing math.",
+  "rawEvidence": ".cache/release-final-license-20261111/comparison.json",
+  "source": "https://learn.microsoft.com/en-us/windows-server/get-started/azure-hybrid-benefit",
+  "sourceQuote": "The base compute rate is equal to the Linux rate for VMs.",
+  "defect": "A text-based license classifier excluded the entire bundled Windows PAYG VM charge from customer discounts. RHEL compute descriptions mentioning separately billed licenses could also lose the compute discount.",
+  "fix": "Explicitly classify VM compute versus license lines and split Windows PAYG into base compute and Windows-minus-base licensing. Keep license exclusions limited to the license charge.",
+  "canonical": {
+    "region": "eastus2",
+    "currency": "USD",
+    "sku": "Standard_D4as_v5",
+    "vmCount": 2,
+    "hours": 730,
+    "diskCount": 2,
+    "disk": "128 GiB Standard SSD LRS",
+    "discountPct": 16,
+    "discountExcludes": ["licenses"],
+    "linuxHourlyRate": 0.172,
+    "windowsBundledHourlyRate": 0.356,
+    "computeList": 251.12,
+    "licenseList": 268.64,
+    "diskList": 19.2,
+    "monthlyList": 538.96,
+    "correctedMonthlyYourPrice": 495.71,
+    "historicalIncorrectMonthlyYourPrice": 535.89
+  },
+  "independentComparisons": [
+    { "mode": "payg", "list": 538.96, "your": 495.71, "engineAgrees": true },
+    { "mode": "ri1y", "list": 442.84, "your": 414.97, "engineAgrees": true },
+    { "mode": "ri3y", "list": 387.01, "your": 368.07, "engineAgrees": true },
+    { "mode": "sp1y", "list": 459.38, "your": 428.86, "engineAgrees": true },
+    { "mode": "sp3y", "list": 403.03, "your": 381.53, "engineAgrees": true },
+    { "mode": "rhel-payg-no-disks", "list": 335.22, "your": 295.04, "engineAgrees": true }
+  ],
+  "regressionCoverage": [
+    "Windows compute and license discount allocation for all five purchasing choices.",
+    "Windows PAYG compute and license list charges independently derived from raw component rates and requested hours/count.",
+    "Windows zero-hours pricing and discounting all lines when licenses are not excluded.",
+    "RHEL compute remains discountable even when its description mentions separately billed licensing.",
+    "Existing math and HTML validation remain required."
+  ],
+  "historicalEvidenceCaveat": "Earlier model-workflow artifact checks verified engine arithmetic and relayed totals, not independent correctness of every price. Historical Windows PAYG reports with license exclusions could pass those checks while containing the incorrect customer total. Their original scores and evidence remain unchanged and must not be described as independent price certification.",
+  "oracleSuiteLimitation": "The existing 142-reference oracle suite uses Windows AHB in its canonical Windows cases and did not cover this Windows PAYG license-exclusion defect. This supplemental independent comparison and focused regression close that specific gap without changing old snapshots."
+}
